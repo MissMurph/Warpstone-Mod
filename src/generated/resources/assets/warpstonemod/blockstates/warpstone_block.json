@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "warpstonemod:block/warpstone_block"
+    }
+  }
+}

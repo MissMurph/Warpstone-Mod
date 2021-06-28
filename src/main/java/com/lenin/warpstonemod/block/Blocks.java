@@ -12,7 +12,8 @@ import net.minecraftforge.fml.RegistryObject;
 import java.util.function.Supplier;
 
 public class Blocks {
-	public static final RegistryObject<Block> SILVER_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties.create(Material.ANVIL)));
+	public static final RegistryObject<Block> WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
+	public static final RegistryObject<Block> WARPSTONE_BLOCK = registerBlock("warpstone_block", () -> new Block(AbstractBlock.Properties.create(Material.IRON)));
 
 	private static <T extends Block> RegistryObject<T> blockRegistry(String name, Supplier<T> block) {
 		return Registration.BLOCKS.register(name, block);

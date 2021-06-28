@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.data;
 
 import com.lenin.warpstonemod.Main;
+import com.lenin.warpstonemod.data.client.ModBLockStateProvider;
 import com.lenin.warpstonemod.data.client.ModItemModelProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -17,6 +18,12 @@ public final class DataGenerators {
 		DataGenerator gen = event.getGenerator();
 		ExistingFileHelper fileHelper = event.getExistingFileHelper();
 
+		gen.addProvider(new ModBLockStateProvider(gen, fileHelper));
 		gen.addProvider(new ModItemModelProvider(gen, fileHelper));
+
+		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(gen, fileHelper);
+
+		gen.addProvider(blockTags);
+		gen.addProvider(new ModItemTagsProvider(gen, blockTags, fileHelper));
 	}
 }

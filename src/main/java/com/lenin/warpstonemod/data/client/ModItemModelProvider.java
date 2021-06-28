@@ -15,9 +15,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 	@Override
 	protected void registerModels (){
-		System.out.println("Models are being Registered");
-
-		//withExistingParent("warpsotne_ore", modLoc("block/warpstone_ore"));
+		withExistingParent("warpstone_ore", modLoc("block/warpstone_ore"));
+		withExistingParent("warpstone_block", modLoc("block/warpstone_block"));
 
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
