@@ -1,6 +1,5 @@
-package com.lenin.warpstonemod.Item;
+package com.lenin.warpstonemod.items;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 

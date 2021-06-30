@@ -1,23 +1,21 @@
 package com.lenin.warpstonemod.data.client;
 
-import com.lenin.warpstonemod.Main;
+import com.lenin.warpstonemod.WarpstoneMain;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class ModItemModelProvider extends ItemModelProvider {
-	public ModItemModelProvider (DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, Main.MOD_ID, existingFileHelper);
-		registerModels();
+public class WarpItemModelProvider extends ItemModelProvider {
+	public WarpItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+		super(generator, WarpstoneMain.MOD_ID, existingFileHelper);
 	}
 
 	@Override
 	protected void registerModels (){
-		System.out.println("Models are being Registered");
-
-		//withExistingParent("warpsotne_ore", modLoc("block/warpstone_ore"));
+		withExistingParent("warpstone_ore", modLoc("block/warpstone_ore"));
+		withExistingParent("warpstone_block", modLoc("block/warpstone_block"));
 
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 

@@ -1,6 +1,6 @@
-package com.lenin.warpstonemod.block;
+package com.lenin.warpstonemod.blocks;
 
-import com.lenin.warpstonemod.Main;
+import com.lenin.warpstonemod.WarpstoneMain;
 import com.lenin.warpstonemod.Registration;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -11,8 +11,9 @@ import net.minecraftforge.fml.RegistryObject;
 
 import java.util.function.Supplier;
 
-public class Blocks {
-	public static final RegistryObject<Block> SILVER_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties.create(Material.ANVIL)));
+public class WarpBlocks {
+	public static final RegistryObject<Block> WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
+	public static final RegistryObject<Block> WARPSTONE_BLOCK = registerBlock("warpstone_block", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
 
 	private static <T extends Block> RegistryObject<T> blockRegistry(String name, Supplier<T> block) {
 		return Registration.BLOCKS.register(name, block);
@@ -20,7 +21,7 @@ public class Blocks {
 
 	public static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
 		RegistryObject<T> ref = blockRegistry(name, block);
-		Registration.ITEMS.register(name, () -> new BlockItem(ref.get(), new Item.Properties().group(Main.MOD_GROUP)));
+		Registration.ITEMS.register(name, () -> new BlockItem(ref.get(), new Item.Properties().group(WarpstoneMain.MOD_GROUP)));
 		return ref;
 	}
 
