@@ -22,6 +22,7 @@ public class WarpTags {
         public static final ITag.INamedTag<Item> STORAGE_BLOCKS_WARPSTONE = forge("storage_blocks/warpstone");
 
         public static final ITag.INamedTag<Item> GEMS_WARPSTONE = forge("gems/warpstone");
+        public static final ITag.INamedTag<Item> DUSTS_WARPSTONE = forge("dusts/warpstone");
 
         private static ITag.INamedTag<Item> forge(String path) {
             return ItemTags.makeWrapperTag(new ResourceLocation("forge", path).toString());

@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    },
+    {
+      "item": "warpstonemod:warpstone_shard"
+    }
+  ],
+  "result": {
+    "item": "warpstonemod:warpstone_block"
+  }
+}

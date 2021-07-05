@@ -20,6 +20,7 @@ public class WarpItemModelProvider extends ItemModelProvider {
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
 		builder("warpstone_shard", itemGenerated);
+		builder("warpstone_dust", itemGenerated);
 	}
 
 	protected ItemModelBuilder builder(String name, ModelFile itemGenerated) {

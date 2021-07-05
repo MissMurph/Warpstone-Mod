@@ -27,5 +27,8 @@ public final class DataGenerators {
 
 		gen.addProvider(blockTags);
 		gen.addProvider(new WarpItemTagsProvider(gen, blockTags, fileHelper));
+
+		gen.addProvider(new WarpLootTableProvider(gen));
+		gen.addProvider(new WarpRecipeProvider(gen));
 	}
 }

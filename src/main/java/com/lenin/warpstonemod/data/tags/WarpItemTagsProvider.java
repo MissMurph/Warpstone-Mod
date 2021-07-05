@@ -23,5 +23,8 @@ public class WarpItemTagsProvider extends ItemTagsProvider {
 
         getOrCreateBuilder(WarpTags.Items.GEMS_WARPSTONE).add(WarpItems.WARPSTONE_SHARD.get());
         getOrCreateBuilder(Tags.Items.GEMS).addTag(WarpTags.Items.GEMS_WARPSTONE);
+
+        getOrCreateBuilder(WarpTags.Items.DUSTS_WARPSTONE).add(WarpItems.WARPSTONE_DUST.get());
+        getOrCreateBuilder(Tags.Items.DUSTS).addTag(WarpTags.Items.DUSTS_WARPSTONE);
     }
 }
