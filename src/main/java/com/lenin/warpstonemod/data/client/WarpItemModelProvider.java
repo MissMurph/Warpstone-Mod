@@ -1,16 +1,15 @@
 package com.lenin.warpstonemod.data.client;
 
-import com.lenin.warpstonemod.Main;
+import com.lenin.warpstonemod.WarpstoneMain;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class ModItemModelProvider extends ItemModelProvider {
-	public ModItemModelProvider (DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, Main.MOD_ID, existingFileHelper);
-		registerModels();
+public class WarpItemModelProvider extends ItemModelProvider {
+	public WarpItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+		super(generator, WarpstoneMain.MOD_ID, existingFileHelper);
 	}
 
 	@Override
@@ -21,6 +20,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 
 		builder("warpstone_shard", itemGenerated);
+		builder("warpstone_dust", itemGenerated);
 	}
 
 	protected ItemModelBuilder builder(String name, ModelFile itemGenerated) {

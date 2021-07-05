@@ -1,15 +1,17 @@
 package com.lenin.warpstonemod.data;
 
-import com.lenin.warpstonemod.Main;
-import com.lenin.warpstonemod.data.client.ModBLockStateProvider;
-import com.lenin.warpstonemod.data.client.ModItemModelProvider;
+import com.lenin.warpstonemod.WarpstoneMain;
+import com.lenin.warpstonemod.data.client.WarpBlockStateProvider;
+import com.lenin.warpstonemod.data.client.WarpItemModelProvider;
+import com.lenin.warpstonemod.data.tags.WarpBlockTagsProvider;
+import com.lenin.warpstonemod.data.tags.WarpItemTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
-@Mod.EventBusSubscriber(modid = Main.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = WarpstoneMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGenerators {
 	private DataGenerators() {}
 
@@ -18,12 +20,15 @@ public final class DataGenerators {
 		DataGenerator gen = event.getGenerator();
 		ExistingFileHelper fileHelper = event.getExistingFileHelper();
 
-		gen.addProvider(new ModBLockStateProvider(gen, fileHelper));
-		gen.addProvider(new ModItemModelProvider(gen, fileHelper));
+		gen.addProvider(new WarpBlockStateProvider(gen, fileHelper));
+		gen.addProvider(new WarpItemModelProvider(gen, fileHelper));
 
-		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(gen, fileHelper);
+		WarpBlockTagsProvider blockTags = new WarpBlockTagsProvider(gen, fileHelper);
 
 		gen.addProvider(blockTags);
-		gen.addProvider(new ModItemTagsProvider(gen, blockTags, fileHelper));
+		gen.addProvider(new WarpItemTagsProvider(gen, blockTags, fileHelper));
+
+		gen.addProvider(new WarpLootTableProvider(gen));
+		gen.addProvider(new WarpRecipeProvider(gen));
 	}
 }
