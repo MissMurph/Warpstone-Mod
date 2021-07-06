@@ -8,6 +8,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.function.Supplier;
@@ -16,6 +17,8 @@ public class WarpBlocks {
 	public static final RegistryObject<Block> WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties
 			.create(Material.ROCK)
 			.setRequiresTool()
+			.harvestLevel(2)
+			.harvestTool(ToolType.PICKAXE)
 			.hardnessAndResistance(3,3)
 	));
 
