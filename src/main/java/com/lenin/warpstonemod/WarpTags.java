@@ -7,7 +7,7 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 
-public class ModTags {
+public class WarpTags {
 
 	public static final class Blocks {
 		public static final ITag.INamedTag<Block> ORES_WARPSTONE = forgeTag("ores/warpstone");

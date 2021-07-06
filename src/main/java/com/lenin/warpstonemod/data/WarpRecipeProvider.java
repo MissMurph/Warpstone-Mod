@@ -16,6 +16,8 @@ public class WarpRecipeProvider extends RecipeProvider {
 
     @Override
     protected void registerRecipes (Consumer<IFinishedRecipe> consumer){
+        System.out.println("yeet");
+
         //WARPSTONE DUST
         ShapelessRecipeBuilder.shapelessRecipe(WarpItems.WARPSTONE_DUST.get(), 1)
                 .addIngredient(WarpItems.WARPSTONE_SHARD.get(), 3)
@@ -26,6 +28,12 @@ public class WarpRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapelessRecipe(WarpBlocks.WARPSTONE_BLOCK.get(), 1)
                 .addIngredient(WarpItems.WARPSTONE_SHARD.get(), 9)
                 .addCriterion("has_item", hasItem(WarpItems.WARPSTONE_SHARD.get()))
+                .build(consumer);
+
+        //WARPSTONE SHARD
+        ShapelessRecipeBuilder.shapelessRecipe(WarpItems.WARPSTONE_SHARD.get(), 9)
+                .addIngredient(WarpBlocks.WARPSTONE_BLOCK.get(), 1)
+                .addCriterion("has_item", hasItem(WarpBlocks.WARPSTONE_BLOCK.get()))
                 .build(consumer);
     }
 }

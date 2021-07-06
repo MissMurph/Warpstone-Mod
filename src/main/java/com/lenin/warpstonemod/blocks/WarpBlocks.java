@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.WarpstoneMain;
 import com.lenin.warpstonemod.Registration;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -12,8 +13,18 @@ import net.minecraftforge.fml.RegistryObject;
 import java.util.function.Supplier;
 
 public class WarpBlocks {
-	public static final RegistryObject<Block> WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
-	public static final RegistryObject<Block> WARPSTONE_BLOCK = registerBlock("warpstone_block", () -> new Block(AbstractBlock.Properties.create(Material.ROCK)));
+	public static final RegistryObject<Block> WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties
+			.create(Material.ROCK)
+			.setRequiresTool()
+			.hardnessAndResistance(3,3)
+	));
+
+	public static final RegistryObject<Block> WARPSTONE_BLOCK = registerBlock("warpstone_block", () -> new Block(AbstractBlock.Properties
+			.create(Material.IRON)
+			.setRequiresTool()
+			.hardnessAndResistance(5,6)
+			.sound(SoundType.METAL)
+	));
 
 	private static <T extends Block> RegistryObject<T> blockRegistry(String name, Supplier<T> block) {
 		return Registration.BLOCKS.register(name, block);
