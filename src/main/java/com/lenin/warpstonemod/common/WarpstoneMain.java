@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import java.util.UUID;
+
 @Mod(WarpstoneMain.MOD_ID)
 public class WarpstoneMain {
 

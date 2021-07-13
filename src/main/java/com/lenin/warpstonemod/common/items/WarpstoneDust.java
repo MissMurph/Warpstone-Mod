@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.items;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,8 @@ public class WarpstoneDust extends Item {
 		//NetworkHooks.open
 
 		//Minecraft.getInstance().displayGuiScreen(new WarpScreen(new TranslationTextComponent("TEST COCK")));
+
+		new Mutation(entity);
 
 		return super.onItemUseFinish(stack, worldIn, entity);
 	}
