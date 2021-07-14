@@ -1,11 +1,10 @@
 package com.lenin.warpstonemod.common.items;
 
-import com.lenin.warpstonemod.common.mutations.Mutation;
+import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.MutateManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
 public class WarpstoneDust extends Item {
@@ -15,13 +14,10 @@ public class WarpstoneDust extends Item {
 
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
-		entity.addPotionEffect(new EffectInstance(Effects.HASTE, 100, 0));
+		MutateManager m = MutateHelper.getManager(entity);
 
-		//NetworkHooks.open
-
-		//Minecraft.getInstance().displayGuiScreen(new WarpScreen(new TranslationTextComponent("TEST COCK")));
-
-		new Mutation(entity);
+		if (m == null) { m = MutateHelper.createManager(entity); }
+		else { m.mutate();}
 
 		return super.onItemUseFinish(stack, worldIn, entity);
 	}

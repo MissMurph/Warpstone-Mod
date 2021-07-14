@@ -1,33 +1,58 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 
 import java.util.UUID;
 
 public class Mutation {
     private static LivingEntity parentPlayer;
+    private final Attribute attributeSource;
     private int mutationLevel;
+    private final UUID uuid;
+    private final String name;
 
-    public Mutation (LivingEntity _parentPlayer){
+    public Mutation (LivingEntity _parentPlayer, Attribute _attributeSource, String _name, String _uuid){
         parentPlayer = _parentPlayer;
+        attributeSource = _attributeSource;
+        name = _name;
+
+        //cap this from -0.25 to 0.5
         mutationLevel = 0;
+
+        uuid = UUID.fromString(_uuid);
+
+        clearModifier();
+    }
+
+    public void changeLevel (double value){
+        mutationLevel += value;
+
+        if (mutationLevel > 50) mutationLevel = 50;
+        if (mutationLevel < -25) mutationLevel = -25;
 
         addModifier();
     }
 
-    public void addModifier () {
+    private void addModifier () {
+        clearModifier();
 
-        //if (parentPlayer.getAttribute(Attributes.MAX_HEALTH).getModifier(UUID.fromString("358c0d76-adac-416a-ab2a-5e29b3bad0c6")) == null) {
-            parentPlayer.getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(
+            parentPlayer.getAttribute(attributeSource).applyPersistentModifier(
                     new AttributeModifier(
-                            UUID.fromString("358c0d76-adac-416a-ab2a-5e29b3bad0c6"),
-                            "mutation.max_health",
-                            20,
+                            uuid,
+                            name,
+                            (double)mutationLevel / 100,
                             AttributeModifier.Operation.MULTIPLY_BASE));
-        //}
 
-        System.out.println(parentPlayer.getAttribute(Attributes.MAX_HEALTH).getValue());
+        System.out.println(parentPlayer.getAttribute(attributeSource).getValue());
+    }
+
+    public void clearModifier () {
+        parentPlayer.getAttribute(attributeSource).removeModifier(uuid);
+    }
+
+    public double getMutationLevel (){
+        return mutationLevel;
     }
 }
