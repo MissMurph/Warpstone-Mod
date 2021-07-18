@@ -26,8 +26,17 @@ public class Mutation {
         clearModifier();
     }
 
-    public void changeLevel (double value){
+    public void changeLevel (int value){
         mutationLevel += value;
+
+        if (mutationLevel > 50) mutationLevel = 50;
+        if (mutationLevel < -25) mutationLevel = -25;
+
+        addModifier();
+    }
+
+    public void setLevel (int value) {
+        mutationLevel = value;
 
         if (mutationLevel > 50) mutationLevel = 50;
         if (mutationLevel < -25) mutationLevel = -25;
@@ -45,14 +54,16 @@ public class Mutation {
                             (double)mutationLevel / 100,
                             AttributeModifier.Operation.MULTIPLY_BASE));
 
-        System.out.println(parentPlayer.getAttribute(attributeSource).getValue());
+        //System.out.println(parentPlayer.getAttribute(attributeSource).getValue());
     }
 
     public void clearModifier () {
         parentPlayer.getAttribute(attributeSource).removeModifier(uuid);
     }
 
-    public double getMutationLevel (){
+    public int getMutationLevel (){
         return mutationLevel;
     }
+
+    public String getMutationType () { return attributeSource.getAttributeName(); }
 }

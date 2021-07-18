@@ -1,7 +1,19 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.network.SyncMutDataPacket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +22,9 @@ public class MutateManager {
     private final LivingEntity parentEntity;
     private final List<Mutation> attributeMutations = new ArrayList<Mutation>();
 
-    private int instability;
+    private CompoundNBT mutData;
 
-    private static final float MULTIPLIER = 0.05f;
+    private int instability;
 
     public MutateManager (LivingEntity _parentEntity){
         parentEntity = _parentEntity;
@@ -24,8 +36,8 @@ public class MutateManager {
             attributeMutations.add(warpMutations.constructMutation(warpMutations, parentEntity));
         }
 
-        //As the manager is only being created when a mutation is needed to be made we can do the first mutation upon cration
-        mutate();
+        mutData = serialize();
+        MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
     }
 
     public void mutate(){
@@ -37,6 +49,35 @@ public class MutateManager {
         }
 
         instability++;
+        mutData = serialize();
+
+        if (mutData == null) System.out.println("The actual mutData is false");
+
+        MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
+    }
+
+    private CompoundNBT serialize (){
+        CompoundNBT out = new CompoundNBT();
+        out.putUniqueId("player", parentEntity.getUniqueID());
+        out.putInt("instablity", getInstability());
+
+        for (Mutation mut : getMutations()) {
+            out.putInt(mut.getMutationType(), mut.getMutationLevel());
+        }
+        return out;
+    }
+
+    public void loadFromNBT (CompoundNBT nbt) {
+        instability = nbt.getInt("instability");
+
+        for (Mutation mut : getMutations()) {
+            mut.setLevel(nbt.getInt(mut.getMutationType()));
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void receiveDataFromServer (SyncMutDataPacket pkt){
+        loadFromNBT(pkt.data);
     }
 
     public List<Mutation> getMutations() {
@@ -50,4 +91,6 @@ public class MutateManager {
     public int getInstability(){
         return instability;
     }
+
+    public CompoundNBT getMutData () { if (mutData == null) System.out.println("Getting the NBT from Manager returns null"); return mutData; }
 }

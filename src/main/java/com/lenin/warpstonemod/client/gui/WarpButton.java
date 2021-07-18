@@ -42,7 +42,7 @@ public class WarpButton extends Button {
 			Minecraft.getInstance().displayGuiScreen(new MutationScreen(new TranslationTextComponent("warpstonemod.mutation_screen")));
 		}
 		else{
-			//Minecraft.getInstance().player.inventory.openInventory();
+			Minecraft.getInstance().player.inventory.openInventory(Minecraft.getInstance().player);
 		}
 	}
 }

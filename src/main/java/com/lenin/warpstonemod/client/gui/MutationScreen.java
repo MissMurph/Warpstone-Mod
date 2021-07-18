@@ -1,7 +1,9 @@
 package com.lenin.warpstonemod.client.gui;
 
+import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
@@ -10,7 +12,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-
 public class MutationScreen extends Screen {
 	private static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("warpstonemod", "textures/gui/mutation_screen.png");
 
@@ -24,7 +25,8 @@ public class MutationScreen extends Screen {
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 
-
+		if (MutateHelper.getClientManager() != null) System.out.println(MutateHelper.getClientManager().getInstability());
+		else System.out.println("No Client Manager Found");
 	}
 
 	public MutationScreen(ITextComponent titleIn) {

@@ -25,11 +25,9 @@ public final class GuiEvents {
 	}
 
 	//@SubscribeEvent
-	public static void onInvKey(GuiScreenEvent.KeyboardKeyEvent.KeyboardKeyPressedEvent.Post event){
-		if (event.getGui() instanceof MutationScreen && event.getKeyCode() == 69) {
-			event.getGui().closeScreen();
-		}
-	}
-
-
+	//public static void onInvKey(GuiScreenEvent.KeyboardKeyEvent.KeyboardKeyPressedEvent.Post event){
+	//	if (event.getGui() instanceof MutationScreen && event.getKeyCode() == 69) {
+	//		event.getGui().closeScreen();
+	//	}
+	//}
 }
