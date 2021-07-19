@@ -18,7 +18,7 @@ public class Mutation {
         attributeSource = _attributeSource;
         name = _name;
 
-        //cap this from -0.25 to 0.5
+        //cap this from -25 to 50
         mutationLevel = 0;
 
         uuid = UUID.fromString(_uuid);
@@ -53,8 +53,6 @@ public class Mutation {
                             name,
                             (double)mutationLevel / 100,
                             AttributeModifier.Operation.MULTIPLY_BASE));
-
-        //System.out.println(parentPlayer.getAttribute(attributeSource).getValue());
     }
 
     public void clearModifier () {

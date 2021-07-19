@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class MutateHelper {
@@ -74,6 +75,9 @@ public class MutateHelper {
         managers.add(manager);
 
         if (nbt != null) manager.loadFromNBT(nbt);
+        else System.out.println("nbt loaded from file returns null");
+
+        pushMutDataToClient(playerUUID, nbt);
     }
 
     private static CompoundNBT load_unsafe(File file) throws Exception {
@@ -81,7 +85,7 @@ public class MutateHelper {
     }
 
     public static void savePlayerData (UUID playerUUID) {
-        CompoundNBT data = getManager(playerUUID).getMutData();
+        CompoundNBT data = Objects.requireNonNull(getManager(playerUUID)).getMutData();
 
         saveMutData(playerUUID, data);
     }

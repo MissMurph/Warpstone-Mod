@@ -14,6 +14,8 @@ public class WarpstoneDust extends Item {
 
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
+		if (worldIn.isRemote()) return super.onItemUseFinish(stack, worldIn, entity);
+
 		MutateManager m = MutateHelper.getManager(entity);
 
 		if (m == null) { m = MutateHelper.createManager(entity); }
@@ -21,6 +23,4 @@ public class WarpstoneDust extends Item {
 
 		return super.onItemUseFinish(stack, worldIn, entity);
 	}
-
-
 }

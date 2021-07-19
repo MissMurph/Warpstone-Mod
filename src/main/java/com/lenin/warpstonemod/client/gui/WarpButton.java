@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.client.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -13,11 +14,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class WarpButton extends Button {
-	ContainerScreen parentGui;
+	Screen parentGui;
 
-	private static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("warpstonemod","textures/gui/warp_icons.png");
+	protected static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("warpstonemod","textures/gui/warp_icons.png");
 
-	public WarpButton(int x, int y, int width, int height,  ContainerScreen _parentGui) {
+	public WarpButton(int x, int y, int width, int height,  Screen _parentGui) {
 		super(x, y, width, height, new TranslationTextComponent("Test Button"), Button::onPress);
 		this.parentGui = _parentGui;
 	}
@@ -33,16 +34,23 @@ public class WarpButton extends Button {
 		}
 
 		RenderSystem.enableDepthTest();
-		blit(matrixStack, this.x, this.y, 0, (float)i, this.width, this.height, 256, 256);
+		blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 256, 256);
+	}
+
+	public void setPosition (int _x, int _y){
+		this.x = _x; this.y = _y;
+	}
+
+	protected int getParentLeft () {
+		return (parentGui.width - 176) / 2;
+	}
+
+	protected int getParentTop () {
+		return (parentGui.height - 166) / 2;
 	}
 
 	@Override
 	public void onPress() {
-		if (parentGui instanceof InventoryScreen) {
-			Minecraft.getInstance().displayGuiScreen(new MutationScreen(new TranslationTextComponent("warpstonemod.mutation_screen")));
-		}
-		else{
-			Minecraft.getInstance().player.inventory.openInventory(Minecraft.getInstance().player);
-		}
+		super.onPress();
 	}
 }

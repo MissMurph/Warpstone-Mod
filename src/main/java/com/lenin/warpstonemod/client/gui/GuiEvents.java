@@ -20,7 +20,7 @@ public final class GuiEvents {
 	public static void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {
 		if (event.getGui() instanceof InventoryScreen){
 			InventoryScreen gui = (InventoryScreen) event.getGui();
-			event.addWidget(new WarpButton(gui.getGuiLeft() + 134, gui.getGuiTop() + (gui.getYSize() / 2) - 22, 20, 18, gui));
+			event.addWidget(new MutationScreenOpenButton(gui.getGuiLeft() + 134, gui.getGuiTop() + (gui.getYSize() / 2) - 22, 20, 18, gui));
 		}
 	}
 
