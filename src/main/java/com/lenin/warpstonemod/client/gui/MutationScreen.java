@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.client.gui;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -37,6 +38,7 @@ public class MutationScreen extends Screen {
 		this.guiTop = (this.height - this.ySize) / 2;
 
 		widgets.add(new TextWidget(this.guiLeft + 130, guiTop + 82, 25, 25, String.valueOf(MutateHelper.getClientManager().getInstability())));
+		widgets.add(new TextWidget(this.guiLeft + 120, guiTop + 68, 25, 25, "Instability"));
 
 		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 125, 20, 18, this);
 		widgets.add(returnButton);
@@ -54,7 +56,6 @@ public class MutationScreen extends Screen {
 
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		//super.render(matrixStack, mouseX, mouseY, partialTicks);
 		this.renderBackground(matrixStack);
 
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -150,8 +151,14 @@ public class MutationScreen extends Screen {
 			FontRenderer fontrenderer = minecraft.fontRenderer;
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
 			RenderSystem.enableBlend();
-			fontrenderer.drawStringWithShadow(matrixStack, value, this.x, this.y, 0);
 
+			matrixStack.push();
+
+			matrixStack.scale(2, 2, 2);
+
+			matrixStack.pop();
+
+			fontrenderer.drawText(matrixStack, new TranslationTextComponent(value), this.x, this.y, 0);
 
 			blit(matrixStack, x, y, width, height, 0, 0);
 		}

@@ -2,10 +2,12 @@ package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MutateManager {
     private final LivingEntity parentEntity;
@@ -26,7 +28,6 @@ public class MutateManager {
         }
 
         mutData = serialize();
-        //MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
     }
 
     public void mutate(){
@@ -39,6 +40,14 @@ public class MutateManager {
 
         instability++;
         mutData = serialize();
+
+        for (Mutation m : attributeMutations) {
+            if (m.getMutationType().equals(Attributes.ATTACK_SPEED.getAttributeName())) {
+                System.out.println("Mutation: " + m.getMutationLevel() + " Attribute: " + parentEntity.getAttribute(Attributes.ATTACK_SPEED).getValue());
+            }
+        }
+
+        if (parentEntity.getAttributeManager().hasModifier(Attributes.ATTACK_SPEED, UUID.fromString("380312ba-82a6-4b9e-b576-4c5d9e2b1a32"))) System.out.println("Modifier is present");
 
         MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
     }

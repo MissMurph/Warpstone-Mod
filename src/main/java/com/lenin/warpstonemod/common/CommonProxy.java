@@ -1,12 +1,14 @@
 package com.lenin.warpstonemod.common;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.FolderName;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -30,6 +32,7 @@ public class CommonProxy {
 
 	public void attachListeners (IEventBus bus) {
 		bus.addListener(this::onServerStarted);
+		bus.addListener(this::onServerSave);
 
 		bus.addListener(this::onPlayerConnect);
 		bus.addListener(this::onPlayerDisconnect);
@@ -52,6 +55,13 @@ public class CommonProxy {
 	@SubscribeEvent
 	public void onServerStarted (FMLServerStartedEvent event){
 		SERVER = event.getServer();
+	}
+
+	@SubscribeEvent
+	public void onServerSave (WorldEvent.Save event){
+		for (MutateManager m : MutateHelper.managers) {
+			MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
+		}
 	}
 
 	public File getWarpServerDataDirectory () {

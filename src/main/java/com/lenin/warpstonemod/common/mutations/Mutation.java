@@ -1,19 +1,19 @@
 package com.lenin.warpstonemod.common.mutations;
 
+import com.lenin.warpstonemod.common.mutations.attributes.IAttributeSource;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 
 import java.util.UUID;
 
 public class Mutation {
     private static LivingEntity parentPlayer;
-    private final Attribute attributeSource;
+    private final IAttributeSource attributeSource;
     private int mutationLevel;
     private final UUID uuid;
     private final String name;
 
-    public Mutation (LivingEntity _parentPlayer, Attribute _attributeSource, String _name, String _uuid){
+    public Mutation (LivingEntity _parentPlayer, IAttributeSource _attributeSource, String _name, String _uuid){
         parentPlayer = _parentPlayer;
         attributeSource = _attributeSource;
         name = _name;
@@ -47,16 +47,16 @@ public class Mutation {
     private void addModifier () {
         clearModifier();
 
-            parentPlayer.getAttribute(attributeSource).applyPersistentModifier(
-                    new AttributeModifier(
-                            uuid,
-                            name,
-                            (double)mutationLevel / 100,
-                            AttributeModifier.Operation.MULTIPLY_BASE));
+        attributeSource.applyModifier(
+                new AttributeModifier(
+                        uuid,
+                        name,
+                        (double)mutationLevel / 100,
+                        AttributeModifier.Operation.MULTIPLY_TOTAL));
     }
 
     public void clearModifier () {
-        parentPlayer.getAttribute(attributeSource).removeModifier(uuid);
+        attributeSource.removeModifier(uuid);
     }
 
     public int getMutationLevel (){
