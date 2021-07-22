@@ -24,7 +24,7 @@ public class MutateManager {
         //On the Manager's creation we create the Mutations list
         WarpMutations[] array = WarpMutations.values();
         for (WarpMutations warpMutations : array) {
-            attributeMutations.add(warpMutations.constructMutation(warpMutations, parentEntity));
+            attributeMutations.add(warpMutations.constructAttributeMutation(warpMutations, parentEntity));
         }
 
         mutData = serialize();

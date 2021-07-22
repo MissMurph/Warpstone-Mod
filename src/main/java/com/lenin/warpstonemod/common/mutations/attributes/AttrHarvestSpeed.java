@@ -8,14 +8,14 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class AttrHarvestSpeed implements IAttributeSource{
 	private double baseValue;
 	private double modValue;
 	private LivingEntity parentEntity;
 
+	private Map<UUID, Double> resultMap = new Object2ObjectArrayMap<>();
 	private final Map<UUID, AttributeModifier> modMap = new Object2ObjectArrayMap<>();
 
 	public AttrHarvestSpeed (LivingEntity _parentEntity) {
@@ -23,7 +23,7 @@ public class AttrHarvestSpeed implements IAttributeSource{
 		modValue = 0;
 		parentEntity = _parentEntity;
 
-		if (!parentEntity.getEntityWorld().isRemote) this.attachListeners(MinecraftForge.EVENT_BUS);
+		this.attachListeners(MinecraftForge.EVENT_BUS);
 	}
 
 	protected void attachListeners (IEventBus eventBus){
@@ -31,8 +31,11 @@ public class AttrHarvestSpeed implements IAttributeSource{
 	}
 
 	private void onBreakSpeed (PlayerEvent.BreakSpeed event) {
+		if (event.getPlayer() != parentEntity) return;
+
 		float speed = event.getNewSpeed();
-		event.setNewSpeed(speed += (speed * getAttributeValue()));
+		event.setNewSpeed((float) (speed + (speed * getAttributeValue())));
+		System.out.println("Old Speed: " + speed + "New Speed: " + event.getNewSpeed());
 	}
 
 	@Override
@@ -52,15 +55,24 @@ public class AttrHarvestSpeed implements IAttributeSource{
 			throw new IllegalArgumentException("Modifier is already applied on this attribute!");
 		}
 
+		double resultValue;
 		switch (source.getOperation()){
 			case ADDITION:
-				modValue += source.getAmount();
+				resultValue = source.getAmount() / 100;
+				resultMap.put(source.getID(), resultValue);
+				modValue += resultValue;
 				break;
+
 			case MULTIPLY_BASE:
-				modValue += baseValue * source.getAmount();
+				resultValue = baseValue * source.getAmount();
+				resultMap.put(source.getID(), resultValue);
+				modValue += resultValue;
 				break;
+
 			case MULTIPLY_TOTAL:
-				modValue = modValue * (1 + source.getAmount());
+				resultValue = (baseValue + modValue) * source.getAmount();
+				resultMap.put(source.getID(), resultValue);
+				modValue += resultValue;
 				break;
 		}
 
@@ -69,20 +81,11 @@ public class AttrHarvestSpeed implements IAttributeSource{
 
 	@Override
 	public void removeModifier(UUID source) {
-		AttributeModifier mod = modMap.get(source);
+		if (resultMap.get(source) == null) return;
 
-		switch (mod.getOperation()){
-			case ADDITION:
-				modValue -= mod.getAmount();
-				break;
-			case MULTIPLY_BASE:
-				modValue -= baseValue * mod.getAmount();
-				break;
-			case MULTIPLY_TOTAL:
-				modValue = modValue * (1 - mod.getAmount());
-				break;
-		}
+		modValue -= resultMap.get(source);
 
 		modMap.remove(source);
+		resultMap.remove(source);
 	}
 }
