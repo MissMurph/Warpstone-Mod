@@ -4,12 +4,17 @@ import com.lenin.warpstonemod.common.mutations.attributes.IAttributeSource;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 
+import javax.annotation.Nonnull;
+import java.util.function.Consumer;
+
 public class AttributeMutation extends Mutation{
 	private final IAttributeSource attributeSource;
+	private final String name;
 
 	public AttributeMutation(LivingEntity _parentPlayer, IAttributeSource _attributeSource, String _name, String _uuid) {
-		super(_parentPlayer, _name, _uuid);
+		super(_parentPlayer, _uuid);
 		this.attributeSource = _attributeSource;
+		name = _name;
 	}
 
 	protected void addModifier () {
@@ -44,6 +49,11 @@ public class AttributeMutation extends Mutation{
 	@Override
 	public void clearMutation() {
 		attributeSource.removeModifier(uuid);
+	}
+
+	@Override
+	public String getMutationName() {
+		return getMutationType();
 	}
 
 	@Override

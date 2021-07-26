@@ -1,7 +1,9 @@
 package com.lenin.warpstonemod.client.gui;
 
+import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -24,10 +26,11 @@ import java.util.List;
 public class MutationScreen extends Screen {
 	private static final ResourceLocation SCREEN_LOCATION = new ResourceLocation("warpstonemod", "textures/gui/mutation_screen.png");
 	private static final ResourceLocation ATTRIBUTE_RESOURCE = new ResourceLocation("warpstonemod","textures/gui/mutation_attribute_bar.png");
+	private static final ResourceLocation EFFECT_RESOURCE = new ResourceLocation("warpstonemod", "textures/gui/warp_icons.png");
 
 	private int guiLeft, guiTop;
-	private int xSize = 176;
-	private int ySize = 166;
+	private final int xSize = 176;
+	private final int ySize = 166;
 
 	private List<Widget> widgets = new ArrayList<Widget>();
 
@@ -44,9 +47,19 @@ public class MutationScreen extends Screen {
 		widgets.add(returnButton);
 		addButton(returnButton);
 
-		List<Mutation> muts = MutateHelper.getClientManager().getMutations();
+		if (MutateHelper.getClientManager() instanceof DummyMutateManager) System.out.println("Parent Entity is Null!");
+
+		List<Mutation> muts = MutateHelper.getClientManager().getAttributeMutations();
+		List<EffectMutation> effectMuts = MutateHelper.getClientManager().getEffectMutations();
+
 		for (int i = 0; i < muts.size(); i++) {
-			widgets.add(new AttributeBar(0, 97, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationType(), this, i));
+			widgets.add(new AttributeBar(getGuiLeft() + 13 + (17 * i), 97, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationName(), this));
+		}
+
+		for (int i = 0; i < effectMuts.size(); i++) {
+			int y = getGuiTop() + 10;
+			if (i > 7) y += 24;
+			widgets.add(new EffectWidget(getGuiLeft() + 11 + (24 * i), y, 18, 18, effectMuts.get(i)));
 		}
 	}
 
@@ -98,13 +111,10 @@ public class MutationScreen extends Screen {
 		private final String attributeName;
 		private final MutationScreen parentGui;
 
-		private final int index;
-
-		public AttributeBar(int x, int y, int _frame, String _attributeName, MutationScreen _parentGui, int _index) {
+		public AttributeBar(int x, int y, int _frame, String _attributeName, MutationScreen _parentGui) {
 			super(x, y, 7, 78, new TranslationTextComponent("mutation_screen.attribute_bar"));
 			width = 7;
 			height = 78;
-			index = _index;
 			frame = _frame;
 			attributeName = _attributeName;
 			parentGui = _parentGui;
@@ -133,7 +143,7 @@ public class MutationScreen extends Screen {
 
 			RenderSystem.enableDepthTest();
 			RenderSystem.depthFunc(0);
-			blit(matrixStack, parentGui.getGuiLeft() + 13 + (17 * index), this.y, x2 * 8, y2 * 78, this.width, this.height, 256, 256);
+			blit(matrixStack, this.x, this.y, x2 * 8, y2 * 78, this.width, this.height, 256, 256);
 		}
 	}
 
@@ -161,6 +171,26 @@ public class MutationScreen extends Screen {
 			fontrenderer.drawText(matrixStack, new TranslationTextComponent(value), this.x, this.y, 0);
 
 			blit(matrixStack, x, y, width, height, 0, 0);
+		}
+	}
+
+	class EffectWidget extends Widget {
+		private EffectMutation parent;
+
+		public EffectWidget(int x, int y, int width, int height, EffectMutation _parent) {
+			super(x, y, width, height, new TranslationTextComponent("mutations_screen.effect." + _parent.getMutationName()));
+			parent = _parent;
+		}
+
+		@Override
+		public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+			Minecraft minecraft = Minecraft.getInstance();
+			minecraft.getTextureManager().bindTexture(EFFECT_RESOURCE);
+
+			int i = parent.getTexY();
+
+			RenderSystem.enableDepthTest();
+			blit(matrixStack, x, y, 21, (float)i, this.width, this.height, 256, 256);
 		}
 	}
 

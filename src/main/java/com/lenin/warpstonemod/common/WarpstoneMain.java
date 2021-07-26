@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common;
 import com.lenin.warpstonemod.client.ClientProxy;
 import com.lenin.warpstonemod.common.items.WarpstoneItemGroup;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.MutationsRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
@@ -27,6 +28,7 @@ public class WarpstoneMain {
         Registration.register();
         CommonProxy.init();
         MutateHelper.init();
+        MutationsRegistry.init();
 
         //Register the mod
         MinecraftForge.EVENT_BUS.register(this);

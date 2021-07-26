@@ -35,7 +35,6 @@ public class AttrHarvestSpeed implements IAttributeSource{
 
 		float speed = event.getNewSpeed();
 		event.setNewSpeed((float) (speed + (speed * getAttributeValue())));
-		System.out.println("Old Speed: " + speed + "New Speed: " + event.getNewSpeed());
 	}
 
 	@Override

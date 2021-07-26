@@ -1,21 +1,25 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.mutations.attributes.IAttributeSource;
+import com.lenin.warpstonemod.common.network.WarpPacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.network.PacketBuffer;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public abstract class Mutation {
-    protected static LivingEntity parentPlayer;
+    protected LivingEntity parentPlayer;
 
     protected int mutationLevel;
-    protected final UUID uuid;
-    protected final String name;
+    protected UUID uuid;
 
-    public Mutation (LivingEntity _parentPlayer, String _name, String _uuid){
+    public Mutation (LivingEntity _parentPlayer, String _uuid){
         parentPlayer = _parentPlayer;
-        name = _name;
 
         //cap this from -25 to 50
         //or from -1 to 1 for effect muts
@@ -30,9 +34,13 @@ public abstract class Mutation {
 
     public abstract void clearMutation ();
 
+    public abstract String getMutationType ();
+
+    public abstract String getMutationName ();
+
     public int getMutationLevel (){
         return mutationLevel;
     }
 
-    public String getMutationType () { return name; }
+
 }

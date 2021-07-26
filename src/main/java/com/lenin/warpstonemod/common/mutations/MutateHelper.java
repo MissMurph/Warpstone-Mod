@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations;
 
+import com.lenin.warpstonemod.common.mutations.effect_mutations.InvisibilityMutation;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import com.lenin.warpstonemod.common.network.SyncMutDataPacket;
 import net.minecraft.client.Minecraft;
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 public class MutateHelper {
 
-    private static MutateManager clientManager = null;
+    private static MutateManager clientManager = new DummyMutateManager();
 
     public static List<MutateManager> managers = new ArrayList<MutateManager>();
 
@@ -47,13 +48,14 @@ public class MutateHelper {
     }
 
     public static MutateManager getClientManager () {
+        if (clientManager instanceof DummyMutateManager) clientManager = new MutateManager(Minecraft.getInstance().player);
         return clientManager;
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void updateClientMutations(SyncMutDataPacket pkt) {
-        if (clientManager == null) clientManager = new MutateManager(Minecraft.getInstance().player);
-        clientManager.loadFromNBT(pkt.data);
+        MutateManager mut = getClientManager();
+        mut.loadFromNBT(pkt.data);
     }
 
     public static void pushMutDataToClient (UUID playerUUID, CompoundNBT nbt){
