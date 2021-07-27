@@ -5,7 +5,6 @@ import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -59,7 +58,7 @@ public class MutationScreen extends Screen {
 		for (int i = 0; i < effectMuts.size(); i++) {
 			int y = getGuiTop() + 10;
 			if (i > 7) y += 24;
-			widgets.add(new EffectWidget(getGuiLeft() + 11 + (24 * i), y, 18, 18, effectMuts.get(i)));
+			widgets.add(new EffectWidget(getGuiLeft() + 10 + (23 * i), y, 18, 18, effectMuts.get(i)));
 		}
 	}
 
@@ -174,8 +173,9 @@ public class MutationScreen extends Screen {
 		}
 	}
 
+		/*	Effect Widget	*/
 	class EffectWidget extends Widget {
-		private EffectMutation parent;
+		private final EffectMutation parent;
 
 		public EffectWidget(int x, int y, int width, int height, EffectMutation _parent) {
 			super(x, y, width, height, new TranslationTextComponent("mutations_screen.effect." + _parent.getMutationName()));
@@ -185,12 +185,14 @@ public class MutationScreen extends Screen {
 		@Override
 		public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 			Minecraft minecraft = Minecraft.getInstance();
-			minecraft.getTextureManager().bindTexture(EFFECT_RESOURCE);
+			minecraft.getTextureManager().bindTexture(parent.getTexture());
 
-			int i = parent.getTexY();
+			int i = 0;
+
+			if (parent.getMutationLevel() == -1) i = 18;
 
 			RenderSystem.enableDepthTest();
-			blit(matrixStack, x, y, 21, (float)i, this.width, this.height, 256, 256);
+			blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 18, 36);
 		}
 	}
 

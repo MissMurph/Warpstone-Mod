@@ -3,13 +3,13 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import net.minecraft.entity.LivingEntity;
 
-import javax.annotation.Nonnull;
-
 public class PpMutation extends EffectMutation {
 	protected PpMutation(LivingEntity _parentPlayer, int _id) {
-		super(_parentPlayer, _id, WarpMutations.nameConst + "effect.largepp", WarpMutations.nameConst + "effect.smallpp", 0, "ba2f092b-76d6-4d71-85ba-51becadb4d19");
-		System.out.println("PP Mutation Constructed");
-		mutationLevel = 1;
+		super(_parentPlayer, _id,
+				WarpMutations.nameConst + "effect.largepp",
+				WarpMutations.nameConst + "effect.smallpp",
+				"pp_icon.png",
+				"ba2f092b-76d6-4d71-85ba-51becadb4d19");
 	}
 
 	@Override

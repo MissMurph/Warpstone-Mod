@@ -1,16 +1,9 @@
 package com.lenin.warpstonemod.common.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.attributes.AttrHarvestSpeed;
 import com.lenin.warpstonemod.common.mutations.attributes.VanillaAttribute;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.InvisibilityMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.PpMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public enum WarpMutations {
     MAX_HEALTH,

@@ -65,7 +65,17 @@ public class MutateManager {
             int i = WarpstoneMain.getRandom().nextInt(MutationsRegistry.getMapSize());
             boolean existing = containsEffect(i);
 
-            if (!existing) return MutationsRegistry.constructMutation(i, parentEntity);
+
+            if (!existing) {
+                EffectMutation mut = MutationsRegistry.constructMutation(i, parentEntity);
+
+                if (WarpstoneMain.getRandom().nextBoolean()) mut.setLevel(1);
+                else mut.setLevel(-1);
+
+                //WarpstoneMain.getRandom().nextBoolean() ? mut.setLevel(1) : mut.setLevel(-1);
+
+                return mut;
+            }
         }
     }
 

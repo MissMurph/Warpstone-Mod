@@ -1,8 +1,9 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.InvisibilityMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.VisibilityMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.PpMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.VisionMutation;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 
@@ -13,8 +14,9 @@ public class MutationsRegistry {
 	public static Map<Integer, EffectMutation.IEffectFactory> factoryMap = new Object2ObjectArrayMap<>();
 
 	public static void init(){
-		registerFactory(InvisibilityMutation.EffectFactory::new);
+		registerFactory(VisibilityMutation.EffectFactory::new);
 		registerFactory(PpMutation.EffectFactory::new);
+		registerFactory(VisionMutation.EffectFactory::new);
 
 		for (int i = 0; i < factoryMap.size(); i++) {
 			System.out.println("Factory IDS: " + factoryMap.get(i).getID());

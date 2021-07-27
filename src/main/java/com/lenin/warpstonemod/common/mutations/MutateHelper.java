@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.common.mutations;
 
-import com.lenin.warpstonemod.common.mutations.effect_mutations.InvisibilityMutation;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import com.lenin.warpstonemod.common.network.SyncMutDataPacket;
 import net.minecraft.client.Minecraft;
@@ -13,7 +12,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.File;
 import java.io.IOException;

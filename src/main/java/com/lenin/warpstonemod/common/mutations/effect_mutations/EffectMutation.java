@@ -1,20 +1,22 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.ResourceLocation;
 
 public abstract class EffectMutation extends Mutation {
 	protected final String posName, negName;
 	protected int id;
-	protected final int texY;
+	protected ResourceLocation resourceLocation;
 
-	protected EffectMutation(LivingEntity _parentPlayer, int _id, String _posName, String _negName,  int _texY, String _uuid) {
+	protected EffectMutation(LivingEntity _parentPlayer, int _id, String _posName, String _negName,  String resName, String _uuid) {
 		super(_parentPlayer, _uuid);
 		posName = _posName;
 		negName = _negName;
 		id = _id;
 
-		texY = _texY;
+		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/" + resName);
 	}
 
 	protected void applyMutation (){
@@ -63,8 +65,8 @@ public abstract class EffectMutation extends Mutation {
 		}
 	}
 
-	public int getTexY (){
-		return texY;
+	public ResourceLocation getTexture () {
+		return resourceLocation;
 	}
 
 	@Override
