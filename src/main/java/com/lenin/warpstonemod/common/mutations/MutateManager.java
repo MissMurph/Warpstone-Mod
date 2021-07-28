@@ -67,14 +67,9 @@ public class MutateManager {
 
 
             if (!existing) {
-                EffectMutation mut = MutationsRegistry.constructMutation(i, parentEntity);
+                int i2 = WarpstoneMain.getRandom().nextBoolean() ? 1 : -1;
 
-                if (WarpstoneMain.getRandom().nextBoolean()) mut.setLevel(1);
-                else mut.setLevel(-1);
-
-                //WarpstoneMain.getRandom().nextBoolean() ? mut.setLevel(1) : mut.setLevel(-1);
-
-                return mut;
+                return MutationsRegistry.constructMutation(i, parentEntity, i2);
             }
         }
     }
@@ -112,11 +107,14 @@ public class MutateManager {
 
             for (int i : array) {
                 if (containsEffect(i)) continue;
-                EffectMutation mut = MutationsRegistry.constructMutation(i, parentEntity);
-                mut.setLevel(nbt.getInt(String.valueOf(i)));
+                EffectMutation mut = MutationsRegistry.constructMutation(i, parentEntity, nbt.getInt(String.valueOf(i)));
                 effectMutations.add(mut);
             }
         }
+
+       for (EffectMutation m : effectMutations) {
+           m.applyMutation();
+       }
     }
 
     public void resetMutations () {

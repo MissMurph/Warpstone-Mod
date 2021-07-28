@@ -7,19 +7,20 @@ import net.minecraft.util.ResourceLocation;
 
 public abstract class EffectMutation extends Mutation {
 	protected final String posName, negName;
-	protected int id;
+	protected final int id;
 	protected ResourceLocation resourceLocation;
 
-	protected EffectMutation(LivingEntity _parentPlayer, int _id, String _posName, String _negName,  String resName, String _uuid) {
+	protected EffectMutation(LivingEntity _parentPlayer, int _id, int _mutationLevel, String _posName, String _negName,  String resName, String _uuid) {
 		super(_parentPlayer, _uuid);
 		posName = _posName;
 		negName = _negName;
 		id = _id;
+		mutationLevel = _mutationLevel;
 
 		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/" + resName);
 	}
 
-	protected void applyMutation (){
+	public void applyMutation (){
 		if (parentPlayer == null) return;
 
 		clearMutation();
@@ -81,6 +82,6 @@ public abstract class EffectMutation extends Mutation {
 	public interface IEffectFactory {
 		int getID();
 		void setID(int value);
-		EffectMutation factory(LivingEntity parent);
+		EffectMutation factory(LivingEntity parent, int mutationLevel);
 	}
 }

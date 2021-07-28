@@ -5,8 +5,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class VisibilityMutation extends EffectMutation{
-	protected VisibilityMutation(LivingEntity _parentPlayer, int _id) {
-		super(_parentPlayer, _id,
+	protected VisibilityMutation(LivingEntity _parentPlayer, int _mutationLevel) {
+		super(_parentPlayer, EffectFactory.id, _mutationLevel,
 				WarpMutations.nameConst + "effect.invisibility",
 				WarpMutations.nameConst + "effect.glowing",
 				"visibility_icon.png",
@@ -14,7 +14,7 @@ public class VisibilityMutation extends EffectMutation{
 	}
 
 	@Override
-	protected void applyMutation() {
+	public void applyMutation() {
 		super.applyMutation();
 
 		switch (mutationLevel) {
@@ -40,20 +40,21 @@ public class VisibilityMutation extends EffectMutation{
 	public static class EffectFactory implements IEffectFactory {
 		public EffectFactory() { }
 
-		private int id;
+		protected static int id;
 
 		@Override
 		public int getID() {
-			return this.id;
+			return id;
 		}
 
+		@Override
 		public void setID(int value){
 			id = value;
 		}
 
 		@Override
-		public EffectMutation factory(LivingEntity parent) {
-			return new VisibilityMutation(parent, id);
+		public EffectMutation factory(LivingEntity parent, int _mutationLevel) {
+			return new VisibilityMutation(parent, _mutationLevel);
 		}
 	}
 }

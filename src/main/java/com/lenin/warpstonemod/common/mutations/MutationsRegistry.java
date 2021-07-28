@@ -23,8 +23,8 @@ public class MutationsRegistry {
 		}
 	}
 
-	public static EffectMutation constructMutation (int key, LivingEntity parent){
-		return factoryMap.get(key).factory(parent);
+	public static EffectMutation constructMutation (int key, LivingEntity parent, int mutationLevel){
+		return factoryMap.get(key).factory(parent, mutationLevel);
 	}
 
 	public static <T extends EffectMutation.IEffectFactory> void registerFactory (Supplier<T> supplier){
