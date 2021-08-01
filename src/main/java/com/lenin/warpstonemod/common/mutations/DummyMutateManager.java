@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class DummyMutateManager extends MutateManager{
@@ -35,15 +36,9 @@ public class DummyMutateManager extends MutateManager{
 	public void resetMutations() { System.out.println("Dummy Manager is being Called!"); }
 
 	@Override
-	public List<Mutation> getMutations() {
+	public List<AttributeMutation> getAttributeMutations() {
 		System.out.println("Dummy Manager is being Called!");
-		return attributeMutations;
-	}
-
-	@Override
-	public List<Mutation> getAttributeMutations() {
-		System.out.println("Dummy Manager is being Called!");
-		return attributeMutations;
+		return new LinkedList<AttributeMutation>();
 	}
 
 	@Override

@@ -1,60 +1,62 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class VisibilityMutation extends EffectMutation{
-	protected VisibilityMutation(LivingEntity _parentPlayer, int _mutationLevel) {
-		super(_parentPlayer, EffectFactory.id, _mutationLevel,
+public class VisibilityMutation extends EffectMutation {
+	public VisibilityMutation(int _id) {
+		super(_id,
 				WarpMutations.nameConst + "effect.invisibility",
 				WarpMutations.nameConst + "effect.glowing",
 				"visibility_icon.png",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d");
+
+		attachListeners(MinecraftForge.EVENT_BUS);
 	}
 
 	@Override
-	public void applyMutation() {
-		super.applyMutation();
+	public void attachListeners(IEventBus bus){
+		bus.addListener(this::onEntityRender);
+	}
 
-		switch (mutationLevel) {
+	@Override
+	public void applyMutation(LivingEntity entity) {
+		super.applyMutation(entity);
+
+		switch (instanceMap.get(entity.getUniqueID()).getMutationLevel()) {
 			case -1:
-				parentPlayer.setGlowing(true);
+				entity.setGlowing(true);
 				break;
 			case 0:
 				break;
 			case 1:
-				parentPlayer.setInvisible(true);
+				entity.setInvisible(true);
 				break;
 		}
 	}
 
 	@Override
-	public void clearMutation() {
-		super.clearMutation();
+	public void clearMutation(LivingEntity entity) {
+		super.clearMutation(entity);
 
-		parentPlayer.setInvisible(false);
-		parentPlayer.setGlowing(false);
+		entity.setInvisible(false);
+		entity.setGlowing(false);
 	}
 
-	public static class EffectFactory implements IEffectFactory {
-		public EffectFactory() { }
+	@SubscribeEvent
+	public void onEntityRender (RenderLivingEvent.Pre event) {
+		instanceMap.forEach((uuid, mut) -> {
+			if (!mut.isActive() || event.getEntity() != mut.getParent()) return;
 
-		protected static int id;
-
-		@Override
-		public int getID() {
-			return id;
-		}
-
-		@Override
-		public void setID(int value){
-			id = value;
-		}
-
-		@Override
-		public EffectMutation factory(LivingEntity parent, int _mutationLevel) {
-			return new VisibilityMutation(parent, _mutationLevel);
-		}
+			if (mut.getMutationLevel() == 1) event.getEntity().setInvisible(true);
+			else event.getEntity().setGlowing(true);
+		});
 	}
 }

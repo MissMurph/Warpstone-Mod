@@ -13,34 +13,16 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public abstract class Mutation {
-    protected LivingEntity parentPlayer;
-
     protected int mutationLevel;
     protected UUID uuid;
 
-    public Mutation (LivingEntity _parentPlayer, String _uuid){
-        parentPlayer = _parentPlayer;
-
-        //cap this from -25 to 50
-        //or from -1 to 1 for effect muts
-        mutationLevel = 0;
-
+    public Mutation (String _uuid){
         uuid = UUID.fromString(_uuid);
     }
-
-    public abstract void changeLevel (int value);
-
-    public abstract void setLevel (int value);
-
-    public abstract void clearMutation ();
 
     public abstract String getMutationType ();
 
     public abstract String getMutationName ();
-
-    public int getMutationLevel (){
-        return mutationLevel;
-    }
 
 
 }

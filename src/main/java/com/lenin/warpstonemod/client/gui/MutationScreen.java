@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.client.gui;
 
+import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
@@ -36,6 +37,8 @@ public class MutationScreen extends Screen {
 	@Override
 	protected void init(){
 		super.init();
+		widgets.clear();
+
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 
@@ -48,11 +51,11 @@ public class MutationScreen extends Screen {
 
 		if (MutateHelper.getClientManager() instanceof DummyMutateManager) System.out.println("Parent Entity is Null!");
 
-		List<Mutation> muts = MutateHelper.getClientManager().getAttributeMutations();
+		List<AttributeMutation> muts = MutateHelper.getClientManager().getAttributeMutations();
 		List<EffectMutation> effectMuts = MutateHelper.getClientManager().getEffectMutations();
 
 		for (int i = 0; i < muts.size(); i++) {
-			widgets.add(new AttributeBar(getGuiLeft() + 13 + (17 * i), 97, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationName(), this));
+			widgets.add(new AttributeBar(getGuiLeft() + 13 + (17 * i), getGuiTop() + 60, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationName(), this));
 		}
 
 		for (int i = 0; i < effectMuts.size(); i++) {
@@ -178,7 +181,8 @@ public class MutationScreen extends Screen {
 		private final EffectMutation parent;
 
 		public EffectWidget(int x, int y, int width, int height, EffectMutation _parent) {
-			super(x, y, width, height, new TranslationTextComponent("mutations_screen.effect." + _parent.getMutationName()));
+			super(x, y, width, height, new TranslationTextComponent(
+					"mutations_screen.effect." + _parent.getMutationName(_parent.getInstance(Minecraft.getInstance().player).getMutationLevel())));
 			parent = _parent;
 		}
 
@@ -189,7 +193,7 @@ public class MutationScreen extends Screen {
 
 			int i = 0;
 
-			if (parent.getMutationLevel() == -1) i = 18;
+			if (parent.getInstance(Minecraft.getInstance().player).getMutationLevel() == -1) i = 18;
 
 			RenderSystem.enableDepthTest();
 			blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 18, 36);

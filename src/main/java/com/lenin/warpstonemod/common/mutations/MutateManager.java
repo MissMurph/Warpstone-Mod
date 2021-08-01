@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MutateManager {
     protected final LivingEntity parentEntity;
-    protected final List<Mutation> attributeMutations = new ArrayList<>();
+    protected final List<AttributeMutation> attributeMutations = new ArrayList<>();
     protected List<EffectMutation> effectMutations = new ArrayList<>();
 
     protected CompoundNBT mutData;
@@ -37,10 +37,11 @@ public class MutateManager {
 
         //Loop over every point of instablity and apply levels, no negatives if no instablity
         for (int i = 0; i < instability + 1; i++) {
-            if (!hasEffectBeenCreated && effectMutations.size() < MutationsRegistry.getMapSize() && WarpstoneMain.getRandom().nextInt(100) > 75) {
+            if (!hasEffectBeenCreated && effectMutations.size() < EffectsMap.getMapSize() && WarpstoneMain.getRandom().nextInt(100) > 75) {
                 EffectMutation mut = getRandomEffectMut();
 
-                if (mut != null) { effectMutations.add(mut); }
+                effectMutations.add(mut);
+                mut.applyMutation(parentEntity);
 
                 hasEffectBeenCreated = true;
             } else {
@@ -59,17 +60,15 @@ public class MutateManager {
     }
 
     protected EffectMutation getRandomEffectMut () {
-        if (effectMutations.size() >= MutationsRegistry.getMapSize()) return null;
+        if (effectMutations.size() >= EffectsMap.getMapSize()) return null;
 
         while (true) {
-            int i = WarpstoneMain.getRandom().nextInt(MutationsRegistry.getMapSize());
-            boolean existing = containsEffect(i);
+            int i = WarpstoneMain.getRandom().nextInt(EffectsMap.getMapSize());
 
-
-            if (!existing) {
+            if (!containsEffect(i)) {
                 int i2 = WarpstoneMain.getRandom().nextBoolean() ? 1 : -1;
 
-                return MutationsRegistry.constructMutation(i, parentEntity, i2);
+                return EffectsMap.constructInstance(i, parentEntity, i2);
             }
         }
     }
@@ -79,7 +78,7 @@ public class MutateManager {
         out.putUniqueId("player", parentEntity.getUniqueID());
         out.putInt("instability", getInstability());
 
-        for (Mutation mut : getAttributeMutations()) {
+        for (AttributeMutation mut : getAttributeMutations()) {
             out.putInt(mut.getMutationType(), mut.getMutationLevel());
         }
 
@@ -87,7 +86,7 @@ public class MutateManager {
 
         for (EffectMutation m : effectMutations) {
             classList.add(m.getMutationID());
-            out.putInt(String.valueOf(m.getMutationID()), m.getMutationLevel());
+            out.putInt(String.valueOf(m.getMutationID()), m.getInstance(parentEntity).getMutationLevel());
         }
 
         if (!classList.isEmpty()) out.putIntArray("effect_mutations", classList);
@@ -98,7 +97,7 @@ public class MutateManager {
     public void loadFromNBT (CompoundNBT nbt) {
         instability = nbt.getInt("instability");
 
-        for (Mutation mut : getAttributeMutations()) {
+        for (AttributeMutation mut : getAttributeMutations()) {
             mut.setLevel(nbt.getInt(mut.getMutationType()));
         }
 
@@ -107,35 +106,28 @@ public class MutateManager {
 
             for (int i : array) {
                 if (containsEffect(i)) continue;
-                EffectMutation mut = MutationsRegistry.constructMutation(i, parentEntity, nbt.getInt(String.valueOf(i)));
+                EffectMutation mut = EffectsMap.constructInstance(i, parentEntity, nbt.getInt(String.valueOf(i)));
+                System.out.println(mut.getMutationName(mut.getInstance(parentEntity).getMutationLevel()) + " created");
                 effectMutations.add(mut);
+                mut.applyMutation(parentEntity);
             }
         }
 
-       for (EffectMutation m : effectMutations) {
-           m.applyMutation();
-       }
+       /*for (EffectMutation m : effectMutations) {
+           System.out.println(m.getMutationName(m.getInstance(parentEntity).getMutationLevel()) + " applying mutation");
+           m.applyMutation(parentEntity);
+       }*/
     }
 
     public void resetMutations () {
-        for (Mutation m : getMutations()) { m.clearMutation(); }
+        //for (Mutation m : getMutations()) { m.clearMutation(); }
 
-        for (Mutation m : attributeMutations) { m.setLevel(0); }
+        for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
 
         effectMutations.clear();
     }
 
-    //@OnlyIn(Dist.CLIENT)
-    //protected void receiveDataFromServer (SyncMutDataPacket pkt){ loadFromNBT(pkt.data); }
-
-    public List<Mutation> getMutations() {
-        List<Mutation> totalMuts = new ArrayList<>();
-        totalMuts.addAll(getAttributeMutations());
-        totalMuts.addAll(getEffectMutations());
-        return totalMuts;
-    }
-
-    public List<Mutation> getAttributeMutations (){
+    public List<AttributeMutation> getAttributeMutations (){
         return attributeMutations;
     }
 

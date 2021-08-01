@@ -1,11 +1,13 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraftforge.eventbus.api.IEventBus;
 
 public class PpMutation extends EffectMutation {
-	protected PpMutation(LivingEntity _parentPlayer, int _mutationLevel) {
-		super(_parentPlayer, EffectFactory.id, _mutationLevel,
+	protected PpMutation(int _id) {
+		super(_id,
 				WarpMutations.nameConst + "effect.largepp",
 				WarpMutations.nameConst + "effect.smallpp",
 				"pp_icon.png",
@@ -13,29 +15,15 @@ public class PpMutation extends EffectMutation {
 	}
 
 	@Override
-	public void applyMutation() {}
+	public void attachListeners(IEventBus bus) {	}
 
 	@Override
-	public void clearMutation() {}
+	public void applyMutation(LivingEntity entity) {
+		super.applyMutation(entity);
+	}
 
-	public static class EffectFactory implements IEffectFactory {
-		public EffectFactory (){}
-
-		protected static int id;
-
-		@Override
-		public int getID() {
-			return id;
-		}
-
-		@Override
-		public void setID(int value) {
-			id = value;
-		}
-
-		@Override
-		public EffectMutation factory(LivingEntity parent, int _mutationLevel) {
-			return new PpMutation(parent, _mutationLevel);
-		}
+	@Override
+	public void clearMutation(LivingEntity entity) {
+		super.clearMutation(entity);
 	}
 }

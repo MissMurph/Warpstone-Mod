@@ -5,16 +5,20 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
 import java.util.function.Consumer;
 
-public class AttributeMutation extends Mutation{
-	private final IAttributeSource attributeSource;
-	private final String name;
+public class AttributeMutation{
+	protected final IAttributeSource attributeSource;
+	protected final String name;
+	protected final UUID uuid;
+	protected int mutationLevel;
 
-	public AttributeMutation(LivingEntity _parentPlayer, IAttributeSource _attributeSource, String _name, String _uuid) {
-		super(_parentPlayer, _uuid);
+	public AttributeMutation(IAttributeSource _attributeSource, String _name, String _uuid) {
+		uuid = UUID.fromString(_uuid);
 		this.attributeSource = _attributeSource;
 		name = _name;
+		mutationLevel = 0;
 	}
 
 	protected void addModifier () {
@@ -46,18 +50,20 @@ public class AttributeMutation extends Mutation{
 		addModifier();
 	}
 
-	@Override
 	public void clearMutation() {
 		attributeSource.removeModifier(uuid);
 	}
 
-	@Override
+
 	public String getMutationName() {
 		return getMutationType();
 	}
 
-	@Override
 	public String getMutationType() {
 		return this.attributeSource.getAttributeName();
+	}
+
+	public int getMutationLevel (){
+		return mutationLevel;
 	}
 }

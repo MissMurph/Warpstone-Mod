@@ -24,7 +24,7 @@ public class MutateHelper {
 
     private static MutateManager clientManager = new DummyMutateManager();
 
-    public static List<MutateManager> managers = new ArrayList<MutateManager>();
+    protected static List<MutateManager> managers = new ArrayList<MutateManager>();
 
     public static MutateManager getManager (UUID playerUUID){
         for (MutateManager m : managers) {
@@ -37,6 +37,10 @@ public class MutateHelper {
         for (MutateManager m : managers) { if (m.getParentEntity() == e) return m; }
 
         return null;
+    }
+
+    public static List<MutateManager> getManagers () {
+        return managers;
     }
 
     public static MutateManager createManager (LivingEntity e) {
@@ -99,11 +103,17 @@ public class MutateHelper {
         } catch (IOException ignored) {}
     }
 
+    public static void clearManager (UUID uuid) {
+        managers.remove(getManager(uuid));
+        System.out.println(managers.size());
+    }
+
     public static File getMutFile (UUID playerUUID) {
         File f = new File(WarpstoneMain.getProxy().getWarpServerDataDirectory(), playerUUID.toString() + ".warpstone");
-
+        System.out.println("WARPLOGS: Loading NBT File");
         if (!f.exists()) {
             try {
+                System.out.println("WARPLOGS: NBT File not found, writing new one");
                 CompressedStreamTools.write(new CompoundNBT(), f);
             } catch (IOException ignored) {}
         }
