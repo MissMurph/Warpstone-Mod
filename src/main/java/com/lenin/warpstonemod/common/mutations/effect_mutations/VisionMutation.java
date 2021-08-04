@@ -56,9 +56,10 @@ public class VisionMutation extends EffectMutation implements IMutationTick{
 
 		if (density < 0.1f) {
 			density = 0.1f;
-			event.setDensity(density);
-			event.setCanceled(true);
 		}
+
+		event.setCanceled(true);
+		event.setDensity(density);
 	}
 
 	@Override

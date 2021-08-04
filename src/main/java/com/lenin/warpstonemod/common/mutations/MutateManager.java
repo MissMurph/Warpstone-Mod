@@ -96,6 +96,7 @@ public class MutateManager {
 
     public void loadFromNBT (CompoundNBT nbt) {
         instability = nbt.getInt("instability");
+        mutData = nbt;
 
         for (AttributeMutation mut : getAttributeMutations()) {
             mut.setLevel(nbt.getInt(mut.getMutationType()));
@@ -112,11 +113,6 @@ public class MutateManager {
                 mut.applyMutation(parentEntity);
             }
         }
-
-       /*for (EffectMutation m : effectMutations) {
-           System.out.println(m.getMutationName(m.getInstance(parentEntity).getMutationLevel()) + " applying mutation");
-           m.applyMutation(parentEntity);
-       }*/
     }
 
     public void resetMutations () {
@@ -143,7 +139,22 @@ public class MutateManager {
         return instability;
     }
 
-    public CompoundNBT getMutData () { if (mutData == null) System.out.println("Getting the NBT from Manager returns null"); return mutData; }
+    public CompoundNBT getMutData () {
+        if (mutData == null) System.out.println("Getting the NBT from Manager returns null");
+        return mutData;
+    }
+
+    public void unload() {
+        MutateHelper.savePlayerData(parentEntity.getUniqueID(), getMutData());
+
+        for (EffectMutation m : effectMutations) {
+            m.clearInstance(this.parentEntity);
+        }
+
+        effectMutations.clear();
+        attributeMutations.clear();
+        MutateHelper.managers.remove(this);
+    }
 
     public boolean containsEffect (int id) {
         for (EffectMutation m : effectMutations) {

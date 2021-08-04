@@ -92,20 +92,19 @@ public class MutateHelper {
     public static void savePlayerData (UUID playerUUID) {
         CompoundNBT data = Objects.requireNonNull(getManager(playerUUID)).getMutData();
 
-        saveMutData(playerUUID, data);
+        savePlayerData(playerUUID, data);
     }
 
-    private static void saveMutData (UUID playerUUID, CompoundNBT data) {
+    public static void savePlayerData (UUID playerUUID, CompoundNBT nbt) {
         File f = getMutFile(playerUUID);
 
         try {
-            CompressedStreamTools.write(data, f);
+            CompressedStreamTools.write(nbt, f);
         } catch (IOException ignored) {}
     }
 
-    public static void clearManager (UUID uuid) {
-        managers.remove(getManager(uuid));
-        System.out.println(managers.size());
+    public static void unloadManager (UUID uuid) {
+        getManager(uuid).unload();
     }
 
     public static File getMutFile (UUID playerUUID) {

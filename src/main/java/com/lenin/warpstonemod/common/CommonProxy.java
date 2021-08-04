@@ -66,8 +66,8 @@ public class CommonProxy {
 
 		System.out.println("WARPLOG: Playing Logging out Event");
 
-		MutateHelper.savePlayerData(player.getUniqueID());
-		MutateHelper.clearManager(player.getUniqueID());
+		//MutateHelper.savePlayerData(player.getUniqueID());
+		MutateHelper.unloadManager(player.getUniqueID());
 	}
 
 	public void onServerStarted (FMLServerStartedEvent event){
@@ -76,7 +76,7 @@ public class CommonProxy {
 
 	public void onServerSave (WorldEvent.Save event){
 		for (MutateManager m : MutateHelper.getManagers()) {
-			//MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
+			MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
 		}
 	}
 
