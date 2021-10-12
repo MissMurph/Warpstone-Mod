@@ -104,6 +104,7 @@ public class MutateManager {
 
        if (nbt.contains("effect_mutations")) {
             int[] array = nbt.getIntArray("effect_mutations");
+            System.out.println(array.length);
 
             for (int i : array) {
                 if (containsEffect(i)) continue;
@@ -113,14 +114,22 @@ public class MutateManager {
                 mut.applyMutation(parentEntity);
             }
         }
+       else {
+           for (EffectMutation m : effectMutations) { m.clearInstance(this.parentEntity); }
+           effectMutations.clear();
+       }
     }
 
     public void resetMutations () {
-        //for (Mutation m : getMutations()) { m.clearMutation(); }
-
         for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
 
+        for (EffectMutation m : effectMutations) { m.clearInstance(this.parentEntity); }
         effectMutations.clear();
+
+        instability = 0;
+        mutData = serialize();
+
+        MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
     }
 
     public List<AttributeMutation> getAttributeMutations (){
@@ -145,7 +154,7 @@ public class MutateManager {
     }
 
     public void unload() {
-        MutateHelper.savePlayerData(parentEntity.getUniqueID(), getMutData());
+        saveData();
 
         for (EffectMutation m : effectMutations) {
             m.clearInstance(this.parentEntity);
@@ -154,6 +163,11 @@ public class MutateManager {
         effectMutations.clear();
         attributeMutations.clear();
         MutateHelper.managers.remove(this);
+    }
+
+    public void saveData (){
+        mutData = serialize();
+        MutateHelper.savePlayerData(parentEntity.getUniqueID(), getMutData());
     }
 
     public boolean containsEffect (int id) {

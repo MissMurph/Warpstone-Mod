@@ -50,12 +50,14 @@ public class DummyMutateManager extends MutateManager{
 	@Override
 	public LivingEntity getParentEntity() {
 		System.out.println("Dummy Manager is being Called!");
-		if (Minecraft.getInstance().world.isRemote()) {
+		/*if (Minecraft.getInstance().world.isRemote()) {
 			return Minecraft.getInstance().player;
 		}
 		else {
 			return null;
-		}
+		}*/
+
+		return parentEntity;
 	}
 
 	@Override

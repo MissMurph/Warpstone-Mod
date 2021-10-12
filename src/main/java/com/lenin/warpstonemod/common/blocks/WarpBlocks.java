@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.blocks;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.Registration;
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

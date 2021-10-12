@@ -4,7 +4,6 @@ import com.lenin.warpstonemod.client.gui.MutationScreenOpenButton;
 import com.lenin.warpstonemod.common.CommonProxy;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class ClientProxy extends CommonProxy {
@@ -17,7 +16,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void attachListeners(IEventBus bus) {
 		super.attachListeners(bus);
-
 		bus.addListener(this::guiPostInit);
 	}
 

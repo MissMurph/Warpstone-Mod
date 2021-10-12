@@ -1,8 +1,8 @@
 package com.lenin.warpstonemod.common.data;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.client.WarpBlockStateProvider;
 import com.lenin.warpstonemod.client.WarpItemModelProvider;
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.data.tags.WarpBlockTagsProvider;
 import com.lenin.warpstonemod.common.data.tags.WarpItemTagsProvider;
 import net.minecraft.data.DataGenerator;

@@ -1,20 +1,23 @@
-package com.lenin.warpstonemod.common.mutations.effect_mutations;
+package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class VisionMutation extends EffectMutation implements IMutationTick{
-	private static final EffectInstance effect = new EffectInstance(Effects.NIGHT_VISION, 1200, 0, false, false);
-
+public class VisionMutation extends EffectMutation implements IMutationTick {
 	public VisionMutation(int _id) {
 		super(_id,
 				WarpMutations.nameConst + "effect.night_vision",
@@ -22,13 +25,16 @@ public class VisionMutation extends EffectMutation implements IMutationTick{
 				"vision_icon.png",
 				"ba2f092b-76d6-4d71-85ba-51becadb4d19");
 
-		effect.setPotionDurationMax(true);
-		attachListeners(MinecraftForge.EVENT_BUS);
 		MutationTickHelper.addListener(this);
 	}
 
 	@Override
 	public void attachListeners (IEventBus bus) {
+
+	}
+
+	@Override
+	public void attachClientListeners(IEventBus bus) {
 		bus.addListener(this::onRenderFog);
 	}
 
@@ -48,6 +54,7 @@ public class VisionMutation extends EffectMutation implements IMutationTick{
 		});
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onRenderFog (EntityViewRenderEvent.FogDensity event) {
 		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID()) || instanceMap.get(Minecraft.getInstance().player.getUniqueID()).getMutationLevel() != -1) return;

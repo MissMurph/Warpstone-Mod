@@ -1,12 +1,9 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.mutations.attributes.IAttributeSource;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 public class AttributeMutation{
 	protected final IAttributeSource attributeSource;

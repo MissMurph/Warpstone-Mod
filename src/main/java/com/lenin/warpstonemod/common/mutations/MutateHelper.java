@@ -1,11 +1,11 @@
 package com.lenin.warpstonemod.common.mutations;
 
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import com.lenin.warpstonemod.common.network.SyncMutDataPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class MutateHelper {
@@ -49,6 +48,7 @@ public class MutateHelper {
         return m;
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static MutateManager getClientManager () {
         if (clientManager instanceof DummyMutateManager) clientManager = new MutateManager(Minecraft.getInstance().player);
         return clientManager;
@@ -90,9 +90,7 @@ public class MutateHelper {
     }
 
     public static void savePlayerData (UUID playerUUID) {
-        CompoundNBT data = Objects.requireNonNull(getManager(playerUUID)).getMutData();
-
-        savePlayerData(playerUUID, data);
+        getManager(playerUUID).saveData();
     }
 
     public static void savePlayerData (UUID playerUUID, CompoundNBT nbt) {

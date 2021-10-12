@@ -3,7 +3,6 @@ package com.lenin.warpstonemod.client.gui;
 import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -26,7 +25,7 @@ import java.util.List;
 public class MutationScreen extends Screen {
 	private static final ResourceLocation SCREEN_LOCATION = new ResourceLocation("warpstonemod", "textures/gui/mutation_screen.png");
 	private static final ResourceLocation ATTRIBUTE_RESOURCE = new ResourceLocation("warpstonemod","textures/gui/mutation_attribute_bar.png");
-	private static final ResourceLocation EFFECT_RESOURCE = new ResourceLocation("warpstonemod", "textures/gui/warp_icons.png");
+	//private static final ResourceLocation EFFECT_RESOURCE = new ResourceLocation("warpstonemod", "textures/gui/warp_icons.png");
 
 	private int guiLeft, guiTop;
 	private final int xSize = 176;

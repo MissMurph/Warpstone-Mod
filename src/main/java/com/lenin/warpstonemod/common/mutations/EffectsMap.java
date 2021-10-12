@@ -1,11 +1,10 @@
 package com.lenin.warpstonemod.common.mutations;
 
-import com.lenin.warpstonemod.common.mutations.effect_mutations.*;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class EffectsMap {
 	public static Map<Integer, EffectMutation> effectMap = new Object2ObjectArrayMap<>();

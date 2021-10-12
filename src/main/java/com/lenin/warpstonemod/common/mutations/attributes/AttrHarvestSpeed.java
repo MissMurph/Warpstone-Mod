@@ -2,14 +2,13 @@ package com.lenin.warpstonemod.common.mutations.attributes;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 
 public class AttrHarvestSpeed implements IAttributeSource{
 	private double baseValue;

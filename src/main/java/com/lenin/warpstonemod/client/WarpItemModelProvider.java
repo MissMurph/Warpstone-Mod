@@ -21,6 +21,7 @@ public class WarpItemModelProvider extends ItemModelProvider {
 
 		builder("warpstone_shard", itemGenerated);
 		builder("warpstone_dust", itemGenerated);
+		builder("mutation_reset", itemGenerated);
 	}
 
 	protected ItemModelBuilder builder(String name, ModelFile itemGenerated) {

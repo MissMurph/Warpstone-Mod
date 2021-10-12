@@ -22,11 +22,11 @@ public abstract class WarpPacket<T extends WarpPacket<T>> {
 	@Nonnull
 	public abstract Handler<T> handler();
 
-	public static interface Encoder<T extends WarpPacket<T>> extends BiConsumer<T, PacketBuffer> {}
+	public interface Encoder<T extends WarpPacket<T>> extends BiConsumer<T, PacketBuffer> {}
 
-	public static interface Decoder<T extends WarpPacket<T>> extends Function<PacketBuffer, T> {}
+	public interface Decoder<T extends WarpPacket<T>> extends Function<PacketBuffer, T> {}
 
-	public static interface Handler<T extends WarpPacket<T>> extends BiConsumer<T, Supplier<NetworkEvent.Context>> {
+	public interface Handler<T extends WarpPacket<T>> extends BiConsumer<T, Supplier<NetworkEvent.Context>> {
 
 		@Override
 		default void accept(T t, Supplier<NetworkEvent.Context> contextSupplier) {

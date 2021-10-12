@@ -1,7 +1,9 @@
 package com.lenin.warpstonemod.common;
 
+import com.lenin.warpstonemod.common.mutations.EffectsMap;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationRegistry;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import net.minecraft.entity.Entity;
@@ -9,19 +11,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.FolderName;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.io.File;
 import java.util.UUID;
@@ -32,9 +29,17 @@ public class CommonProxy {
 	public static MinecraftServer SERVER;
 
 	public void init (){
-		System.out.println("WARPLOG: Initializing CommonProxy");
+		//System.out.println("WARPLOG: Initializing CommonProxy");
+		Registration.register();
+		MutateHelper.init();
+		EffectsMap.init();
+		EffectMutationRegistry.init();
+
+		//System.out.println("WARPLOG: Initialized Global Classes");
+
 		PacketHandler.registerPackets();
-		attachListeners(MinecraftForge.EVENT_BUS);
+
+		//System.out.println("WARPLOG: Completed Initializing CommonProxy");
 	}
 
 	public void attachListeners (IEventBus bus) {
@@ -50,13 +55,13 @@ public class CommonProxy {
 	}
 
 	public void onTick(TickEvent.PlayerTickEvent event){
-		if (event.phase == TickEvent.Phase.START) MutationTickHelper.onTick(event);
+		if (event.phase == TickEvent.Phase.END) MutationTickHelper.onTick(event);
 	}
 
 	public void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
-		System.out.println("WARPLOG: Playing Logging in Event");
+		//System.out.println("WARPLOG: Playing Logging in Event");
 
 		MutateHelper.loadMutData(player.getUniqueID());
 	}
@@ -64,14 +69,15 @@ public class CommonProxy {
 	public void onPlayerDisconnect (PlayerEvent.PlayerLoggedOutEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
-		System.out.println("WARPLOG: Playing Logging out Event");
+		//System.out.println("WARPLOG: Playing Logging out Event");
 
-		//MutateHelper.savePlayerData(player.getUniqueID());
 		MutateHelper.unloadManager(player.getUniqueID());
 	}
 
-	public void onServerStarted (FMLServerStartedEvent event){
-		SERVER = event.getServer();
+	public void onServerStarted (FMLCommonSetupEvent event){
+		//SERVER = event.getServer();
+
+		//event.
 	}
 
 	public void onServerSave (WorldEvent.Save event){
@@ -81,7 +87,7 @@ public class CommonProxy {
 	}
 
 	public <T extends Event> void registerEventListener (Consumer<T> suppler) {
-		MinecraftForge.EVENT_BUS.addListener(suppler);
+		//if () MinecraftForge.EVENT_BUS.addListener(suppler);
 	}
 
 	public static void register () {}

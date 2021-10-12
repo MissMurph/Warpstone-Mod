@@ -1,7 +1,7 @@
-package com.lenin.warpstonemod.common.mutations.effect_mutations;
+package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
-import net.minecraft.entity.Entity;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -16,6 +16,11 @@ public class PpMutation extends EffectMutation {
 
 	@Override
 	public void attachListeners(IEventBus bus) {	}
+
+	@Override
+	public void attachClientListeners(IEventBus bus) {
+
+	}
 
 	@Override
 	public void applyMutation(LivingEntity entity) {

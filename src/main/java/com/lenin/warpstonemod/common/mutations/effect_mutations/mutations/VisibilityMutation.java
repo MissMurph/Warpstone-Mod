@@ -1,10 +1,10 @@
-package com.lenin.warpstonemod.common.mutations.effect_mutations;
+package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
-import net.minecraft.entity.Entity;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,11 +18,17 @@ public class VisibilityMutation extends EffectMutation {
 				"visibility_icon.png",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d");
 
-		attachListeners(MinecraftForge.EVENT_BUS);
 	}
 
 	@Override
 	public void attachListeners(IEventBus bus){
+
+
+	}
+
+	//@OnlyIn(Dist.CLIENT)
+	@Override
+	public void attachClientListeners(IEventBus bus) {
 		bus.addListener(this::onEntityRender);
 	}
 
@@ -50,6 +56,7 @@ public class VisibilityMutation extends EffectMutation {
 		entity.setGlowing(false);
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onEntityRender (RenderLivingEvent.Pre event) {
 		instanceMap.forEach((uuid, mut) -> {
