@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
-import net.minecraftforge.event.TickEvent;
+import net.minecraft.entity.player.PlayerEntity;
 
 public interface IMutationTick {
-	void onTick(TickEvent event);
+	void mutationTick (PlayerEntity player);
 }

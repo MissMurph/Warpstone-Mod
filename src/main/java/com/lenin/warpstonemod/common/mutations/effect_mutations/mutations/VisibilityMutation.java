@@ -2,15 +2,16 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class VisibilityMutation extends EffectMutation {
+public class VisibilityMutation extends EffectMutation implements IMutationTick {
 	public VisibilityMutation(int _id) {
 		super(_id,
 				WarpMutations.nameConst + "effect.invisibility",
@@ -23,6 +24,11 @@ public class VisibilityMutation extends EffectMutation {
 	@Override
 	public void attachListeners(IEventBus bus){
 
+
+	}
+
+	@Override
+	public void mutationTick(PlayerEntity player) {
 
 	}
 
@@ -49,8 +55,8 @@ public class VisibilityMutation extends EffectMutation {
 	}
 
 	@Override
-	public void clearMutation(LivingEntity entity) {
-		super.clearMutation(entity);
+	public void deactivateMutation(LivingEntity entity) {
+		super.deactivateMutation(entity);
 
 		entity.setInvisible(false);
 		entity.setGlowing(false);

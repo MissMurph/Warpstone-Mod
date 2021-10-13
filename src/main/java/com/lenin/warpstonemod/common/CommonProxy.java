@@ -27,13 +27,17 @@ import java.util.function.Consumer;
 public class CommonProxy {
 
 	public static MinecraftServer SERVER;
+	private TickManager tickManager;
 
 	public void init (){
 		//System.out.println("WARPLOG: Initializing CommonProxy");
 		Registration.register();
 		MutateHelper.init();
-		EffectsMap.init();
+		//EffectsMap.init();
 		EffectMutationRegistry.init();
+
+		this.tickManager = new TickManager();
+		this.attachTickListeners(tickManager::register);
 
 		//System.out.println("WARPLOG: Initialized Global Classes");
 
@@ -43,19 +47,18 @@ public class CommonProxy {
 	}
 
 	public void attachListeners (IEventBus bus) {
-		System.out.println("WARPLOG: Attaching Listeners in Common");
+		//System.out.println("WARPLOG: Attaching Listeners in Common");
 
-		bus.addListener(this::onServerStarted);
 		bus.addListener(this::onServerSave);
 
 		bus.addListener(this::onPlayerConnect);
 		bus.addListener(this::onPlayerDisconnect);
 
-		bus.addListener(this::onTick);
+		tickManager.attachListeners(bus);
 	}
 
-	public void onTick(TickEvent.PlayerTickEvent event){
-		if (event.phase == TickEvent.Phase.END) MutationTickHelper.onTick(event);
+	public void attachTickListeners (Consumer<ITickHandler> handler) {
+		handler.accept(MutationTickHelper.INSTANCE);
 	}
 
 	public void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
@@ -74,20 +77,10 @@ public class CommonProxy {
 		MutateHelper.unloadManager(player.getUniqueID());
 	}
 
-	public void onServerStarted (FMLCommonSetupEvent event){
-		//SERVER = event.getServer();
-
-		//event.
-	}
-
 	public void onServerSave (WorldEvent.Save event){
 		for (MutateManager m : MutateHelper.getManagers()) {
 			MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
 		}
-	}
-
-	public <T extends Event> void registerEventListener (Consumer<T> suppler) {
-		//if () MinecraftForge.EVENT_BUS.addListener(suppler);
 	}
 
 	public static void register () {}

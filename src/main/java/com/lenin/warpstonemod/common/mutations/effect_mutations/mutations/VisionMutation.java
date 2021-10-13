@@ -4,16 +4,14 @@ import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -24,8 +22,6 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 				WarpMutations.nameConst + "effect.blindness",
 				"vision_icon.png",
 				"ba2f092b-76d6-4d71-85ba-51becadb4d19");
-
-		MutationTickHelper.addListener(this);
 	}
 
 	@Override
@@ -39,7 +35,7 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void onTick(TickEvent event) {
+	public void mutationTick(PlayerEntity player) {
 		instanceMap.forEach((uuid, mut) -> {
 			if (!mut.isActive() || mut.getMutationLevel() == -1) return;
 
@@ -80,8 +76,8 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void clearMutation(LivingEntity entity) {
-		super.clearMutation(entity);
+	public void deactivateMutation(LivingEntity entity) {
+		super.deactivateMutation(entity);
 
 		entity.removePotionEffect(Effects.NIGHT_VISION);
 	}

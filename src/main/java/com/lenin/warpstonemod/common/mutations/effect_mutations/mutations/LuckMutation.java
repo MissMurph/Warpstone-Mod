@@ -40,8 +40,8 @@ public class LuckMutation extends EffectMutation {
 	}
 
 	@Override
-	public void clearMutation(LivingEntity entity) {
-		super.clearMutation(entity);
+	public void deactivateMutation(LivingEntity entity) {
+		super.deactivateMutation(entity);
 
 		instanceMap.get(entity.getUniqueID()).getParent()
 				.getAttribute(Attributes.LUCK)

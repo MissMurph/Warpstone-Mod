@@ -28,7 +28,7 @@ public class PpMutation extends EffectMutation {
 	}
 
 	@Override
-	public void clearMutation(LivingEntity entity) {
-		super.clearMutation(entity);
+	public void deactivateMutation(LivingEntity entity) {
+		super.deactivateMutation(entity);
 	}
 }

@@ -1,21 +1,14 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class JumpMutation extends EffectMutation implements IMutationTick {
@@ -25,8 +18,6 @@ public class JumpMutation extends EffectMutation implements IMutationTick {
 				WarpMutations.nameConst + "effect.weak_legs",
 				"jump_icon.png",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c");
-
-		MutationTickHelper.addListener(this);
 	}
 
 	@Override
@@ -53,7 +44,7 @@ public class JumpMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void onTick(TickEvent event) {
+	public void mutationTick(PlayerEntity player) {
 		instanceMap.forEach((uuid, mut) -> {
 			if (!mut.isActive() || mut.getMutationLevel() == -1) return;
 
@@ -78,8 +69,8 @@ public class JumpMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void clearMutation(LivingEntity entity) {
-		super.clearMutation(entity);
+	public void deactivateMutation(LivingEntity entity) {
+		super.deactivateMutation(entity);
 
 		if (instanceMap.get(entity.getUniqueID()).getMutationLevel() == 1) {
 			entity.removePotionEffect(Effects.JUMP_BOOST);

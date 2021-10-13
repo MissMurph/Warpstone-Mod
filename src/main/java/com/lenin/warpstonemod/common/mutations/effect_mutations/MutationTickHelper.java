@@ -1,20 +1,31 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.common.ITickHandler;
+import com.lenin.warpstonemod.common.WarpstoneMain;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.fml.LogicalSide;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.EnumSet;
 
-public class MutationTickHelper {
-	private static List<IMutationTick> mutations = new LinkedList<>();
+public class MutationTickHelper implements ITickHandler {
 
-	public static void onTick (TickEvent.PlayerTickEvent event){
-		for (IMutationTick i : mutations) {
-			i.onTick(event);
+	public static final MutationTickHelper INSTANCE = new MutationTickHelper();
+	private MutationTickHelper(){}
+
+	@Override
+	public void onTick(TickEvent.Type type, Object... context) {
+		PlayerEntity entity = (PlayerEntity) context[0];
+		//LogicalSide side = (LogicalSide) context[1];
+
+		for (int i = 0; i < WarpstoneMain.getEffectsMap().getMapSize(); i++) {
+			EffectMutation mut = WarpstoneMain.getEffectsMap().getMap().get(i);
+			if (mut instanceof IMutationTick) ((IMutationTick) mut).mutationTick(entity);
 		}
 	}
 
-	public static void addListener (IMutationTick listener){
-		mutations.add(listener);
+	@Override
+	public EnumSet<TickEvent.Type> getHandledTypes() {
+		return EnumSet.of(TickEvent.Type.PLAYER);
 	}
 }

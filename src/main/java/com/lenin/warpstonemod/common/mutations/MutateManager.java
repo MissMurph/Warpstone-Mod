@@ -37,7 +37,7 @@ public class MutateManager {
 
         //Loop over every point of instablity and apply levels, no negatives if no instablity
         for (int i = 0; i < instability + 1; i++) {
-            if (!hasEffectBeenCreated && effectMutations.size() < EffectsMap.getMapSize() && WarpstoneMain.getRandom().nextInt(100) > 75) {
+            if (!hasEffectBeenCreated && effectMutations.size() < WarpstoneMain.getEffectsMap().getMapSize() && WarpstoneMain.getRandom().nextInt(100) > 75) {
                 EffectMutation mut = getRandomEffectMut();
 
                 effectMutations.add(mut);
@@ -60,15 +60,15 @@ public class MutateManager {
     }
 
     protected EffectMutation getRandomEffectMut () {
-        if (effectMutations.size() >= EffectsMap.getMapSize()) return null;
+        if (effectMutations.size() >= WarpstoneMain.getEffectsMap().getMapSize()) return null;
 
         while (true) {
-            int i = WarpstoneMain.getRandom().nextInt(EffectsMap.getMapSize());
+            int i = WarpstoneMain.getRandom().nextInt(WarpstoneMain.getEffectsMap().getMapSize());
 
             if (!containsEffect(i)) {
                 int i2 = WarpstoneMain.getRandom().nextBoolean() ? 1 : -1;
 
-                return EffectsMap.constructInstance(i, parentEntity, i2);
+                return WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity, i2);
             }
         }
     }
@@ -104,12 +104,11 @@ public class MutateManager {
 
        if (nbt.contains("effect_mutations")) {
             int[] array = nbt.getIntArray("effect_mutations");
-            System.out.println(array.length);
 
             for (int i : array) {
                 if (containsEffect(i)) continue;
-                EffectMutation mut = EffectsMap.constructInstance(i, parentEntity, nbt.getInt(String.valueOf(i)));
-                System.out.println(mut.getMutationName(mut.getInstance(parentEntity).getMutationLevel()) + " created");
+                EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity, nbt.getInt(String.valueOf(i)));
+                //System.out.println(mut.getMutationName(mut.getInstance(parentEntity).getMutationLevel()) + " created");
                 effectMutations.add(mut);
                 mut.applyMutation(parentEntity);
             }

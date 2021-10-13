@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -62,6 +64,18 @@ public class MutationScreen extends Screen {
 			if (i > 7) y += 24;
 			widgets.add(new EffectWidget(getGuiLeft() + 10 + (23 * i), y, 18, 18, effectMuts.get(i)));
 		}
+	}
+
+	public static TranslationTextComponent getEffectWidgetName (EffectMutation parent){
+		EffectMutationInstance refInstance = parent.getInstance(Minecraft.getInstance().player);
+
+		int level = 0;
+
+		if (refInstance != null) {
+			refInstance.getMutationLevel();
+		}
+
+		return new TranslationTextComponent("mutations_screen.effect." + parent.getMutationName(level));
 	}
 
 	public MutationScreen(ITextComponent titleIn) {
@@ -180,8 +194,7 @@ public class MutationScreen extends Screen {
 		private final EffectMutation parent;
 
 		public EffectWidget(int x, int y, int width, int height, EffectMutation _parent) {
-			super(x, y, width, height, new TranslationTextComponent(
-					"mutations_screen.effect." + _parent.getMutationName(_parent.getInstance(Minecraft.getInstance().player).getMutationLevel())));
+			super(x, y, width, height, getEffectWidgetName(_parent));
 			parent = _parent;
 		}
 
@@ -192,7 +205,7 @@ public class MutationScreen extends Screen {
 
 			int i = 0;
 
-			if (parent.getInstance(Minecraft.getInstance().player).getMutationLevel() == -1) i = 18;
+			if (parent.getInstance(Minecraft.getInstance().player) != null && parent.getInstance(Minecraft.getInstance().player).getMutationLevel() == -1) i = 18;
 
 			RenderSystem.enableDepthTest();
 			blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 18, 36);

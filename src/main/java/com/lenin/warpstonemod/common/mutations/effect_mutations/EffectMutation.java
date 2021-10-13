@@ -44,8 +44,13 @@ public abstract class EffectMutation {
 		mut.setActive(true);
 	}
 
-	public void clearMutation(LivingEntity entity) {
-		instanceMap.get(entity.getUniqueID()).setActive(false);
+	//This cannot clear instances as methods are overridden to deactivate mutations
+	public void deactivateMutation(LivingEntity entity) {
+		deactivateMutation(entity.getUniqueID());
+	}
+
+	public void deactivateMutation(UUID playerUUID) {
+		instanceMap.get(playerUUID).setActive(false);
 	}
 
 	public String getMutationName(int level) {
@@ -74,11 +79,13 @@ public abstract class EffectMutation {
 		return instance;
 	}
 
+	//Different from Deactivate Mutations as will deactivate then clear the instance
 	public void clearInstance (LivingEntity entity) {
 		clearInstance(entity.getUniqueID());
 	}
 
 	public void clearInstance (UUID playerUUID) {
+		deactivateMutation(playerUUID);
 		instanceMap.remove(playerUUID);
 	}
 
