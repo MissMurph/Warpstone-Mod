@@ -10,6 +10,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.LogicalSide;
 
 public class FallingMutation extends EffectMutation implements IMutationTick {
 	public FallingMutation(int _id) {
@@ -43,8 +44,10 @@ public class FallingMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void mutationTick(PlayerEntity player) {
+	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		currentTickCount--;
+
+		if (side == LogicalSide.CLIENT) return;
 
 		instanceMap.forEach((uuid, mut) -> {
 			if (mut.getParent().world.isRemote()) return;
@@ -83,7 +86,7 @@ public class FallingMutation extends EffectMutation implements IMutationTick {
 
 		if (instanceMap.get(entity.getUniqueID()).getMutationLevel() == 1) {
 			EffectInstance inst = new EffectInstance(Effects.SLOW_FALLING, 3600, 0, false, false);
-			inst.setPotionDurationMax(true);
+			//inst.setPotionDurationMax(true);
 			entity.addPotionEffect(inst);
 		}
 	}

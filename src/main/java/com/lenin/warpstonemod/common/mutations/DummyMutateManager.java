@@ -42,7 +42,7 @@ public class DummyMutateManager extends MutateManager{
 	}
 
 	@Override
-	public List<EffectMutation> getEffectMutations() {
+	public List<Integer> getEffectMutations() {
 		System.out.println("Dummy Manager is being Called!");
 		return effectMutations;
 	}

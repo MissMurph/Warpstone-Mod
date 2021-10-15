@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 
 public class VisionMutation extends EffectMutation implements IMutationTick {
 	public VisionMutation(int _id) {
@@ -35,7 +36,7 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void mutationTick(PlayerEntity player) {
+	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		instanceMap.forEach((uuid, mut) -> {
 			if (!mut.isActive() || mut.getMutationLevel() == -1) return;
 

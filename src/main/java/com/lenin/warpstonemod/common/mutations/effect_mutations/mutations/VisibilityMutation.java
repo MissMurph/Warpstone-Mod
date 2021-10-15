@@ -10,6 +10,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 
 public class VisibilityMutation extends EffectMutation implements IMutationTick {
 	public VisibilityMutation(int _id) {
@@ -28,7 +29,7 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 	}
 
 	@Override
-	public void mutationTick(PlayerEntity player) {
+	public void mutationTick(PlayerEntity player, LogicalSide side) {
 
 	}
 

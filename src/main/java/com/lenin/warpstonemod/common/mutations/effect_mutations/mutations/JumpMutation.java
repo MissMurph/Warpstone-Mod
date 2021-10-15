@@ -10,6 +10,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.LogicalSide;
 
 public class JumpMutation extends EffectMutation implements IMutationTick {
 	public JumpMutation(int _id) {
@@ -44,7 +45,7 @@ public class JumpMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void mutationTick(PlayerEntity player) {
+	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		instanceMap.forEach((uuid, mut) -> {
 			if (!mut.isActive() || mut.getMutationLevel() == -1) return;
 

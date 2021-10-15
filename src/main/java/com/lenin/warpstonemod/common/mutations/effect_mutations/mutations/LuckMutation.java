@@ -29,12 +29,14 @@ public class LuckMutation extends EffectMutation {
 	public void applyMutation(LivingEntity entity) {
 		super.applyMutation(entity);
 
+		if (entity.world.isRemote) return;
+
 		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
 
 		if (mut.getMutationLevel() == 1) mut.getParent()
 				.getAttribute(Attributes.LUCK)
 				.applyNonPersistentModifier(new AttributeModifier(uuid, "mutation.good_luck", 1.0D, AttributeModifier.Operation.ADDITION));
-		else mut.getParent()
+		if (mut.getMutationLevel() == -1) mut.getParent()
 				.getAttribute(Attributes.LUCK)
 				.applyNonPersistentModifier(new AttributeModifier(uuid, "mutation.bad_luck", -1.0D, AttributeModifier.Operation.ADDITION));
 	}
@@ -42,6 +44,8 @@ public class LuckMutation extends EffectMutation {
 	@Override
 	public void deactivateMutation(LivingEntity entity) {
 		super.deactivateMutation(entity);
+
+		if (entity.world.isRemote) return;
 
 		instanceMap.get(entity.getUniqueID()).getParent()
 				.getAttribute(Attributes.LUCK)

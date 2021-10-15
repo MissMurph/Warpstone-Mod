@@ -5,6 +5,7 @@ import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class MutationScreen extends Screen {
@@ -53,7 +55,11 @@ public class MutationScreen extends Screen {
 		if (MutateHelper.getClientManager() instanceof DummyMutateManager) System.out.println("Parent Entity is Null!");
 
 		List<AttributeMutation> muts = MutateHelper.getClientManager().getAttributeMutations();
-		List<EffectMutation> effectMuts = MutateHelper.getClientManager().getEffectMutations();
+		List<EffectMutation> effectMuts = new ArrayList<>();
+
+		for (int i : MutateHelper.getClientManager().getEffectMutations()) {
+			effectMuts.add(WarpstoneMain.getEffectsMap().getMap().get(i));
+		}
 
 		for (int i = 0; i < muts.size(); i++) {
 			widgets.add(new AttributeBar(getGuiLeft() + 13 + (17 * i), getGuiTop() + 60, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationName(), this));
