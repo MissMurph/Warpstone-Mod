@@ -20,7 +20,8 @@ public class EffectsMap {
 
 	public EffectMutation constructInstance (int key, LivingEntity parent, int mutationLevel){
 		EffectMutation mut = effectMap.get(key);
-		if (!parent.world.isRemote) mut.putInstance(parent, mutationLevel);
+		if (parent.world.isRemote) mut.putClientInstance(parent, mutationLevel);
+		else mut.putInstance(parent, mutationLevel);
 		return mut;
 	}
 

@@ -104,28 +104,20 @@ public class MutateManager {
         }
 
         int[] array = nbt.getIntArray("effect_mutations");
+        List<Integer> deletion = new ArrayList<>(effectMutations);
 
         for (int i : array) {
-            if (containsEffect(i)) continue;
-            EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity, nbt.getInt(String.valueOf(i)));
+            if (containsEffect(i)) { deletion.remove((Integer) i); continue; }
             effectMutations.add(i);
-            mut.applyMutation(parentEntity);
+
+            if (!parentEntity.world.isRemote()) {
+                EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity, nbt.getInt(String.valueOf(i)));
+                mut.applyMutation(parentEntity);
+            }
         }
 
-        for (int i = 0; i < effectMutations.size(); i++) {
-            boolean remove = true;
-
-            int id = effectMutations.get(i);
-
-            for (int ii : array) {
-                if (ii == id) { remove = false; break; }
-            }
-
-            if (remove) {
-                //This needs a remote check as the client doesn't store instances
-                if (!this.parentEntity.world.isRemote) getEffect(id).clearInstance(this.parentEntity.getUniqueID());
-                effectMutations.remove(i);
-            }
+        for (int i : deletion) {
+            effectMutations.remove((Integer) i);
         }
     }
 
@@ -150,7 +142,7 @@ public class MutateManager {
     }
 
     public LivingEntity getParentEntity (){
-        return parentEntity;
+        return this.parentEntity;
     }
 
     public int getInstability(){

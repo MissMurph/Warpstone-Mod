@@ -25,33 +25,40 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 	@Override
 	public void attachListeners(IEventBus bus){
 
+	}
+
+	@Override
+	public void attachClientListeners(IEventBus bus) {
 
 	}
 
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
+		if (side == LogicalSide.CLIENT ||
+				!instanceMap.containsKey(player.getUniqueID()) ||
+				!instanceMap.get(player.getUniqueID()).isActive()) return;
 
-	}
+		if (instanceMap.get(player.getUniqueID()).getMutationLevel() == 1) {
+			if (!player.isInvisible()) player.setInvisible(true);
+		}
 
-	//@OnlyIn(Dist.CLIENT)
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-		bus.addListener(this::onEntityRender);
+		if (instanceMap.get(player.getUniqueID()).getMutationLevel() == 1) {
+			if (!player.isGlowing()) player.setInvisible(true);
+		}
 	}
 
 	@Override
 	public void applyMutation(LivingEntity entity) {
 		super.applyMutation(entity);
 
-		switch (instanceMap.get(entity.getUniqueID()).getMutationLevel()) {
-			case -1:
-				entity.setGlowing(true);
-				break;
-			case 0:
-				break;
-			case 1:
-				entity.setInvisible(true);
-				break;
+		if (entity.world.isRemote()) return;
+
+		if (instanceMap.get(entity.getUniqueID()).getMutationLevel() == 1) {
+			entity.setInvisible(true);
+		}
+
+		if (instanceMap.get(entity.getUniqueID()).getMutationLevel() == -1) {
+			entity.setGlowing(true);
 		}
 	}
 
@@ -59,18 +66,9 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 	public void deactivateMutation(LivingEntity entity) {
 		super.deactivateMutation(entity);
 
+		if (entity.world.isRemote()) return;
+
 		entity.setInvisible(false);
 		entity.setGlowing(false);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
-	public void onEntityRender (RenderLivingEvent.Pre event) {
-		instanceMap.forEach((uuid, mut) -> {
-			if (!mut.isActive() || event.getEntity() != mut.getParent()) return;
-
-			if (mut.getMutationLevel() == 1) event.getEntity().setInvisible(true);
-			else event.getEntity().setGlowing(true);
-		});
 	}
 }

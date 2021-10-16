@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.client;
 
 import com.lenin.warpstonemod.client.gui.MutationScreenOpenButton;
 import com.lenin.warpstonemod.common.CommonProxy;
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,7 +17,12 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void attachListeners(IEventBus bus) {
 		super.attachListeners(bus);
+
 		bus.addListener(this::guiPostInit);
+
+		for (int i = 0; i < WarpstoneMain.getEffectsMap().getMap().size(); i++) {
+			WarpstoneMain.getEffectsMap().getMap().get(i).attachClientListeners(bus);
+		}
 	}
 
 	public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {

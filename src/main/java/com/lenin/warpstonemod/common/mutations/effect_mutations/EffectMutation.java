@@ -21,7 +21,7 @@ public abstract class EffectMutation {
 	protected ResourceLocation resourceLocation;
 	protected final UUID uuid;
 
-	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<UUID, EffectMutationInstance>();
+	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
 	protected EffectMutation(int _id, String _posName, String _negName,  String resName, String _uuid) {
 		uuid = UUID.fromString(_uuid);
@@ -40,17 +40,25 @@ public abstract class EffectMutation {
 	public abstract void attachClientListeners(IEventBus bus);
 
 	public void applyMutation (LivingEntity entity){
+		if (entity.world.isRemote) return;
+
 		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
 		mut.setActive(true);
 	}
 
 	//This cannot clear instances as methods are overridden to deactivate mutations
 	public void deactivateMutation(LivingEntity entity) {
-		deactivateMutation(entity.getUniqueID());
+		if (entity.world.isRemote()) return;
+
+		instanceMap.get(entity.getUniqueID()).setActive(false);
 	}
 
-	public void deactivateMutation(UUID playerUUID) {
-		instanceMap.get(playerUUID).setActive(false);
+	//Different from Deactivate Mutations as will deactivate then clear the instance
+	public void clearInstance (LivingEntity entity) {
+		if (entity.world.isRemote()) return;
+
+		deactivateMutation(entity);
+		instanceMap.remove(entity.getUniqueID());
 	}
 
 	public String getMutationName(int level) {
@@ -79,15 +87,7 @@ public abstract class EffectMutation {
 		return instance;
 	}
 
-	//Different from Deactivate Mutations as will deactivate then clear the instance
-	public void clearInstance (LivingEntity entity) {
-		clearInstance(entity.getUniqueID());
-	}
-
-	public void clearInstance (UUID playerUUID) {
-		deactivateMutation(playerUUID);
-		instanceMap.remove(playerUUID);
-	}
+	public void putClientInstance (LivingEntity entity, int mutationLevel){}
 
 	public ResourceLocation getTexture () {
 		return resourceLocation;
