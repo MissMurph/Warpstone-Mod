@@ -1,18 +1,18 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.MathHelper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class MutateManager {
     protected final LivingEntity parentEntity;
     protected final List<AttributeMutation> attributeMutations = new ArrayList<>();
-    protected List<Integer> effectMutations = new ArrayList<>();
+    protected Map<Integer, Integer> effectMutations = new HashMap<>();
 
     protected CompoundNBT mutData;
 
@@ -33,15 +33,17 @@ public class MutateManager {
         mutData = serialize();
     }
 
-    public void mutate(){
+    public void mutate(IWarpstoneConsumable item){
         boolean hasEffectBeenCreated = false;
 
+        int instabilityValue = item.getCorruptionValue() + (int) Math.floor(item.getCorruptionValue() * ((double)getInstability() / 100));
+
         //Loop over every point of instablity and apply levels, no negatives if no instablity
-        for (int i = 0; i < instability + 1; i++) {
+        for (int i = 0; i < getInstabilityLevel() + 1; i++) {
             if (!hasEffectBeenCreated && effectMutations.size() < WarpstoneMain.getEffectsMap().getMapSize() && WarpstoneMain.getRandom().nextInt(100) > 75) {
                 EffectMutation mut = getRandomEffectMut();
 
-                effectMutations.add(mut.getMutationID());
+                effectMutations.put(mut.getMutationID(), mut.getInstance(this.parentEntity).getMutationLevel());
                 mut.applyMutation(parentEntity);
 
                 hasEffectBeenCreated = true;
@@ -54,7 +56,7 @@ public class MutateManager {
             }
         }
 
-        instability++;
+        instability += instabilityValue;
         mutData = serialize();
 
         MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
@@ -85,7 +87,7 @@ public class MutateManager {
 
         List<Integer> classList = new ArrayList<>();
 
-        for (int i : effectMutations) {
+        for (int i : effectMutations.keySet()) {
             classList.add(i);
             out.putInt(String.valueOf(i), getEffect(i).getInstance(parentEntity).getMutationLevel());
         }
@@ -104,11 +106,11 @@ public class MutateManager {
         }
 
         int[] array = nbt.getIntArray("effect_mutations");
-        List<Integer> deletion = new ArrayList<>(effectMutations);
+        List<Integer> deletion = new ArrayList<>(effectMutations.keySet());
 
         for (int i : array) {
             if (containsEffect(i)) { deletion.remove((Integer) i); continue; }
-            effectMutations.add(i);
+            effectMutations.put(i, nbt.getInt(String.valueOf(i)));
 
             if (!parentEntity.world.isRemote()) {
                 EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity, nbt.getInt(String.valueOf(i)));
@@ -124,7 +126,7 @@ public class MutateManager {
     public void resetMutations () {
         for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
 
-        for (int i : effectMutations) { getEffect(i).clearInstance(this.parentEntity); }
+        for (int i : effectMutations.keySet()) { getEffect(i).clearInstance(this.parentEntity); }
         effectMutations.clear();
 
         instability = 0;
@@ -138,6 +140,10 @@ public class MutateManager {
     }
 
     public List<Integer> getEffectMutations (){
+            return new ArrayList<>(effectMutations.keySet());
+    }
+
+    public Map<Integer, Integer> getEffectLevelsMap (){
         return effectMutations;
     }
 
@@ -149,6 +155,10 @@ public class MutateManager {
         return instability;
     }
 
+    public int getInstabilityLevel (){
+        return (int) Math.floor((double) (instability) / 100);
+    }
+
     public CompoundNBT getMutData () {
         if (mutData == null) System.out.println("Getting the NBT from Manager returns null");
         return mutData;
@@ -157,7 +167,7 @@ public class MutateManager {
     public void unload() {
         saveData();
 
-        for (int i : effectMutations) {
+        for (int i : effectMutations.keySet()) {
             getEffect(i).clearInstance(this.parentEntity);
         }
 
@@ -176,7 +186,7 @@ public class MutateManager {
     }
 
     public boolean containsEffect (int id) {
-        for (int i : effectMutations) {
+        for (int i : effectMutations.keySet()) {
             if (i == id) return true;
         }
         return false;

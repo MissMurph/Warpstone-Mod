@@ -6,6 +6,7 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationIn
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -19,7 +20,8 @@ public class JumpMutation extends EffectMutation implements IMutationTick {
 				WarpMutations.nameConst + "effect.jump_boost",
 				WarpMutations.nameConst + "effect.weak_legs",
 				"jump_icon.png",
-				"45c87f74-844f-410c-8de2-d9e8cf1cac2c");
+				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
+				Rarity.COMMON);
 	}
 
 	@Override

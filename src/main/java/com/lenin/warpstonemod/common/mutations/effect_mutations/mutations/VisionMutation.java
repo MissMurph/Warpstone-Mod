@@ -7,13 +7,13 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 
 public class VisionMutation extends EffectMutation implements IMutationTick {
@@ -22,7 +22,8 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 				WarpMutations.nameConst + "effect.night_vision",
 				WarpMutations.nameConst + "effect.blindness",
 				"vision_icon.png",
-				"ba2f092b-76d6-4d71-85ba-51becadb4d19");
+				"ba2f092b-76d6-4d71-85ba-51becadb4d19",
+				Rarity.COMMON);
 	}
 
 	@Override

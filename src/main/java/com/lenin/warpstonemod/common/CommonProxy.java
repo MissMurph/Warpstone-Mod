@@ -1,5 +1,8 @@
 package com.lenin.warpstonemod.common;
 
+import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.items.WarpItems;
+import com.lenin.warpstonemod.common.items.WarpstoneShard;
 import com.lenin.warpstonemod.common.mutations.EffectsMap;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
@@ -13,6 +16,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.FolderName;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -54,6 +58,8 @@ public class CommonProxy {
 		bus.addListener(this::onPlayerConnect);
 		bus.addListener(this::onPlayerDisconnect);
 
+		bus.addListener(this::onPlayerItemUse);
+
 		tickManager.attachListeners(bus);
 	}
 
@@ -80,6 +86,15 @@ public class CommonProxy {
 	public void onServerSave (WorldEvent.Save event){
 		for (MutateManager m : MutateHelper.getManagers()) {
 			MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
+		}
+	}
+
+	public void onPlayerItemUse (PlayerInteractEvent.RightClickItem event){
+		if (event.getItemStack().getItem() instanceof IWarpstoneConsumable) {
+			IWarpstoneConsumable item = (IWarpstoneConsumable) event.getItemStack().getItem();
+			if (!item.canBeConsumed()) {
+				event.setCanceled(true);
+			}
 		}
 	}
 

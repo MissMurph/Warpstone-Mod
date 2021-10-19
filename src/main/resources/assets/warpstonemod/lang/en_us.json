@@ -1,7 +1,47 @@
 {
   "item.warpstonemod.warpstone_shard": "Warpstone Shard",
   "item.warpstonemod.warpstone_dust": "Warpstone Dust",
+  "item.warpstonemod.mutation_reset": "Mutation Reset",
   "block.warpstonemod.warpstone_ore": "Warpstone Ore",
   "block.warpstonemod.warpstone_block": "Warpstone Block",
-  "itemGroup.warpstone": "Warpstone"
+  "itemGroup.warpstone": "Warpstone",
+  "mutation.screen.instability": "Instability",
+  "mutation.screen.instability.name": "Instability",
+
+  "mutation.attribute.name.generic.max_health": "Max Health",
+  "mutation.attribute.name.generic.attack_damage": "Attack Damage",
+  "mutation.attribute.name.generic.movement_speed": "Move Speed",
+  "mutation.attribute.name.generic.armor": "Armor",
+  "mutation.attribute.name.generic.armor_touchness": "Armor Toughness",
+  "mutation.attribute.mining_speed": "Mining Speed",
+
+  "mutation.effect.slow_falling": "Slow Falling",
+  "mutation.effect.slow_falling.desc": "Grants Slow Falling",
+  "mutation.effect.levitation": "Random Levitation",
+  "mutation.effect.levitation.desc": "Every 15 seconds there's a small chance you'll randomly start levitating",
+
+  "mutation.effect.jump_boost": "Jump Boost",
+  "mutation.effect.jump_boost.desc": "Grants Stronger Jumping",
+  "mutation.effect.weak_legs": "Weak Legs",
+  "mutation.effect.weak_legs.desc": "Take extra fall damage",
+
+  "mutation.effect.good_luck": "Good Luck",
+  "mutation.effect.good_luck.desc": "Gives you Good Luck",
+  "mutation.effect.bad_luck": "Bad Luck",
+  "mutation.effect.bad_luck.desc": "Gives you Bad Luck",
+
+  "mutation.effect.largepp": "Large PP",
+  "mutation.effect.largepp.desc": "You have a large PP",
+  "mutation.effect.smallpp": "Small PP",
+  "mutation.effect.smallpp.desc": "You have a smol PP",
+
+  "mutation.effect.invisibility": "Invisibility",
+  "mutation.effect.invisibility.desc": "Turns you invisible",
+  "mutation.effect.glowing": "Glowing",
+  "mutation.effect.glowing.desc": "Makes you glowing, revealing you to nearby enemies",
+
+  "mutation.effect.night_vision": "Night Vision",
+  "mutation.effect.night_vision.desc": "Grants Night Vision",
+  "mutation.effect.blindness": "Blindness",
+  "mutation.effect.blindness.desc": "Makes you short-sighted"
 }

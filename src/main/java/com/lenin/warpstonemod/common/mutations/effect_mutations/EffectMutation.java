@@ -1,16 +1,14 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
-import com.lenin.warpstonemod.common.CommonProxy;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.LogicalSide;
 
 import java.util.Map;
 import java.util.UUID;
@@ -20,10 +18,13 @@ public abstract class EffectMutation {
 	protected final int id;
 	protected ResourceLocation resourceLocation;
 	protected final UUID uuid;
+	protected String posDescription, negDescription;
+
+	protected Rarity rarity;
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
-	protected EffectMutation(int _id, String _posName, String _negName,  String resName, String _uuid) {
+	protected EffectMutation(int _id, String _posName, String _negName, String resName, String _uuid, Rarity rarity) {
 		uuid = UUID.fromString(_uuid);
 		posName = _posName;
 		negName = _negName;
@@ -32,6 +33,9 @@ public abstract class EffectMutation {
 		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/" + resName);
 
 		attachListeners(MinecraftForge.EVENT_BUS);
+
+		posDescription = posName + ".desc";
+		negDescription = negName + ".desc";
 	}
 
 	public abstract void attachListeners(IEventBus bus);
@@ -67,6 +71,17 @@ public abstract class EffectMutation {
 				return negName;
 			case 1:
 				return posName;
+			default:
+				return "null";
+		}
+	}
+
+	public String getMutationDesc(int level) {
+		switch (level) {
+			case -1:
+				return negDescription;
+			case 1:
+				return posDescription;
 			default:
 				return "null";
 		}

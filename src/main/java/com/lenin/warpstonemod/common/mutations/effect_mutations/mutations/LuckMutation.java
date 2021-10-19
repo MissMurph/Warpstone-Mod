@@ -6,6 +6,7 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationIn
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class LuckMutation extends EffectMutation {
@@ -14,7 +15,8 @@ public class LuckMutation extends EffectMutation {
 				WarpMutations.nameConst + "effect.good_luck",
 				WarpMutations.nameConst + "effect.bad_luck",
 				"luck_icon.png",
-				"a2361e8f-1be0-478f-9742-a873400e9b6d");
+				"a2361e8f-1be0-478f-9742-a873400e9b6d",
+				Rarity.COMMON);
 	}
 
 	@Override

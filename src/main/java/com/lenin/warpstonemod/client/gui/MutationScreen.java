@@ -4,7 +4,6 @@ import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -14,16 +13,14 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class MutationScreen extends Screen {
@@ -45,8 +42,8 @@ public class MutationScreen extends Screen {
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 
-		widgets.add(new TextWidget(this.guiLeft + 130, guiTop + 82, 25, 25, String.valueOf(MutateHelper.getClientManager().getInstability())));
-		widgets.add(new TextWidget(this.guiLeft + 120, guiTop + 68, 25, 25, "Instability"));
+		widgets.add(new InstabilityWidget(this.guiLeft + 130, guiTop + 82, 25, 25, MutateHelper.getClientManager().getInstabilityLevel(), MutateHelper.getClientManager().getInstability()));
+		widgets.add(new TextWidget(this.guiLeft + 120, guiTop + 68, 25, 25, "instability"));
 
 		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 125, 20, 18, this);
 		widgets.add(returnButton);
@@ -55,33 +52,17 @@ public class MutationScreen extends Screen {
 		if (MutateHelper.getClientManager() instanceof DummyMutateManager) System.out.println("Parent Entity is Null!");
 
 		List<AttributeMutation> muts = MutateHelper.getClientManager().getAttributeMutations();
-		List<EffectMutation> effectMuts = new ArrayList<>();
-
-		for (int i : MutateHelper.getClientManager().getEffectMutations()) {
-			effectMuts.add(WarpstoneMain.getEffectsMap().getMap().get(i));
-		}
+		Map<Integer, Integer> effectMuts = MutateHelper.getClientManager().getEffectLevelsMap();
 
 		for (int i = 0; i < muts.size(); i++) {
 			widgets.add(new AttributeBar(getGuiLeft() + 13 + (17 * i), getGuiTop() + 60, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationName(), this));
 		}
 
-		for (int i = 0; i < effectMuts.size(); i++) {
+		for (int i : effectMuts.keySet()) {
 			int y = getGuiTop() + 10;
 			if (i > 7) y += 24;
-			widgets.add(new EffectWidget(getGuiLeft() + 10 + (23 * i), y, 18, 18, effectMuts.get(i)));
+			widgets.add(new EffectWidget(getGuiLeft() + 10 + (23 * i), y, 18, 18, WarpstoneMain.getEffectsMap().effectMap.get(i), effectMuts.get(i)));
 		}
-	}
-
-	public static TranslationTextComponent getEffectWidgetName (EffectMutation parent){
-		EffectMutationInstance refInstance = parent.getInstance(Minecraft.getInstance().player);
-
-		int level = 0;
-
-		if (refInstance != null) {
-			refInstance.getMutationLevel();
-		}
-
-		return new TranslationTextComponent("mutations_screen.effect." + parent.getMutationName(level));
 	}
 
 	public MutationScreen(ITextComponent titleIn) {
@@ -99,6 +80,11 @@ public class MutationScreen extends Screen {
 		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
 
 		for (Widget w : widgets) {
+			if (w instanceof WarpWidget) {
+				WarpWidget w2 = (WarpWidget) w;
+				if (w2.contains(mouseX, mouseY)) w2.renderWarpToolTip(matrixStack, mouseX, mouseY, width, height, Minecraft.getInstance().fontRenderer);
+			}
+
 			w.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
 	}
@@ -127,7 +113,7 @@ public class MutationScreen extends Screen {
 
 
 		/*	ATTRIBUTE BAR	*/
-	class AttributeBar extends Widget {
+	class AttributeBar extends WarpWidget{
 		private final int frame;
 		private final String attributeName;
 		private final MutationScreen parentGui;
@@ -139,6 +125,18 @@ public class MutationScreen extends Screen {
 			frame = _frame;
 			attributeName = _attributeName;
 			parentGui = _parentGui;
+		}
+
+		@Override
+		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
+			List<ITextProperties> list = new ArrayList<>();
+			list.add((new TranslationTextComponent(attributeName)).mergeStyle(TextFormatting.WHITE));
+			String levelText = "+";
+			if (frame < 25) levelText = "-";
+
+			list.add((new StringTextComponent(levelText + frame + "%")).mergeStyle(TextFormatting.WHITE));
+
+			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
 		}
 
 		@Override
@@ -169,12 +167,27 @@ public class MutationScreen extends Screen {
 	}
 
 		/*	TEXT WIDGET	*/
-	class TextWidget extends Widget {
-		private final String value;
+	class InstabilityWidget extends WarpWidget {
+		private final int value;
+		private final int totalValue;
 
-		public TextWidget(int x, int y, int width, int height, String _value) {
+		public InstabilityWidget(int x, int y, int width, int height, int _value, int _totalValue) {
 			super(x, y, width, height, new TranslationTextComponent("mutation_screen.text_widget"));
 			value = _value;
+			totalValue = _totalValue;
+		}
+
+		@Override
+		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
+			List<ITextProperties> list = new ArrayList<>();
+
+			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.WHITE;
+
+			list.add((new TranslationTextComponent("mutation.screen.instability.name")).mergeStyle(TextFormatting.WHITE));
+			list.add((new TranslationTextComponent("Level: " + value)).mergeStyle(color));
+			list.add((new TranslationTextComponent("Total: " + totalValue)).mergeStyle(TextFormatting.WHITE));
+
+			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
 		}
 
 		@Override
@@ -189,19 +202,33 @@ public class MutationScreen extends Screen {
 
 			matrixStack.pop();
 
-			fontrenderer.drawText(matrixStack, new TranslationTextComponent(value), this.x, this.y, 0);
+			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.BLACK;
+
+			fontrenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 0);
 
 			blit(matrixStack, x, y, width, height, 0, 0);
 		}
 	}
 
 		/*	Effect Widget	*/
-	class EffectWidget extends Widget {
+	class EffectWidget extends WarpWidget {
 		private final EffectMutation parent;
+		private final int level;
 
-		public EffectWidget(int x, int y, int width, int height, EffectMutation _parent) {
-			super(x, y, width, height, getEffectWidgetName(_parent));
+		public EffectWidget(int x, int y, int width, int height, EffectMutation _parent, int _level) {
+			super(x, y, width, height, new TranslationTextComponent("mutation_screen." + _parent.getMutationName(_level)));
 			parent = _parent;
+			level = _level;
+		}
+
+		@Override
+		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
+			List<ITextProperties> list = new ArrayList<>();
+
+			list.add((new TranslationTextComponent(parent.getMutationName(level))).mergeStyle(TextFormatting.WHITE));
+			list.add((new TranslationTextComponent(parent.getMutationDesc(level))).mergeStyle(TextFormatting.WHITE));
+
+			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
 		}
 
 		@Override
@@ -211,7 +238,7 @@ public class MutationScreen extends Screen {
 
 			int i = 0;
 
-			if (parent.getInstance(Minecraft.getInstance().player) != null && parent.getInstance(Minecraft.getInstance().player).getMutationLevel() == -1) i = 18;
+			if (level == -1) i = 18;
 
 			RenderSystem.enableDepthTest();
 			blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 18, 36);
@@ -220,13 +247,40 @@ public class MutationScreen extends Screen {
 
 		/*	SCREEN TOGGLE BUTTON	*/
 	class ReturnButton extends WarpButton {
-			public ReturnButton(int x, int y, int width, int height, Screen _parentGui) {
-				super(x, y, width, height, _parentGui);
-			}
-
-			@Override
-			public void onPress() {
-				Minecraft.getInstance().displayGuiScreen(new InventoryScreen(Minecraft.getInstance().player));
-			}
+		public ReturnButton(int x, int y, int width, int height, Screen _parentGui) {
+			super(x, y, width, height, _parentGui);
 		}
+
+		@Override
+		public void onPress() {
+			Minecraft.getInstance().displayGuiScreen(new InventoryScreen(Minecraft.getInstance().player));
+		}
+	}
+
+	/*	TEXT WIDGET	*/
+	class TextWidget extends Widget {
+		private final String value;
+
+		public TextWidget(int x, int y, int width, int height, String _value) {
+			super(x, y, width, height, new TranslationTextComponent("mutation.screen." + _value));
+			value = _value;
+		}
+
+		@Override
+		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+			FontRenderer fontrenderer = minecraft.fontRenderer;
+			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+			RenderSystem.enableBlend();
+
+			matrixStack.push();
+
+			matrixStack.scale(4, 4, 4);
+
+			matrixStack.pop();
+
+			fontrenderer.drawText(matrixStack, new TranslationTextComponent("mutation.screen." + value), this.x, this.y, 0);
+
+			blit(matrixStack, x, y, width, height, 0, 0);
+		}
+	}
 }

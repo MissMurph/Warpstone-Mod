@@ -5,11 +5,8 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 
 public class VisibilityMutation extends EffectMutation implements IMutationTick {
@@ -18,7 +15,8 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 				WarpMutations.nameConst + "effect.invisibility",
 				WarpMutations.nameConst + "effect.glowing",
 				"visibility_icon.png",
-				"a2361e8f-1be0-478f-9742-a873400e9b6d");
+				"a2361e8f-1be0-478f-9742-a873400e9b6d",
+				Rarity.UNCOMMON);
 
 	}
 

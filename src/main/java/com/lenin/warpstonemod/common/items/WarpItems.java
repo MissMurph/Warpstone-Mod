@@ -8,8 +8,9 @@ import net.minecraftforge.fml.RegistryObject;
 
 public class WarpItems {
     public static final RegistryObject<Item> WARPSTONE_SHARD = Registration.ITEMS.register("warpstone_shard", ()
-            -> new Item(new Item.Properties()
-            .group(WarpstoneMain.MOD_GROUP)));
+            -> new WarpstoneShard(new Item.Properties()
+            .group(WarpstoneMain.MOD_GROUP)
+            .food(WarpFoods.WARPSTONE_SHARD)));
 
     public static final RegistryObject<Item> WARPSTONE_DUST = Registration.ITEMS.register("warpstone_dust", ()
             -> new WarpstoneDust(new Item.Properties()

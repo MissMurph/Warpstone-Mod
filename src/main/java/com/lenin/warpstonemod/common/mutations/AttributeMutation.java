@@ -53,7 +53,7 @@ public class AttributeMutation{
 
 
 	public String getMutationName() {
-		return getMutationType();
+		return name;
 	}
 
 	public String getMutationType() {

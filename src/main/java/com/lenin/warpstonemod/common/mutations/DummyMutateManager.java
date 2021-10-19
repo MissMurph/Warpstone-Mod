@@ -1,10 +1,12 @@
 package com.lenin.warpstonemod.common.mutations;
 
+import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class DummyMutateManager extends MutateManager{
 	}
 
 	@Override
-	public void mutate() { }
+	public void mutate(IWarpstoneConsumable item) { }
 
 	@Override
 	protected EffectMutation getRandomEffectMut() {
@@ -44,7 +46,7 @@ public class DummyMutateManager extends MutateManager{
 	@Override
 	public List<Integer> getEffectMutations() {
 		System.out.println("Dummy Manager is being Called!");
-		return effectMutations;
+		return new ArrayList<>();
 	}
 
 	@Override

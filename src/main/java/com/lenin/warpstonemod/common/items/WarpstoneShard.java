@@ -7,12 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class WarpstoneDust extends Item implements IWarpstoneConsumable{
-	public WarpstoneDust(Properties properties) {
+public class WarpstoneShard extends Item implements IWarpstoneConsumable{
+	public WarpstoneShard(Properties properties) {
 		super(properties);
 	}
 
-	protected final int corruptionValue = 20;
+	private final int corruptionValue = 50;
 
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
@@ -34,6 +34,6 @@ public class WarpstoneDust extends Item implements IWarpstoneConsumable{
 
 	@Override
 	public boolean canBeConsumed() {
-		return true;
+		return false;
 	}
 }
