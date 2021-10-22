@@ -11,10 +11,12 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelp
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.FolderName;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -59,6 +61,7 @@ public class CommonProxy {
 		bus.addListener(this::onPlayerDisconnect);
 
 		bus.addListener(this::onPlayerItemUse);
+		bus.addListener(this::onPlayerDeath);
 
 		tickManager.attachListeners(bus);
 	}
@@ -95,6 +98,16 @@ public class CommonProxy {
 			if (!item.canBeConsumed()) {
 				event.setCanceled(true);
 			}
+		}
+	}
+
+	public void onPlayerDeath (LivingDeathEvent event){
+		if (event.getEntityLiving() instanceof PlayerEntity) {
+			PlayerEntity p = (PlayerEntity) event.getEntityLiving();
+
+			MutateManager m = MutateHelper.getManager(p);
+
+			if (m != null) m.resetMutations(event);
 		}
 	}
 

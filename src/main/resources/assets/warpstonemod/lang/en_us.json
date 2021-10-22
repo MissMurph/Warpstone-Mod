@@ -5,14 +5,17 @@
   "block.warpstonemod.warpstone_ore": "Warpstone Ore",
   "block.warpstonemod.warpstone_block": "Warpstone Block",
   "itemGroup.warpstone": "Warpstone",
+
   "mutation.screen.instability": "Instability",
   "mutation.screen.instability.name": "Instability",
+  "mutation.screen.corruption": "Corruption",
+  "mutation.screen.corruption.name": "Corruption",
 
   "mutation.attribute.name.generic.max_health": "Max Health",
   "mutation.attribute.name.generic.attack_damage": "Attack Damage",
   "mutation.attribute.name.generic.movement_speed": "Move Speed",
   "mutation.attribute.name.generic.armor": "Armor",
-  "mutation.attribute.name.generic.armor_touchness": "Armor Toughness",
+  "mutation.attribute.name.generic.armor_toughness": "Armor Toughness",
   "mutation.attribute.mining_speed": "Mining Speed",
 
   "mutation.effect.slow_falling": "Slow Falling",

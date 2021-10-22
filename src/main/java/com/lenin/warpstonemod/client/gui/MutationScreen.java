@@ -42,10 +42,13 @@ public class MutationScreen extends Screen {
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 
-		widgets.add(new InstabilityWidget(this.guiLeft + 130, guiTop + 82, 25, 25, MutateHelper.getClientManager().getInstabilityLevel(), MutateHelper.getClientManager().getInstability()));
-		widgets.add(new TextWidget(this.guiLeft + 120, guiTop + 68, 25, 25, "instability"));
+		widgets.add(new InstabilityWidget(this.guiLeft + 133, guiTop + 79, 25, 25, MutateHelper.getClientManager().getInstabilityLevel(), MutateHelper.getClientManager().getInstability()));
+		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 64, 25, 25, "instability"));
 
-		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 125, 20, 18, this);
+		widgets.add(new CorruptionWidget(this.guiLeft + 133, guiTop + 121, 25, 25, MutateHelper.getClientManager().getCorruptionLevel(), MutateHelper.getClientManager().getCorruption()));
+		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 103, 25, 25, "corruption"));
+
+		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 144, 20, 18, this);
 		widgets.add(returnButton);
 		addButton(returnButton);
 
@@ -58,10 +61,12 @@ public class MutationScreen extends Screen {
 			widgets.add(new AttributeBar(getGuiLeft() + 13 + (17 * i), getGuiTop() + 60, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationName(), this));
 		}
 
-		for (int i : effectMuts.keySet()) {
+		List<Integer> idList = new ArrayList<>(effectMuts.keySet());
+
+		for (int i = 0; i < idList.size(); i++) {
 			int y = getGuiTop() + 10;
 			if (i > 7) y += 24;
-			widgets.add(new EffectWidget(getGuiLeft() + 10 + (23 * i), y, 18, 18, WarpstoneMain.getEffectsMap().effectMap.get(i), effectMuts.get(i)));
+			widgets.add(new EffectWidget(getGuiLeft() + 10 + (23 * i), y, 18, 18, WarpstoneMain.getEffectsMap().effectMap.get(idList.get(i)), effectMuts.get(idList.get(i))));
 		}
 	}
 
@@ -166,7 +171,7 @@ public class MutationScreen extends Screen {
 		}
 	}
 
-		/*	TEXT WIDGET	*/
+		/*	INSTABILITY WIDGET	*/
 	class InstabilityWidget extends WarpWidget {
 		private final int value;
 		private final int totalValue;
@@ -184,6 +189,50 @@ public class MutationScreen extends Screen {
 			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.WHITE;
 
 			list.add((new TranslationTextComponent("mutation.screen.instability.name")).mergeStyle(TextFormatting.WHITE));
+			list.add((new TranslationTextComponent("Level: " + value)).mergeStyle(color));
+			list.add((new TranslationTextComponent("Total: " + totalValue)).mergeStyle(TextFormatting.WHITE));
+
+			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
+		}
+
+		@Override
+		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+			FontRenderer fontrenderer = minecraft.fontRenderer;
+			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+			RenderSystem.enableBlend();
+
+			matrixStack.push();
+
+			matrixStack.scale(2, 2, 2);
+
+			matrixStack.pop();
+
+			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.BLACK;
+
+			fontrenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 0);
+
+			blit(matrixStack, x, y, width, height, 0, 0);
+		}
+	}
+
+		/*	CORRUPTION WIDGET	*/
+	class CorruptionWidget extends WarpWidget {
+		private final int value;
+		private final int totalValue;
+
+		public CorruptionWidget(int x, int y, int width, int height, int _value, int _totalValue) {
+			super(x, y, width, height, new TranslationTextComponent("mutation_screen.text_widget"));
+			value = _value;
+			totalValue = _totalValue;
+		}
+
+		@Override
+		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
+			List<ITextProperties> list = new ArrayList<>();
+
+			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.WHITE;
+
+			list.add((new TranslationTextComponent("mutation.screen.corruption.name")).mergeStyle(TextFormatting.WHITE));
 			list.add((new TranslationTextComponent("Level: " + value)).mergeStyle(color));
 			list.add((new TranslationTextComponent("Total: " + totalValue)).mergeStyle(TextFormatting.WHITE));
 

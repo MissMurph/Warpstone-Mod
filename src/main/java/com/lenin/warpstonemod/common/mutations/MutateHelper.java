@@ -25,16 +25,15 @@ public class MutateHelper {
 
     protected static List<MutateManager> managers = new ArrayList<MutateManager>();
 
+    public static MutateManager getManager (LivingEntity e) {
+        return getManager(e.getUniqueID());
+    }
+
     public static MutateManager getManager (UUID playerUUID){
         for (MutateManager m : managers) {
             if (m.getParentEntity().getUniqueID() == playerUUID)
-                return m; }
-        return null;
-    }
-
-    public static MutateManager getManager (LivingEntity e) {
-        for (MutateManager m : managers) { if (m.getParentEntity() == e) return m; }
-
+                return m;
+        }
         return null;
     }
 

@@ -69,4 +69,9 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 		entity.setInvisible(false);
 		entity.setGlowing(false);
 	}
+
+	@Override
+	public boolean canApplyMutation(int corruptionLevel) {
+		return corruptionLevel >= 2;
+	}
 }

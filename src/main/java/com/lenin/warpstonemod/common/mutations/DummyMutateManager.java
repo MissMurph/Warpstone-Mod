@@ -35,7 +35,7 @@ public class DummyMutateManager extends MutateManager{
 	public void loadFromNBT(CompoundNBT nbt) { System.out.println("Dummy Manager is being Called!"); }
 
 	@Override
-	public void resetMutations() { System.out.println("Dummy Manager is being Called!"); }
+	public void resetMutations(Object... context) { System.out.println("Dummy Manager is being Called!"); }
 
 	@Override
 	public List<AttributeMutation> getAttributeMutations() {

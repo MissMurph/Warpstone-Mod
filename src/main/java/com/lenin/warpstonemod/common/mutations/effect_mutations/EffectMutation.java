@@ -87,6 +87,10 @@ public abstract class EffectMutation {
 		}
 	}
 
+	public boolean canApplyMutation (int corruptionLevel){
+		return corruptionLevel >= 1;
+	}
+
 	public EffectMutationInstance getInstance (LivingEntity entity) {
 		return getInstance(entity.getUniqueID());
 	}

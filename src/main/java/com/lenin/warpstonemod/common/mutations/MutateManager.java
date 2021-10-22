@@ -6,6 +6,8 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import java.util.*;
 
@@ -17,10 +19,12 @@ public class MutateManager {
     protected CompoundNBT mutData;
 
     protected int instability;
+    protected int corruption;
 
     public MutateManager (LivingEntity _parentEntity){
         parentEntity = _parentEntity;
         instability = 0;
+        corruption = 0;
 
         if (_parentEntity == null) return;
 
@@ -36,27 +40,36 @@ public class MutateManager {
     public void mutate(IWarpstoneConsumable item){
         boolean hasEffectBeenCreated = false;
 
-        int instabilityValue = item.getCorruptionValue() + (int) Math.floor(item.getCorruptionValue() * ((double)getInstability() / 100));
-
         //Loop over every point of instablity and apply levels, no negatives if no instablity
         for (int i = 0; i < getInstabilityLevel() + 1; i++) {
-            if (!hasEffectBeenCreated && effectMutations.size() < WarpstoneMain.getEffectsMap().getMapSize() && WarpstoneMain.getRandom().nextInt(100) > 75) {
+            boolean canMutateAttribute = true;
+
+            if (!hasEffectBeenCreated && WarpstoneMain.getRandom().nextInt(100) > 85) {
                 EffectMutation mut = getRandomEffectMut();
 
-                effectMutations.put(mut.getMutationID(), mut.getInstance(this.parentEntity).getMutationLevel());
-                mut.applyMutation(parentEntity);
+                if (mut != null) {
+                    effectMutations.put(mut.getMutationID(), mut.getInstance(this.parentEntity).getMutationLevel());
+                    mut.applyMutation(parentEntity);
 
-                hasEffectBeenCreated = true;
-            } else {
-                attributeMutations.get(WarpstoneMain.getRandom().nextInt(attributeMutations.size())).changeLevel(5);
+                    hasEffectBeenCreated = true;
+                    canMutateAttribute = false;
+                }
             }
+
+            if (canMutateAttribute) attributeMutations.get(WarpstoneMain.getRandom().nextInt(attributeMutations.size())).changeLevel(5);
 
             if (i > 0) {
                 attributeMutations.get(WarpstoneMain.getRandom().nextInt(attributeMutations.size())).changeLevel(-5);
             }
         }
 
+        int instabilityValue = item.getCorruptionValue() + (int) Math.round(item.getCorruptionValue() * (
+                (double)getInstability() / 100) * (double)(WarpstoneMain.getRandom().nextInt((getCorruptionLevel() + 2) * 10) / 100)
+        );
+        int corruptionValue = Math.round(instabilityValue * (getInstabilityLevel() /10f));
+
         instability += instabilityValue;
+        corruption += corruptionValue;
         mutData = serialize();
 
         MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
@@ -64,6 +77,13 @@ public class MutateManager {
 
     protected EffectMutation getRandomEffectMut () {
         if (effectMutations.size() >= WarpstoneMain.getEffectsMap().getMapSize()) return null;
+        List<EffectMutation> legalList = new ArrayList<>();
+
+        for (EffectMutation e : WarpstoneMain.getEffectsMap().getMap().values()) {
+            if (e.canApplyMutation(getCorruptionLevel())) legalList.add(e);
+        }
+
+        if (legalList.isEmpty()) return null;
 
         while (true) {
             int i = WarpstoneMain.getRandom().nextInt(WarpstoneMain.getEffectsMap().getMapSize());
@@ -80,6 +100,7 @@ public class MutateManager {
         CompoundNBT out = new CompoundNBT();
         out.putUniqueId("player", parentEntity.getUniqueID());
         out.putInt("instability", getInstability());
+        out.putInt("corruption", getCorruption());
 
         for (AttributeMutation mut : getAttributeMutations()) {
             out.putInt(mut.getMutationType(), mut.getMutationLevel());
@@ -99,6 +120,7 @@ public class MutateManager {
 
     public void loadFromNBT (CompoundNBT nbt) {
         instability = nbt.getInt("instability");
+        corruption = nbt.getInt("corruption");
         mutData = nbt;
 
         for (AttributeMutation mut : getAttributeMutations()) {
@@ -119,16 +141,17 @@ public class MutateManager {
         }
 
         for (int i : deletion) {
-            effectMutations.remove((Integer) i);
+            effectMutations.remove(i);
         }
     }
 
-    public void resetMutations () {
+    public void resetMutations (Object... context) {
         for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
 
         for (int i : effectMutations.keySet()) { getEffect(i).clearInstance(this.parentEntity); }
         effectMutations.clear();
 
+        if (!(context[0] instanceof LivingDeathEvent)) corruption = 0;
         instability = 0;
         mutData = serialize();
 
@@ -157,6 +180,25 @@ public class MutateManager {
 
     public int getInstabilityLevel (){
         return (int) Math.floor((double) (instability) / 100);
+    }
+
+    public int getCorruption () {
+        return corruption;
+    }
+
+    public int getCorruptionLevel (){
+        int threshold = 0;
+
+        for (int i = 0; i < 10; i++) {
+            threshold +=  i * (125 * (i + 1)) + 750;
+
+            if (threshold > corruption) {
+                if (i < 1) return 0;
+                return 1;
+            }
+        }
+
+        return 0;
     }
 
     public CompoundNBT getMutData () {
