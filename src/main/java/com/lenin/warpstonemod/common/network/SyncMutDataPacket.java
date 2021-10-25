@@ -21,17 +21,12 @@ public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
 
 	public SyncMutDataPacket (UUID _playerUUID, CompoundNBT _data) {
 		data = _data;
-		//playerUUID = _playerUUID;
-
-		//System.out.println("UUID: " + playerUUID.toString() + "   Data: " + data.getInt("instability"));
 	}
 
 	@Nonnull
 	@Override
 	public Encoder<SyncMutDataPacket> encoder() {
 		return (packet, buffer) -> {
-			//ByteBufUtils.writeUUID(buffer, playerUUID);
-
 			ByteBufUtils.writeNBT(buffer, packet.data);
 		};
 	}
@@ -41,8 +36,6 @@ public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
 	public Decoder<SyncMutDataPacket> decoder() {
 		return buffer -> {
 			SyncMutDataPacket pkt = new SyncMutDataPacket();
-
-			//pkt.playerUUID = ByteBufUtils.readUUID(buffer);
 			pkt.data = ByteBufUtils.readNBT(buffer);
 
 			return pkt;

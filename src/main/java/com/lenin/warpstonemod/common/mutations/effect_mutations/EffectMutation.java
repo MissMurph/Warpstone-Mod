@@ -1,10 +1,14 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.mutations.MutateManager;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,28 +18,26 @@ import java.util.Map;
 import java.util.UUID;
 
 public abstract class EffectMutation {
-	protected final String posName, negName;
+	protected final String mutName;
 	protected final int id;
 	protected ResourceLocation resourceLocation;
 	protected final UUID uuid;
-	protected String posDescription, negDescription;
+	protected String mutDescription;
 
 	protected Rarity rarity;
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
-	protected EffectMutation(int _id, String _posName, String _negName, String resName, String _uuid, Rarity rarity) {
+	protected EffectMutation(int _id, String _mutName, String resName, String _uuid, Rarity rarity) {
 		uuid = UUID.fromString(_uuid);
-		posName = _posName;
-		negName = _negName;
+		mutName = _mutName;
 		id = _id;
 
-		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/" + resName);
+		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + resName);
 
 		attachListeners(MinecraftForge.EVENT_BUS);
 
-		posDescription = posName + ".desc";
-		negDescription = negName + ".desc";
+		mutDescription = mutName + ".desc";
 	}
 
 	public abstract void attachListeners(IEventBus bus);
@@ -65,31 +67,17 @@ public abstract class EffectMutation {
 		instanceMap.remove(entity.getUniqueID());
 	}
 
-	public String getMutationName(int level) {
-		switch (level) {
-			case -1:
-				return negName;
-			case 1:
-				return posName;
-			default:
-				return "null";
-		}
+		//When overriding do NOT call Super, no need to override unless differing from standard format
+	public IFormattableTextComponent getMutationName() {
+		return new TranslationTextComponent(mutName).mergeStyle(TextFormatting.WHITE);
 	}
 
-	public String getMutationDesc(int level) {
-		switch (level) {
-			case -1:
-				return negDescription;
-			case 1:
-				return posDescription;
-			default:
-				return "null";
-		}
+		//When overriding do NOT call Super, no need to override unless differing from standard format
+	public IFormattableTextComponent getMutationDesc() {
+		return new TranslationTextComponent(mutDescription).mergeStyle(TextFormatting.WHITE);
 	}
 
-	public boolean canApplyMutation (int corruptionLevel){
-		return corruptionLevel >= 1;
-	}
+	public abstract boolean isLegalMutation(MutateManager manager);
 
 	public EffectMutationInstance getInstance (LivingEntity entity) {
 		return getInstance(entity.getUniqueID());
@@ -99,14 +87,14 @@ public abstract class EffectMutation {
 		return instanceMap.getOrDefault(playerUUID, null);
 	}
 
-	public EffectMutationInstance putInstance (LivingEntity entity, int mutationLevel) {
-		EffectMutationInstance instance = new EffectMutationInstance(this, mutationLevel, entity);
+	public EffectMutationInstance putInstance (LivingEntity entity) {
+		EffectMutationInstance instance = new EffectMutationInstance(this, entity);
 
 		instanceMap.put(entity.getUniqueID(), instance);
 		return instance;
 	}
 
-	public void putClientInstance (LivingEntity entity, int mutationLevel){}
+	public void putClientInstance (LivingEntity entity){}
 
 	public ResourceLocation getTexture () {
 		return resourceLocation;

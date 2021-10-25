@@ -1,28 +1,26 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.LogicalSide;
 
-public class VisionMutation extends EffectMutation implements IMutationTick {
-	public VisionMutation(int _id) {
+public class BlindnessMutation extends EffectMutation {
+	public BlindnessMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.night_vision",
 				WarpMutations.nameConst + "effect.blindness",
-				"vision_icon.png",
-				"ba2f092b-76d6-4d71-85ba-51becadb4d19",
+				"blindness.png",
+				"0d988324-bfef-4dd4-87a7-647364829c44",
 				Rarity.COMMON);
 	}
 
@@ -44,30 +42,10 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 		if (instanceMap.containsKey(entity.getUniqueID())) instanceMap.remove(entity.getUniqueID());
 	}
 
-	@Override
-	public void mutationTick(PlayerEntity player, LogicalSide side) {
-		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || !instanceMap.get(player.getUniqueID()).isActive()) return;
-
-		EffectMutationInstance instance = instanceMap.get(player.getUniqueID());
-
-		if (instance.getMutationLevel() == 1) {
-			if (player.isPotionActive(Effects.NIGHT_VISION)) {
-				for (EffectInstance e : player.getActivePotionEffects()) {
-					if (e.getPotion() == Effects.NIGHT_VISION && e.getDuration() < 1200) {
-						player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 3600, 0, false, false));
-					}
-				}
-			}
-			else {
-				player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 3600, 0, false, false));
-			}
-		}
-	}
-
 	@OnlyIn(Dist.CLIENT)
 	public void onRenderFog (EntityViewRenderEvent.FogDensity event) {
 		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID()) ||
-				instanceMap.get(Minecraft.getInstance().player.getUniqueID()).getMutationLevel() != -1 ||
+				!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID()) ||
 				!instanceMap.get(Minecraft.getInstance().player.getUniqueID()).isActive()) return;
 
 		float density = event.getDensity();
@@ -81,10 +59,15 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void putClientInstance(LivingEntity entity, int mutationLevel) {
-		super.putClientInstance(entity, mutationLevel);
+	public void putClientInstance(LivingEntity entity) {
+		super.putClientInstance(entity);
 
-		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), new EffectMutationInstance(this, mutationLevel, Minecraft.getInstance().player));
+		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), new EffectMutationInstance(this, Minecraft.getInstance().player));
+	}
+
+	@Override
+	public IFormattableTextComponent getMutationName() {
+		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override
@@ -93,13 +76,6 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 
 		if (entity.world.isRemote()) {
 			instanceMap.get(Minecraft.getInstance().player.getUniqueID()).setActive(true);
-			return;
-		}
-
-		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
-
-		if (mut.getMutationLevel() == 1) {
-			entity.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 1200, 0, false, false));
 		}
 	}
 
@@ -109,9 +85,11 @@ public class VisionMutation extends EffectMutation implements IMutationTick {
 
 		if (entity.world.isRemote()) {
 			instanceMap.get(Minecraft.getInstance().player.getUniqueID()).setActive(false);
-			return;
 		}
+	}
 
-		entity.removePotionEffect(Effects.NIGHT_VISION);
+	@Override
+	public boolean isLegalMutation(MutateManager manager) {
+		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.NIGHT_VISION);
 	}
 }

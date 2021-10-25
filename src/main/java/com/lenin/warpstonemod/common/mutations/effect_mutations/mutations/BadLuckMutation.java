@@ -1,21 +1,24 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class LuckMutation extends EffectMutation {
-	public LuckMutation (int _id) {
+public class BadLuckMutation extends EffectMutation {
+	public BadLuckMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.good_luck",
 				WarpMutations.nameConst + "effect.bad_luck",
-				"luck_icon.png",
-				"a2361e8f-1be0-478f-9742-a873400e9b6d",
+				"bad_luck.png",
+				"0942e8e9-295a-430f-9988-5537e4010648",
 				Rarity.COMMON);
 	}
 
@@ -35,10 +38,7 @@ public class LuckMutation extends EffectMutation {
 
 		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
 
-		if (mut.getMutationLevel() == 1) mut.getParent()
-				.getAttribute(Attributes.LUCK)
-				.applyNonPersistentModifier(new AttributeModifier(uuid, "mutation.good_luck", 1.0D, AttributeModifier.Operation.ADDITION));
-		if (mut.getMutationLevel() == -1) mut.getParent()
+		mut.getParent()
 				.getAttribute(Attributes.LUCK)
 				.applyNonPersistentModifier(new AttributeModifier(uuid, "mutation.bad_luck", -1.0D, AttributeModifier.Operation.ADDITION));
 	}
@@ -52,5 +52,15 @@ public class LuckMutation extends EffectMutation {
 		instanceMap.get(entity.getUniqueID()).getParent()
 				.getAttribute(Attributes.LUCK)
 				.removeModifier(uuid);
+	}
+
+	@Override
+	public IFormattableTextComponent getMutationName() {
+		return super.getMutationName().mergeStyle(TextFormatting.RED);
+	}
+
+	@Override
+	public boolean isLegalMutation(MutateManager manager) {
+		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.GOOD_LUCK);
 	}
 }

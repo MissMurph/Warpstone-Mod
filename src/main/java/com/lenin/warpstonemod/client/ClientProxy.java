@@ -21,7 +21,7 @@ public class ClientProxy extends CommonProxy {
 		bus.addListener(this::guiPostInit);
 
 		for (int i = 0; i < WarpstoneMain.getEffectsMap().getMap().size(); i++) {
-			WarpstoneMain.getEffectsMap().getMap().get(i).attachClientListeners(bus);
+			WarpstoneMain.getEffectsMap().getEffectMutation(i).attachClientListeners(bus);
 		}
 	}
 

@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.mutations.*;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 
@@ -11,17 +11,13 @@ public class EffectsMap {
 	public Map<Integer, EffectMutation> effectMap = new Object2ObjectArrayMap<>();
 
 	public void init(){
-		registerEffect(new VisibilityMutation(0));
-		registerEffect(new VisionMutation(1));
-		registerEffect(new JumpMutation(2));
-		registerEffect(new LuckMutation(3));
-		registerEffect(new FallingMutation(4));
+		EffectMutations.init();
 	}
 
-	public EffectMutation constructInstance (int key, LivingEntity parent, int mutationLevel){
+	public EffectMutation constructInstance (int key, LivingEntity parent){
 		EffectMutation mut = effectMap.get(key);
-		if (parent.world.isRemote) mut.putClientInstance(parent, mutationLevel);
-		else mut.putInstance(parent, mutationLevel);
+		if (parent.world.isRemote) mut.putClientInstance(parent);
+		else mut.putInstance(parent);
 		return mut;
 	}
 
@@ -37,5 +33,13 @@ public class EffectsMap {
 
 	public Map<Integer, EffectMutation> getMap () {
 		return effectMap;
+	}
+
+	public EffectMutation getEffectMutation (EffectMutation mut) {
+		return getEffectMutation(mut.getMutationID());
+	}
+
+	public EffectMutation getEffectMutation (int id) {
+		return effectMap.get(id);
 	}
 }

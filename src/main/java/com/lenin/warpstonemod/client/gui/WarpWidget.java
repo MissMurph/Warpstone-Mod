@@ -3,10 +3,10 @@ package com.lenin.warpstonemod.client.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class WarpWidget extends Widget {

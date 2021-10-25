@@ -7,9 +7,11 @@
   "itemGroup.warpstone": "Warpstone",
 
   "mutation.screen.instability": "Instability",
-  "mutation.screen.instability.name": "Instability",
   "mutation.screen.corruption": "Corruption",
-  "mutation.screen.corruption.name": "Corruption",
+  "warpstone.screen.generic.level": "Level:",
+  "warpstone.screen.generic.total": "Total:",
+
+  "warpstone.consumable.wither_risk": "Wither Risk:",
 
   "mutation.attribute.name.generic.max_health": "Max Health",
   "mutation.attribute.name.generic.attack_damage": "Attack Damage",

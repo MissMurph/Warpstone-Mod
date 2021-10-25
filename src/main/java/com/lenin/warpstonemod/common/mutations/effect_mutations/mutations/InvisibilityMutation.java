@@ -1,7 +1,9 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,12 +11,11 @@ import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-public class VisibilityMutation extends EffectMutation implements IMutationTick {
-	public VisibilityMutation(int _id) {
+public class InvisibilityMutation extends EffectMutation implements IMutationTick {
+	public InvisibilityMutation(int _id) {
 		super(_id,
 				WarpMutations.nameConst + "effect.invisibility",
-				WarpMutations.nameConst + "effect.glowing",
-				"visibility_icon.png",
+				"invisibility.png",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d",
 				Rarity.UNCOMMON);
 
@@ -32,17 +33,9 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
-		if (side == LogicalSide.CLIENT ||
-				!instanceMap.containsKey(player.getUniqueID()) ||
-				!instanceMap.get(player.getUniqueID()).isActive()) return;
+		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || !instanceMap.get(player.getUniqueID()).isActive()) return;
 
-		if (instanceMap.get(player.getUniqueID()).getMutationLevel() == 1) {
-			if (!player.isInvisible()) player.setInvisible(true);
-		}
-
-		if (instanceMap.get(player.getUniqueID()).getMutationLevel() == 1) {
-			if (!player.isGlowing()) player.setInvisible(true);
-		}
+		if (!player.isInvisible()) player.setInvisible(true);
 	}
 
 	@Override
@@ -51,13 +44,7 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 
 		if (entity.world.isRemote()) return;
 
-		if (instanceMap.get(entity.getUniqueID()).getMutationLevel() == 1) {
-			entity.setInvisible(true);
-		}
-
-		if (instanceMap.get(entity.getUniqueID()).getMutationLevel() == -1) {
-			entity.setGlowing(true);
-		}
+		entity.setInvisible(true);
 	}
 
 	@Override
@@ -67,11 +54,10 @@ public class VisibilityMutation extends EffectMutation implements IMutationTick 
 		if (entity.world.isRemote()) return;
 
 		entity.setInvisible(false);
-		entity.setGlowing(false);
 	}
 
 	@Override
-	public boolean canApplyMutation(int corruptionLevel) {
-		return corruptionLevel >= 2;
+	public boolean isLegalMutation(MutateManager manager) {
+		return manager.getCorruptionLevel() >= 2 && !manager.containsEffect(EffectMutations.GLOWING);
 	}
 }

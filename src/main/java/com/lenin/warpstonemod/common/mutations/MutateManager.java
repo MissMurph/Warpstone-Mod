@@ -5,16 +5,16 @@ import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MutateManager {
     protected final LivingEntity parentEntity;
     protected final List<AttributeMutation> attributeMutations = new ArrayList<>();
-    protected Map<Integer, Integer> effectMutations = new HashMap<>();
+    protected List<Integer> effectMutations = new ArrayList<>();
 
     protected CompoundNBT mutData;
 
@@ -48,7 +48,7 @@ public class MutateManager {
                 EffectMutation mut = getRandomEffectMut();
 
                 if (mut != null) {
-                    effectMutations.put(mut.getMutationID(), mut.getInstance(this.parentEntity).getMutationLevel());
+                    effectMutations.add(mut.getMutationID());
                     mut.applyMutation(parentEntity);
 
                     hasEffectBeenCreated = true;
@@ -61,6 +61,12 @@ public class MutateManager {
             if (i > 0) {
                 attributeMutations.get(WarpstoneMain.getRandom().nextInt(attributeMutations.size())).changeLevel(-5);
             }
+        }
+
+        double witherRisk = getWitherRisk(item.getCorruptionValue());
+        if (Math.random() > 1f - witherRisk) {
+            int duration = WarpstoneMain.getRandom().nextInt((int) Math.round(800 * witherRisk));
+            parentEntity.addPotionEffect(new EffectInstance(Effects.WITHER, duration));
         }
 
         int instabilityValue = item.getCorruptionValue() + (int) Math.round(item.getCorruptionValue() * (
@@ -80,20 +86,13 @@ public class MutateManager {
         List<EffectMutation> legalList = new ArrayList<>();
 
         for (EffectMutation e : WarpstoneMain.getEffectsMap().getMap().values()) {
-            if (e.canApplyMutation(getCorruptionLevel())) legalList.add(e);
+            if (!containsEffect(e) && e.isLegalMutation(this)) legalList.add(e);
         }
 
         if (legalList.isEmpty()) return null;
 
-        while (true) {
-            int i = WarpstoneMain.getRandom().nextInt(WarpstoneMain.getEffectsMap().getMapSize());
-
-            if (!containsEffect(i)) {
-                int i2 = WarpstoneMain.getRandom().nextBoolean() ? 1 : -1;
-
-                return WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity, i2);
-            }
-        }
+        int i = WarpstoneMain.getRandom().nextInt(legalList.size());
+        return WarpstoneMain.getEffectsMap().constructInstance(legalList.get(i).getMutationID(), parentEntity);
     }
 
     protected CompoundNBT serialize (){
@@ -106,12 +105,7 @@ public class MutateManager {
             out.putInt(mut.getMutationType(), mut.getMutationLevel());
         }
 
-        List<Integer> classList = new ArrayList<>();
-
-        for (int i : effectMutations.keySet()) {
-            classList.add(i);
-            out.putInt(String.valueOf(i), getEffect(i).getInstance(parentEntity).getMutationLevel());
-        }
+        List<Integer> classList = new ArrayList<>(effectMutations);
 
         out.putIntArray("effect_mutations", classList);
 
@@ -128,30 +122,30 @@ public class MutateManager {
         }
 
         int[] array = nbt.getIntArray("effect_mutations");
-        List<Integer> deletion = new ArrayList<>(effectMutations.keySet());
+        List<Integer> deletion = new ArrayList<>(effectMutations);
 
         for (int i : array) {
             if (containsEffect(i)) { deletion.remove((Integer) i); continue; }
-            effectMutations.put(i, nbt.getInt(String.valueOf(i)));
+            effectMutations.add(i);
 
             if (!parentEntity.world.isRemote()) {
-                EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity, nbt.getInt(String.valueOf(i)));
+                EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity);
                 mut.applyMutation(parentEntity);
             }
         }
 
         for (int i : deletion) {
-            effectMutations.remove(i);
+            effectMutations.remove((Integer) i);
         }
     }
 
-    public void resetMutations (Object... context) {
+    public void resetMutations (boolean death) {
         for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
 
-        for (int i : effectMutations.keySet()) { getEffect(i).clearInstance(this.parentEntity); }
+        for (int i : effectMutations) { getEffect(i).clearInstance(this.parentEntity); }
         effectMutations.clear();
 
-        if (!(context[0] instanceof LivingDeathEvent)) corruption = 0;
+        if (!death) corruption = 0;
         instability = 0;
         mutData = serialize();
 
@@ -163,11 +157,7 @@ public class MutateManager {
     }
 
     public List<Integer> getEffectMutations (){
-            return new ArrayList<>(effectMutations.keySet());
-    }
-
-    public Map<Integer, Integer> getEffectLevelsMap (){
-        return effectMutations;
+            return new ArrayList<>(effectMutations);
     }
 
     public LivingEntity getParentEntity (){
@@ -201,6 +191,16 @@ public class MutateManager {
         return 0;
     }
 
+    public double getWitherRisk (int corruptionValue) {
+        //System.out.println(getInstabilityLevel() + "   " + (double)getInstabilityLevel() / 10);
+        //System.out.println(getInstabilityLevel() + "   " + (double)getCorruptionLevel() / 10);
+
+        double value =  (((double) corruptionValue / 100f) * (((double) getInstabilityLevel() / 10 - 0.3) - (double) getCorruptionLevel() / 10));
+
+        if (value < 0) return 0;
+        return value;
+    }
+
     public CompoundNBT getMutData () {
         if (mutData == null) System.out.println("Getting the NBT from Manager returns null");
         return mutData;
@@ -209,7 +209,7 @@ public class MutateManager {
     public void unload() {
         saveData();
 
-        for (int i : effectMutations.keySet()) {
+        for (int i : effectMutations) {
             getEffect(i).clearInstance(this.parentEntity);
         }
 
@@ -224,11 +224,15 @@ public class MutateManager {
     }
 
     private EffectMutation getEffect (int id) {
-        return WarpstoneMain.getEffectsMap().getMap().get(id);
+        return WarpstoneMain.getEffectsMap().getEffectMutation(id);
+    }
+
+    public boolean containsEffect (EffectMutation mut) {
+        return containsEffect(mut.getMutationID());
     }
 
     public boolean containsEffect (int id) {
-        for (int i : effectMutations.keySet()) {
+        for (int i : effectMutations) {
             if (i == id) return true;
         }
         return false;

@@ -2,7 +2,6 @@ package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -35,7 +34,7 @@ public class DummyMutateManager extends MutateManager{
 	public void loadFromNBT(CompoundNBT nbt) { System.out.println("Dummy Manager is being Called!"); }
 
 	@Override
-	public void resetMutations(Object... context) { System.out.println("Dummy Manager is being Called!"); }
+	public void resetMutations(boolean death) { System.out.println("Dummy Manager is being Called!"); }
 
 	@Override
 	public List<AttributeMutation> getAttributeMutations() {
