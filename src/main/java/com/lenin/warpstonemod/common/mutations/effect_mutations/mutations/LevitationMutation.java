@@ -18,7 +18,7 @@ import net.minecraftforge.fml.LogicalSide;
 public class LevitationMutation extends EffectMutation implements IMutationTick {
 	public LevitationMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.levitation",
+				"levitation",
 				"levitation.png",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
 				Rarity.COMMON);

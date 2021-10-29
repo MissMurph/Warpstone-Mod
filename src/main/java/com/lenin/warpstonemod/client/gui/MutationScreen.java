@@ -62,8 +62,12 @@ public class MutationScreen extends Screen {
 
 		for (int i = 0; i < effectMuts.size(); i++) {
 			int y = getGuiTop() + 10;
-			if (i > 7) y += 24;
-			widgets.add(new EffectWidget(getGuiLeft() + 10 + (23 * i), y, 18, 18, WarpstoneMain.getEffectsMap().effectMap.get(effectMuts.get(i))));
+			int x = getGuiLeft() + 10 + (23 * i);
+			if (i >= 7) {
+				y += 24;
+				x = getGuiLeft() + 10 + (23 * (i - 7));
+			}
+			widgets.add(new EffectWidget(x, y, 18, 18, WarpstoneMain.getEffectsMap().effectMap.get(effectMuts.get(i))));
 		}
 	}
 

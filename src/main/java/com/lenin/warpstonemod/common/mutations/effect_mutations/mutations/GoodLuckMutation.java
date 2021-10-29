@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class GoodLuckMutation extends EffectMutation {
 	public GoodLuckMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.good_luck",
+				"good_luck",
 				"good_luck.png",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d",
 				Rarity.COMMON);

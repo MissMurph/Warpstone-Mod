@@ -16,7 +16,7 @@ import net.minecraftforge.fml.LogicalSide;
 public class SlowFallMutation extends EffectMutation implements IMutationTick {
 	public SlowFallMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.slow_falling",
+				"slow_falling",
 				"slow_fall.png",
 				"4e80c5c4-07ef-4ddb-85f9-e1901ba17103",
 				Rarity.COMMON);

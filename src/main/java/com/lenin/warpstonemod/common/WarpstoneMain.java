@@ -1,12 +1,14 @@
 package com.lenin.warpstonemod.common;
 
 import com.lenin.warpstonemod.client.ClientProxy;
+import com.lenin.warpstonemod.common.data.loot.WarpLootModifierSerializers;
 import com.lenin.warpstonemod.common.items.WarpstoneItemGroup;
 import com.lenin.warpstonemod.common.mutations.EffectsMap;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.Random;
 
@@ -33,6 +35,8 @@ public class WarpstoneMain {
 
         this.map = new EffectsMap();
         map.init();
+
+        WarpLootModifierSerializers.init(FMLJavaModLoadingContext.get().getModEventBus());
 
         //Creates Proxies and assigns for Minecraft to use, refs client THEN server
         this.proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);

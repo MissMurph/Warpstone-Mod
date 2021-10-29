@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
@@ -28,10 +29,11 @@ public abstract class EffectMutation {
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
-	protected EffectMutation(int _id, String _mutName, String resName, String _uuid, Rarity rarity) {
+	public EffectMutation(int _id, String _mutName, String resName, String _uuid, Rarity _rarity) {
 		uuid = UUID.fromString(_uuid);
-		mutName = _mutName;
+		mutName = WarpMutations.nameConst + "effect." +_mutName;
 		id = _id;
+		rarity = _rarity;
 
 		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + resName);
 
@@ -69,7 +71,7 @@ public abstract class EffectMutation {
 
 		//When overriding do NOT call Super, no need to override unless differing from standard format
 	public IFormattableTextComponent getMutationName() {
-		return new TranslationTextComponent(mutName).mergeStyle(TextFormatting.WHITE);
+		return new TranslationTextComponent(mutName).mergeStyle(rarity.color);
 	}
 
 		//When overriding do NOT call Super, no need to override unless differing from standard format

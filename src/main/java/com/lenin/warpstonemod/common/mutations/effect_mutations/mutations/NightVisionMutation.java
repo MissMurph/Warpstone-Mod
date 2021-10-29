@@ -18,7 +18,7 @@ import net.minecraftforge.fml.LogicalSide;
 public class NightVisionMutation extends EffectMutation implements IMutationTick {
 	public NightVisionMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.night_vision",
+				"night_vision",
 				"night_vision.png",
 				"ba2f092b-76d6-4d71-85ba-51becadb4d19",
 				Rarity.COMMON);

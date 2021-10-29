@@ -16,8 +16,6 @@ public class WarpRecipeProvider extends RecipeProvider {
 
     @Override
     protected void registerRecipes (Consumer<IFinishedRecipe> consumer){
-        System.out.println("yeet");
-
         //WARPSTONE DUST
         ShapelessRecipeBuilder.shapelessRecipe(WarpItems.WARPSTONE_DUST.get(), 1)
                 .addIngredient(WarpItems.WARPSTONE_SHARD.get(), 3)

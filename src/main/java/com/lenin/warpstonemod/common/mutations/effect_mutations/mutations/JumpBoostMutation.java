@@ -16,7 +16,7 @@ import net.minecraftforge.fml.LogicalSide;
 public class JumpBoostMutation extends EffectMutation implements IMutationTick {
 	public JumpBoostMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.jump_boost",
+				"jump_boost",
 				"jump_boost.png",
 				"1020d46e-68db-45f4-9721-b14608ade167",
 				Rarity.COMMON);

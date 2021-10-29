@@ -18,7 +18,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class BlindnessMutation extends EffectMutation {
 	public BlindnessMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.blindness",
+				"blindness",
 				"blindness.png",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
 				Rarity.COMMON);

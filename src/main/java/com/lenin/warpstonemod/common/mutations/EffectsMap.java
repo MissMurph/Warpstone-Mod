@@ -22,6 +22,7 @@ public class EffectsMap {
 	}
 
 	public EffectMutation registerEffect (EffectMutation mut){
+		if (effectMap.containsKey(mut.getMutationID())) throw new IllegalArgumentException("ID Already Registered");
 		int key = effectMap.size();
 		effectMap.put(key, mut);
 		return mut;
@@ -41,5 +42,12 @@ public class EffectsMap {
 
 	public EffectMutation getEffectMutation (int id) {
 		return effectMap.get(id);
+	}
+
+	public EffectMutation getEffectMutation (String name) {
+		for (EffectMutation e : effectMap.values()) {
+			if (e.getMutationName().toString().equals(name)) return e;
+		}
+		return null;
 	}
 }

@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.data;
+package com.lenin.warpstonemod.common.data.loot;
 
 import com.google.common.collect.ImmutableList;
 import com.lenin.warpstonemod.common.Registration;
@@ -11,6 +11,7 @@ import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.LootConditionManager;
 import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
@@ -38,7 +39,7 @@ public class WarpLootTableProvider extends LootTableProvider {
 
     @Override
     protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationTracker) {
-        map.forEach((p_218436_2_, p_218436_3_) -> LootTableManager.validateLootTable(validationTracker, p_218436_2_, p_218436_3_));
+        map.forEach((resLocation, lootTable) -> LootTableManager.validateLootTable(validationTracker, resLocation, lootTable));
     }
 
     public static class WarpBlockLootTables extends BlockLootTables {

@@ -3,6 +3,8 @@ package com.lenin.warpstonemod.common.data;
 import com.lenin.warpstonemod.client.WarpBlockStateProvider;
 import com.lenin.warpstonemod.client.WarpItemModelProvider;
 import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.data.loot.WarpLootModifierProvider;
+import com.lenin.warpstonemod.common.data.loot.WarpLootTableProvider;
 import com.lenin.warpstonemod.common.data.tags.WarpBlockTagsProvider;
 import com.lenin.warpstonemod.common.data.tags.WarpItemTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -30,5 +32,7 @@ public final class DataGenerators {
 
 		gen.addProvider(new WarpLootTableProvider(gen));
 		gen.addProvider(new WarpRecipeProvider(gen));
+
+		gen.addProvider(new WarpLootModifierProvider(gen));
 	}
 }

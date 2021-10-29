@@ -35,6 +35,9 @@ public class CommonProxy {
 		MutateHelper.init();
 		//EffectsMap.init();
 		EffectMutations.init();
+		//WarpLootConditionTypes.init();
+
+
 
 		this.tickManager = new TickManager();
 		this.attachTickListeners(tickManager::register);

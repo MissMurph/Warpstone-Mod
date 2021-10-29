@@ -14,7 +14,7 @@ import net.minecraftforge.fml.LogicalSide;
 public class InvisibilityMutation extends EffectMutation implements IMutationTick {
 	public InvisibilityMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.invisibility",
+				"invisibility",
 				"invisibility.png",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d",
 				Rarity.UNCOMMON);

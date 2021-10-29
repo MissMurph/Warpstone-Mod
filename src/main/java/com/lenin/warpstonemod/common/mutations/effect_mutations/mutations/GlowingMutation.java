@@ -16,7 +16,7 @@ import net.minecraftforge.fml.LogicalSide;
 public class GlowingMutation extends EffectMutation implements IMutationTick {
 	public GlowingMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.glowing",
+				"glowing",
 				"glowing.png",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
 				Rarity.UNCOMMON);

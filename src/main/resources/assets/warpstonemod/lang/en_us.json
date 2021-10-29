@@ -22,31 +22,52 @@
 
   "mutation.effect.slow_falling": "Slow Falling",
   "mutation.effect.slow_falling.desc": "Grants Slow Falling",
+
   "mutation.effect.levitation": "Random Levitation",
   "mutation.effect.levitation.desc": "Every 15 seconds there's a small chance you'll randomly start levitating",
 
   "mutation.effect.jump_boost": "Jump Boost",
   "mutation.effect.jump_boost.desc": "Grants Stronger Jumping",
+
   "mutation.effect.weak_legs": "Weak Legs",
   "mutation.effect.weak_legs.desc": "Take extra fall damage",
 
   "mutation.effect.good_luck": "Good Luck",
   "mutation.effect.good_luck.desc": "Gives you Good Luck",
+
   "mutation.effect.bad_luck": "Bad Luck",
   "mutation.effect.bad_luck.desc": "Gives you Bad Luck",
 
   "mutation.effect.largepp": "Large PP",
   "mutation.effect.largepp.desc": "You have a large PP",
+
   "mutation.effect.smallpp": "Small PP",
   "mutation.effect.smallpp.desc": "You have a smol PP",
 
   "mutation.effect.invisibility": "Invisibility",
   "mutation.effect.invisibility.desc": "Turns you invisible",
+
   "mutation.effect.glowing": "Glowing",
   "mutation.effect.glowing.desc": "Makes you glowing, revealing you to nearby enemies",
 
   "mutation.effect.night_vision": "Night Vision",
   "mutation.effect.night_vision.desc": "Grants Night Vision",
+
   "mutation.effect.blindness": "Blindness",
-  "mutation.effect.blindness.desc": "Makes you short-sighted"
+  "mutation.effect.blindness.desc": "Makes you short-sighted",
+
+  "mutation.effect.fortune": "Fortune",
+  "mutation.effect.fortune.desc": "Drop extra loot from Ores",
+
+  "mutation.effect.fast_metabolism": "Fast Metabolism",
+  "mutation.effect.fast_metabolism.desc": "Gain extra Food and Saturation from eating",
+
+  "mutation.effect.slow_metabolism": "Slow Metabolism",
+  "mutation.effect.slow_metabolism.desc": "Gain less Food and Saturation from eating",
+
+  "mutation.effect.corrosive_touch": "Corrosive Touch",
+  "mutation.effect.corrosive_touch.desc": "Hits against enemies have a 50% chance to inflict Poison",
+
+  "mutation.effect.frail_body": "Frail Body",
+  "mutation.effect.frail_body.desc": "Hits against you have a 25% chance to inflict Poison"
 }

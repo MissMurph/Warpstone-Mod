@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class BadLuckMutation extends EffectMutation {
 	public BadLuckMutation(int _id) {
 		super(_id,
-				WarpMutations.nameConst + "effect.bad_luck",
+				"bad_luck",
 				"bad_luck.png",
 				"0942e8e9-295a-430f-9988-5537e4010648",
 				Rarity.COMMON);

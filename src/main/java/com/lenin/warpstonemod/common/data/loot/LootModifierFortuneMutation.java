@@ -1,0 +1,69 @@
+package com.lenin.warpstonemod.common.data.loot;
+
+import com.google.gson.JsonObject;
+import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.items.WarpItems;
+import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.common.loot.LootModifier;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+public class LootModifierFortuneMutation extends LootModifier {
+	protected LootModifierFortuneMutation(ILootCondition[] conditionsIn) {
+		super(conditionsIn);
+	}
+
+	@Nonnull
+	@Override
+	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+		for (LootParameter<?> p : LootParameterSets.BLOCK.getRequiredParameters()) {
+			if (!context.has(p) || !context.has(LootParameters.THIS_ENTITY)) return generatedLoot;
+		}
+
+		MutateManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
+
+		if (manager != null && manager.containsEffect(EffectMutations.FORTUNE)) {
+			Block block = context.get(LootParameters.BLOCK_STATE).getBlock();
+
+			block.getTags().stream().filter(tag -> tag.equals(Tags.Blocks.ORES.getName())).forEach(tag -> {
+				List<ItemStack> stack = new ArrayList<>(generatedLoot);
+
+				for (ItemStack i : stack) {
+					if (!(i.getItem() instanceof BlockItem) && WarpstoneMain.getRandom().nextBoolean()) {
+						generatedLoot.add(i);
+					}
+				}
+			});
+		}
+
+		return generatedLoot;
+	}
+
+	public static class Serializer extends GlobalLootModifierSerializer<LootModifierFortuneMutation> {
+		@Override
+		public LootModifierFortuneMutation read(ResourceLocation location, JsonObject object, ILootCondition[] conditions) {
+			return new LootModifierFortuneMutation(conditions);
+		}
+
+		@Override
+		public JsonObject write(LootModifierFortuneMutation instance) {
+			return this.makeConditions(instance.conditions);
+		}
+	}
+}
