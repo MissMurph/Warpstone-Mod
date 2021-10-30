@@ -17,7 +17,6 @@ public class WeakLegsMutation extends EffectMutation {
 	public WeakLegsMutation(int _id) {
 		super(_id,
 				"weak_legs",
-				"weak_legs.png",
 				"d198bf46-f9aa-4950-b0de-6f80d6396853",
 				Rarity.COMMON);
 	}
@@ -51,6 +50,6 @@ public class WeakLegsMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.JUMP_BOOST);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.JUMP_BOOST);
 	}
 }

@@ -17,7 +17,6 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 	public GlowingMutation(int _id) {
 		super(_id,
 				"glowing",
-				"glowing.png",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
 				Rarity.UNCOMMON);
 
@@ -67,6 +66,6 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 2 && !manager.containsEffect(EffectMutations.INVISIBILITY);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.INVISIBILITY);
 	}
 }

@@ -19,7 +19,6 @@ public class BlindnessMutation extends EffectMutation {
 	public BlindnessMutation(int _id) {
 		super(_id,
 				"blindness",
-				"blindness.png",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
 				Rarity.COMMON);
 	}
@@ -90,6 +89,6 @@ public class BlindnessMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.NIGHT_VISION);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.NIGHT_VISION);
 	}
 }

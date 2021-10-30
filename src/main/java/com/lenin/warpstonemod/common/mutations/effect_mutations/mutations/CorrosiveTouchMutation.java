@@ -18,7 +18,6 @@ public class CorrosiveTouchMutation extends EffectMutation {
 	public CorrosiveTouchMutation(int _id) {
 		super(_id,
 				"corrosive_touch",
-				"corrosive_touch.png",
 				"8ee3692f-f855-43e3-8a9f-dffb37381995",
 				Rarity.RARE);
 	}
@@ -46,6 +45,6 @@ public class CorrosiveTouchMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 2 && !manager.containsEffect(EffectMutations.FRAIL_BODY);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FRAIL_BODY);
 	}
 }

@@ -69,5 +69,11 @@
   "mutation.effect.corrosive_touch.desc": "Hits against enemies have a 50% chance to inflict Poison",
 
   "mutation.effect.frail_body": "Frail Body",
-  "mutation.effect.frail_body.desc": "Hits against you have a 25% chance to inflict Poison"
+  "mutation.effect.frail_body.desc": "Hits against you have a 25% chance to inflict Poison",
+
+  "mutation.effect.strength": "Strength",
+  "mutation.effect.strength.desc": "Deal extra knockback on hits",
+
+  "mutation.effect.gills": "Gills",
+  "mutation.effect.gills.desc": "Grants Water Breathing"
 }

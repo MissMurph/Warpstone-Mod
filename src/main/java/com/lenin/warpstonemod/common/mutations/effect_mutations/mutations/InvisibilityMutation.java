@@ -15,7 +15,6 @@ public class InvisibilityMutation extends EffectMutation implements IMutationTic
 	public InvisibilityMutation(int _id) {
 		super(_id,
 				"invisibility",
-				"invisibility.png",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d",
 				Rarity.UNCOMMON);
 
@@ -58,6 +57,6 @@ public class InvisibilityMutation extends EffectMutation implements IMutationTic
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 2 && !manager.containsEffect(EffectMutations.GLOWING);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GLOWING);
 	}
 }

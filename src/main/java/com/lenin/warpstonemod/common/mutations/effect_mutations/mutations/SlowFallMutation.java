@@ -17,7 +17,6 @@ public class SlowFallMutation extends EffectMutation implements IMutationTick {
 	public SlowFallMutation(int _id) {
 		super(_id,
 				"slow_falling",
-				"slow_fall.png",
 				"4e80c5c4-07ef-4ddb-85f9-e1901ba17103",
 				Rarity.COMMON);
 	}
@@ -64,6 +63,6 @@ public class SlowFallMutation extends EffectMutation implements IMutationTick {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.LEVITATION);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.LEVITATION);
 	}
 }

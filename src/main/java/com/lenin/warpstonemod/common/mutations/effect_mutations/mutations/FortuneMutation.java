@@ -10,7 +10,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class FortuneMutation extends EffectMutation {
 	public FortuneMutation(int _id) {	super(_id,
 				"fortune",
-				"fortune.png",
 				"9b0a8faa-1888-409f-a2a4-b0aab39cc065",
 				Rarity.RARE);
 	}
@@ -35,6 +34,6 @@ public class FortuneMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 2;
+		return super.isLegalMutation(manager);
 	}
 }

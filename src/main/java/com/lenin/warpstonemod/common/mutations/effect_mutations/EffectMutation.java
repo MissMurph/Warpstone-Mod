@@ -25,17 +25,24 @@ public abstract class EffectMutation {
 	protected final UUID uuid;
 	protected String mutDescription;
 
+	/**
+	 * {@link #rarity} by default determines required Corruption level required <br>
+	 * COMMON = 1 <br>
+	 * UNCOMMON = 2 <br>
+	 * RARE = 3 <br>
+	 * EPIC = 4 <br>
+	**/
 	protected Rarity rarity;
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
-	public EffectMutation(int _id, String _mutName, String resName, String _uuid, Rarity _rarity) {
+	public EffectMutation(int _id, String _mutName, String _uuid, Rarity _rarity) {
 		uuid = UUID.fromString(_uuid);
 		mutName = WarpMutations.nameConst + "effect." +_mutName;
 		id = _id;
 		rarity = _rarity;
 
-		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + resName);
+		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + _mutName + ".png");
 
 		attachListeners(MinecraftForge.EVENT_BUS);
 
@@ -69,17 +76,26 @@ public abstract class EffectMutation {
 		instanceMap.remove(entity.getUniqueID());
 	}
 
-		//When overriding do NOT call Super, no need to override unless differing from standard format
 	public IFormattableTextComponent getMutationName() {
 		return new TranslationTextComponent(mutName).mergeStyle(rarity.color);
 	}
 
-		//When overriding do NOT call Super, no need to override unless differing from standard format
 	public IFormattableTextComponent getMutationDesc() {
 		return new TranslationTextComponent(mutDescription).mergeStyle(TextFormatting.WHITE);
 	}
 
-	public abstract boolean isLegalMutation(MutateManager manager);
+	public boolean isLegalMutation(MutateManager manager){
+		switch (rarity){
+			case UNCOMMON:
+				return manager.getCorruptionLevel() >= 2;
+			case RARE:
+				return manager.getCorruptionLevel() >= 3;
+			case EPIC:
+				return manager.getCorruptionLevel() >= 4;
+			default:
+				return manager.getCorruptionLevel() >= 1;
+		}
+	}
 
 	public EffectMutationInstance getInstance (LivingEntity entity) {
 		return getInstance(entity.getUniqueID());
@@ -87,6 +103,14 @@ public abstract class EffectMutation {
 
 	public EffectMutationInstance getInstance (UUID playerUUID) {
 		return instanceMap.getOrDefault(playerUUID, null);
+	}
+
+	public boolean containsInstance (LivingEntity entity) {
+		return containsInstance(entity.getUniqueID());
+	}
+
+	public boolean containsInstance (UUID playerUUID) {
+		return instanceMap.containsKey(playerUUID);
 	}
 
 	public EffectMutationInstance putInstance (LivingEntity entity) {

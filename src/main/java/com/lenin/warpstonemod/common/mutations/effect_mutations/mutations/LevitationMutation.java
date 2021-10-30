@@ -19,9 +19,8 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 	public LevitationMutation(int _id) {
 		super(_id,
 				"levitation",
-				"levitation.png",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
-				Rarity.COMMON);
+				Rarity.UNCOMMON);
 
 		currentTickCount = TICK_COUNT;
 	}
@@ -62,6 +61,6 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.SLOW_FALLING);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_FALLING);
 	}
 }

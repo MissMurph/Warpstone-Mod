@@ -14,7 +14,6 @@ public class SlowMetabolismMutation extends EffectMutation {
 	public SlowMetabolismMutation(int _id) {
 		super(_id,
 				"slow_metabolism",
-				"slow_metabolism.png",
 				"4e0ded20-d669-46e2-98c7-c70d023f4fc6",
 				Rarity.COMMON);
 	}
@@ -43,6 +42,6 @@ public class SlowMetabolismMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.FAST_METABOLISM);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FAST_METABOLISM);
 	}
 }

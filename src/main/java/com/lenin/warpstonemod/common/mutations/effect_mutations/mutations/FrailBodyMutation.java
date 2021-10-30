@@ -16,7 +16,6 @@ public class FrailBodyMutation extends EffectMutation {
 	public FrailBodyMutation(int _id) {
 		super(_id,
 				"frail_body",
-				"frail_body.png",
 				"b09d14ec-beda-4ea9-bf80-2055535c1b99",
 				Rarity.COMMON);
 	}
@@ -50,6 +49,6 @@ public class FrailBodyMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.CORROSIVE_TOUCH);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.CORROSIVE_TOUCH);
 	}
 }

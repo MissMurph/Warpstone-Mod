@@ -1,9 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,35 +11,40 @@ import net.minecraft.potion.Effects;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-public class JumpBoostMutation extends EffectMutation implements IMutationTick {
-	public JumpBoostMutation(int _id) {
+public class GillsMutation extends EffectMutation implements IMutationTick {
+	public GillsMutation(int _id) {
 		super(_id,
-				"jump_boost",
-				"1020d46e-68db-45f4-9721-b14608ade167",
+				"gills",
+				"bf69604d-0669-41d2-92e4-aafa8fa0acdc",
 				Rarity.COMMON);
 	}
 
 	@Override
 	public void attachListeners(IEventBus bus) {
+
 	}
 
 	@Override
 	public void attachClientListeners(IEventBus bus) {
+
 	}
 
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
-		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || instanceMap.get(player.getUniqueID()).isActive()) return;
+		if (side == LogicalSide.CLIENT
+				|| !instanceMap.containsKey(player.getUniqueID())
+				|| !instanceMap.get(player.getUniqueID()).isActive()) return;
 
-		if (player.isPotionActive(Effects.JUMP_BOOST)) {
+
+		if (player.isPotionActive(Effects.WATER_BREATHING)) {
 			for (EffectInstance e : player.getActivePotionEffects()) {
-				if (e.getPotion() == Effects.JUMP_BOOST && e.getDuration() < 1200) {
-					player.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 3600, 0, false, false));
+				if (e.getPotion() == Effects.WATER_BREATHING && e.getDuration() < 1200) {
+					player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 3600, 0, false, false));
 				}
 			}
 		}
 		else {
-			player.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 3600, 0, false, false));
+			player.addPotionEffect(new EffectInstance(Effects.WITHER, 3600, 0, false, false));
 		}
 	}
 
@@ -49,22 +52,22 @@ public class JumpBoostMutation extends EffectMutation implements IMutationTick {
 	public void applyMutation(LivingEntity entity) {
 		super.applyMutation(entity);
 
-		if (entity.world.isRemote()) return;
+		if (entity.world.isRemote) return;
 
-		entity.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 3600, 0, false, false));
+		entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 1200));
 	}
 
 	@Override
 	public void deactivateMutation(LivingEntity entity) {
 		super.deactivateMutation(entity);
 
-		if (entity.world.isRemote()) return;
+		if (entity.world.isRemote) return;
 
-		entity.removePotionEffect(Effects.JUMP_BOOST);
+		entity.removePotionEffect(Effects.WATER_BREATHING);
 	}
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.WEAK_LEGS);
+		return super.isLegalMutation(manager);
 	}
 }

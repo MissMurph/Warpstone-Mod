@@ -15,7 +15,6 @@ public class GoodLuckMutation extends EffectMutation {
 	public GoodLuckMutation(int _id) {
 		super(_id,
 				"good_luck",
-				"good_luck.png",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d",
 				Rarity.COMMON);
 	}
@@ -53,6 +52,6 @@ public class GoodLuckMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.BAD_LUCK);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BAD_LUCK);
 	}
 }

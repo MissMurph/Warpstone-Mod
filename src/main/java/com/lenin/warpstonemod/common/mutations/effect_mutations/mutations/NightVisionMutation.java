@@ -19,7 +19,6 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 	public NightVisionMutation(int _id) {
 		super(_id,
 				"night_vision",
-				"night_vision.png",
 				"ba2f092b-76d6-4d71-85ba-51becadb4d19",
 				Rarity.COMMON);
 	}
@@ -43,7 +42,9 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
-		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || !instanceMap.get(player.getUniqueID()).isActive()) return;
+		if (side == LogicalSide.CLIENT
+				|| !instanceMap.containsKey(player.getUniqueID())
+				|| !instanceMap.get(player.getUniqueID()).isActive()) return;
 
 
 		if (player.isPotionActive(Effects.NIGHT_VISION)) {
@@ -85,6 +86,6 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return manager.getCorruptionLevel() >= 1 && !manager.containsEffect(EffectMutations.BLINDNESS);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BLINDNESS);
 	}
 }
