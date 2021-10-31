@@ -44,7 +44,7 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 			}
 		}
 		else {
-			player.addPotionEffect(new EffectInstance(Effects.WITHER, 3600, 0, false, false));
+			player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 3600, 0, false, false));
 		}
 	}
 
@@ -54,7 +54,7 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 
 		if (entity.world.isRemote) return;
 
-		entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 1200));
+		entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 3600, 0, false, false));
 	}
 
 	@Override
@@ -68,6 +68,7 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager);
+		return false;
+		//return super.isLegalMutation(manager);
 	}
 }

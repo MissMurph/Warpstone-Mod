@@ -21,6 +21,7 @@ public class EffectMutations {
 	public final static EffectMutation FRAIL_BODY = WarpstoneMain.getEffectsMap().registerEffect(new FrailBodyMutation(14));
 	public final static EffectMutation STRENGTH = WarpstoneMain.getEffectsMap().registerEffect(new StrengthMutation(15));
 	public final static EffectMutation GILLS = WarpstoneMain.getEffectsMap().registerEffect(new GillsMutation(16));
+	public final static EffectMutation WEAK_LUNGS = WarpstoneMain.getEffectsMap().registerEffect(new WeakLungsMutation(17));
 
 	public static void init() {}
 }

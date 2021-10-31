@@ -60,13 +60,6 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 	}
 
 	@Override
-	public void putClientInstance(LivingEntity entity) {
-		super.putClientInstance(entity);
-
-		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), new EffectMutationInstance(this, Minecraft.getInstance().player));
-	}
-
-	@Override
 	public void applyMutation(LivingEntity entity) {
 		super.applyMutation(entity);
 

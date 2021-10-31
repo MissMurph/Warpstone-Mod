@@ -3,10 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.WarpMutations;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -21,12 +18,7 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 				"levitation",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
 				Rarity.UNCOMMON);
-
-		currentTickCount = TICK_COUNT;
 	}
-
-	protected final int TICK_COUNT = 300;
-	protected int currentTickCount;
 
 	@Override
 	public void attachListeners(IEventBus bus) {}
@@ -38,16 +30,10 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || !instanceMap.get(player.getUniqueID()).isActive()) return;
 
-		currentTickCount--;
-
-		EffectMutationInstance instance = instanceMap.get(player.getUniqueID());
-
-		if (currentTickCount <= 0 && WarpstoneMain.getRandom().nextInt(100) >= 90) {
+		if (((TickCounterInstance)instanceMap.get(player.getUniqueID())).deincrement() && WarpstoneMain.getRandom().nextInt(100) >= 90) {
 			int duration = 20 + WarpstoneMain.getRandom().nextInt(100);
 			player.addPotionEffect(new EffectInstance(Effects.LEVITATION, duration));
 		}
-
-		if (currentTickCount <= 0) currentTickCount = TICK_COUNT;
 	}
 
 	@Override
@@ -62,5 +48,10 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_FALLING);
+	}
+
+	@Override
+	public EffectMutationInstance getInstanceType(LivingEntity entity) {
+		return new TickCounterInstance(entity, 300);
 	}
 }

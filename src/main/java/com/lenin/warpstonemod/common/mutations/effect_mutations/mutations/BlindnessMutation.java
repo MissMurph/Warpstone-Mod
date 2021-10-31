@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
@@ -61,7 +60,7 @@ public class BlindnessMutation extends EffectMutation {
 	public void putClientInstance(LivingEntity entity) {
 		super.putClientInstance(entity);
 
-		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), new EffectMutationInstance(this, Minecraft.getInstance().player));
+		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), new EffectMutationInstance(Minecraft.getInstance().player));
 	}
 
 	@Override

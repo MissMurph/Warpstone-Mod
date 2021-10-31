@@ -114,7 +114,7 @@ public abstract class EffectMutation {
 	}
 
 	public EffectMutationInstance putInstance (LivingEntity entity) {
-		EffectMutationInstance instance = new EffectMutationInstance(this, entity);
+		EffectMutationInstance instance = getInstanceType(entity);
 
 		instanceMap.put(entity.getUniqueID(), instance);
 		return instance;
@@ -128,5 +128,9 @@ public abstract class EffectMutation {
 
 	public int getMutationID() {
 		return id;
+	}
+
+	public EffectMutationInstance getInstanceType (LivingEntity entity) {
+		return new EffectMutationInstance(entity);
 	}
 }

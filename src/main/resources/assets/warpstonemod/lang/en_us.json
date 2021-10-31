@@ -75,5 +75,8 @@
   "mutation.effect.strength.desc": "Deal extra knockback on hits",
 
   "mutation.effect.gills": "Gills",
-  "mutation.effect.gills.desc": "Grants Water Breathing"
+  "mutation.effect.gills.desc": "Grants Water Breathing",
+
+  "mutation.effect.weak_lungs": "Weak Lungs",
+  "mutation.effect.weak_lungs.desc": "-20% maximum breathing time"
 }

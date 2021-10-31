@@ -1,15 +1,23 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.*;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
+import net.minecraft.potion.EffectUtils;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.LogicalSide;
 
-public class WeakLungsMutation extends EffectMutation {
-	public WeakLungsMutation(int _id, String _mutName, String _uuid, Rarity _rarity) {
-		super(_id, _mutName, _uuid, _rarity);
+public class WeakLungsMutation extends EffectMutation implements IMutationTick {
+	public WeakLungsMutation(int _id) {
+		super(_id,
+				"weak_lungs",
+				"9216454f-c64d-4dcd-95f3-339df891aeef",
+				Rarity.COMMON);
 	}
 
 	@Override
@@ -20,6 +28,30 @@ public class WeakLungsMutation extends EffectMutation {
 	@Override
 	public void attachClientListeners(IEventBus bus) {
 
+	}
+
+	/**This code is replicating the behaviours of {@link LivingEntity}.baseTick <br>
+	 * We perform the same check for if the player is under water then every 5 ticks
+	 * take away 1 unit of breath, making effectively +20% air consumption
+	 */
+
+	@Override
+	public void mutationTick(PlayerEntity player, LogicalSide side) {
+		if (side == LogicalSide.CLIENT
+				|| !containsInstance(player)
+				|| !getInstance(player).isActive()
+		) return;
+
+		if (((TickCounterInstance)instanceMap.get(player.getUniqueID())).deincrement()) {
+			if (player.areEyesInFluid(FluidTags.WATER)
+					&& !player.world.getBlockState(new BlockPos(player.getPosX(), player.getPosYEye(), player.getPosZ())).matchesBlock(Blocks.BUBBLE_COLUMN)
+					&& !EffectUtils.canBreatheUnderwater(player)
+					&& !player.abilities.disableDamage
+			) {
+				int air = player.getAir() - 1;
+				player.setAir(air);
+			}
+		}
 	}
 
 	@Override
@@ -34,6 +66,11 @@ public class WeakLungsMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GILLS);
+		return true;
+	}
+
+	@Override
+	public EffectMutationInstance getInstanceType(LivingEntity entity) {
+		return new TickCounterInstance(entity, 5);
 	}
 }
