@@ -139,7 +139,7 @@ public class MutationScreen extends Screen {
 			list.add((new TranslationTextComponent(attributeName)).mergeStyle(TextFormatting.WHITE));
 			String levelText = "+";
 			TextFormatting color = TextFormatting.GREEN;
-			if (frame < 25) { levelText = "-"; color = TextFormatting.RED; }
+			if (frame < 25) { levelText = ""; color = TextFormatting.RED; }
 
 			list.add((new StringTextComponent(levelText + (frame - 25) + "%")).mergeStyle(color));
 

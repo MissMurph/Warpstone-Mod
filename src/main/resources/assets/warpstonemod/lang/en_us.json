@@ -78,5 +78,20 @@
   "mutation.effect.gills.desc": "Grants Water Breathing",
 
   "mutation.effect.weak_lungs": "Weak Lungs",
-  "mutation.effect.weak_lungs.desc": "-20% maximum breathing time"
+  "mutation.effect.weak_lungs.desc": "-20% maximum breathing time",
+
+  "mutation.effect.fire_breathing": "Fire Breathing",
+  "mutation.effect.fire_breathing.desc": "Standing in Fire heals you",
+
+  "mutation.effect.explosive": "Explosive",
+  "mutation.effect.explosive.desc": "Take extra damage from Fire sources, if you die from a Fire source you explode",
+
+  "mutation.effect.archer": "Archer",
+  "mutation.effect.archer.desc": "Deal +25% extra ranged damage, -25% melee damage",
+
+  "mutation.effect.scales": "Scales",
+  "mutation.effect.scales.desc": "+25% Armour and Armour Toughness but -25% all Healing",
+
+  "mutation.effect.thorns": "Thorns",
+  "mutation.effect.thorns.desc": "Reflect 25% of damage taken onto attacker, -25% Armour"
 }

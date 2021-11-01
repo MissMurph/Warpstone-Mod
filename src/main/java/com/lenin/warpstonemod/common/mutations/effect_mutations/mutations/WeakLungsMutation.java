@@ -9,6 +9,8 @@ import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectUtils;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
@@ -30,7 +32,7 @@ public class WeakLungsMutation extends EffectMutation implements IMutationTick {
 
 	}
 
-	/**This code is replicating the behaviours of {@link LivingEntity}.baseTick <br>
+	/**This code is replicating the behaviours of {@link LivingEntity#baseTick()} <br>
 	 * We perform the same check for if the player is under water then every 5 ticks
 	 * take away 1 unit of breath, making effectively +20% air consumption
 	 */
@@ -65,8 +67,13 @@ public class WeakLungsMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
+	public IFormattableTextComponent getMutationName() {
+		return super.getMutationName().mergeStyle(TextFormatting.RED);
+	}
+
+	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return true;
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GILLS);
 	}
 
 	@Override

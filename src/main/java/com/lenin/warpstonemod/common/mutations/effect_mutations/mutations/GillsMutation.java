@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -68,7 +69,6 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return false;
-		//return super.isLegalMutation(manager);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.WEAK_LUNGS);
 	}
 }

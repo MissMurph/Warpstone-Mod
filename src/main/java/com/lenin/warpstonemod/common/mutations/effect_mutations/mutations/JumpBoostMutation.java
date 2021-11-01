@@ -31,7 +31,9 @@ public class JumpBoostMutation extends EffectMutation implements IMutationTick {
 
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
-		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || instanceMap.get(player.getUniqueID()).isActive()) return;
+		if (!instanceMap.containsKey(player.getUniqueID())
+				|| !instanceMap.get(player.getUniqueID()).isActive()
+		) return;
 
 		if (player.isPotionActive(Effects.JUMP_BOOST)) {
 			for (EffectInstance e : player.getActivePotionEffects()) {

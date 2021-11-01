@@ -2,8 +2,8 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import net.minecraft.entity.LivingEntity;
 
-/**To use this type of instance, override {@link EffectMutation}.getInstanceType <br>
- * and replace the EffectMutationInstance construction with this (or other) type
+/**To use this type of instance, override {@link EffectMutation#getInstanceType(LivingEntity)} <br>
+ * and replace the {@link EffectMutationInstance} construction with this (or other) sub-type
  */
 
 public class TickCounterInstance extends EffectMutationInstance{
@@ -14,6 +14,10 @@ public class TickCounterInstance extends EffectMutationInstance{
 
 	protected int tickInterval;
 	protected int currentTick;
+
+	public int getTick () {
+		return currentTick;
+	}
 
 	//Will return TRUE if this deincrementation results in a reset, FALSE if deincrements normally
 	public boolean deincrement () {

@@ -7,6 +7,8 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -38,6 +40,11 @@ public class SlowMetabolismMutation extends EffectMutation {
 
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
 		playerEntity.getFoodStats().addStats(-1, -2);
+	}
+
+	@Override
+	public IFormattableTextComponent getMutationName() {
+		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

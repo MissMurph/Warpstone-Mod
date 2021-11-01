@@ -110,6 +110,7 @@ public abstract class EffectMutation {
 	}
 
 	public boolean containsInstance (UUID playerUUID) {
+		if (playerUUID == null) return false;
 		return instanceMap.containsKey(playerUUID);
 	}
 

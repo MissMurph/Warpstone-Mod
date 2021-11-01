@@ -1,0 +1,71 @@
+package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
+
+import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.TickCounterInstance;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Rarity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.Explosion;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+public class ExplosiveMutation extends EffectMutation {
+	public ExplosiveMutation(int _id) {
+		super(_id,
+				"explosive",
+				"7332e11c-ff66-439f-8808-4de93e9cf355",
+				Rarity.COMMON);
+	}
+
+	private final Set<DamageSource> fireSources = new HashSet<>(Arrays.asList(
+			DamageSource.ON_FIRE,
+			DamageSource.IN_FIRE,
+			DamageSource.HOT_FLOOR,
+			DamageSource.LAVA
+	));
+
+	@Override
+	public void attachListeners(IEventBus bus) {
+		bus.addListener(this::onLivingDeath);
+		bus.addListener(this::onLivingDamage);
+	}
+
+	@Override
+	public void attachClientListeners(IEventBus bus) {
+
+	}
+
+	public void onLivingDamage (LivingDeathEvent event) {
+		if (!fireSources.contains(event.getSource())
+				|| !containsInstance(event.getEntityLiving())
+				|| !getInstance(event.getEntityLiving()).isActive()
+		) return;
+
+		event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 1f);
+	}
+
+	public void onLivingDeath (LivingDeathEvent event) {
+		if (!fireSources.contains(event.getSource())
+				|| !containsInstance(event.getEntityLiving())
+				|| !getInstance(event.getEntityLiving()).isActive()
+		) return;
+
+		LivingEntity entity = event.getEntityLiving();
+
+		entity.world.createExplosion(entity, entity.getPosX(), entity.getPosYHeight(0.0625D), entity.getPosZ(), 4.0F, Explosion.Mode.BREAK);
+	}
+
+	@Override
+	public boolean isLegalMutation(MutateManager manager) {
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FIRE_BREATHING);
+	}
+}

@@ -22,6 +22,12 @@ public class EffectMutations {
 	public final static EffectMutation STRENGTH = WarpstoneMain.getEffectsMap().registerEffect(new StrengthMutation(15));
 	public final static EffectMutation GILLS = WarpstoneMain.getEffectsMap().registerEffect(new GillsMutation(16));
 	public final static EffectMutation WEAK_LUNGS = WarpstoneMain.getEffectsMap().registerEffect(new WeakLungsMutation(17));
+	public final static EffectMutation FIRE_BREATHING = WarpstoneMain.getEffectsMap().registerEffect(new FireBreathingMutation(18));
+	public final static EffectMutation EXPLOSIVE = WarpstoneMain.getEffectsMap().registerEffect(new ExplosiveMutation(19));
+	public final static EffectMutation ARCHER = WarpstoneMain.getEffectsMap().registerEffect(new ArcherMutation(20));
+	public final static EffectMutation BRAWLER = WarpstoneMain.getEffectsMap().registerEffect(new BrawlerMutation(21));
+	public final static EffectMutation SCALES = WarpstoneMain.getEffectsMap().registerEffect(new ScalesMutation(22));
+	public final static EffectMutation THORNS = WarpstoneMain.getEffectsMap().registerEffect(new ThornsMutation(23));
 
 	public static void init() {}
 }
