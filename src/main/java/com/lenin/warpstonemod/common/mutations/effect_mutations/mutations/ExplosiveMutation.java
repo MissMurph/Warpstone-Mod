@@ -8,6 +8,8 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.TickCounterInsta
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -62,6 +64,11 @@ public class ExplosiveMutation extends EffectMutation {
 		LivingEntity entity = event.getEntityLiving();
 
 		entity.world.createExplosion(entity, entity.getPosX(), entity.getPosYHeight(0.0625D), entity.getPosZ(), 4.0F, Explosion.Mode.BREAK);
+	}
+
+	@Override
+	public IFormattableTextComponent getMutationName() {
+		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

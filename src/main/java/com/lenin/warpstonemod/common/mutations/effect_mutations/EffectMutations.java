@@ -28,6 +28,11 @@ public class EffectMutations {
 	public final static EffectMutation BRAWLER = WarpstoneMain.getEffectsMap().registerEffect(new BrawlerMutation(21));
 	public final static EffectMutation SCALES = WarpstoneMain.getEffectsMap().registerEffect(new ScalesMutation(22));
 	public final static EffectMutation THORNS = WarpstoneMain.getEffectsMap().registerEffect(new ThornsMutation(23));
+	public final static EffectMutation FINS = WarpstoneMain.getEffectsMap().registerEffect(new FinsMutation(24));
+	public final static EffectMutation STRONG_LEGS = WarpstoneMain.getEffectsMap().registerEffect(new StrongLegsMutation(25));
+	public final static EffectMutation IRON_GUT = WarpstoneMain.getEffectsMap().registerEffect(new IronGutMutation(26));
+	public final static EffectMutation ALCOHOLIC = WarpstoneMain.getEffectsMap().registerEffect(new AlcoholicMutation(27));
+	public final static EffectMutation WEAK_LIVER = WarpstoneMain.getEffectsMap().registerEffect(new WeakLiverMutation(28));
 
 	public static void init() {}
 }

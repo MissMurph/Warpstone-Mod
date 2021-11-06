@@ -93,5 +93,20 @@
   "mutation.effect.scales.desc": "+25% Armour and Armour Toughness but -25% all Healing",
 
   "mutation.effect.thorns": "Thorns",
-  "mutation.effect.thorns.desc": "Reflect 25% of damage taken onto attacker, -25% Armour"
+  "mutation.effect.thorns.desc": "Reflect 25% of damage taken onto attacker, -25% Armour",
+
+  "mutation.effect.fins": "Fins",
+  "mutation.effect.fins.desc": "+100% Swim Speed",
+
+  "mutation.effect.strong_legs": "Strong Legs",
+  "mutation.effect.strong_legs.desc": "Leap forward whenever you jump while sprinting",
+
+  "mutation.effect.iron_gut": "Iron Gut",
+  "mutation.effect.iron_gut.desc": "Immune to the negative effects of any dangerous Food",
+
+  "mutation.effect.alcoholic": "Alcoholic",
+  "mutation.effect.alcoholic.desc": "Drinking any potion grants you temporary Absorption",
+
+  "mutation.effect.weak_liver": "Weak Liver",
+  "mutation.effect.weak_liver.desc": "Drinking any potion inflicts Nausea"
 }
