@@ -108,5 +108,11 @@
   "mutation.effect.alcoholic.desc": "Drinking any potion grants you temporary Absorption",
 
   "mutation.effect.weak_liver": "Weak Liver",
-  "mutation.effect.weak_liver.desc": "Drinking any potion inflicts Nausea"
+  "mutation.effect.weak_liver.desc": "Drinking any potion inflicts Nausea",
+
+  "mutation.effect.blood_sucking": "Blood Sucking",
+  "mutation.effect.blood_sucking.desc": "Heal for 25% of the Damage you deal, -25% Max Health",
+
+  "mutation.effect.undead": "Undead",
+  "mutation.effect.undead.desc": "+100% Max Health, -25% Healing & immune to Poison"
 }

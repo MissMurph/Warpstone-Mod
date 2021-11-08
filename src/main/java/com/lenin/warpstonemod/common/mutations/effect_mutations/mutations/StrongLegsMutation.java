@@ -49,6 +49,6 @@ public class StrongLegsMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FINS);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FINS) && !manager.containsEffect(EffectMutations.WEAK_LEGS);
 	}
 }

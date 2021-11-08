@@ -134,6 +134,6 @@ public class AlcoholicMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_METABOLISM);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_METABOLISM) && !manager.containsEffect(EffectMutations.WEAK_LIVER);
 	}
 }

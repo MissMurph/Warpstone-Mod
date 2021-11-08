@@ -50,6 +50,6 @@ public class WeakLegsMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.JUMP_BOOST);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.JUMP_BOOST) && !manager.containsEffect(EffectMutations.STRONG_LEGS);
 	}
 }
