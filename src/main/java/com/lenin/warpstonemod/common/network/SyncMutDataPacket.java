@@ -14,13 +14,17 @@ import java.util.UUID;
 
 public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
 
-	public CompoundNBT data;
+	private CompoundNBT data;
 	//public UUID playerUUID;
 
 	public SyncMutDataPacket () {}
 
-	public SyncMutDataPacket (UUID _playerUUID, CompoundNBT _data) {
+	public SyncMutDataPacket (CompoundNBT _data) {
 		data = _data;
+	}
+
+	public CompoundNBT getData () {
+		return data;
 	}
 
 	@Nonnull

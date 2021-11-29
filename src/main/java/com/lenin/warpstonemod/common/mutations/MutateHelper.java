@@ -56,12 +56,11 @@ public class MutateHelper {
     @OnlyIn(Dist.CLIENT)
     public static void updateClientMutations(SyncMutDataPacket pkt) {
         MutateManager mut = getClientManager();
-        mut.loadFromNBT(pkt.data);
+        mut.loadFromNBT(pkt.getData());
     }
 
     public static void pushMutDataToClient (UUID playerUUID, CompoundNBT nbt){
-        SyncMutDataPacket pkt = new SyncMutDataPacket();
-        pkt.data = nbt;
+        SyncMutDataPacket pkt = new SyncMutDataPacket(nbt);
         MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         PacketHandler.CHANNEL.sendToPlayer(server.getPlayerList().getPlayerByUUID(playerUUID), pkt);
     }

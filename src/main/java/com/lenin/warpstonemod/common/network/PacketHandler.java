@@ -19,6 +19,7 @@ public class PacketHandler {
 
 	public static void registerPackets () {
 		registerMessage(SyncMutDataPacket::new);
+		registerMessage(FlightMutationPacket::new);
 	}
 
 	private static <T extends WarpPacket<T>> void registerMessage (Supplier<T> suppler){

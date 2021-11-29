@@ -12,15 +12,6 @@ import java.io.DataOutputStream;
 import java.util.UUID;
 
 public class ByteBufUtils {
-	public static void writeUUID(PacketBuffer buf, UUID uuid) {
-		buf.writeLong(uuid.getMostSignificantBits());
-		buf.writeLong(uuid.getLeastSignificantBits());
-	}
-
-	public static UUID readUUID(PacketBuffer buf) {
-		return new UUID(buf.readLong(), buf.readLong());
-	}
-
 	public static void writeNBT (PacketBuffer buf, @Nonnull CompoundNBT nbt) {
 		try (DataOutputStream dos = new DataOutputStream(new ByteBufOutputStream(buf))) {
 			CompressedStreamTools.write(nbt, dos);
@@ -32,5 +23,13 @@ public class ByteBufUtils {
 			return CompressedStreamTools.read(dis);
 		} catch (Exception ignored) {}
 		throw new IllegalStateException("Could not load incoming NBT from byte buffer");
+	}
+
+	public static void writeBool (PacketBuffer buf, boolean bool) {
+		buf.writeBoolean(bool);
+	}
+
+	public static boolean readBool (PacketBuffer buf) {
+		return buf.readBoolean();
 	}
 }

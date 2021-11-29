@@ -35,6 +35,7 @@ public class EffectMutations {
 	public final static EffectMutation WEAK_LIVER = WarpstoneMain.getEffectsMap().registerEffect(new WeakLiverMutation(28));
 	public final static EffectMutation BLOOD_SUCKING = WarpstoneMain.getEffectsMap().registerEffect(new BloodSuckingMutation(29));
 	public final static EffectMutation UNDEAD = WarpstoneMain.getEffectsMap().registerEffect(new UndeadMutation(30));
+	//public final static EffectMutation FLIGHT = WarpstoneMain.getEffectsMap().registerEffect(new FlightMutation(31));
 
 	public static void init() {}
 }
