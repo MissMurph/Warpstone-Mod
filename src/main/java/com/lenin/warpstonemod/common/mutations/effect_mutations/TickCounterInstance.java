@@ -19,6 +19,10 @@ public class TickCounterInstance extends EffectMutationInstance{
 		return currentTick;
 	}
 
+	public void reset () {
+		currentTick = tickInterval;
+	}
+
 	//Will return TRUE if this deincrementation results in a reset, FALSE if deincrements normally
 	public boolean deincrement () {
 		currentTick--;

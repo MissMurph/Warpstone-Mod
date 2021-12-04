@@ -114,5 +114,17 @@
   "mutation.effect.blood_sucking.desc": "Heal for 25% of the Damage you deal, -25% Max Health",
 
   "mutation.effect.undead": "Undead",
-  "mutation.effect.undead.desc": "+100% Max Health, -25% Healing & immune to Poison"
+  "mutation.effect.undead.desc": "+100% Max Health, -25% Healing & immune to Poison",
+
+  "mutation.effect.hooves": "Hooves",
+  "mutation.effect.hooves.desc": "+100 Sprint Speed when nothing is in your hands",
+
+  "mutation.effect.hydrophilic": "Hydrophilic",
+  "mutation.effect.hydrophilic.desc": "Can no longer eat Food, instead drink water, swim or stand in the rain to refill food",
+
+  "mutation.effect.potassium": "Potassium Bomb",
+  "mutation.effect.potassium.desc": "Drinking Water and standing in Water for 3 seconds causes you to Explode",
+
+  "mutation.effect.claws": "Claws",
+  "mutation.effect.claws.desc": "+3 to +10 Damage when nothing is in your hands"
 }
