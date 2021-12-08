@@ -12,7 +12,6 @@ import net.minecraft.potion.EffectType;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

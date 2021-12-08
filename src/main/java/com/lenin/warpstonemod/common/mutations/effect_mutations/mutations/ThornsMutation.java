@@ -10,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class ThornsMutation extends EffectMutation {
@@ -67,6 +66,6 @@ public class ThornsMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return !manager.containsEffect(EffectMutations.SCALES);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SCALES);
 	}
 }

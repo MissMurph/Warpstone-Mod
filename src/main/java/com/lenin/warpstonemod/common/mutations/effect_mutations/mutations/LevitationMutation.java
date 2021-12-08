@@ -2,7 +2,6 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,7 +27,10 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
-		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || !instanceMap.get(player.getUniqueID()).isActive()) return;
+		if (side == LogicalSide.CLIENT
+				|| !instanceMap.containsKey(player.getUniqueID())
+				|| !instanceMap.get(player.getUniqueID()).isActive())
+			return;
 
 		if (((TickCounterInstance)instanceMap.get(player.getUniqueID())).deincrement() && WarpstoneMain.getRandom().nextInt(100) >= 90) {
 			int duration = 20 + WarpstoneMain.getRandom().nextInt(100);

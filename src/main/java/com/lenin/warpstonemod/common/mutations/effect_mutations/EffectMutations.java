@@ -39,6 +39,9 @@ public class EffectMutations {
 	public final static EffectMutation HYDROPHILIC = WarpstoneMain.getEffectsMap().registerEffect(new HydrophilicMutation(32));
 	public final static EffectMutation POTASSIUM = WarpstoneMain.getEffectsMap().registerEffect(new PotassiumMutation(33));
 	public final static EffectMutation CLAWS = WarpstoneMain.getEffectsMap().registerEffect(new ClawsMutation(34));
+	public final static EffectMutation SHARP_SENSES = WarpstoneMain.getEffectsMap().registerEffect(new SharpSensesMutation(35));
+	public final static EffectMutation TURTLE = WarpstoneMain.getEffectsMap().registerEffect(new TurtleMutation(36));
+	public final static EffectMutation SCARRING = WarpstoneMain.getEffectsMap().registerEffect(new ScarringMutation(37));
 
 	public static void init() {}
 }

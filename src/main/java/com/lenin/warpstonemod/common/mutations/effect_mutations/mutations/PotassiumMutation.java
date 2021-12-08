@@ -88,7 +88,7 @@ public class PotassiumMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public EffectMutationInstance putInstance(LivingEntity entity) {
+	public EffectMutationInstance getInstanceType(LivingEntity entity) {
 		return new TickCounterInstance(entity, 60);
 	}
 

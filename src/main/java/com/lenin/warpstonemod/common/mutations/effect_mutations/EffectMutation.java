@@ -32,6 +32,7 @@ public abstract class EffectMutation {
 	 * RARE = 3 <br>
 	 * EPIC = 4 <br>
 	**/
+
 	protected Rarity rarity;
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
@@ -70,7 +71,10 @@ public abstract class EffectMutation {
 
 	//Different from Deactivate Mutations as will deactivate then clear the instance
 	public void clearInstance (LivingEntity entity) {
-		if (entity.world.isRemote()) return;
+		if (entity.world.isRemote()) {
+			clearClientInstance();
+			return;
+		}
 
 		deactivateMutation(entity);
 		instanceMap.remove(entity.getUniqueID());
@@ -115,13 +119,21 @@ public abstract class EffectMutation {
 	}
 
 	public EffectMutationInstance putInstance (LivingEntity entity) {
-		EffectMutationInstance instance = getInstanceType(entity);
+		EffectMutationInstance instance = entity.world.isRemote() ? putClientInstance() : getInstanceType(entity);
 
-		instanceMap.put(entity.getUniqueID(), instance);
+		if (instance != null) instanceMap.put(entity.getUniqueID(), instance);
 		return instance;
 	}
 
-	public void putClientInstance (LivingEntity entity){}
+	@OnlyIn(Dist.CLIENT)
+	public EffectMutationInstance putClientInstance() {
+		return null;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void clearClientInstance () {
+		instanceMap.clear();
+	}
 
 	public ResourceLocation getTexture () {
 		return resourceLocation;

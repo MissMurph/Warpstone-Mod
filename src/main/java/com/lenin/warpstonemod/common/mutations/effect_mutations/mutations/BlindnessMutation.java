@@ -27,6 +27,7 @@ public class BlindnessMutation extends EffectMutation {
 
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void attachClientListeners(IEventBus bus) {
 		bus.addListener(this::onRenderFog);
@@ -42,9 +43,10 @@ public class BlindnessMutation extends EffectMutation {
 
 	@OnlyIn(Dist.CLIENT)
 	public void onRenderFog (EntityViewRenderEvent.FogDensity event) {
-		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID()) ||
-				!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID()) ||
-				!instanceMap.get(Minecraft.getInstance().player.getUniqueID()).isActive()) return;
+		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
+				|| !instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
+				//|| !instanceMap.get(Minecraft.getInstance().player.getUniqueID()).isActive()
+		) return;
 
 		float density = event.getDensity();
 
@@ -56,11 +58,14 @@ public class BlindnessMutation extends EffectMutation {
 		event.setDensity(density);
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void putClientInstance(LivingEntity entity) {
-		super.putClientInstance(entity);
+	public EffectMutationInstance putClientInstance() {
+		EffectMutationInstance instance = new EffectMutationInstance(Minecraft.getInstance().player);
 
-		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), new EffectMutationInstance(Minecraft.getInstance().player));
+		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), instance);
+
+		return instance;
 	}
 
 	@Override

@@ -14,7 +14,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HydrophilicMutation extends EffectMutation implements IMutationTick {
 	public HydrophilicMutation(int _id) {
@@ -103,7 +105,7 @@ public class HydrophilicMutation extends EffectMutation implements IMutationTick
 	}
 
 	@Override
-	public EffectMutationInstance putInstance(LivingEntity entity) {
+	public EffectMutationInstance getInstanceType(LivingEntity entity) {
 		return new TickCounterInstance(entity, 100);
 	}
 

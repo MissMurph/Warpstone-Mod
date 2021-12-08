@@ -128,8 +128,9 @@ public class MutateManager {
             if (containsEffect(i)) { deletion.remove((Integer) i); continue; }
             effectMutations.add(i);
 
+            EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity);
+
             if (!parentEntity.world.isRemote()) {
-                EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity);
                 mut.applyMutation(parentEntity);
             }
         }

@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
@@ -32,7 +31,10 @@ public class InvisibilityMutation extends EffectMutation implements IMutationTic
 
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
-		if (side == LogicalSide.CLIENT || !instanceMap.containsKey(player.getUniqueID()) || !instanceMap.get(player.getUniqueID()).isActive()) return;
+		if (side == LogicalSide.CLIENT
+				|| !instanceMap.containsKey(player.getUniqueID())
+				|| !instanceMap.get(player.getUniqueID()).isActive())
+			return;
 
 		if (!player.isInvisible()) player.setInvisible(true);
 	}

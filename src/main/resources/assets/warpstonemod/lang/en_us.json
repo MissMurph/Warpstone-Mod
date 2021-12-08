@@ -126,5 +126,16 @@
   "mutation.effect.potassium.desc": "Drinking Water and standing in Water for 3 seconds causes you to Explode",
 
   "mutation.effect.claws": "Claws",
-  "mutation.effect.claws.desc": "+3 to +10 Damage when nothing is in your hands"
+  "mutation.effect.claws.desc": "+3 to +10 Damage when nothing is in your hands",
+
+  "mutation.effect.sharp_senses": "Sharp Senses",
+  "mutation.effect.sharp_senses.desc": "Every 3 seconds your next attack will deal +100% damage, but -25% damage when this isn't applied",
+  "effect.warpstonemod.sharp_senses": "Sharp Senses",
+
+  "mutation.effect.turtle": "Turtle",
+  "mutation.effect.turtle.desc": "After blocking an attack your next attack will do +100% Damage",
+  "effect.warpstonemod.turtle": "Turtle",
+
+  "mutation.effect.scarring": "Scarring",
+  "mutation.effect.scarring.desc": "Grants Regeneration every 20 seconds, taking damage will reduce this Interval and increase its Duration"
 }
