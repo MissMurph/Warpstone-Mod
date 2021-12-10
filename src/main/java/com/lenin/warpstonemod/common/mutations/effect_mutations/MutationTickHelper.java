@@ -18,8 +18,8 @@ public class MutationTickHelper implements ITickHandler {
 		PlayerEntity entity = (PlayerEntity) context[0];
 		LogicalSide side = (LogicalSide) context[1];
 
-		for (int i = 0; i < WarpstoneMain.getEffectsMap().getMapSize(); i++) {
-			EffectMutation mut = WarpstoneMain.getEffectsMap().getEffectMutation(i);
+		for (int i = 0; i < EffectMutations.getMapSize(); i++) {
+			EffectMutation mut = EffectMutations.getEffectMutation(i);
 			if (mut instanceof IMutationTick) ((IMutationTick) mut).mutationTick(entity, side);
 		}
 	}

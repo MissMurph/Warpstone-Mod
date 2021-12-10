@@ -3,9 +3,9 @@ package com.lenin.warpstonemod.common;
 import com.lenin.warpstonemod.client.ClientProxy;
 import com.lenin.warpstonemod.common.data.loot.WarpLootModifierSerializers;
 import com.lenin.warpstonemod.common.items.WarpstoneItemGroup;
-import com.lenin.warpstonemod.common.mutations.EffectsMap;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -21,33 +21,33 @@ public class WarpstoneMain {
     private static final Random random = new Random();
 
     private final CommonProxy proxy;
-    private final EffectsMap map;
+    //private final EffectsMap map;
 
     private static WarpstoneMain instance;
 
     public WarpstoneMain() {
         instance = this;
 
-        //CommonProxy.register();
+        MinecraftForge.EVENT_BUS.register(this);
 
-        //Register the mod
-       // MinecraftForge.EVENT_BUS.register(this);
+        //this.map = new EffectsMap();
+        //map.init();
 
-        this.map = new EffectsMap();
-        map.init();
+        IEventBus fmlEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        WarpLootModifierSerializers.init(FMLJavaModLoadingContext.get().getModEventBus());
+        WarpLootModifierSerializers.init(fmlEventBus);
 
         //Creates Proxies and assigns for Minecraft to use, refs client THEN server
         this.proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
         this.proxy.init();
+        this.proxy.attachLifeCycle(fmlEventBus);
         this.proxy.attachListeners(MinecraftForge.EVENT_BUS);
     }
 
     public static CommonProxy getProxy () { return getInstance().proxy; }
 
-    public static EffectsMap getEffectsMap () { return getInstance().map; }
+    //public static EffectsMap getEffectsMap () { return getInstance().map; }
 
     public static WarpstoneMain getInstance() { return instance; }
 

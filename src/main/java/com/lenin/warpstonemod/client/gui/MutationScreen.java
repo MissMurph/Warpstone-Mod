@@ -5,6 +5,7 @@ import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -67,7 +68,7 @@ public class MutationScreen extends Screen {
 				y += 23;
 				x = getGuiLeft() + 10 + (23 * (i - 7));
 			}
-			widgets.add(new EffectWidget(x, y, 18, 18, WarpstoneMain.getEffectsMap().effectMap.get(effectMuts.get(i))));
+			widgets.add(new EffectWidget(x, y, 18, 18, EffectMutations.getEffectMutation(effectMuts.get(i))));
 		}
 	}
 

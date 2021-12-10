@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
@@ -28,7 +29,6 @@ public class MutateManager {
 
         if (_parentEntity == null) return;
 
-        //On the Manager's creation we create the Attribute Mutations classList
         WarpMutations[] array = WarpMutations.values();
         for (WarpMutations warpMutations : array) {
             attributeMutations.add(WarpMutations.constructAttributeMutation(warpMutations, parentEntity));
@@ -82,17 +82,17 @@ public class MutateManager {
     }
 
     protected EffectMutation getRandomEffectMut () {
-        if (effectMutations.size() >= WarpstoneMain.getEffectsMap().getMapSize()) return null;
+        if (effectMutations.size() >= EffectMutations.getMapSize()) return null;
         List<EffectMutation> legalList = new ArrayList<>();
 
-        for (EffectMutation e : WarpstoneMain.getEffectsMap().getMap().values()) {
+        for (EffectMutation e : EffectMutations.getMap().values()) {
             if (!containsEffect(e) && e.isLegalMutation(this)) legalList.add(e);
         }
 
         if (legalList.isEmpty()) return null;
 
         int i = WarpstoneMain.getRandom().nextInt(legalList.size());
-        return WarpstoneMain.getEffectsMap().constructInstance(legalList.get(i).getMutationID(), parentEntity);
+        return EffectMutations.constructInstance(legalList.get(i).getMutationID(), parentEntity);
     }
 
     protected CompoundNBT serialize (){
@@ -128,7 +128,7 @@ public class MutateManager {
             if (containsEffect(i)) { deletion.remove((Integer) i); continue; }
             effectMutations.add(i);
 
-            EffectMutation mut = WarpstoneMain.getEffectsMap().constructInstance(i, parentEntity);
+            EffectMutation mut = EffectMutations.constructInstance(i, parentEntity);
 
             if (!parentEntity.world.isRemote()) {
                 mut.applyMutation(parentEntity);
@@ -185,7 +185,7 @@ public class MutateManager {
 
             if (threshold > corruption) {
                 if (i < 1) return 0;
-                return 1;
+                return i;
             }
         }
 
@@ -193,9 +193,6 @@ public class MutateManager {
     }
 
     public double getWitherRisk (int corruptionValue) {
-        //System.out.println(getInstabilityLevel() + "   " + (double)getInstabilityLevel() / 10);
-        //System.out.println(getInstabilityLevel() + "   " + (double)getCorruptionLevel() / 10);
-
         double value =  (((double) corruptionValue / 100f) * (((double) getInstabilityLevel() / 10 - 0.3) - (double) getCorruptionLevel() / 10));
 
         if (value < 0) return 0;
@@ -225,7 +222,7 @@ public class MutateManager {
     }
 
     private EffectMutation getEffect (int id) {
-        return WarpstoneMain.getEffectsMap().getEffectMutation(id);
+        return EffectMutations.getEffectMutation(id);
     }
 
     public boolean containsEffect (EffectMutation mut) {

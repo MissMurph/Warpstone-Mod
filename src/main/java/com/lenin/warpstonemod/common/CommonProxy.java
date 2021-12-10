@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common;
 
+import com.lenin.warpstonemod.common.blocks.WarpBlocks;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
@@ -11,14 +12,25 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.storage.FolderName;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.io.File;
 import java.util.UUID;
@@ -26,32 +38,23 @@ import java.util.function.Consumer;
 
 public class CommonProxy {
 
-	public static MinecraftServer SERVER;
 	private TickManager tickManager;
 
+	private Registration register;
+
 	public void init (){
-		//System.out.println("WARPLOG: Initializing CommonProxy");
-		Registration.register();
+		register = new Registration();
+
 		MutateHelper.init();
-		//EffectsMap.init();
 		EffectMutations.init();
-		//WarpLootConditionTypes.init();
-
-
 
 		this.tickManager = new TickManager();
 		this.attachTickListeners(tickManager::register);
 
-		//System.out.println("WARPLOG: Initialized Global Classes");
-
 		PacketHandler.registerPackets();
-
-		//System.out.println("WARPLOG: Completed Initializing CommonProxy");
 	}
 
 	public void attachListeners (IEventBus bus) {
-		//System.out.println("WARPLOG: Attaching Listeners in Common");
-
 		bus.addListener(this::onServerSave);
 
 		bus.addListener(this::onPlayerConnect);
@@ -60,7 +63,17 @@ public class CommonProxy {
 		bus.addListener(this::onPlayerItemUse);
 		bus.addListener(this::onPlayerDeath);
 
+		bus.addListener(EventPriority.HIGH, WarpstoneWorldGen::onBiomeLoading);
+
 		tickManager.attachListeners(bus);
+	}
+
+	public void attachLifeCycle (IEventBus bus) {
+		bus.addListener(this::onCommonSetup);
+	}
+
+	public void onCommonSetup (FMLCommonSetupEvent event) {
+		WarpstoneWorldGen.init();
 	}
 
 	public void attachTickListeners (Consumer<ITickHandler> handler) {
@@ -70,15 +83,11 @@ public class CommonProxy {
 	public void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
-		//System.out.println("WARPLOG: Playing Logging in Event");
-
 		MutateHelper.loadMutData(player.getUniqueID());
 	}
 
 	public void onPlayerDisconnect (PlayerEvent.PlayerLoggedOutEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-
-		//System.out.println("WARPLOG: Playing Logging out Event");
 
 		MutateHelper.unloadManager(player.getUniqueID());
 	}
@@ -109,18 +118,6 @@ public class CommonProxy {
 	}
 
 	public static void register () {}
-
-	public static LivingEntity getPlayerByUUID(UUID playerUUID) {
-		return SERVER.getPlayerList().getPlayerByUUID(playerUUID);
-	}
-
-	public static LogicalSide getSide (UUID playerUUID) {
-		return getSide(getPlayerByUUID(playerUUID));
-	}
-
-	public static LogicalSide getSide (Entity entity) {
-		return entity.getEntityWorld().isRemote() ? LogicalSide.CLIENT : LogicalSide.SERVER;
-	}
 
 	public File getWarpServerDataDirectory () {
 		MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);

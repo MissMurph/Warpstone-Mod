@@ -9,7 +9,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,30 +24,26 @@ public class Registration {
     public static final DeferredRegister<Item> ITEMS = create(ForgeRegistries.ITEMS);
     public static final DeferredRegister<Block> BLOCKS = create(ForgeRegistries.BLOCKS);
     public static final DeferredRegister<Effect> EFFECTS = create(ForgeRegistries.POTIONS);
-    public static final DeferredRegister<ContainerType<?>> CONTAINERS = create(ForgeRegistries.CONTAINERS);
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = create(ForgeRegistries.TILE_ENTITIES);
-    public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = create(ForgeRegistries.RECIPE_SERIALIZERS);
 
-    public static void register () {
+    public Registration () {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ITEMS.register(modEventBus);
         BLOCKS.register(modEventBus);
+        ITEMS.register(modEventBus);
         EFFECTS.register(modEventBus);
 
-        //CONTAINERS.register(modEventBus);
-        //TILE_ENTITIES.register(modEventBus);
-        //RECIPE_SERIALIZERS.register(modEventBus);
-
-        WarpItems.register();
         WarpBlocks.register();
+        WarpItems.register();
         WarpFoods.register();
         WarpEffects.init();
+        //WarpstoneWorldGen.init();
 
         //WarpContainerTypes.register();
         //WarpRecipeSerializers.register();
         //WarpTileEntityTypes.register();
     }
+
+
 
     private static <T extends IForgeRegistryEntry<T>> DeferredRegister<T> create(IForgeRegistry<T> registryEntry){
         return DeferredRegister.create(registryEntry, WarpstoneMain.MOD_ID);

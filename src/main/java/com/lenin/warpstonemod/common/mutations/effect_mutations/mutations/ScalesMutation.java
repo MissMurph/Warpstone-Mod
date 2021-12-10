@@ -77,6 +77,6 @@ public class ScalesMutation extends EffectMutation {
 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
-		return !manager.containsEffect(EffectMutations.THORNS);
+		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.THORNS);
 	}
 }
