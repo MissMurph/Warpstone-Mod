@@ -16,17 +16,19 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class PotassiumMutation extends EffectMutation implements IMutationTick {
+public class PotassiumMutation extends CounterEffectMutation implements IMutationTick {
 	public PotassiumMutation(int _id) {
 		super(_id,
 				"potassium",
 				"f74dfa9a-2104-403b-85a3-2a3f0c08e8c5",
-				Rarity.UNCOMMON);
+				Rarity.UNCOMMON,
+				100
+		);
 	}
+
+	private Map<UUID, Integer> counterMap = new HashMap<>();
 
 	private final List<Potion> legalPotions = new ArrayList<>(Arrays.asList(
 			Potions.WATER,
@@ -53,7 +55,7 @@ public class PotassiumMutation extends EffectMutation implements IMutationTick {
 			) return;
 
 		if (player.isInWaterRainOrBubbleColumn()) {
-			if (((TickCounterInstance)getInstance(player)).deincrement()) {
+			if (deincrement(counterMap, player.getUniqueID())) {
 				player.world.createExplosion(
 						null,
 						player.getPosX(),
@@ -63,7 +65,7 @@ public class PotassiumMutation extends EffectMutation implements IMutationTick {
 						Explosion.Mode.BREAK
 				);
 			}
-		} else ((TickCounterInstance)getInstance(player)).reset();
+		} else reset(counterMap, player.getUniqueID());
 	}
 
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
@@ -85,11 +87,6 @@ public class PotassiumMutation extends EffectMutation implements IMutationTick {
 				6f,
 				Explosion.Mode.BREAK
 		);
-	}
-
-	@Override
-	public EffectMutationInstance getInstanceType(LivingEntity entity) {
-		return new TickCounterInstance(entity, 60);
 	}
 
 	@Override

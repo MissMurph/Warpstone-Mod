@@ -15,14 +15,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ScarringMutation extends EffectMutation implements IMutationTick {
+public class ScarringMutation extends CounterEffectMutation implements IMutationTick {
 	public ScarringMutation(int _id) {
 		super(_id,
 				"scarring",
 				"50cc914e-dbfb-4d26-8be3-03de8151932a",
-				Rarity.RARE);
+				Rarity.RARE,
+				100
+				);
 	}
 
+	private Map<UUID, Integer> counterMap = new HashMap<>();
 	private Map<UUID, Integer> bonusMap = new HashMap<>();
 
 	@Override
@@ -42,7 +45,7 @@ public class ScarringMutation extends EffectMutation implements IMutationTick {
 				|| !getInstance(player).isActive()
 			) return;
 
-		if (((TickCounterInstance) getInstance(player)).deincrement()) {
+		if (deincrement(counterMap, player.getUniqueID())) {
 			applyEffect(player);
 		}
 	}
@@ -89,11 +92,6 @@ public class ScarringMutation extends EffectMutation implements IMutationTick {
 		if (entity.world.isRemote()) return;
 
 		bonusMap.remove(entity.getUniqueID());
-	}
-
-	@Override
-	public EffectMutationInstance getInstanceType(LivingEntity entity) {
-		return new TickCounterInstance(entity, 400);
 	}
 
 	@Override

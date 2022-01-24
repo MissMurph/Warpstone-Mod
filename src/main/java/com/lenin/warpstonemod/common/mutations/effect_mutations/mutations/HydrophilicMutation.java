@@ -14,17 +14,18 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class HydrophilicMutation extends EffectMutation implements IMutationTick {
+public class HydrophilicMutation extends CounterEffectMutation implements IMutationTick {
 	public HydrophilicMutation(int _id) {
 		super(_id,
 				"hydriophilic",
 				"17782c2e-2438-4c81-b05b-507cb3c576b0",
-				Rarity.UNCOMMON);
+				Rarity.UNCOMMON,
+				100);
 	}
+
+	private Map<UUID, Integer> counterMap = new HashMap<>();
 
 	/**This mutation replaces eating food with drinking water, you cannot eat food
 	 * and must drink water in order to eat, blank potions yield less food. <br>
@@ -63,11 +64,11 @@ public class HydrophilicMutation extends EffectMutation implements IMutationTick
 			) return;
 
 		if (player.isInWaterRainOrBubbleColumn()) {
-			if (((TickCounterInstance)getInstance(player)).deincrement()) {
+			if (deincrement(counterMap, player.getUniqueID())) {
 				player.getFoodStats().addStats(1, 0);
 			}
 		}
-		else ((TickCounterInstance)getInstance(player)).reset();
+		else reset(counterMap, uuid);
 	}
 
 	public void onItemUseStart (PlayerInteractEvent.RightClickItem event) {
@@ -102,11 +103,6 @@ public class HydrophilicMutation extends EffectMutation implements IMutationTick
 		int foodValue = 4 - legalPotions.indexOf(PotionUtils.getPotionFromItem(event.getItem()));
 
 		((PlayerEntity) event.getEntityLiving()).getFoodStats().addStats(foodValue, 1);
-	}
-
-	@Override
-	public EffectMutationInstance getInstanceType(LivingEntity entity) {
-		return new TickCounterInstance(entity, 100);
 	}
 
 	@Override

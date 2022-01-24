@@ -75,9 +75,4 @@ public class WeakLungsMutation extends EffectMutation implements IMutationTick {
 	public boolean isLegalMutation(MutateManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GILLS);
 	}
-
-	@Override
-	public EffectMutationInstance getInstanceType(LivingEntity entity) {
-		return new TickCounterInstance(entity, 5);
-	}
 }

@@ -48,6 +48,7 @@ public class EffectMutations {
 	public final static EffectMutation SHARP_SENSES = registerEffect(new SharpSensesMutation(35));
 	public final static EffectMutation TURTLE = registerEffect(new TurtleMutation(36));
 	public final static EffectMutation SCARRING = registerEffect(new ScarringMutation(37));
+	public final static EffectMutation THICK_FUR = registerEffect(new FurMutation(38));
 
 	public static EffectMutation constructInstance (int key, LivingEntity parent){
 		EffectMutation mut = EFFFECT_MAP.get(key);

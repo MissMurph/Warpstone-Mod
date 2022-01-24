@@ -90,11 +90,6 @@ public class SharpSensesMutation extends EffectMutation implements IMutationTick
 	}
 
 	@Override
-	public EffectMutationInstance getInstanceType(LivingEntity entity) {
-		return new TickCounterInstance(entity, 60);
-	}
-
-	@Override
 	public boolean isLegalMutation(MutateManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.CLAWS);
 	}

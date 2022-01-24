@@ -10,9 +10,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class FireBreathingMutation extends EffectMutation implements IMutationTick {
 	public FireBreathingMutation(int _id) {
@@ -21,6 +19,10 @@ public class FireBreathingMutation extends EffectMutation implements IMutationTi
 				"9970d2cf-e6ba-4025-acf6-fc23ca0c3668",
 				Rarity.RARE);
 	}
+
+	private Map<UUID, Integer> counterMap = new HashMap<>();
+
+	private static final int INTERVAL = 40;
 
 	private final Set<DamageSource> fireSources = new HashSet<>(Arrays.asList(
 			DamageSource.ON_FIRE,
@@ -47,7 +49,12 @@ public class FireBreathingMutation extends EffectMutation implements IMutationTi
 				|| !instanceMap.get(player.getUniqueID()).isActive()
 		) return;
 
-		canHeal = ((TickCounterInstance)instanceMap.get(player.getUniqueID())).deincrement();
+		counterMap.put(player.getUniqueID(), counterMap.get(player.getUniqueID()) - 1);
+
+		if (counterMap.get(player.getUniqueID()) <= 0) {
+			canHeal = true;
+			counterMap.put(player.getUniqueID(), INTERVAL);
+		}
 	}
 
 	public void onLivingAttack (LivingAttackEvent event) {
@@ -62,8 +69,17 @@ public class FireBreathingMutation extends EffectMutation implements IMutationTi
 	}
 
 	@Override
-	public EffectMutationInstance getInstanceType(LivingEntity entity) {
-		return new TickCounterInstance(entity, 40);
+	public void applyMutation(LivingEntity entity) {
+		super.applyMutation(entity);
+
+		counterMap.put(entity.getUniqueID(), INTERVAL);
+	}
+
+	@Override
+	public void deactivateMutation(LivingEntity entity) {
+		super.deactivateMutation(entity);
+
+		counterMap.remove(entity.getUniqueID());
 	}
 
 	@Override

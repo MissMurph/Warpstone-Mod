@@ -11,13 +11,20 @@ import net.minecraft.potion.Effects;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-public class LevitationMutation extends EffectMutation implements IMutationTick {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+public class LevitationMutation extends CounterEffectMutation implements IMutationTick {
 	public LevitationMutation(int _id) {
 		super(_id,
 				"levitation",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
-				Rarity.UNCOMMON);
+				Rarity.UNCOMMON,
+				200);
 	}
+
+	private Map<UUID, Integer> counterMap = new HashMap<>();
 
 	@Override
 	public void attachListeners(IEventBus bus) {}
@@ -32,7 +39,7 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 				|| !instanceMap.get(player.getUniqueID()).isActive())
 			return;
 
-		if (((TickCounterInstance)instanceMap.get(player.getUniqueID())).deincrement() && WarpstoneMain.getRandom().nextInt(100) >= 90) {
+		if (deincrement(counterMap, player.getUniqueID()) && WarpstoneMain.getRandom().nextInt(100) >= 90) {
 			int duration = 20 + WarpstoneMain.getRandom().nextInt(100);
 			player.addPotionEffect(new EffectInstance(Effects.LEVITATION, duration));
 		}
@@ -50,10 +57,5 @@ public class LevitationMutation extends EffectMutation implements IMutationTick 
 	@Override
 	public boolean isLegalMutation(MutateManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_FALLING);
-	}
-
-	@Override
-	public EffectMutationInstance getInstanceType(LivingEntity entity) {
-		return new TickCounterInstance(entity, 300);
 	}
 }
