@@ -21,10 +21,9 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 				"levitation",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
 				Rarity.UNCOMMON,
-				200);
+				300
+		);
 	}
-
-	private Map<UUID, Integer> counterMap = new HashMap<>();
 
 	@Override
 	public void attachListeners(IEventBus bus) {}

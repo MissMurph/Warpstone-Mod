@@ -28,8 +28,6 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 		);
 	}
 
-	private Map<UUID, Integer> counterMap = new HashMap<>();
-
 	private final List<Potion> legalPotions = new ArrayList<>(Arrays.asList(
 			Potions.WATER,
 			Potions.MUNDANE,

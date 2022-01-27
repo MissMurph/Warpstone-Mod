@@ -17,12 +17,14 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-public class SharpSensesMutation extends EffectMutation implements IMutationTick {
+public class SharpSensesMutation extends CounterEffectMutation implements IMutationTick {
 	public SharpSensesMutation(int _id) {
 		super(_id,
 				"sharp_senses",
 				"6ba9291c-f067-410b-9579-9f11169ea0fd",
-				Rarity.RARE);
+				Rarity.RARE,
+				60
+		);
 	}
 
 	@Override
@@ -42,7 +44,7 @@ public class SharpSensesMutation extends EffectMutation implements IMutationTick
 				|| !getInstance(player).isActive()
 			) return;
 
-		if (((TickCounterInstance)getInstance(player)).deincrement() && !player.isPotionActive(WarpEffects.SHARP_SENSES.get())) {
+		if (deincrement(counterMap, player.getUniqueID()) && !player.isPotionActive(WarpEffects.SHARP_SENSES.get())) {
 			ModifiableAttributeInstance attribute = player.getAttribute(Attributes.ATTACK_DAMAGE);
 
 			if (attribute.getModifier(uuid) != null) attribute.removeModifier(uuid);

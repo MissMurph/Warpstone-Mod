@@ -14,12 +14,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-public class WeakLungsMutation extends EffectMutation implements IMutationTick {
+public class WeakLungsMutation extends CounterEffectMutation implements IMutationTick {
 	public WeakLungsMutation(int _id) {
 		super(_id,
 				"weak_lungs",
 				"9216454f-c64d-4dcd-95f3-339df891aeef",
-				Rarity.COMMON);
+				Rarity.COMMON,
+				5
+				);
 	}
 
 	@Override
@@ -44,7 +46,7 @@ public class WeakLungsMutation extends EffectMutation implements IMutationTick {
 				|| !getInstance(player).isActive()
 		) return;
 
-		if (((TickCounterInstance)instanceMap.get(player.getUniqueID())).deincrement()) {
+		if (deincrement(counterMap, player.getUniqueID())) {
 			if (player.areEyesInFluid(FluidTags.WATER)
 					&& !player.world.getBlockState(new BlockPos(player.getPosX(), player.getPosYEye(), player.getPosZ())).matchesBlock(Blocks.BUBBLE_COLUMN)
 					&& !EffectUtils.canBreatheUnderwater(player)

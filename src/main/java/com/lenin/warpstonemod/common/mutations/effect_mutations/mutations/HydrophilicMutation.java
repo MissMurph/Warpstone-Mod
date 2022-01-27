@@ -25,8 +25,6 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 				100);
 	}
 
-	private Map<UUID, Integer> counterMap = new HashMap<>();
-
 	/**This mutation replaces eating food with drinking water, you cannot eat food
 	 * and must drink water in order to eat, blank potions yield less food. <br>
 	 * <br>

@@ -21,11 +21,10 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 				"scarring",
 				"50cc914e-dbfb-4d26-8be3-03de8151932a",
 				Rarity.RARE,
-				100
+				400
 				);
 	}
 
-	private Map<UUID, Integer> counterMap = new HashMap<>();
 	private Map<UUID, Integer> bonusMap = new HashMap<>();
 
 	@Override
@@ -56,13 +55,13 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 				|| !getInstance(event.getEntityLiving()).isActive()
 			) return;
 
-		TickCounterInstance instance = (TickCounterInstance) getInstance(event.getEntityLiving());
+		UUID uuid = event.getEntityLiving().getUniqueID();
 
-		int bonus = Math.min(7, Math.round(bonusMap.get(event.getEntityLiving().getUniqueID()) + (event.getAmount() / 2f)));
-		bonusMap.put(event.getEntityLiving().getUniqueID(), bonus);
+		int bonus = Math.min(7, Math.round(bonusMap.get(uuid) + (event.getAmount() / 2f)));
+		bonusMap.put(uuid, bonus);
 
 		for (int i = 0; i < event.getAmount() * 20; i++) {
-			if (instance.getTick() > 100 && instance.deincrement()){
+			if (counterMap.get(uuid) > 100 && deincrement(counterMap, uuid)) {
 				applyEffect(event.getEntityLiving());
 				break;
 			}

@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -12,6 +13,8 @@ public class CounterEffectMutation extends EffectMutation {
         super(_id, _mutName, _uuid, _rarity);
         INTERVAL = _interval;
     }
+
+    protected Map<UUID, Integer> counterMap = new HashMap<>();
 
     protected final int INTERVAL;
 
@@ -42,5 +45,23 @@ public class CounterEffectMutation extends EffectMutation {
 
     protected void reset (Map<UUID, Integer> map, UUID uuid, int interval) {
         map.put(uuid, interval);
+    }
+
+    @Override
+    public void applyMutation(LivingEntity entity) {
+        super.applyMutation(entity);
+
+        if (entity.world.isRemote) return;
+
+        counterMap.put(entity.getUniqueID(), INTERVAL);
+    }
+
+    @Override
+    public void deactivateMutation(LivingEntity entity) {
+        super.deactivateMutation(entity);
+
+        if (entity.world.isRemote) return;
+
+        counterMap.remove(entity.getUniqueID());
     }
 }
