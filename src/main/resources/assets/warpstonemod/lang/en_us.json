@@ -137,5 +137,9 @@
   "effect.warpstonemod.turtle": "Turtle",
 
   "mutation.effect.scarring": "Scarring",
-  "mutation.effect.scarring.desc": "Grants Regeneration every 20 seconds, taking damage will reduce this Interval and increase its Duration"
+  "mutation.effect.scarring.desc": "Grants Regeneration every 20 seconds, taking damage will reduce this Interval and increase its Duration",
+
+  "mutation.effect.wool": "Wool Growth",
+  "mutation.effect.wool.desc": "Grow a block of Wool every minute, maximum of 10",
+  "effect.warpstonemod.wool": "Wool Growth"
 }

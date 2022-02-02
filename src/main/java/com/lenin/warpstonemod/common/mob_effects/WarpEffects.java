@@ -8,6 +8,7 @@ public class WarpEffects {
 
 	public static final RegistryObject<Effect> SHARP_SENSES = Registration.EFFECTS.register("sharp_senses", SharpSensesEffect::new);
 	public static final RegistryObject<Effect> TURTLE = Registration.EFFECTS.register("turtle", TurtleEffect::new);
+	public static final RegistryObject<Effect> WOOL = Registration.EFFECTS.register("wool", WoolEffect::new);
 
 	public static void init() {}
 }
