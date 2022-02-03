@@ -9,7 +9,6 @@ import net.minecraft.network.PacketBuffer;
 import javax.annotation.Nonnull;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.UUID;
 
 public class ByteBufUtils {
 	public static void writeNBT (PacketBuffer buf, @Nonnull CompoundNBT nbt) {
@@ -23,13 +22,5 @@ public class ByteBufUtils {
 			return CompressedStreamTools.read(dis);
 		} catch (Exception ignored) {}
 		throw new IllegalStateException("Could not load incoming NBT from byte buffer");
-	}
-
-	public static void writeBool (PacketBuffer buf, boolean bool) {
-		buf.writeBoolean(bool);
-	}
-
-	public static boolean readBool (PacketBuffer buf) {
-		return buf.readBoolean();
 	}
 }

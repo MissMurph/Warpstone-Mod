@@ -10,7 +10,6 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import javax.annotation.Nonnull;
-import java.util.UUID;
 
 public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
 

@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.ITickHandler;
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -22,10 +21,5 @@ public class MutationTickHelper implements ITickHandler {
 			EffectMutation mut = EffectMutations.getEffectMutation(i);
 			if (mut instanceof IMutationTick) ((IMutationTick) mut).mutationTick(entity, side);
 		}
-	}
-
-	@Override
-	public EnumSet<TickEvent.Type> getHandledTypes() {
-		return EnumSet.of(TickEvent.Type.PLAYER);
 	}
 }

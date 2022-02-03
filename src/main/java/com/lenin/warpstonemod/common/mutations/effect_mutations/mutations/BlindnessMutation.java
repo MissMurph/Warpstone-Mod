@@ -45,7 +45,7 @@ public class BlindnessMutation extends EffectMutation {
 	public void onRenderFog (EntityViewRenderEvent.FogDensity event) {
 		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
 				|| !instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
-				//|| !instanceMap.get(Minecraft.getInstance().player.getUniqueID()).isActive()
+				|| !instanceMap.get(Minecraft.getInstance().player.getUniqueID()).isActive()
 		) return;
 
 		float density = event.getDensity();

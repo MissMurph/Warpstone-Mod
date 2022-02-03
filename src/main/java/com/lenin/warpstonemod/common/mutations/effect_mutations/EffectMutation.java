@@ -56,7 +56,7 @@ public abstract class EffectMutation {
 	public abstract void attachClientListeners(IEventBus bus);
 
 	public void applyMutation (LivingEntity entity){
-		if (entity.world.isRemote) return;
+		if (!containsInstance(entity.getUniqueID())) return;
 
 		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
 		mut.setActive(true);
@@ -64,7 +64,7 @@ public abstract class EffectMutation {
 
 	//This cannot clear instances as methods are overridden to deactivate mutations
 	public void deactivateMutation(LivingEntity entity) {
-		if (entity.world.isRemote()) return;
+		if (!containsInstance(entity.getUniqueID())) return;
 
 		instanceMap.get(entity.getUniqueID()).setActive(false);
 	}
@@ -118,11 +118,10 @@ public abstract class EffectMutation {
 		return instanceMap.containsKey(playerUUID);
 	}
 
-	public EffectMutationInstance putInstance (LivingEntity entity) {
+	public void putInstance (LivingEntity entity) {
 		EffectMutationInstance instance = entity.world.isRemote() ? putClientInstance() : getInstanceType(entity);
 
 		if (instance != null) instanceMap.put(entity.getUniqueID(), instance);
-		return instance;
 	}
 
 	@OnlyIn(Dist.CLIENT)

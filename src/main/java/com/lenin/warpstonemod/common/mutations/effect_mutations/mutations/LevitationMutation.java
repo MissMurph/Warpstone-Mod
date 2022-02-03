@@ -2,7 +2,9 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.*;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -10,10 +12,6 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class LevitationMutation extends CounterEffectMutation implements IMutationTick {
 	public LevitationMutation(int _id) {

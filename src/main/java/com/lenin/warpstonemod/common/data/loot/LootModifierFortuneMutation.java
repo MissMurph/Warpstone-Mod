@@ -2,22 +2,20 @@ package com.lenin.warpstonemod.common.data.loot;
 
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
-import com.lenin.warpstonemod.common.items.WarpItems;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.*;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameter;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 import javax.annotation.Nonnull;

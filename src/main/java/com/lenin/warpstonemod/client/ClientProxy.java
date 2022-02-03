@@ -2,7 +2,6 @@ package com.lenin.warpstonemod.client;
 
 import com.lenin.warpstonemod.client.gui.MutationScreenOpenButton;
 import com.lenin.warpstonemod.common.CommonProxy;
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraftforge.client.event.GuiScreenEvent;

@@ -1,55 +1,40 @@
 package com.lenin.warpstonemod.common;
 
-import com.lenin.warpstonemod.common.blocks.WarpBlocks;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.network.PacketHandler;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.storage.FolderName;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.io.File;
-import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommonProxy {
-
-	private TickManager tickManager;
-
-	private Registration register;
+	private final List<ITickHandler> tickHandlers = new ArrayList<>();
 
 	public void init (){
-		register = new Registration();
+		Registration.init();
 
 		MutateHelper.init();
 		EffectMutations.init();
 
-		this.tickManager = new TickManager();
-		this.attachTickListeners(tickManager::register);
+		this.tickHandlers.add(MutationTickHelper.INSTANCE);
 
 		PacketHandler.registerPackets();
 	}
@@ -63,21 +48,24 @@ public class CommonProxy {
 		bus.addListener(this::onPlayerItemUse);
 		bus.addListener(this::onPlayerDeath);
 
-		bus.addListener(EventPriority.HIGH, WarpstoneWorldGen::onBiomeLoading);
+		bus.addListener(this::onPlayerTick);
 
-		tickManager.attachListeners(bus);
+		bus.addListener(EventPriority.HIGH, WarpstoneWorldGen::onBiomeLoading);
 	}
 
 	public void attachLifeCycle (IEventBus bus) {
 		bus.addListener(this::onCommonSetup);
 	}
 
-	public void onCommonSetup (FMLCommonSetupEvent event) {
-		WarpstoneWorldGen.init();
+	private void onPlayerTick (TickEvent.PlayerTickEvent event) {
+		if (event.phase != TickEvent.Phase.END) return;
+		for (ITickHandler handler : tickHandlers) {
+			handler.onTick(TickEvent.Type.PLAYER, event.player, event.side);
+		}
 	}
 
-	public void attachTickListeners (Consumer<ITickHandler> handler) {
-		handler.accept(MutationTickHelper.INSTANCE);
+	public void onCommonSetup (FMLCommonSetupEvent event) {
+		WarpstoneWorldGen.init();
 	}
 
 	public void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
@@ -116,8 +104,6 @@ public class CommonProxy {
 			if (m != null) m.resetMutations(true);
 		}
 	}
-
-	public static void register () {}
 
 	public File getWarpServerDataDirectory () {
 		MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);

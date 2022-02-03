@@ -6,6 +6,4 @@ import java.util.EnumSet;
 
 public interface ITickHandler {
 	void onTick(TickEvent.Type type, Object... context);
-
-	public EnumSet<TickEvent.Type> getHandledTypes();
 }

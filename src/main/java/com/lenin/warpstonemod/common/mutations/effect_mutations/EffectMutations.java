@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.mutations.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;

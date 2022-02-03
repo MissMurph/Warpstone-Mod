@@ -5,18 +5,15 @@ import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import net.minecraft.client.audio.SoundSource;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -65,7 +62,9 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
             player.addPotionEffect(new EffectInstance(
                     WarpEffects.WOOL.get(),
                     duration,
-                    bonus
+                    bonus,
+                    false,
+                    false
             ));
         }
     }
@@ -131,7 +130,9 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
         entity.addPotionEffect(new EffectInstance(
                 WarpEffects.WOOL.get(),
                 1200,
-                0
+                0,
+                false,
+                false
         ));
     }
 

@@ -21,7 +21,6 @@ public class WarpstoneMain {
     private static final Random random = new Random();
 
     private final CommonProxy proxy;
-    //private final EffectsMap map;
 
     private static WarpstoneMain instance;
 
@@ -30,14 +29,10 @@ public class WarpstoneMain {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        //this.map = new EffectsMap();
-        //map.init();
-
         IEventBus fmlEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         WarpLootModifierSerializers.init(fmlEventBus);
 
-        //Creates Proxies and assigns for Minecraft to use, refs client THEN server
         this.proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
         this.proxy.init();
@@ -46,8 +41,6 @@ public class WarpstoneMain {
     }
 
     public static CommonProxy getProxy () { return getInstance().proxy; }
-
-    //public static EffectsMap getEffectsMap () { return getInstance().map; }
 
     public static WarpstoneMain getInstance() { return instance; }
 

@@ -17,7 +17,12 @@ public class MutationScreenOpenButton extends WarpButton {
 		Minecraft minecraft = Minecraft.getInstance();
 		minecraft.getTextureManager().bindTexture(RESOURCE_LOCATION);
 
-		if (parentGui instanceof InventoryScreen && x != getParentLeft() + 134 || y != getParentTop() + (166 / 2) - 22) {
+		//78 is the offset applied by the Recipe Book GUI
+
+		if (((InventoryScreen)parentGui).getRecipeGui().isVisible() && x != getParentLeft() + 212) {
+			this.setPosition(getParentLeft() + 212, getParentTop() + (166 / 2) - 22);
+		}
+		else if (!((InventoryScreen)parentGui).getRecipeGui().isVisible() && x != getParentLeft() + 134) {
 			this.setPosition(getParentLeft() + 134, getParentTop() + (166 / 2) - 22);
 		}
 
@@ -28,7 +33,6 @@ public class MutationScreenOpenButton extends WarpButton {
 
 		RenderSystem.enableDepthTest();
 		blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 256, 256);
-
 	}
 
 	@Override

@@ -19,10 +19,6 @@ public class WarpSimpleChannel {
 		}
 	}
 
-	public <MSG> void sendToServer (MSG message){
-		channel.sendToServer(message);
-	}
-
 	public <MSG> void send (PacketDistributor.PacketTarget target, MSG message){
 		channel.send(target, message);
 	}

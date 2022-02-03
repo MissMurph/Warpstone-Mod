@@ -1,8 +1,9 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.*;
-import net.minecraft.entity.LivingEntity;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.Rarity;
@@ -14,7 +15,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HydrophilicMutation extends CounterEffectMutation implements IMutationTick {
 	public HydrophilicMutation(int _id) {

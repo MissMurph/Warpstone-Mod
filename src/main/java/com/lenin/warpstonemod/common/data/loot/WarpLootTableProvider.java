@@ -11,7 +11,6 @@ import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.LootConditionManager;
 import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;

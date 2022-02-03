@@ -85,8 +85,6 @@ public class MutateManager {
         if (effectMutations.size() >= EffectMutations.getMapSize()) return null;
         List<EffectMutation> legalList = new ArrayList<>();
 
-        if (!containsEffect(EffectMutations.WOOL)) return EffectMutations.constructInstance(EffectMutations.WOOL.getMutationID(), parentEntity);
-
         for (EffectMutation e : EffectMutations.getMap().values()) {
             if (!containsEffect(e) && e.isLegalMutation(this)) legalList.add(e);
         }
@@ -132,9 +130,7 @@ public class MutateManager {
 
             EffectMutation mut = EffectMutations.constructInstance(i, parentEntity);
 
-            if (!parentEntity.world.isRemote()) {
-                mut.applyMutation(parentEntity);
-            }
+            mut.applyMutation(parentEntity);
         }
 
         for (int i : deletion) {

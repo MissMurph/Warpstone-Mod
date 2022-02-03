@@ -1,8 +1,9 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.*;
-import net.minecraft.entity.LivingEntity;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.DamageSource;
@@ -10,7 +11,9 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FireBreathingMutation extends CounterEffectMutation implements IMutationTick {
 	public FireBreathingMutation(int _id) {

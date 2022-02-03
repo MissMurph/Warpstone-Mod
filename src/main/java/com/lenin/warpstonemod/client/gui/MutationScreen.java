@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.client.gui;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
