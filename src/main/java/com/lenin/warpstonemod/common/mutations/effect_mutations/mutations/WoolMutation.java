@@ -149,11 +149,6 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     }
 
     @Override
-    public boolean isLegalMutation(MutateManager manager) {
-        return true;
-    }
-
-    @Override
     public ResourceLocation getTexture() {
         return new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/wool.png");
     }

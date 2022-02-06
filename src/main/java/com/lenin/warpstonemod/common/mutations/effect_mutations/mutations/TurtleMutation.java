@@ -74,11 +74,6 @@ public class TurtleMutation extends EffectMutation {
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SCARRING);
-	}
-
-	@Override
 	public ResourceLocation getTexture() {
 		return new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/turtle.png");
 	}

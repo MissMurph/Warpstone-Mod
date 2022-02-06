@@ -72,9 +72,4 @@ public class ClawsMutation extends EffectMutation implements IMutationTick {
 			attribute.removeModifier(uuid);
 		}
 	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SHARP_SENSES);
-	}
 }

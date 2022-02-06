@@ -28,28 +28,29 @@ public class CounterEffectMutation extends EffectMutation {
 
     }
 
-    protected boolean deincrement (Map<UUID, Integer> map, UUID uuid) {
-        int value = map.get(uuid) - 1;
-        map.put(uuid, value);
+    protected boolean decrement(Map<UUID, Integer> map, UUID playerUUID) {
+        int value = map.get(playerUUID) - 1;
+        map.put(playerUUID, value);
 
         if (value <= 0) {
-            reset(map, uuid);
+            reset(map, playerUUID);
             return true;
         }
         else return false;
     }
 
-    protected void reset (Map<UUID, Integer> map, UUID uuid) {
-        if (map.get(uuid) != INTERVAL) map.put(uuid, INTERVAL);
+    protected void reset (Map<UUID, Integer> map, UUID playerUUID) {
+        if (map.get(playerUUID) != INTERVAL) map.put(playerUUID, INTERVAL);
     }
 
-    protected void reset (Map<UUID, Integer> map, UUID uuid, int interval) {
-        map.put(uuid, interval);
+    //Use this when not using default interval
+    protected void reset (Map<UUID, Integer> map, UUID playerUUID, int interval) {
+        map.put(playerUUID, interval);
     }
 
     @Override
-    public void applyMutation(LivingEntity entity) {
-        super.applyMutation(entity);
+    public void putInstance(LivingEntity entity) {
+        super.putInstance(entity);
 
         if (entity.world.isRemote) return;
 

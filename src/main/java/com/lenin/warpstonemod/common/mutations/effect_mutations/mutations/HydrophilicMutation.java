@@ -65,11 +65,11 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 			) return;
 
 		if (player.isInWaterRainOrBubbleColumn()) {
-			if (deincrement(counterMap, player.getUniqueID())) {
+			if (decrement(counterMap, player.getUniqueID())) {
 				player.getFoodStats().addStats(1, 0);
 			}
 		}
-		else reset(counterMap, uuid);
+		else reset(counterMap, player.getUniqueID());
 	}
 
 	public void onItemUseStart (PlayerInteractEvent.RightClickItem event) {

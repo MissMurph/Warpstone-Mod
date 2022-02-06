@@ -2,9 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -46,7 +44,7 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 				|| !getInstance(player).isActive()
 			) return;
 
-		if (deincrement(counterMap, player.getUniqueID()) && !player.isPotionActive(WarpEffects.SHARP_SENSES.get())) {
+		if (decrement(counterMap, player.getUniqueID()) && !player.isPotionActive(WarpEffects.SHARP_SENSES.get())) {
 			ModifiableAttributeInstance attribute = player.getAttribute(Attributes.ATTACK_DAMAGE);
 
 			if (attribute.getModifier(uuid) != null) attribute.removeModifier(uuid);
@@ -91,11 +89,6 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 
 		if (entity.isPotionActive(WarpEffects.SHARP_SENSES.get())) entity.removePotionEffect(WarpEffects.SHARP_SENSES.get());
 		if (entity.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
-	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.CLAWS);
 	}
 
 	@Override

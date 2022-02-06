@@ -1,8 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -46,7 +44,7 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 				|| !getInstance(player).isActive()
 			) return;
 
-		if (deincrement(counterMap, player.getUniqueID())) {
+		if (decrement(counterMap, player.getUniqueID())) {
 			applyEffect(player);
 		}
 	}
@@ -57,13 +55,13 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 				|| !getInstance(event.getEntityLiving()).isActive()
 			) return;
 
-		UUID uuid = event.getEntityLiving().getUniqueID();
+		UUID playerUUID = event.getEntityLiving().getUniqueID();
 
-		int bonus = Math.min(7, Math.round(bonusMap.get(uuid) + (event.getAmount() / 2f)));
-		bonusMap.put(uuid, bonus);
+		int bonus = Math.min(7, Math.round(bonusMap.get(playerUUID) + (event.getAmount() / 2f)));
+		bonusMap.put(playerUUID, bonus);
 
 		for (int i = 0; i < event.getAmount() * 20; i++) {
-			if (counterMap.get(uuid) > 100 && deincrement(counterMap, uuid)) {
+			if (counterMap.get(playerUUID) > 100 && decrement(counterMap, playerUUID)) {
 				applyEffect(event.getEntityLiving());
 				break;
 			}
@@ -93,10 +91,5 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 		if (entity.world.isRemote()) return;
 
 		bonusMap.remove(entity.getUniqueID());
-	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.TURTLE);
 	}
 }

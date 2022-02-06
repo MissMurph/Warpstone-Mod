@@ -10,6 +10,7 @@
   "mutation.screen.corruption": "Corruption",
   "warpstone.screen.generic.level": "Level:",
   "warpstone.screen.generic.total": "Total:",
+  "warpstone.screen.generic.max_level": "Max Level:",
 
   "warpstone.consumable.wither_risk": "Wither Risk:",
 
@@ -139,7 +140,19 @@
   "mutation.effect.scarring": "Scarring",
   "mutation.effect.scarring.desc": "Grants Regeneration every 20 seconds, taking damage will reduce this Interval and increase its Duration",
 
+  "mutation.effect.thick_fur": "Thick Fur",
+  "mutation.effect.thick_fur.desc": "Passively heal in cold climates, +25% hunger drain in hot climates",
+
+  "mutation.effect.cold_blood": "Cold Blood",
+  "mutation.effect.cold_blood.desc": "Passively heal in hot climates, +25% hunger drain in cold climates",
+
   "mutation.effect.wool": "Wool Growth",
   "mutation.effect.wool.desc": "Grow a block of Wool every minute, maximum of 10",
-  "effect.warpstonemod.wool": "Wool Growth"
+  "effect.warpstonemod.wool": "Wool Growth",
+
+  "mutation.effect.herbivore": "Herbivore",
+  "mutation.effect.herbivore.desc": "+25% Food from Plant food, -25% Food from Meat food",
+
+  "mutation.effect.carnivore": "Carnivore",
+  "mutation.effect.carnivore.desc": "+25% Food from Meat food, -25% Food from Plant food"
 }

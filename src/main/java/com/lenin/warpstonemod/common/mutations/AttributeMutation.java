@@ -39,18 +39,16 @@ public class AttributeMutation{
 	}
 
 	public void changeLevel (int value){
-		mutationLevel += value;
+		setLevel(mutationLevel + value);
+	}
 
-		if (mutationLevel > 50) mutationLevel = 50;
-		if (mutationLevel < -25) mutationLevel = -25;
-
-		addModifier();
+	public boolean canMutate (MutateManager manager) {
+		return mutationLevel < manager.getCorruptionLevel() * 10 || mutationLevel > manager.getCorruptionLevel() * -5;
 	}
 
 	public void clearMutation() {
 		attributeSource.removeModifier(uuid);
 	}
-
 
 	public String getMutationName() {
 		return name;

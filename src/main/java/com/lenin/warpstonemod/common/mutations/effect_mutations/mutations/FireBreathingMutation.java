@@ -50,7 +50,7 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 				|| !instanceMap.get(player.getUniqueID()).isActive()
 		) return;
 
-		if (deincrement(counterMap, player.getUniqueID())) {
+		if (decrement(counterMap, player.getUniqueID())) {
 			canHeal = true;
 			counterMap.put(player.getUniqueID(), INTERVAL);
 		}

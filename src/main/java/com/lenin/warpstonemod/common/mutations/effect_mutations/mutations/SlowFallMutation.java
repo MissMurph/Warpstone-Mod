@@ -60,9 +60,4 @@ public class SlowFallMutation extends EffectMutation implements IMutationTick {
 
 		entity.removePotionEffect(Effects.SLOW_FALLING);
 	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.LEVITATION);
-	}
 }

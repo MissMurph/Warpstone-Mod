@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.client.gui;
 import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -33,6 +34,8 @@ public class MutationScreen extends Screen {
 
 	private List<Widget> widgets = new ArrayList<Widget>();
 
+	//Dont ever let me write UI code again
+
 	@Override
 	protected void init(){
 		super.init();
@@ -41,23 +44,40 @@ public class MutationScreen extends Screen {
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 
-		widgets.add(new InstabilityWidget(this.guiLeft + 133, guiTop + 79, 25, 25, MutateHelper.getClientManager().getInstabilityLevel(), MutateHelper.getClientManager().getInstability()));
+		MutateManager clientManager = MutateHelper.getClientManager();
+
+		widgets.add(new InstabilityWidget(this.guiLeft + 133, guiTop + 79, 25, 25, clientManager.getInstabilityLevel(), clientManager.getInstability()));
 		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 64, 25, 25, "instability"));
 
-		widgets.add(new CorruptionWidget(this.guiLeft + 133, guiTop + 121, 25, 25, MutateHelper.getClientManager().getCorruptionLevel(), MutateHelper.getClientManager().getCorruption()));
+		widgets.add(new CorruptionWidget(this.guiLeft + 133, guiTop + 121, 25, 25, clientManager.getCorruptionLevel(), clientManager.getCorruption()));
 		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 103, 25, 25, "corruption"));
 
 		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 144, 20, 18, this);
 		widgets.add(returnButton);
 		addButton(returnButton);
 
-		if (MutateHelper.getClientManager() instanceof DummyMutateManager) System.out.println("Parent Entity is Null!");
-
-		List<AttributeMutation> muts = MutateHelper.getClientManager().getAttributeMutations();
-		List<Integer> effectMuts = MutateHelper.getClientManager().getEffectMutations();
+		List<AttributeMutation> muts = clientManager.getAttributeMutations();
+		List<Integer> effectMuts = clientManager.getEffectMutations();
 
 		for (int i = 0; i < muts.size(); i++) {
-			widgets.add(new AttributeBar(getGuiLeft() + 13 + (17 * i), getGuiTop() + 60, muts.get(i).getMutationLevel() + 25, muts.get(i).getMutationName(), this));
+			int level = muts.get(i).getMutationLevel();
+
+			int levelMultiple = level < 0 ? 5 : 10;
+
+			float maxLevel = levelMultiple * Math.min(5, clientManager.getCorruptionLevel() + 1);
+
+			float maxFrame = levelMultiple * 5;
+
+			int frame = Math.round(((float)(level) / maxLevel) * maxFrame) + 25;
+
+			widgets.add(new AttributeBar(
+					getGuiLeft() + 13 + (17 * i),
+					getGuiTop() + 60,
+					frame,
+					level,
+					clientManager.getCorruptionLevel(),
+					muts.get(i).getMutationName()
+			));
 		}
 
 		for (int i = 0; i < effectMuts.size(); i++) {
@@ -121,16 +141,18 @@ public class MutationScreen extends Screen {
 		/*	ATTRIBUTE BAR	*/
 	class AttributeBar extends WarpWidget{
 		private final int frame;
+		private final int level;
+		private final int corruptionLevel;
 		private final String attributeName;
-		private final MutationScreen parentGui;
 
-		public AttributeBar(int x, int y, int _frame, String _attributeName, MutationScreen _parentGui) {
+		public AttributeBar(int x, int y, int _frame, int _level, int _corruptionLevel, String _attributeName) {
 			super(x, y, 7, 78, new TranslationTextComponent("mutation_screen.attribute_bar"));
 			width = 7;
 			height = 78;
-			frame = _frame;
 			attributeName = _attributeName;
-			parentGui = _parentGui;
+			frame = _frame;
+			level = _level + 25;
+			corruptionLevel = _corruptionLevel + 1;
 		}
 
 		@Override
@@ -139,9 +161,17 @@ public class MutationScreen extends Screen {
 			list.add((new TranslationTextComponent(attributeName)).mergeStyle(TextFormatting.WHITE));
 			String levelText = "+";
 			TextFormatting color = TextFormatting.GREEN;
-			if (frame < 25) { levelText = ""; color = TextFormatting.RED; }
+			if (level < 25) { levelText = ""; color = TextFormatting.RED; }
 
-			list.add((new StringTextComponent(levelText + (frame - 25) + "%")).mergeStyle(color));
+			String maxLevel = (level < 25 ? "-" + 5 * corruptionLevel : "+" + 10 * corruptionLevel) + "%";
+
+			list.add((new StringTextComponent(levelText + (level - 25) + "%")).mergeStyle(color));
+			list.add(new StringTextComponent("")
+					.appendSibling(new TranslationTextComponent("warpstone.screen.generic.max_level"))
+					.appendSibling(new StringTextComponent(" " + maxLevel)
+							.mergeStyle(color)
+					)
+			);
 
 			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
 		}

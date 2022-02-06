@@ -57,7 +57,7 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 			) return;
 
 		if (player.isInWaterRainOrBubbleColumn()) {
-			if (deincrement(counterMap, player.getUniqueID())) {
+			if (decrement(counterMap, player.getUniqueID())) {
 				player.world.createExplosion(
 						null,
 						player.getPosX(),

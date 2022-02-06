@@ -11,6 +11,7 @@ import net.minecraft.potion.Effects;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MutateManager {
     protected final LivingEntity parentEntity;
@@ -42,25 +43,37 @@ public class MutateManager {
 
         //Loop over every point of instablity and apply levels, no negatives if no instablity
         for (int i = 0; i < getInstabilityLevel() + 1; i++) {
-            boolean canMutateAttribute = true;
-
-            if (!hasEffectBeenCreated && WarpstoneMain.getRandom().nextInt(100) > 85) {
+            if (effectMutations.size() < 14 && !hasEffectBeenCreated && WarpstoneMain.getRandom().nextInt(100) > 90) {
                 EffectMutation mut = getRandomEffectMut();
 
                 if (mut != null) {
                     effectMutations.add(mut.getMutationID());
                     mut.applyMutation(parentEntity);
 
-                    hasEffectBeenCreated = true;
-                    canMutateAttribute = false;
+                    continue;
                 }
+
+                //If no effect mutations can be added then there's no point checking this each iteration so we stop it here
+                hasEffectBeenCreated = true;
             }
 
-            if (canMutateAttribute) attributeMutations.get(WarpstoneMain.getRandom().nextInt(attributeMutations.size())).changeLevel(5);
+            List<AttributeMutation> legal = attributeMutations
+                    .stream()
+                    .filter(attr -> attr.canMutate(this))
+                    .collect(Collectors.toList());
+
+            int change = WarpstoneMain.getRandom().nextInt(getCorruptionLevel()) + 1;
 
             if (i > 0) {
-                attributeMutations.get(WarpstoneMain.getRandom().nextInt(attributeMutations.size())).changeLevel(-5);
+                int index = WarpstoneMain.getRandom().nextInt(legal.size());
+                legal.get(index).changeLevel(-change);
+                legal.remove(index);
             }
+
+            if (i >= 5) change = WarpstoneMain.getRandom().nextInt(100) > 100 - (5 * (getInstabilityLevel() - getCorruptionLevel())) ? change * -1 : change;
+
+            legal.get(WarpstoneMain.getRandom().nextInt(legal.size()))
+                    .changeLevel(change);
         }
 
         double witherRisk = getWitherRisk(item.getCorruptionValue());

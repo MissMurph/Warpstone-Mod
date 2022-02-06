@@ -2,7 +2,6 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -73,7 +72,7 @@ public class FurMutation extends CounterEffectMutation implements IMutationTick 
         ) return;
 
         if (LEGAL_BIOMES.contains(player.world.getBiome(player.getPosition()))) {
-            if (deincrement(counterMap, player.getUniqueID())) {
+            if (decrement(counterMap, player.getUniqueID())) {
                 player.addPotionEffect(new EffectInstance(
                         Effects.REGENERATION,
                         20
@@ -81,17 +80,18 @@ public class FurMutation extends CounterEffectMutation implements IMutationTick 
             }
         }
         else if (ILLEGAL_BIOMES.contains(player.world.getBiome(player.getPosition()))) {
-            if (deincrement(counterMap, player.getUniqueID())) {
+            if (decrement(counterMap, player.getUniqueID())) {
                 player.getFoodStats().setFoodLevel(player.getFoodStats().getFoodLevel() - 1);
             }
         }
         else {
-            reset(counterMap, uuid);
+            reset(counterMap, player.getUniqueID());
         }
     }
 
     @Override
     public boolean isLegalMutation(MutateManager manager) {
-        return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.COLD_BLOOD);
+        //return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.COLD_BLOOD);
+        return false;
     }
 }

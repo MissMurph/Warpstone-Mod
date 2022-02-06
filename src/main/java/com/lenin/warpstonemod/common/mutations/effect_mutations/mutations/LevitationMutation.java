@@ -1,9 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +34,7 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 				|| !instanceMap.get(player.getUniqueID()).isActive())
 			return;
 
-		if (deincrement(counterMap, player.getUniqueID()) && WarpstoneMain.getRandom().nextInt(100) >= 90) {
+		if (decrement(counterMap, player.getUniqueID()) && WarpstoneMain.getRandom().nextInt(100) >= 90) {
 			int duration = 20 + WarpstoneMain.getRandom().nextInt(100);
 			player.addPotionEffect(new EffectInstance(Effects.LEVITATION, duration));
 		}
@@ -49,10 +47,5 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 		if (entity.world.isRemote()) return;
 
 		entity.removePotionEffect(Effects.LEVITATION);
-	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_FALLING);
 	}
 }

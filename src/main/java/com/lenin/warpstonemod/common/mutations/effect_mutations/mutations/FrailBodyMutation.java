@@ -46,9 +46,4 @@ public class FrailBodyMutation extends EffectMutation {
 	public IFormattableTextComponent getMutationName() {
 		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.CORROSIVE_TOUCH);
-	}
 }

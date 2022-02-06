@@ -48,7 +48,7 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 				|| !getInstance(player).isActive()
 		) return;
 
-		if (deincrement(counterMap, player.getUniqueID())) {
+		if (decrement(counterMap, player.getUniqueID())) {
 			if (player.areEyesInFluid(FluidTags.WATER)
 					&& !player.world.getBlockState(new BlockPos(player.getPosX(), player.getPosYEye(), player.getPosZ())).matchesBlock(Blocks.BUBBLE_COLUMN)
 					&& !EffectUtils.canBreatheUnderwater(player)
@@ -56,6 +56,8 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 			) {
 				int air = player.getAir() - 1;
 				player.setAir(air);
+			} else {
+				reset(counterMap, player.getUniqueID());
 			}
 		}
 	}

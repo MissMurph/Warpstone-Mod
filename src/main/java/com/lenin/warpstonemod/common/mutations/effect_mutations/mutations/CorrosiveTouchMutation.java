@@ -39,9 +39,4 @@ public class CorrosiveTouchMutation extends EffectMutation {
 		int ticks = Math.max(Math.round((float)Math.random() * 200f), 40);
 		event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.POISON, ticks));
 	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FRAIL_BODY);
-	}
 }
