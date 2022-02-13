@@ -87,9 +87,15 @@ public class MutateManager {
         );
         int corruptionValue = Math.round(instabilityValue * (getInstabilityLevel() /10f));
 
+        int currentLevel = getCorruptionLevel();
+
         instability += instabilityValue;
         corruption += corruptionValue;
         mutData = serialize();
+
+        if (currentLevel != getCorruptionLevel()) {
+
+        }
 
         MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
     }

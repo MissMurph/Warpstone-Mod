@@ -8,10 +8,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class FortuneMutation extends EffectMutation {
-	public FortuneMutation(int _id) {	super(_id,
+	public FortuneMutation(int _id) {
+		super(_id,
 				"fortune",
 				"9b0a8faa-1888-409f-a2a4-b0aab39cc065",
-				Rarity.RARE);
+				Rarity.RARE
+		);
 	}
 
 	//This mutation is barren due to a need for a Global Loot Modifier to handle the logic
@@ -25,15 +27,5 @@ public class FortuneMutation extends EffectMutation {
 	@Override
 	public void attachClientListeners(IEventBus bus) {
 
-	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.AQUA);
-	}
-
-	@Override
-	public boolean isLegalMutation(MutateManager manager) {
-		return super.isLegalMutation(manager);
 	}
 }

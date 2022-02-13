@@ -52,6 +52,7 @@ public class EffectMutations {
 	public final static EffectMutation WOOL = registerEffect(new WoolMutation(40));
 	public final static EffectMutation HERBIVORE = registerEffect(new HerbivoreMutation(41));
 	public final static EffectMutation CARNIVORE = registerEffect(new CarnivoreMutation(42));
+	public final static EffectMutation BLACK_LUNG = registerEffect(new BlackLungMutation(43));
 
 	public static EffectMutation constructInstance (int key, LivingEntity parent){
 		EffectMutation mut = EFFFECT_MAP.get(key);

@@ -15,6 +15,11 @@ public class WarpLootModifierSerializers {
 			LootModifierFortuneMutation.Serializer::new
 	);
 
+	public static final RegistryObject<LootModifierBlackLungMutation.Serializer> LOOT_BLACKLUNG = SERIALIZERS.register(
+			"loot_blacklung",
+			LootModifierBlackLungMutation.Serializer::new
+	);
+
 	public static void init (IEventBus bus){
 		SERIALIZERS.register(bus);
 	}

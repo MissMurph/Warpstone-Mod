@@ -12,8 +12,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
@@ -30,6 +32,7 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 	@Override
 	public void attachListeners(IEventBus bus) {
 		bus.addListener(this::onLivingDamage);
+		bus.addListener(this::onPotionAdded);
 	}
 
 	@Override
@@ -79,6 +82,15 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 
 		if (player.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
 		player.removePotionEffect(WarpEffects.SHARP_SENSES.get());
+	}
+
+	public void onPotionAdded (PotionEvent.PotionAddedEvent event) {
+		if (!event.getEntityLiving().world.isRemote()
+				|| !(event.getEntityLiving() instanceof PlayerEntity)
+				|| event.getPotionEffect().getPotion() != WarpEffects.SHARP_SENSES.get()
+		) return;
+
+		event.getEntityLiving().playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 	}
 
 	@Override

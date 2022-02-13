@@ -12,9 +12,7 @@ public class WarpLootModifierProvider extends GlobalLootModifierProvider {
 
 	@Override
 	protected void start() {
-		add("loot_fortune", WarpLootModifierSerializers.LOOT_FORTUNE.get(), new LootModifierFortuneMutation(
-				new ILootCondition[]{
-
-		}));
+		add("loot_fortune", WarpLootModifierSerializers.LOOT_FORTUNE.get(), new LootModifierFortuneMutation(new ILootCondition[]{}));
+		add("loot_blacklung", WarpLootModifierSerializers.LOOT_BLACKLUNG.get(), new LootModifierBlackLungMutation(new ILootCondition[]{}));
 	}
 }

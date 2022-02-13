@@ -30,7 +30,6 @@ public class CommonProxy {
 
 	public void init (){
 		Registration.init();
-
 		MutateHelper.init();
 		EffectMutations.init();
 

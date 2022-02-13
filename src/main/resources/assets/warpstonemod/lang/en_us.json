@@ -39,12 +39,6 @@
   "mutation.effect.bad_luck": "Bad Luck",
   "mutation.effect.bad_luck.desc": "Gives you Bad Luck",
 
-  "mutation.effect.largepp": "Large PP",
-  "mutation.effect.largepp.desc": "You have a large PP",
-
-  "mutation.effect.smallpp": "Small PP",
-  "mutation.effect.smallpp.desc": "You have a smol PP",
-
   "mutation.effect.invisibility": "Invisibility",
   "mutation.effect.invisibility.desc": "Turns you invisible",
 
@@ -154,5 +148,8 @@
   "mutation.effect.herbivore.desc": "+25% Food from Plant food, -25% Food from Meat food",
 
   "mutation.effect.carnivore": "Carnivore",
-  "mutation.effect.carnivore.desc": "+25% Food from Meat food, -25% Food from Plant food"
+  "mutation.effect.carnivore.desc": "+25% Food from Meat food, -25% Food from Plant food",
+
+  "mutation.effect.black_lung": "Black Lung",
+  "mutation.effect.black_lung.desc": "+50% Coal from Mining"
 }
