@@ -11,6 +11,7 @@
   "warpstone.screen.generic.level": "Level:",
   "warpstone.screen.generic.total": "Total:",
   "warpstone.screen.generic.max_level": "Max Level:",
+  "warpstone.screen.generic.next_level": "Next Level Threshold:",
 
   "warpstone.consumable.wither_risk": "Wither Risk:",
 

@@ -18,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class MutationScreen extends Screen {
 		widgets.add(new InstabilityWidget(this.guiLeft + 133, guiTop + 79, 25, 25, clientManager.getInstabilityLevel(), clientManager.getInstability()));
 		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 64, 25, 25, "instability"));
 
-		widgets.add(new CorruptionWidget(this.guiLeft + 133, guiTop + 121, 25, 25, clientManager.getCorruptionLevel(), clientManager.getCorruption()));
+		widgets.add(new CorruptionWidget(this.guiLeft + 133, guiTop + 121, 25, 25, clientManager.getCorruptionLevel(), clientManager.getCorruption(), clientManager.getCorruptionToNextLevel()));
 		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 103, 25, 25, "corruption"));
 
 		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 144, 20, 18, this);
@@ -265,11 +266,13 @@ public class MutationScreen extends Screen {
 	class CorruptionWidget extends WarpWidget {
 		private final int value;
 		private final int totalValue;
+		private final int remainingValue;
 
-		public CorruptionWidget(int x, int y, int width, int height, int _value, int _totalValue) {
+		public CorruptionWidget(int x, int y, int width, int height, int _value, int _totalValue, int _remainingValue) {
 			super(x, y, width, height, new TranslationTextComponent("mutation_screen.text_widget"));
 			value = _value;
 			totalValue = _totalValue;
+			remainingValue = _remainingValue;
 		}
 
 		@Override
@@ -287,6 +290,13 @@ public class MutationScreen extends Screen {
 					.appendSibling(new StringTextComponent(" "))
 					.appendSibling(new StringTextComponent(String.valueOf(totalValue)))
 					.mergeStyle(TextFormatting.WHITE));
+
+			list.add(new TranslationTextComponent("warpstone.screen.generic.next_level")
+					.mergeStyle(TextFormatting.GRAY)
+					.mergeStyle(TextFormatting.ITALIC)
+					.appendSibling(new StringTextComponent(" "))
+					.appendSibling(new StringTextComponent(String.valueOf(remainingValue)).mergeStyle(TextFormatting.WHITE))
+			);
 
 			if (witherRisk > 0) {
 				list.add(new TranslationTextComponent("warpstone.consumable.wither_risk")

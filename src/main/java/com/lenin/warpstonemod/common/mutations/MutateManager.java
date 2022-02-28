@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class MutateManager {
         mutData = serialize();
 
         if (currentLevel != getCorruptionLevel()) {
-
+            parentEntity.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1f, 1f);
         }
 
         MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
@@ -132,9 +133,14 @@ public class MutateManager {
     }
 
     public void loadFromNBT (CompoundNBT nbt) {
+        int currentLevel = getCorruptionLevel();
         instability = nbt.getInt("instability");
         corruption = nbt.getInt("corruption");
         mutData = nbt;
+
+        if (getCorruptionLevel() > currentLevel) {
+            parentEntity.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+        }
 
         for (AttributeMutation mut : getAttributeMutations()) {
             mut.setLevel(nbt.getInt(mut.getMutationType()));
@@ -198,15 +204,30 @@ public class MutateManager {
         int threshold = 0;
 
         for (int i = 0; i < 10; i++) {
-            threshold +=  i * (125 * (i + 1)) + 750;
+            threshold += i * (125 * (i + 1)) + 750;
 
             if (threshold > corruption) {
-                if (i < 1) return 0;
+                //if (i < 1) return 0;
                 return i;
             }
         }
 
         return 0;
+    }
+
+    public int getCorruptionToNextLevel () {
+        int target = getCorruptionLevel() + 1;
+        int threshold = 0;
+
+        for (int i = 0; i < target; i++) {
+            threshold += i * (125 * (i + 1)) + 750;
+
+            if (threshold > corruption) {
+                return threshold;
+            }
+        }
+
+        return threshold - getCorruption();
     }
 
     public double getWitherRisk (int corruptionValue) {
