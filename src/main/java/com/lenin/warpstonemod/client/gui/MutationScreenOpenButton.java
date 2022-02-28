@@ -32,7 +32,7 @@ public class MutationScreenOpenButton extends WarpButton {
 		}
 
 		RenderSystem.enableDepthTest();
-		blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 256, 256);
+		blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 20, 37);
 	}
 
 	@Override

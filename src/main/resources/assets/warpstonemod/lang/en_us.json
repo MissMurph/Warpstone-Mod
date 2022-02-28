@@ -85,6 +85,9 @@
   "mutation.effect.archer": "Archer",
   "mutation.effect.archer.desc": "Deal +25% extra ranged damage, -25% melee damage",
 
+  "mutation.effect.brawler": "Brawler",
+  "mutation.effect.brawler.desc": "Deal +25% extra melee damage, -25% ranged damage",
+
   "mutation.effect.scales": "Scales",
   "mutation.effect.scales.desc": "+25% Armour and Armour Toughness but -25% all Healing",
 

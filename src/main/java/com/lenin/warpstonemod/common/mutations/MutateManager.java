@@ -33,7 +33,7 @@ public class MutateManager {
 
         WarpMutations[] array = WarpMutations.values();
         for (WarpMutations warpMutations : array) {
-            attributeMutations.add(WarpMutations.constructAttributeMutation(warpMutations, parentEntity));
+            attributeMutations.add(WarpMutations.constructAttributeMutation(warpMutations, this));
         }
 
         mutData = serialize();
@@ -79,7 +79,7 @@ public class MutateManager {
 
         double witherRisk = getWitherRisk(item.getCorruptionValue());
         if (Math.random() > 1f - witherRisk) {
-            int duration = WarpstoneMain.getRandom().nextInt((int) Math.round(800 * witherRisk));
+            int duration = WarpstoneMain.getRandom().nextInt((int) Math.round(2400 * witherRisk));
             parentEntity.addPotionEffect(new EffectInstance(Effects.WITHER, duration));
         }
 

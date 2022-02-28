@@ -47,11 +47,11 @@ public class MutationScreen extends Screen {
 
 		MutateManager clientManager = MutateHelper.getClientManager();
 
-		widgets.add(new InstabilityWidget(this.guiLeft + 133, guiTop + 79, 25, 25, clientManager.getInstabilityLevel(), clientManager.getInstability()));
+		widgets.add(new InstabilityWidget(this.guiLeft + 137, guiTop + 80, 25, 25, clientManager.getInstabilityLevel(), clientManager.getInstability()));
 		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 64, 25, 25, "instability"));
 
-		widgets.add(new CorruptionWidget(this.guiLeft + 133, guiTop + 121, 25, 25, clientManager.getCorruptionLevel(), clientManager.getCorruption(), clientManager.getCorruptionToNextLevel()));
-		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 103, 25, 25, "corruption"));
+		widgets.add(new CorruptionWidget(this.guiLeft + 136, guiTop + 119, 25, 25, clientManager.getCorruptionLevel(), clientManager.getCorruption(), clientManager.getCorruptionToNextLevel()));
+		widgets.add(new TextWidget(this.guiLeft + 117, guiTop + 102, 25, 25, "corruption"));
 
 		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 144, 20, 18, this);
 		widgets.add(returnButton);
@@ -244,7 +244,7 @@ public class MutationScreen extends Screen {
 
 		@Override
 		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			FontRenderer fontrenderer = minecraft.fontRenderer;
+			FontRenderer fontRenderer = minecraft.fontRenderer;
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
 			RenderSystem.enableBlend();
 
@@ -256,7 +256,7 @@ public class MutationScreen extends Screen {
 
 			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.BLACK;
 
-			fontrenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 0);
+			fontRenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 10);
 
 			blit(matrixStack, x, y, width, height, 0, 0);
 		}
@@ -310,19 +310,19 @@ public class MutationScreen extends Screen {
 
 		@Override
 		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			FontRenderer fontrenderer = minecraft.fontRenderer;
+			FontRenderer fontRenderer = minecraft.fontRenderer;
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
 			RenderSystem.enableBlend();
 
 			matrixStack.push();
 
-			matrixStack.scale(2, 2, 2);
+			//matrixStack.scale(10, 10, 10);
 
 			matrixStack.pop();
 
 			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.BLACK;
 
-			fontrenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 0);
+			fontRenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 0);
 
 			blit(matrixStack, x, y, width, height, 0, 0);
 		}
@@ -379,7 +379,7 @@ public class MutationScreen extends Screen {
 
 		@Override
 		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			FontRenderer fontrenderer = minecraft.fontRenderer;
+			FontRenderer fontRenderer = minecraft.fontRenderer;
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
 			RenderSystem.enableBlend();
 
@@ -389,7 +389,7 @@ public class MutationScreen extends Screen {
 
 			matrixStack.pop();
 
-			fontrenderer.drawText(matrixStack, new TranslationTextComponent("mutation.screen." + value), this.x, this.y, 0);
+			fontRenderer.drawText(matrixStack, new TranslationTextComponent("mutation.screen." + value), this.x, this.y, 0);
 
 			blit(matrixStack, x, y, width, height, 0, 0);
 		}

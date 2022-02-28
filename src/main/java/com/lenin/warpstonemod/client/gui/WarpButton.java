@@ -17,7 +17,7 @@ public class WarpButton extends Button {
 	protected static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("warpstonemod","textures/gui/warp_icons.png");
 
 	public WarpButton(int x, int y, int width, int height,  Screen _parentGui) {
-		super(x, y, width, height, new TranslationTextComponent("Test Button"), Button::onPress);
+		super(x, y, width, height, new TranslationTextComponent("warpstone.screen.generic.button"), Button::onPress);
 		this.parentGui = _parentGui;
 	}
 
@@ -32,7 +32,7 @@ public class WarpButton extends Button {
 		}
 
 		RenderSystem.enableDepthTest();
-		blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 256, 256);
+		blit(matrixStack, x, y, 0, (float)i, this.width, this.height, 20, 37);
 	}
 
 	public void setPosition (int _x, int _y){

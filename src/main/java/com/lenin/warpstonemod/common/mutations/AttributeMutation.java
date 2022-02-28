@@ -10,12 +10,14 @@ public class AttributeMutation{
 	protected final String name;
 	protected final UUID uuid;
 	protected int mutationLevel;
+	protected final MutateManager manager;
 
-	public AttributeMutation(IAttributeSource _attributeSource, String _name, String _uuid) {
+	public AttributeMutation(IAttributeSource _attributeSource, MutateManager _manager, String _name, String _uuid) {
 		uuid = UUID.fromString(_uuid);
 		this.attributeSource = _attributeSource;
 		name = _name;
 		mutationLevel = 0;
+		manager = _manager;
 	}
 
 	protected void addModifier () {
@@ -32,8 +34,11 @@ public class AttributeMutation{
 	public void setLevel (int value) {
 		mutationLevel = value;
 
-		if (mutationLevel > 50) mutationLevel = 50;
-		if (mutationLevel < -25) mutationLevel = -25;
+		int maxPos = manager.getCorruptionLevel() * 10;
+		int maxNeg = manager.getCorruptionLevel() * -5;
+
+		if (mutationLevel > maxPos) mutationLevel = maxPos;
+		if (mutationLevel < maxNeg) mutationLevel = maxNeg;
 
 		addModifier();
 	}
