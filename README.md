@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/244631604478214146/947847206126362624/Warpstone_Title.png" />
+  <img src="https://raw.githubusercontent.com/SirChockemBerry/Warpstone-Mod/main/src/main/resources/warpstone_title.png" />
 </p>
 
 A mod about doing stuff
