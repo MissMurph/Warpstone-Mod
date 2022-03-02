@@ -11,4 +11,4 @@ A mod about eating strange gems to mutate yourself in strange and powerful ways
 # Usage Rules
 All uses of this mod in any capacity (including but not limited to Modpacks) must cite credit to the original author, mod packs that wish to use this mod for monetization may only do so with explicit permission
 
-#### Homepage: [Curseforge](https://minecraft.curseforge.com/projects/astral-sorcery)
+#### Homepage: [Curseforge](https://www.curseforge.com/minecraft/mc-mods/warpstone)
