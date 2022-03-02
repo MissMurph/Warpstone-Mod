@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[36,)"
+loaderVersion="[35,)"
 license="All rights reserved"
 [[mods]]
 modId="warpstonemod"
@@ -13,12 +13,12 @@ description='''Warpstone is a mod about eating strange gems to mutate yourself i
 [[dependencies.warpstonemod]]
     modId="forge"
     mandatory=true
-    versionRange="[36,)"
+    versionRange="[35,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.warpstonemod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5]"
+    versionRange="[1.16.4,1.16.5)"
     ordering="NONE"
     side="BOTH"

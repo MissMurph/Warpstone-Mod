@@ -63,7 +63,7 @@ public class MutateManager {
                     .filter(attr -> attr.canMutate(this))
                     .collect(Collectors.toList());
 
-            int change = WarpstoneMain.getRandom().nextInt(getCorruptionLevel()) + 1;
+            int change = getCorruptionLevel() > 0 ? WarpstoneMain.getRandom().nextInt(getCorruptionLevel()) + 1 : 1;
 
             if (i > 0) {
                 int index = WarpstoneMain.getRandom().nextInt(legal.size());
@@ -71,7 +71,7 @@ public class MutateManager {
                 legal.remove(index);
             }
 
-            if (i >= 5) change = WarpstoneMain.getRandom().nextInt(100) > 100 - (5 * (getInstabilityLevel() - getCorruptionLevel())) ? change * -1 : change;
+            if (i >= 8) change = WarpstoneMain.getRandom().nextInt(100) > 100 - (5 * (getInstabilityLevel() - getCorruptionLevel())) ? change * -1 : change;
 
             legal.get(WarpstoneMain.getRandom().nextInt(legal.size()))
                     .changeLevel(change);

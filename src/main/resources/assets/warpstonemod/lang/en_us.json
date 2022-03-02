@@ -26,7 +26,7 @@
   "mutation.effect.slow_falling.desc": "Grants Slow Falling",
 
   "mutation.effect.levitation": "Random Levitation",
-  "mutation.effect.levitation.desc": "Every 15 seconds there's a small chance you'll randomly start levitating",
+  "mutation.effect.levitation.desc": "Every 15 seconds there's a small chance you will randomly start levitating",
 
   "mutation.effect.jump_boost": "Jump Boost",
   "mutation.effect.jump_boost.desc": "Grants Stronger Jumping",

@@ -34,8 +34,8 @@ public class AttributeMutation{
 	public void setLevel (int value) {
 		mutationLevel = value;
 
-		int maxPos = manager.getCorruptionLevel() * 10;
-		int maxNeg = manager.getCorruptionLevel() * -5;
+		int maxPos = Math.min((manager.getCorruptionLevel() + 1) * 10, 50);
+		int maxNeg = Math.max((manager.getCorruptionLevel() + 1) * -5, -25);
 
 		if (mutationLevel > maxPos) mutationLevel = maxPos;
 		if (mutationLevel < maxNeg) mutationLevel = maxNeg;
@@ -48,7 +48,7 @@ public class AttributeMutation{
 	}
 
 	public boolean canMutate (MutateManager manager) {
-		return mutationLevel < manager.getCorruptionLevel() * 10 || mutationLevel > manager.getCorruptionLevel() * -5;
+		return mutationLevel < Math.min((manager.getCorruptionLevel() + 1) * 10, 50) || mutationLevel > Math.max((manager.getCorruptionLevel() + 1) * -5, -25);
 	}
 
 	public void clearMutation() {
