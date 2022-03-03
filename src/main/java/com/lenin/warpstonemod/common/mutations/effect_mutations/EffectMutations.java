@@ -1,73 +1,71 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.common.Registration;
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.mutations.*;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.ObjectHolder;
 
-import java.util.Map;
+import java.util.function.Supplier;
 
+@ObjectHolder("warpstonemod")
 public class EffectMutations {
-	public static Map<Integer, EffectMutation> EFFFECT_MAP = new Object2ObjectArrayMap<>();
+	public static final EffectMutation INVISIBILITY = registerEffect(InvisibilityMutation::new);
+	public static final EffectMutation NIGHT_VISION = registerEffect(NightVisionMutation::new);
+	public static final EffectMutation JUMP_BOOST = registerEffect(JumpBoostMutation::new);
+	public static final EffectMutation GOOD_LUCK = registerEffect(GoodLuckMutation::new);
+	public static final EffectMutation SLOW_FALLING = registerEffect(SlowFallMutation::new);
+	public static final EffectMutation LEVITATION = registerEffect(LevitationMutation::new);
+	public static final EffectMutation WEAK_LEGS = registerEffect(WeakLegsMutation::new);
+	public static final EffectMutation BAD_LUCK = registerEffect(BadLuckMutation::new);
+	public static final EffectMutation GLOWING = registerEffect(GlowingMutation::new);
+	public static final EffectMutation BLINDNESS = registerEffect(BlindnessMutation::new);
+	public static final EffectMutation FORTUNE = registerEffect(FortuneMutation::new);
+	public static final EffectMutation FAST_METABOLISM = registerEffect(FastMetabolismMutation::new);
+	public static final EffectMutation SLOW_METABOLISM = registerEffect(SlowMetabolismMutation::new);
+	public static final EffectMutation CORROSIVE_TOUCH = registerEffect(CorrosiveTouchMutation::new);
+	public static final EffectMutation FRAIL_BODY = registerEffect(FrailBodyMutation::new);
+	public static final EffectMutation STRENGTH = registerEffect(StrengthMutation::new);
+	public static final EffectMutation GILLS = registerEffect(GillsMutation::new);
+	public static final EffectMutation WEAK_LUNGS = registerEffect(WeakLungsMutation::new);
+	public static final EffectMutation FIRE_BREATHING = registerEffect(FireBreathingMutation::new);
+	public static final EffectMutation EXPLOSIVE = registerEffect(ExplosiveMutation::new);
+	public static final EffectMutation ARCHER = registerEffect(ArcherMutation::new);
+	public static final EffectMutation BRAWLER = registerEffect(BrawlerMutation::new);
+	public static final EffectMutation SCALES = registerEffect(ScalesMutation::new);
+	public static final EffectMutation THORNS = registerEffect(ThornsMutation::new);
+	public static final EffectMutation FINS = registerEffect(FinsMutation::new);
+	public static final EffectMutation STRONG_LEGS = registerEffect(StrongLegsMutation::new);
+	public static final EffectMutation IRON_GUT = registerEffect(IronGutMutation::new);
+	public static final EffectMutation ALCOHOLIC = registerEffect(AlcoholicMutation::new);
+	public static final EffectMutation WEAK_LIVER = registerEffect(WeakLiverMutation::new);
+	public static final EffectMutation BLOOD_SUCKING = registerEffect(BloodSuckingMutation::new);
+	public static final EffectMutation UNDEAD = registerEffect(UndeadMutation::new);
+	public static final EffectMutation HOOVES = registerEffect(HoovesMutation::new);
+	public static final EffectMutation HYDROPHILIC = registerEffect(HydrophilicMutation::new);
+	public static final EffectMutation POTASSIUM = registerEffect(PotassiumMutation::new);
+	public static final EffectMutation CLAWS = registerEffect(ClawsMutation::new);
+	public static final EffectMutation SHARP_SENSES = registerEffect(SharpSensesMutation::new);
+	public static final EffectMutation TURTLE = registerEffect(TurtleMutation::new);
+	public static final EffectMutation SCARRING = registerEffect(ScarringMutation::new);
+	public static final EffectMutation THICK_FUR = registerEffect(FurMutation::new);
+	public static final EffectMutation COLD_BLOOD = registerEffect(ColdBloodMutation::new);
+	public static final EffectMutation WOOL = registerEffect(WoolMutation::new);
+	public static final EffectMutation HERBIVORE = registerEffect(HerbivoreMutation::new);
+	public static final EffectMutation CARNIVORE = registerEffect(CarnivoreMutation::new);
+	public static final EffectMutation BLACK_LUNG = registerEffect(BlackLungMutation::new);
 
-	public final static EffectMutation INVISIBILITY = registerEffect(new InvisibilityMutation(0));
-	public final static EffectMutation NIGHT_VISION = registerEffect(new NightVisionMutation(1));
-	public final static EffectMutation JUMP_BOOST = registerEffect(new JumpBoostMutation(2));
-	public final static EffectMutation GOOD_LUCK = registerEffect(new GoodLuckMutation(3));
-	public final static EffectMutation SLOW_FALLING = registerEffect(new SlowFallMutation(4));
-	public final static EffectMutation LEVITATION = registerEffect(new LevitationMutation(5));
-	public final static EffectMutation WEAK_LEGS = registerEffect(new WeakLegsMutation(6));
-	public final static EffectMutation BAD_LUCK = registerEffect(new BadLuckMutation(7));
-	public final static EffectMutation GLOWING = registerEffect(new GlowingMutation(8));
-	public final static EffectMutation BLINDNESS = registerEffect(new BlindnessMutation(9));
-	public final static EffectMutation FORTUNE = registerEffect(new FortuneMutation(10));
-	public final static EffectMutation FAST_METABOLISM = registerEffect(new FastMetabolismMutation(11));
-	public final static EffectMutation SLOW_METABOLISM = registerEffect(new SlowMetabolismMutation(12));
-	public final static EffectMutation CORROSIVE_TOUCH = registerEffect(new CorrosiveTouchMutation(13));
-	public final static EffectMutation FRAIL_BODY = registerEffect(new FrailBodyMutation(14));
-	public final static EffectMutation STRENGTH = registerEffect(new StrengthMutation(15));
-	public final static EffectMutation GILLS = registerEffect(new GillsMutation(16));
-	public final static EffectMutation WEAK_LUNGS = registerEffect(new WeakLungsMutation(17));
-	public final static EffectMutation FIRE_BREATHING = registerEffect(new FireBreathingMutation(18));
-	public final static EffectMutation EXPLOSIVE = registerEffect(new ExplosiveMutation(19));
-	public final static EffectMutation ARCHER = registerEffect(new ArcherMutation(20));
-	public final static EffectMutation BRAWLER = registerEffect(new BrawlerMutation(21));
-	public final static EffectMutation SCALES = registerEffect(new ScalesMutation(22));
-	public final static EffectMutation THORNS = registerEffect(new ThornsMutation(23));
-	public final static EffectMutation FINS = registerEffect(new FinsMutation(24));
-	public final static EffectMutation STRONG_LEGS = registerEffect(new StrongLegsMutation(25));
-	public final static EffectMutation IRON_GUT = registerEffect(new IronGutMutation(26));
-	public final static EffectMutation ALCOHOLIC = registerEffect(new AlcoholicMutation(27));
-	public final static EffectMutation WEAK_LIVER = registerEffect(new WeakLiverMutation(28));
-	public final static EffectMutation BLOOD_SUCKING = registerEffect(new BloodSuckingMutation(29));
-	public final static EffectMutation UNDEAD = registerEffect(new UndeadMutation(30));
-	public final static EffectMutation HOOVES = registerEffect(new HoovesMutation(31));
-	public final static EffectMutation HYDROPHILIC = registerEffect(new HydrophilicMutation(32));
-	public final static EffectMutation POTASSIUM = registerEffect(new PotassiumMutation(33));
-	public final static EffectMutation CLAWS = registerEffect(new ClawsMutation(34));
-	public final static EffectMutation SHARP_SENSES = registerEffect(new SharpSensesMutation(35));
-	public final static EffectMutation TURTLE = registerEffect(new TurtleMutation(36));
-	public final static EffectMutation SCARRING = registerEffect(new ScarringMutation(37));
-	public final static EffectMutation THICK_FUR = registerEffect(new FurMutation(38));
-	public final static EffectMutation COLD_BLOOD = registerEffect(new FurMutation(39));
-	public final static EffectMutation WOOL = registerEffect(new WoolMutation(40));
-	public final static EffectMutation HERBIVORE = registerEffect(new HerbivoreMutation(41));
-	public final static EffectMutation CARNIVORE = registerEffect(new CarnivoreMutation(42));
-	public final static EffectMutation BLACK_LUNG = registerEffect(new BlackLungMutation(43));
 
-	public static EffectMutation constructInstance (int key, LivingEntity parent){
-		EffectMutation mut = EFFFECT_MAP.get(key);
-		mut.putInstance(parent);
-		return mut;
+	public static EffectMutation registerEffect(Supplier<EffectMutation> mut){
+		return WarpstoneMain.getProxy().getRegistration().register(mut.get());
 	}
 
-	public static EffectMutation registerEffect (EffectMutation mut){
-		if (EFFFECT_MAP.containsKey(mut.getMutationID())) throw new IllegalArgumentException("ID Already Registered");
-		int key = EFFFECT_MAP.size();
-		EFFFECT_MAP.put(key, mut);
-		return mut;
+	public static EffectMutation getMutation (String key) {
+		return RegistryObject.of(new ResourceLocation(WarpstoneMain.MOD_ID, key), EffectMutation.class, WarpstoneMain.MOD_ID).get();
 	}
 
-	public static int getMapSize () {
+	/*public static int getMapSize () {
 		return EFFFECT_MAP.size();
 	}
 
@@ -81,7 +79,7 @@ public class EffectMutations {
 
 	public static EffectMutation getEffectMutation(int id) {
 		return EFFFECT_MAP.get(id);
-	}
+	}*/
 
-	public static void init() {}
+	public static void register() {}
 }

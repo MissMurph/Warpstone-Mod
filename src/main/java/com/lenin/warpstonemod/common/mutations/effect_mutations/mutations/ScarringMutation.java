@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ScarringMutation extends CounterEffectMutation implements IMutationTick {
-	public ScarringMutation(int _id) {
-		super(_id,
-				"scarring",
+	public ScarringMutation() {
+		super(
+                "scarring",
 				"50cc914e-dbfb-4d26-8be3-03de8151932a",
 				Rarity.RARE,
 				400

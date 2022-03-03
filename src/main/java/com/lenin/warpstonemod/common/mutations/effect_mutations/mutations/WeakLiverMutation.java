@@ -16,9 +16,9 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class WeakLiverMutation extends EffectMutation {
-	public WeakLiverMutation(int _id) {
-		super(_id,
-				"weak_liver",
+	public WeakLiverMutation() {
+		super(
+                "weak_liver",
 				"76635d17-d433-4464-bf8e-dc1a60d55229",
 				Rarity.COMMON);
 	}

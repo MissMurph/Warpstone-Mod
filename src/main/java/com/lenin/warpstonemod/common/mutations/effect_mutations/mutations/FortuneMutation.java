@@ -1,16 +1,13 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.item.Rarity;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class FortuneMutation extends EffectMutation {
-	public FortuneMutation(int _id) {
-		super(_id,
-				"fortune",
+	public FortuneMutation() {
+		super(
+                "fortune",
 				"9b0a8faa-1888-409f-a2a4-b0aab39cc065",
 				Rarity.RARE
 		);

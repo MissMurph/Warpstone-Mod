@@ -23,9 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PotassiumMutation extends CounterEffectMutation implements IMutationTick {
-	public PotassiumMutation(int _id) {
-		super(_id,
-				"potassium",
+	public PotassiumMutation() {
+		super(
+                "potassium",
 				"f74dfa9a-2104-403b-85a3-2a3f0c08e8c5",
 				Rarity.UNCOMMON,
 				100

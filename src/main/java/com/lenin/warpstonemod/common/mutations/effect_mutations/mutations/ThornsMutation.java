@@ -13,9 +13,9 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class ThornsMutation extends EffectMutation {
-	public ThornsMutation(int _id) {
-		super(_id,
-				"thorns",
+	public ThornsMutation() {
+		super(
+                "thorns",
 				"cd74624b-9d68-4017-b4ab-eb326f45dd72",
 				Rarity.UNCOMMON);
 	}

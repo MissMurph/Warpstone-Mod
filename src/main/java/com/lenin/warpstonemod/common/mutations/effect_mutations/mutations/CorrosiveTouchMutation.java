@@ -1,9 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
@@ -12,9 +10,9 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class CorrosiveTouchMutation extends EffectMutation {
-	public CorrosiveTouchMutation(int _id) {
-		super(_id,
-				"corrosive_touch",
+	public CorrosiveTouchMutation() {
+		super(
+                "corrosive_touch",
 				"8ee3692f-f855-43e3-8a9f-dffb37381995",
 				Rarity.RARE);
 	}

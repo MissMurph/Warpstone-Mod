@@ -10,9 +10,9 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class StrongLegsMutation extends EffectMutation {
-	public StrongLegsMutation(int _id) {
-		super(_id,
-				"strong_legs",
+	public StrongLegsMutation() {
+		super(
+                "strong_legs",
 				"88a8026d-7ce3-4a21-8436-f3cce8840080",
 				Rarity.UNCOMMON);
 	}

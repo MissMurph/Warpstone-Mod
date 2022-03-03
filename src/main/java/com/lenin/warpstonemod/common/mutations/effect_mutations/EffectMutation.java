@@ -2,7 +2,6 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.WarpMutations;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
@@ -14,16 +13,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class EffectMutation {
+public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> {
 	protected final String mutName;
-	protected final int id;
-	protected ResourceLocation resourceLocation;
 	protected final UUID uuid;
-	protected String mutDescription;
+	protected final String translateKeyConstant = "mutation.effect.";
 
 	/**
 	 * {@link #rarity} by default determines required Corruption level required <br>
@@ -37,17 +35,15 @@ public abstract class EffectMutation {
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
-	public EffectMutation(int _id, String _mutName, String _uuid, Rarity _rarity) {
+	public EffectMutation(String _mutName, String _uuid, Rarity _rarity) {
 		uuid = UUID.fromString(_uuid);
-		mutName = WarpMutations.nameConst + "effect." +_mutName;
-		id = _id;
+		mutName = _mutName;
 		rarity = _rarity;
 
-		resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + _mutName + ".png");
+		setRegistryName(WarpstoneMain.MOD_ID, mutName);
 
 		attachListeners(MinecraftForge.EVENT_BUS);
-
-		mutDescription = mutName + ".desc";
+		attachClientListeners(MinecraftForge.EVENT_BUS);
 	}
 
 	public abstract void attachListeners(IEventBus bus);
@@ -56,7 +52,7 @@ public abstract class EffectMutation {
 	public abstract void attachClientListeners(IEventBus bus);
 
 	public void applyMutation (LivingEntity entity){
-		if (!containsInstance(entity.getUniqueID())) return;
+		if (!containsInstance(entity.getUniqueID())) constructInstance(entity);
 
 		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
 		mut.setActive(true);
@@ -81,11 +77,11 @@ public abstract class EffectMutation {
 	}
 
 	public IFormattableTextComponent getMutationName() {
-		return new TranslationTextComponent(mutName).mergeStyle(rarity.color);
+		return new TranslationTextComponent(translateKeyConstant + mutName).mergeStyle(rarity.color);
 	}
 
 	public IFormattableTextComponent getMutationDesc() {
-		return new TranslationTextComponent(mutDescription).mergeStyle(TextFormatting.WHITE);
+		return new TranslationTextComponent(translateKeyConstant + mutName + ".desc").mergeStyle(TextFormatting.WHITE);
 	}
 
 	public boolean isLegalMutation(MutateManager manager){
@@ -118,7 +114,7 @@ public abstract class EffectMutation {
 		return instanceMap.containsKey(playerUUID);
 	}
 
-	public void putInstance (LivingEntity entity) {
+	public void constructInstance(LivingEntity entity) {
 		EffectMutationInstance instance = entity.world.isRemote() ? putClientInstance() : getInstanceType(entity);
 
 		if (instance != null) instanceMap.put(entity.getUniqueID(), instance);
@@ -135,11 +131,11 @@ public abstract class EffectMutation {
 	}
 
 	public ResourceLocation getTexture () {
-		return resourceLocation;
+		return new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + getKey() + ".png");
 	}
 
-	public int getMutationID() {
-		return id;
+	public String getKey () {
+		return mutName;
 	}
 
 	public EffectMutationInstance getInstanceType (LivingEntity entity) {

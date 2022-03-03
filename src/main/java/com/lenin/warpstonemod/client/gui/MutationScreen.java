@@ -58,7 +58,7 @@ public class MutationScreen extends Screen {
 		addButton(returnButton);
 
 		List<AttributeMutation> muts = clientManager.getAttributeMutations();
-		List<Integer> effectMuts = clientManager.getEffectMutations();
+		List<String> effectMuts = clientManager.getEffectMutations();
 
 		for (int i = 0; i < muts.size(); i++) {
 			int level = muts.get(i).getMutationLevel();
@@ -88,7 +88,7 @@ public class MutationScreen extends Screen {
 				y += 23;
 				x = getGuiLeft() + 10 + (23 * (i - 7));
 			}
-			widgets.add(new EffectWidget(x, y, 18, 18, EffectMutations.getEffectMutation(effectMuts.get(i))));
+			widgets.add(new EffectWidget(x, y, 18, 18, EffectMutations.getMutation(effectMuts.get(i))));
 		}
 	}
 

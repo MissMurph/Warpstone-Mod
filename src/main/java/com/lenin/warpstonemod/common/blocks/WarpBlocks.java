@@ -14,7 +14,7 @@ import net.minecraftforge.fml.RegistryObject;
 import java.util.function.Supplier;
 
 public class WarpBlocks {
-	public static final RegistryObject<Block> WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties
+	public static final Block WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties
 			.create(Material.ROCK)
 			.setRequiresTool()
 			.harvestLevel(2)
@@ -22,20 +22,21 @@ public class WarpBlocks {
 			.hardnessAndResistance(3,3)
 	));
 
-	public static final RegistryObject<Block> WARPSTONE_BLOCK = registerBlock("warpstone_block", () -> new Block(AbstractBlock.Properties
+	public static final Block WARPSTONE_BLOCK = registerBlock("warpstone_block", () -> new Block(AbstractBlock.Properties
 			.create(Material.IRON)
 			.setRequiresTool()
 			.hardnessAndResistance(5,6)
 			.sound(SoundType.METAL)
 	));
 
-	private static <T extends Block> RegistryObject<T> blockRegistry(String name, Supplier<T> block) {
-		return Registration.BLOCKS.register(name, block);
+	private static Block blockRegistry(String name, Supplier<Block> block) {
+		Block b = block.get().setRegistryName(name);
+		return WarpstoneMain.getProxy().getRegistration().register(b);
 	}
 
-	public static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
-		RegistryObject<T> ref = blockRegistry(name, block);
-		Registration.ITEMS.register(name, () -> new BlockItem(ref.get(), new Item.Properties().group(WarpstoneMain.MOD_GROUP)));
+	public static Block registerBlock(String name, Supplier<Block> block) {
+		Block ref = blockRegistry(name, block);
+		WarpstoneMain.getProxy().getRegistration().register(new BlockItem(ref, new Item.Properties().group(WarpstoneMain.MOD_GROUP)).setRegistryName(name));
 		return ref;
 	}
 

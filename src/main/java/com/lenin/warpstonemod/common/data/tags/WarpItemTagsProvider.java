@@ -21,10 +21,10 @@ public class WarpItemTagsProvider extends ItemTagsProvider {
         copy(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE, WarpTags.Items.STORAGE_BLOCKS_WARPSTONE);
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
 
-        getOrCreateBuilder(WarpTags.Items.GEMS_WARPSTONE).add(WarpItems.WARPSTONE_SHARD.get());
+        getOrCreateBuilder(WarpTags.Items.GEMS_WARPSTONE).add(WarpItems.WARPSTONE_SHARD);
         getOrCreateBuilder(Tags.Items.GEMS).addTag(WarpTags.Items.GEMS_WARPSTONE);
 
-        getOrCreateBuilder(WarpTags.Items.DUSTS_WARPSTONE).add(WarpItems.WARPSTONE_DUST.get());
+        getOrCreateBuilder(WarpTags.Items.DUSTS_WARPSTONE).add(WarpItems.WARPSTONE_DUST);
         getOrCreateBuilder(Tags.Items.DUSTS).addTag(WarpTags.Items.DUSTS_WARPSTONE);
     }
 }

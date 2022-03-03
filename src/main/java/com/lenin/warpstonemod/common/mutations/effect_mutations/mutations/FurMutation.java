@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FurMutation extends CounterEffectMutation implements IMutationTick {
-    public FurMutation(int _id) {
-        super(_id,
+    public FurMutation() {
+        super(
                 "thick_fur",
                 "d20a2481-f5b9-4ad5-8557-3833b983673a",
                 Rarity.UNCOMMON,

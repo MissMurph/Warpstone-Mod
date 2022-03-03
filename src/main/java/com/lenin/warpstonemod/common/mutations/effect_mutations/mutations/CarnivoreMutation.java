@@ -9,8 +9,8 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 
 public class CarnivoreMutation extends HerbivoreMutation {
 
-    public CarnivoreMutation(int _id) {
-        super(_id,
+    public CarnivoreMutation() {
+        super(
                 "carnivore",
                 "b9de45cc-6dd2-468d-980e-3da40521b10a",
                 Rarity.COMMON

@@ -10,9 +10,9 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class StrengthMutation extends EffectMutation {
-	public StrengthMutation(int _id) {
-		super(_id,
-				"strength",
+	public StrengthMutation() {
+		super(
+                "strength",
 				"0c0bbd77-a45b-4e92-8f95-ebdd8a565e02",
 				Rarity.COMMON);
 	}

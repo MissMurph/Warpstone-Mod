@@ -13,9 +13,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
 public class NightVisionMutation extends EffectMutation implements IMutationTick {
-	public NightVisionMutation(int _id) {
-		super(_id,
-				"night_vision",
+	public NightVisionMutation() {
+		super(
+                "night_vision",
 				"ba2f092b-76d6-4d71-85ba-51becadb4d19",
 				Rarity.COMMON);
 	}

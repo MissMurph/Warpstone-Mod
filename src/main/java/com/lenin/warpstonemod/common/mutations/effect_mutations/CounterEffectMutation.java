@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CounterEffectMutation extends EffectMutation {
-    public CounterEffectMutation(int _id, String _mutName, String _uuid, Rarity _rarity, int _interval) {
-        super(_id, _mutName, _uuid, _rarity);
+    public CounterEffectMutation(String _mutName, String _uuid, Rarity _rarity, int _interval) {
+        super(_mutName, _uuid, _rarity);
         INTERVAL = _interval;
     }
 
@@ -49,8 +49,8 @@ public class CounterEffectMutation extends EffectMutation {
     }
 
     @Override
-    public void putInstance(LivingEntity entity) {
-        super.putInstance(entity);
+    public void constructInstance(LivingEntity entity) {
+        super.constructInstance(entity);
 
         if (entity.world.isRemote) return;
 

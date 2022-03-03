@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class IronGutMutation extends EffectMutation {
-	public IronGutMutation(int _id) {
-		super(_id,
-				"iron_gut",
+	public IronGutMutation() {
+		super(
+                "iron_gut",
 				"487b1027-3643-41ef-b3f5-e5f71abf503f",
 				Rarity.UNCOMMON);
 	}

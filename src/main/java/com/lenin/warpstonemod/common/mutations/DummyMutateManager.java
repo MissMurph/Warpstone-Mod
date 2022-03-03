@@ -19,12 +19,6 @@ public class DummyMutateManager extends MutateManager{
 	public void mutate(IWarpstoneConsumable item) { }
 
 	@Override
-	protected EffectMutation getRandomEffectMut() {
-		System.out.println("Dummy Manager is being Called!");
-		return null;
-	}
-
-	@Override
 	protected CompoundNBT serialize() {
 		System.out.println("Dummy Manager is being Called!");
 		return null;
@@ -43,7 +37,7 @@ public class DummyMutateManager extends MutateManager{
 	}
 
 	@Override
-	public List<Integer> getEffectMutations() {
+	public List<String> getEffectMutations() {
 		System.out.println("Dummy Manager is being Called!");
 		return new ArrayList<>();
 	}

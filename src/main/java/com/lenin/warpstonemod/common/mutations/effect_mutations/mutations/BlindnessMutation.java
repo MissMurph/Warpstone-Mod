@@ -15,9 +15,9 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class BlindnessMutation extends EffectMutation {
-	public BlindnessMutation(int _id) {
-		super(_id,
-				"blindness",
+	public BlindnessMutation() {
+		super(
+                "blindness",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
 				Rarity.COMMON);
 	}

@@ -13,16 +13,16 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import java.util.*;
 
 public class HerbivoreMutation extends EffectMutation {
-    public HerbivoreMutation(int _id) {
-        super(_id,
+    public HerbivoreMutation() {
+        super(
                 "herbivore",
                 "a605523f-b225-44f1-a598-4d6dc5958337",
                 Rarity.COMMON
         );
     }
 
-    protected HerbivoreMutation (int _id, String _name, String _uuid, Rarity _rarity) {
-        super(_id,
+    protected HerbivoreMutation (String _name, String _uuid, Rarity _rarity) {
+        super(
                 _name,
                 _uuid,
                 _rarity

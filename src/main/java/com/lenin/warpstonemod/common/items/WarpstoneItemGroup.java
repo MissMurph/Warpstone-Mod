@@ -10,6 +10,6 @@ public class WarpstoneItemGroup extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(WarpItems.WARPSTONE_SHARD.get());
+        return new ItemStack(WarpItems.WARPSTONE_SHARD);
     }
 }

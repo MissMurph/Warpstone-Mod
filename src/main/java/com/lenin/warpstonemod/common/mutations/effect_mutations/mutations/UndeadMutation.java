@@ -15,9 +15,9 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class UndeadMutation extends EffectMutation {
-	public UndeadMutation(int _id) {
-		super(_id,
-				"undead",
+	public UndeadMutation() {
+		super(
+                "undead",
 				"36588dba-9d9e-45be-b572-c0c571370054",
 				Rarity.RARE);
 	}

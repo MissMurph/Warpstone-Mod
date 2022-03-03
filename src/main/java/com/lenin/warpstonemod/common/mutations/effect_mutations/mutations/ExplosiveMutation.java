@@ -17,9 +17,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ExplosiveMutation extends EffectMutation {
-	public ExplosiveMutation(int _id) {
-		super(_id,
-				"explosive",
+	public ExplosiveMutation() {
+		super(
+                "explosive",
 				"7332e11c-ff66-439f-8808-4de93e9cf355",
 				Rarity.COMMON);
 	}

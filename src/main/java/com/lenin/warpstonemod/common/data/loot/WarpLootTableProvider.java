@@ -14,8 +14,10 @@ import net.minecraft.loot.*;
 import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -45,20 +47,17 @@ public class WarpLootTableProvider extends LootTableProvider {
 
         @Override
         protected void addTables (){
-            registerDropSelfLootTable(WarpBlocks.WARPSTONE_BLOCK.get());
-            //registerLootTable(WarpBlocks.WARPSTONE_ORE.get(), droppingItemWithFortune(WarpBlocks.WARPSTONE_ORE.get(), WarpItems.WARPSTONE_SHARD.get()));
+            registerDropSelfLootTable(WarpBlocks.WARPSTONE_BLOCK);
 
-            registerLootTable(WarpBlocks.WARPSTONE_ORE.get(), (warpstoneOre) -> {
-                return droppingWithSilkTouch(warpstoneOre,
-                        withExplosionDecay(warpstoneOre, ItemLootEntry.builder(WarpItems.WARPSTONE_SHARD.get())
-                                .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F)))
-                                .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE))));
-            });
+            registerLootTable(WarpBlocks.WARPSTONE_ORE, (warpstoneOre) -> droppingWithSilkTouch(warpstoneOre,
+                    withExplosionDecay(warpstoneOre, ItemLootEntry.builder(WarpItems.WARPSTONE_SHARD)
+                            .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F)))
+                            .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE)))));
         }
 
         @Override
         protected Iterable<Block> getKnownBlocks(){
-            return Registration.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList());
+            return new ArrayList<>(Registration.BLOCKS);
         }
     }
 }

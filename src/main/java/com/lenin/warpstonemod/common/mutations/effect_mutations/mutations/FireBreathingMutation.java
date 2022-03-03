@@ -16,8 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FireBreathingMutation extends CounterEffectMutation implements IMutationTick {
-	public FireBreathingMutation(int _id) {
-		super(_id,
+	public FireBreathingMutation() {
+		super(
 				"fire_breathing",
 				"9970d2cf-e6ba-4025-acf6-fc23ca0c3668",
 				Rarity.RARE,

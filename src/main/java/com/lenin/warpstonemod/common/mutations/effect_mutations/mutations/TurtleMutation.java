@@ -2,9 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,9 +15,9 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class TurtleMutation extends EffectMutation {
-	public TurtleMutation(int _id) {
-		super(_id,
-				"turtle",
+	public TurtleMutation() {
+		super(
+                "turtle",
 				"21fdd2d1-a7d3-44fd-a033-d155775e5d95",
 				Rarity.RARE);
 	}
@@ -44,7 +42,7 @@ public class TurtleMutation extends EffectMutation {
 				|| !getInstance(event.getEntityLiving()).isActive()
 			) return;
 
-		if (event.getEntityLiving().isActiveItemStackBlocking() && !event.getEntityLiving().isPotionActive(WarpEffects.TURTLE.get())) {
+		if (event.getEntityLiving().isActiveItemStackBlocking() && !event.getEntityLiving().isPotionActive(WarpEffects.TURTLE)) {
 			event.getEntityLiving().getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(
 					uuid,
 					((TranslationTextComponent) getMutationName()).getKey() + ".damage.boost",
@@ -52,7 +50,7 @@ public class TurtleMutation extends EffectMutation {
 					AttributeModifier.Operation.MULTIPLY_TOTAL
 			));
 
-			event.getEntityLiving().addPotionEffect(new EffectInstance(WarpEffects.TURTLE.get(), 72000, 0, false, false, true));
+			event.getEntityLiving().addPotionEffect(new EffectInstance(WarpEffects.TURTLE, 72000, 0, false, false, true));
 		}
 	}
 
@@ -67,9 +65,9 @@ public class TurtleMutation extends EffectMutation {
 
 		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 
-		if (player.isPotionActive(WarpEffects.TURTLE.get())) {
+		if (player.isPotionActive(WarpEffects.TURTLE)) {
 			player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
-			player.removePotionEffect(WarpEffects.TURTLE.get());
+			player.removePotionEffect(WarpEffects.TURTLE);
 		}
 	}
 

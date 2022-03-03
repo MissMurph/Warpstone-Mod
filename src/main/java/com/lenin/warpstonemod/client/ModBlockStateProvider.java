@@ -14,7 +14,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		simpleBlock(WarpBlocks.WARPSTONE_ORE.get());
-		simpleBlock(WarpBlocks.WARPSTONE_BLOCK.get());
+		simpleBlock(WarpBlocks.WARPSTONE_ORE);
+		simpleBlock(WarpBlocks.WARPSTONE_BLOCK);
 	}
 }

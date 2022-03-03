@@ -3,12 +3,14 @@ package com.lenin.warpstonemod.common;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.FolderName;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -19,6 +21,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.io.File;
@@ -27,12 +30,12 @@ import java.util.List;
 
 public class CommonProxy {
 	private final List<ITickHandler> tickHandlers = new ArrayList<>();
+	protected Registration registration;
 
 	public void init (){
-		Registration.init();
 		MutateHelper.init();
-		EffectMutations.init();
 
+		this.registration = new Registration();
 		this.tickHandlers.add(MutationTickHelper.INSTANCE);
 
 		PacketHandler.registerPackets();
@@ -54,6 +57,9 @@ public class CommonProxy {
 
 	public void attachLifeCycle (IEventBus bus) {
 		bus.addListener(this::onCommonSetup);
+		registration.attachListeners(bus);
+
+		bus.addListener(Registration::onRegistryBuild);
 	}
 
 	private void onPlayerTick (TickEvent.PlayerTickEvent event) {
@@ -114,5 +120,9 @@ public class CommonProxy {
 		if (!dir.exists()) dir.mkdirs();
 
 		return dir;
+	}
+
+	public Registration getRegistration(){
+		return this.registration;
 	}
 }

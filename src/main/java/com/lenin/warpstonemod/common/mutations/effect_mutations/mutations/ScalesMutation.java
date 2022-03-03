@@ -12,9 +12,9 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class ScalesMutation extends EffectMutation {
-	public ScalesMutation(int _id) {
-		super(_id,
-				"scales",
+	public ScalesMutation() {
+		super(
+                "scales",
 				"265aebfe-d019-4fed-b1a7-a3311ffc7562",
 				Rarity.UNCOMMON);
 	}

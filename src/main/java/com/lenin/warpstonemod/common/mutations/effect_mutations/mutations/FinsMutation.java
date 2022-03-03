@@ -9,9 +9,9 @@ import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class FinsMutation extends EffectMutation {
-	public FinsMutation(int _id) {
-		super(_id,
-				"fins",
+	public FinsMutation() {
+		super(
+                "fins",
 				"26d0153a-08da-4c90-9287-44f1e6920e7d",
 				Rarity.COMMON);
 	}

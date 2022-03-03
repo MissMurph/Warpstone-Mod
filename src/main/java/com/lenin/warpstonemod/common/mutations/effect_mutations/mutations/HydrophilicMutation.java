@@ -20,9 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HydrophilicMutation extends CounterEffectMutation implements IMutationTick {
-	public HydrophilicMutation(int _id) {
-		super(_id,
-				"hydriophilic",
+	public HydrophilicMutation() {
+		super(
+                "hydriophilic",
 				"17782c2e-2438-4c81-b05b-507cb3c576b0",
 				Rarity.UNCOMMON,
 				100);

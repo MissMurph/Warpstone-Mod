@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ColdBloodMutation extends CounterEffectMutation implements IMutationTick {
-    public ColdBloodMutation(int _id) {
-        super(_id,
+    public ColdBloodMutation() {
+        super(
                 "cold_blood",
                 "ecf187d9-7a7d-4732-9a20-f44bfe64a615",
                 Rarity.UNCOMMON,

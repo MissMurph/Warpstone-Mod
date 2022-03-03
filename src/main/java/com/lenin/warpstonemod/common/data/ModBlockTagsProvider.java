@@ -17,10 +17,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
 	@Override
 	protected void registerTags() {
-		getOrCreateBuilder(WarpTags.Blocks.ORES_WARPSTONE).add(WarpBlocks.WARPSTONE_ORE.get());
+		getOrCreateBuilder(WarpTags.Blocks.ORES_WARPSTONE).add(WarpBlocks.WARPSTONE_ORE);
 		getOrCreateBuilder(Tags.Blocks.ORES).addTag(WarpTags.Blocks.ORES_WARPSTONE);
 
-		getOrCreateBuilder(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE).add(WarpBlocks.WARPSTONE_BLOCK.get());
+		getOrCreateBuilder(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE).add(WarpBlocks.WARPSTONE_BLOCK);
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).addTag(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE);
 	}
 }

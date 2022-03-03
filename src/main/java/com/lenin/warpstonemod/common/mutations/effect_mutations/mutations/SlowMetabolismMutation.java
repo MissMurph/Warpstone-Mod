@@ -12,9 +12,9 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class SlowMetabolismMutation extends EffectMutation {
-	public SlowMetabolismMutation(int _id) {
-		super(_id,
-				"slow_metabolism",
+	public SlowMetabolismMutation() {
+		super(
+                "slow_metabolism",
 				"4e0ded20-d669-46e2-98c7-c70d023f4fc6",
 				Rarity.COMMON);
 	}

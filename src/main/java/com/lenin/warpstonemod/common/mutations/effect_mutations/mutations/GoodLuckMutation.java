@@ -11,9 +11,9 @@ import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class GoodLuckMutation extends EffectMutation {
-	public GoodLuckMutation(int _id) {
-		super(_id,
-				"good_luck",
+	public GoodLuckMutation() {
+		super(
+                "good_luck",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d",
 				Rarity.COMMON);
 	}

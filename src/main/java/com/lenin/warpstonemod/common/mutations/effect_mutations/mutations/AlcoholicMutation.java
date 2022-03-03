@@ -21,9 +21,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class AlcoholicMutation extends EffectMutation {
-	public AlcoholicMutation(int _id) {
-		super(_id,
-				"alcoholic",
+	public AlcoholicMutation() {
+		super(
+                "alcoholic",
 				"3fe06fe0-6a8d-403a-b4da-4ed1a9d822fb",
 				Rarity.UNCOMMON);
 	}

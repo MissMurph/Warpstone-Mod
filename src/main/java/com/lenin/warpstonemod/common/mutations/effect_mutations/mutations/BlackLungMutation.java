@@ -6,8 +6,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class BlackLungMutation extends EffectMutation {
 
-    public BlackLungMutation(int _id) {
-        super(_id,
+    public BlackLungMutation() {
+        super(
                 "black_lung",
                 "24d24ca3-4072-45d6-a7f0-29085b4f77fd",
                 Rarity.COMMON

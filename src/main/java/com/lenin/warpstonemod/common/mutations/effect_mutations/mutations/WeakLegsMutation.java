@@ -13,8 +13,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class WeakLegsMutation extends EffectMutation {
-	public WeakLegsMutation(int _id) {
-		super(_id,
+	public WeakLegsMutation() {
+		super(
 				"weak_legs",
 				"d198bf46-f9aa-4950-b0de-6f80d6396853",
 				Rarity.COMMON);

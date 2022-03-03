@@ -13,9 +13,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
 public class GillsMutation extends EffectMutation implements IMutationTick {
-	public GillsMutation(int _id) {
-		super(_id,
-				"gills",
+	public GillsMutation() {
+		super(
+                "gills",
 				"bf69604d-0669-41d2-92e4-aafa8fa0acdc",
 				Rarity.COMMON);
 	}

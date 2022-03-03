@@ -1,14 +1,22 @@
 package com.lenin.warpstonemod.common.mob_effects;
 
 import com.lenin.warpstonemod.common.Registration;
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.util.function.Supplier;
+
 public class WarpEffects {
 
-	public static final RegistryObject<Effect> SHARP_SENSES = Registration.EFFECTS.register("sharp_senses", SharpSensesEffect::new);
-	public static final RegistryObject<Effect> TURTLE = Registration.EFFECTS.register("turtle", TurtleEffect::new);
-	public static final RegistryObject<Effect> WOOL = Registration.EFFECTS.register("wool", WoolEffect::new);
+	public static final Effect SHARP_SENSES = registerEffects("sharp_senses", SharpSensesEffect::new);
+	public static final Effect TURTLE = registerEffects("turtle", TurtleEffect::new);
+	public static final Effect WOOL = registerEffects("wool", WoolEffect::new);
 
-	public static void init() {}
+	private static Effect registerEffects (String name, Supplier<Effect> effect) {
+		Effect e = effect.get().setRegistryName(name);
+		return WarpstoneMain.getProxy().getRegistration().register(e);
+	}
+
+	public static void register() {}
 }

@@ -15,7 +15,7 @@ public class WarpstoneWorldGen {
             "warpstone_ore",
             Feature.ORE.withConfiguration(new OreFeatureConfig(
                             OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                            WarpBlocks.WARPSTONE_ORE.get().getDefaultState(),
+                            WarpBlocks.WARPSTONE_ORE.getDefaultState(),
                             4))
                     .range(64)
                     .count(16)
@@ -25,7 +25,7 @@ public class WarpstoneWorldGen {
             "warpstone_ore",
             Feature.ORE.withConfiguration(new OreFeatureConfig(
                             OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                            WarpBlocks.WARPSTONE_ORE.get().getDefaultState(),
+                            WarpBlocks.WARPSTONE_ORE.getDefaultState(),
                             6))
                     .range(16)
                     .count(10)

@@ -13,9 +13,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class BadLuckMutation extends EffectMutation {
-	public BadLuckMutation(int _id) {
-		super(_id,
-				"bad_luck",
+	public BadLuckMutation() {
+		super(
+                "bad_luck",
 				"0942e8e9-295a-430f-9988-5537e4010648",
 				Rarity.COMMON);
 	}

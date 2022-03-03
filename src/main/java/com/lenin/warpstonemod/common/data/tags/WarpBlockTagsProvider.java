@@ -16,11 +16,11 @@ public class WarpBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void registerTags (){
         //WARPSTONE ORE TAGS
-        getOrCreateBuilder(WarpTags.Blocks.ORES_WARPSTONE).add(WarpBlocks.WARPSTONE_ORE.get());     //Adding block to tag
+        getOrCreateBuilder(WarpTags.Blocks.ORES_WARPSTONE).add(WarpBlocks.WARPSTONE_ORE);           //Adding block to tag
         getOrCreateBuilder(Tags.Blocks.ORES).addTag(WarpTags.Blocks.ORES_WARPSTONE);                //This is adding the tag to the group
 
         //WARPSTONE BLOCK TAGS
-        getOrCreateBuilder(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE).add(WarpBlocks.WARPSTONE_BLOCK.get());     //Adding block to tag
+        getOrCreateBuilder(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE).add(WarpBlocks.WARPSTONE_BLOCK);           //Adding block to tag
         getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).addTag(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE);        //This is adding the tag to the group
     }
 }

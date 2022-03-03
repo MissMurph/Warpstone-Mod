@@ -9,9 +9,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class BrawlerMutation extends EffectMutation {
-	public BrawlerMutation(int _id) {
-		super(_id,
-				"brawler",
+	public BrawlerMutation() {
+		super(
+                "brawler",
 				"af1bc073-2f9f-471e-a165-9681cfe4700c",
 				Rarity.UNCOMMON);
 	}

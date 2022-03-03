@@ -25,7 +25,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 		copy(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE, WarpTags.Items.STORAGE_BLOCKS_WARPSTONE);
 		copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
 
-		getOrCreateBuilder(WarpTags.Items.GEMS_WARPSTONE).add(WarpItems.WARPSTONE_SHARD.get());
+		getOrCreateBuilder(WarpTags.Items.GEMS_WARPSTONE).add(WarpItems.WARPSTONE_SHARD);
 		getOrCreateBuilder(Tags.Items.GEMS).addTag(WarpTags.Items.GEMS_WARPSTONE);
 	}
 }

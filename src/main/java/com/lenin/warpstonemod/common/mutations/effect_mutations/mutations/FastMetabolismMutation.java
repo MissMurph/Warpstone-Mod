@@ -10,9 +10,9 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class FastMetabolismMutation extends EffectMutation {
-	public FastMetabolismMutation(int _id) {
-		super(_id,
-				"fast_metabolism",
+	public FastMetabolismMutation() {
+		super(
+                "fast_metabolism",
 				"1ce59983-cba5-4586-9186-3f69bd0487ce",
 				Rarity.COMMON);
 	}

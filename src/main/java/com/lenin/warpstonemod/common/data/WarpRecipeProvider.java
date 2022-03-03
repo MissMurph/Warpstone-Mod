@@ -17,21 +17,21 @@ public class WarpRecipeProvider extends RecipeProvider {
     @Override
     protected void registerRecipes (Consumer<IFinishedRecipe> consumer){
         //WARPSTONE DUST
-        ShapelessRecipeBuilder.shapelessRecipe(WarpItems.WARPSTONE_DUST.get(), 1)
-                .addIngredient(WarpItems.WARPSTONE_SHARD.get(), 3)
-                .addCriterion("has_item", hasItem(WarpItems.WARPSTONE_SHARD.get()))
+        ShapelessRecipeBuilder.shapelessRecipe(WarpItems.WARPSTONE_DUST, 1)
+                .addIngredient(WarpItems.WARPSTONE_SHARD, 3)
+                .addCriterion("has_item", hasItem(WarpItems.WARPSTONE_SHARD))
                 .build(consumer);
 
         //WARPSTONE BLOCK
-        ShapelessRecipeBuilder.shapelessRecipe(WarpBlocks.WARPSTONE_BLOCK.get(), 1)
-                .addIngredient(WarpItems.WARPSTONE_SHARD.get(), 9)
-                .addCriterion("has_item", hasItem(WarpItems.WARPSTONE_SHARD.get()))
+        ShapelessRecipeBuilder.shapelessRecipe(WarpBlocks.WARPSTONE_BLOCK, 1)
+                .addIngredient(WarpItems.WARPSTONE_SHARD, 9)
+                .addCriterion("has_item", hasItem(WarpItems.WARPSTONE_SHARD))
                 .build(consumer);
 
         //WARPSTONE SHARD
-        ShapelessRecipeBuilder.shapelessRecipe(WarpItems.WARPSTONE_SHARD.get(), 9)
-                .addIngredient(WarpBlocks.WARPSTONE_BLOCK.get(), 1)
-                .addCriterion("has_item", hasItem(WarpBlocks.WARPSTONE_BLOCK.get()))
+        ShapelessRecipeBuilder.shapelessRecipe(WarpItems.WARPSTONE_SHARD, 9)
+                .addIngredient(WarpBlocks.WARPSTONE_BLOCK, 1)
+                .addCriterion("has_item", hasItem(WarpBlocks.WARPSTONE_BLOCK))
                 .build(consumer);
     }
 }

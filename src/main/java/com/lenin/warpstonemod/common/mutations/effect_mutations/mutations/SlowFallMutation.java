@@ -1,8 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,9 +11,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
 public class SlowFallMutation extends EffectMutation implements IMutationTick {
-	public SlowFallMutation(int _id) {
-		super(_id,
-				"slow_falling",
+	public SlowFallMutation() {
+		super(
+                "slow_falling",
 				"4e80c5c4-07ef-4ddb-85f9-e1901ba17103",
 				Rarity.COMMON);
 	}

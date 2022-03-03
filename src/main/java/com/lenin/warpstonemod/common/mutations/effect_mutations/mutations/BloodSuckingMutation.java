@@ -12,9 +12,9 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class BloodSuckingMutation extends EffectMutation {
-	public BloodSuckingMutation(int _id) {
-		super(_id,
-				"blood_sucking",
+	public BloodSuckingMutation() {
+		super(
+                "blood_sucking",
 				"0c3e6ecf-34ef-4ad6-8440-d06573f15fd3",
 				Rarity.RARE);
 	}

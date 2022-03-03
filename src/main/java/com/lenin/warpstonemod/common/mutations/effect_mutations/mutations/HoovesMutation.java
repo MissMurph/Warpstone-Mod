@@ -14,9 +14,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
 public class HoovesMutation extends EffectMutation implements IMutationTick {
-	public HoovesMutation(int _id) {
-		super(_id,
-				"hooves",
+	public HoovesMutation() {
+		super(
+                "hooves",
 				"eeb67c1e-ef30-4d9a-b4ed-5b4ea156274a",
 				Rarity.RARE);
 	}

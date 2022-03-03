@@ -17,8 +17,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
 public class WeakLungsMutation extends CounterEffectMutation implements IMutationTick {
-	public WeakLungsMutation(int _id) {
-		super(_id,
+	public WeakLungsMutation() {
+		super(
 				"weak_lungs",
 				"9216454f-c64d-4dcd-95f3-339df891aeef",
 				Rarity.COMMON,
