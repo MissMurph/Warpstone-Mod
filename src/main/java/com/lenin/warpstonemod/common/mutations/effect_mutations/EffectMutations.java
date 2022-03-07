@@ -62,24 +62,8 @@ public class EffectMutations {
 	}
 
 	public static EffectMutation getMutation (String key) {
-		return RegistryObject.of(new ResourceLocation(WarpstoneMain.MOD_ID, key), EffectMutation.class, WarpstoneMain.MOD_ID).get();
+		return Registration.EFFECT_MUTATIONS.getValue(new ResourceLocation(WarpstoneMain.MOD_ID, key));
 	}
-
-	/*public static int getMapSize () {
-		return EFFFECT_MAP.size();
-	}
-
-	public static Map<Integer, EffectMutation> getMap () {
-		return EFFFECT_MAP;
-	}
-
-	public static EffectMutation getEffectMutation (EffectMutation mut) {
-		return getEffectMutation(mut.getMutationID());
-	}
-
-	public static EffectMutation getEffectMutation(int id) {
-		return EFFFECT_MAP.get(id);
-	}*/
 
 	public static void register() {}
 }

@@ -71,6 +71,8 @@ public class CommonProxy {
 
 	public void onCommonSetup (FMLCommonSetupEvent event) {
 		WarpstoneWorldGen.init();
+
+		getRegistration().EFFECT_MUTATIONS.getEntries().forEach(reg -> System.out.println(reg.getKey()));
 	}
 
 	public void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {

@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.client.gui;
 
 import com.lenin.warpstonemod.common.mutations.AttributeMutation;
-import com.lenin.warpstonemod.common.mutations.DummyMutateManager;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
@@ -18,44 +17,133 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
-public class MutationScreen extends Screen {
+public class MutationScreen extends WSScreen {
 	private static final ResourceLocation SCREEN_LOCATION = new ResourceLocation("warpstonemod", "textures/gui/mutation_screen.png");
-	private static final ResourceLocation ATTRIBUTE_RESOURCE = new ResourceLocation("warpstonemod","textures/gui/mutation_attribute_bar.png");
 	//private static final ResourceLocation EFFECT_RESOURCE = new ResourceLocation("warpstonemod", "textures/gui/warp_icons.png");
 
 	private int guiLeft, guiTop;
 	private final int xSize = 176;
 	private final int ySize = 166;
 
-	private List<Widget> widgets = new ArrayList<Widget>();
+	private List<WSElement> elements = new ArrayList<>();
 
 	//Dont ever let me write UI code again
 
 	@Override
 	protected void init(){
 		super.init();
-		widgets.clear();
 
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 
 		MutateManager clientManager = MutateHelper.getClientManager();
 
-		widgets.add(new InstabilityWidget(this.guiLeft + 137, guiTop + 80, 25, 25, clientManager.getInstabilityLevel(), clientManager.getInstability()));
-		widgets.add(new TextWidget(this.guiLeft + 121, guiTop + 64, 25, 25, "instability"));
+		WSElement returnButton = new WSButton(this.guiLeft + 132,
+				guiTop + 144,
+				20,
+				18,
+				new ResourceLocation("warpstonemod","textures/gui/warp_icons.png"),
+				(onPress) -> Minecraft.getInstance().displayGuiScreen(new InventoryScreen(Minecraft.getInstance().player))
+		);
+		elements.add(returnButton);
 
-		widgets.add(new CorruptionWidget(this.guiLeft + 136, guiTop + 119, 25, 25, clientManager.getCorruptionLevel(), clientManager.getCorruption(), clientManager.getCorruptionToNextLevel()));
-		widgets.add(new TextWidget(this.guiLeft + 117, guiTop + 102, 25, 25, "corruption"));
+			/*	Instability	*/
+		/*elements.add(new WSText(
+				//title above the widget
+				this.guiLeft + 121,
+				guiTop + 64,
+				25,
+				25,
+				new TranslationTextComponent("mutation.screen.instability")
+		));
 
-		Widget returnButton = new ReturnButton(this.guiLeft + 132, guiTop + 144, 20, 18, this);
-		widgets.add(returnButton);
-		addButton(returnButton);
+		WSElement instabilityWidget = new WSText(
+				//widget
+				this.guiLeft + 137,
+				this.guiTop + 80,
+				25,
+				25,
+				new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel())));
+
+		List<ITextComponent> instabilityList = new ArrayList<>();
+		TextFormatting color = clientManager.getInstabilityLevel() > 5 ? TextFormatting.RED : TextFormatting.WHITE;
+
+		int instWither = clientManager.getInstabilityLevel() * 10 - 30;
+
+		// TODO: Have referenced objects (corruption, instability, mutations) return their tooltips rather than hard keying here
+
+		instabilityList.add(new TranslationTextComponent("mutation.screen.instabilityWidget").mergeStyle(TextFormatting.WHITE));
+		instabilityList.add(new TranslationTextComponent("warpstone.screen.generic.level")
+				.appendSibling(new StringTextComponent(" "))
+				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel()))
+						.mergeStyle(color)));
+		instabilityList.add(new TranslationTextComponent("warpstone.screen.generic.total")
+				.appendSibling(new StringTextComponent(" "))
+				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getInstability())))
+				.mergeStyle(TextFormatting.WHITE));
+		if (instWither > 0) {
+			instabilityList.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
+					.appendSibling(new StringTextComponent(" "))
+					.appendSibling(new StringTextComponent("+" + instWither + "%").mergeStyle(TextFormatting.RED))
+			);
+		}
+
+		instabilityWidget.addToolTips(instabilityList.toArray(new ITextComponent[0]));
+		elements.add(instabilityWidget);
+
+			/* Corruption	*/
+		/*elements.add(new WSText(
+				//title above the widget
+				this.guiLeft + 121,
+				guiTop + 64,
+				25,
+				25,
+				new TranslationTextComponent("mutation.screen.corruption")
+		));
+
+		WSElement corruptionWidget = new WSText(
+				//widget
+				this.guiLeft + 117,
+				this.guiTop + 102,
+				25,
+				25,
+				new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel())));
+
+		List<ITextComponent> corruptionTooltip = new ArrayList<>();
+		int corWither = clientManager.getCorruptionLevel() * 10;
+
+		corruptionTooltip.add(new TranslationTextComponent("mutation.screen.corruption").mergeStyle(TextFormatting.WHITE));
+		corruptionTooltip.add(new TranslationTextComponent("warpstone.screen.generic.level")
+				.appendSibling(new StringTextComponent(" "))
+				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getCorruptionLevel())))
+				.mergeStyle(TextFormatting.WHITE));
+		corruptionTooltip.add(new TranslationTextComponent("warpstone.screen.generic.total")
+				.appendSibling(new StringTextComponent(" "))
+				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getCorruption())))
+				.mergeStyle(TextFormatting.WHITE));
+
+		corruptionTooltip.add(new TranslationTextComponent("warpstone.screen.generic.next_level")
+				.mergeStyle(TextFormatting.GRAY)
+				.mergeStyle(TextFormatting.ITALIC)
+				.appendSibling(new StringTextComponent(" "))
+				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getCorruptionToNextLevel())).mergeStyle(TextFormatting.WHITE))
+		);
+
+		if (corWither > 0) {
+			corruptionTooltip.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
+					.appendSibling(new StringTextComponent(" "))
+					.appendSibling(new StringTextComponent("-" + corWither + "%").mergeStyle(TextFormatting.GREEN))
+			);
+		}
+
+		corruptionWidget.addToolTips(corruptionTooltip.toArray(new ITextComponent[0]));
+		elements.add(corruptionWidget); */
 
 		List<AttributeMutation> muts = clientManager.getAttributeMutations();
 		List<String> effectMuts = clientManager.getEffectMutations();
@@ -71,14 +159,19 @@ public class MutationScreen extends Screen {
 
 			int frame = Math.round(((float)(level) / maxLevel) * maxFrame) + 25;
 
-			widgets.add(new AttributeBar(
+			WSElement temp = new AttributeBar(
 					getGuiLeft() + 13 + (17 * i),
 					getGuiTop() + 60,
 					frame,
 					level,
 					clientManager.getCorruptionLevel(),
-					muts.get(i).getMutationName()
-			));
+					muts.get(i).getMutationName(),
+					Textures.SHEET_MUT_ATTR_BAR.resolve(frame)
+			);
+
+			System.out.println("X:" + temp.x + " Y:" + temp.y + " Width:" + temp.width + " Height:" + temp.height);
+
+			elements.add(temp);
 		}
 
 		for (int i = 0; i < effectMuts.size(); i++) {
@@ -88,7 +181,15 @@ public class MutationScreen extends Screen {
 				y += 23;
 				x = getGuiLeft() + 10 + (23 * (i - 7));
 			}
-			widgets.add(new EffectWidget(x, y, 18, 18, EffectMutations.getMutation(effectMuts.get(i))));
+
+			List<ITextComponent> tooltips = new ArrayList<>();
+			tooltips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationName().mergeStyle(TextFormatting.BOLD));
+			tooltips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationDesc());
+
+			WSElement img = new WSImage(x, y, 18, 18, EffectMutations.getMutation(effectMuts.get(i)).getTexture());
+			img.addToolTips(tooltips.toArray(new ITextComponent[0]));
+
+			elements.add(img);
 		}
 	}
 
@@ -98,7 +199,7 @@ public class MutationScreen extends Screen {
 
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(matrixStack);
+		//this.renderBackground(matrixStack);
 
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(SCREEN_LOCATION);
@@ -106,12 +207,7 @@ public class MutationScreen extends Screen {
 		int j = this.guiTop;
 		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
 
-		for (Widget w : widgets) {
-			if (w instanceof WarpWidget) {
-				WarpWidget w2 = (WarpWidget) w;
-				if (w2.contains(mouseX, mouseY)) w2.renderWarpToolTip(matrixStack, mouseX, mouseY, width, height, Minecraft.getInstance().fontRenderer);
-			}
-
+		for (WSElement w : elements) {
 			w.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
 	}
@@ -137,29 +233,32 @@ public class MutationScreen extends Screen {
 
 	public int getGuiTop () { return guiTop; }
 
+	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int click) {
 
 
-		/*	ATTRIBUTE BAR	*/
-	class AttributeBar extends WarpWidget{
+		return super.mouseClicked(mouseX, mouseY, click);
+	}
+
+	/*	ATTRIBUTE BAR	*/
+	class AttributeBar extends WSImage{
 		private final int frame;
-		private final int level;
-		private final int corruptionLevel;
-		private final String attributeName;
 
-		public AttributeBar(int x, int y, int _frame, int _level, int _corruptionLevel, String _attributeName) {
-			super(x, y, 7, 78, new TranslationTextComponent("mutation_screen.attribute_bar"));
+		private final RawTextureResource resource;
+
+		public AttributeBar(int x, int y, int _frame, int _level, int _corruptionLevel, String _attributeName, RawTextureResource _resource) {
+			super(x, y, 7, 78, new ResourceLocation("warpstonemod","textures/gui/mutation_attribute_bar.png"));
 			width = 7;
 			height = 78;
-			attributeName = _attributeName;
 			frame = _frame;
-			level = _level + 25;
-			corruptionLevel = _corruptionLevel + 1;
-		}
+			int level = _level + 25;
+			int corruptionLevel = _corruptionLevel + 1;
 
-		@Override
-		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
-			List<ITextProperties> list = new ArrayList<>();
-			list.add((new TranslationTextComponent(attributeName)).mergeStyle(TextFormatting.WHITE));
+			resource = _resource;
+
+				/*	Tooltips	*/
+			List<ITextComponent> list = new ArrayList<>();
+			list.add((new TranslationTextComponent(_attributeName)).mergeStyle(TextFormatting.WHITE));
 			String levelText = "+";
 			TextFormatting color = TextFormatting.GREEN;
 			if (level < 25) { levelText = ""; color = TextFormatting.RED; }
@@ -174,15 +273,17 @@ public class MutationScreen extends Screen {
 					)
 			);
 
-			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
+			addToolTips(list.toArray(new ITextComponent[0]));
 		}
 
 		@Override
-		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			Minecraft minecraft = Minecraft.getInstance();
-			minecraft.getTextureManager().bindTexture(ATTRIBUTE_RESOURCE);
+		public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+			super.render(matrixStack, mouseY, mouseY, partialTicks);
 
-			int x2 = 0;
+			Minecraft minecraft = Minecraft.getInstance();
+			minecraft.getTextureManager().bindTexture(resource.resource);
+
+			/*int x2 = 0;
 			int y2 = 0;
 
 			if (frame < 25)  {
@@ -196,202 +297,11 @@ public class MutationScreen extends Screen {
 			else if (frame >= 57) {
 				x2 = frame - 57;
 				y2 = 2;
-			}
+			}*/
 
 			RenderSystem.enableDepthTest();
 			RenderSystem.depthFunc(0);
-			blit(matrixStack, this.x, this.y, x2 * 8, y2 * 78, this.width, this.height, 256, 256);
-		}
-	}
-
-		/*	INSTABILITY WIDGET	*/
-	class InstabilityWidget extends WarpWidget {
-		private final int value;
-		private final int totalValue;
-
-		public InstabilityWidget(int x, int y, int width, int height, int _value, int _totalValue) {
-			super(x, y, width, height, new TranslationTextComponent("mutation_screen.text_widget"));
-			value = _value;
-			totalValue = _totalValue;
-		}
-
-		@Override
-		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
-			List<ITextProperties> list = new ArrayList<>();
-
-			TextFormatting color = value > 5 ? TextFormatting.RED : TextFormatting.WHITE;
-
-			int witherRisk = value * 10 - 30;
-
-			list.add(new TranslationTextComponent("mutation.screen.instability").mergeStyle(TextFormatting.WHITE));
-			list.add(new TranslationTextComponent("warpstone.screen.generic.level")
-					.appendSibling(new StringTextComponent(" "))
-					.appendSibling(new StringTextComponent(String.valueOf(value))
-							.mergeStyle(color)));
-			list.add(new TranslationTextComponent("warpstone.screen.generic.total")
-					.appendSibling(new StringTextComponent(" "))
-					.appendSibling(new StringTextComponent(String.valueOf(totalValue)))
-					.mergeStyle(TextFormatting.WHITE));
-			if (witherRisk > 0) {
-				list.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
-						.appendSibling(new StringTextComponent(" "))
-						.appendSibling(new StringTextComponent("+" + witherRisk + "%").mergeStyle(TextFormatting.RED))
-				);
-			}
-
-			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
-		}
-
-		@Override
-		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			FontRenderer fontRenderer = minecraft.fontRenderer;
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
-			RenderSystem.enableBlend();
-
-			matrixStack.push();
-
-			matrixStack.scale(2, 2, 2);
-
-			matrixStack.pop();
-
-			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.BLACK;
-
-			fontRenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 10);
-
-			blit(matrixStack, x, y, width, height, 0, 0);
-		}
-	}
-
-		/*	CORRUPTION WIDGET	*/
-	class CorruptionWidget extends WarpWidget {
-		private final int value;
-		private final int totalValue;
-		private final int remainingValue;
-
-		public CorruptionWidget(int x, int y, int width, int height, int _value, int _totalValue, int _remainingValue) {
-			super(x, y, width, height, new TranslationTextComponent("mutation_screen.text_widget"));
-			value = _value;
-			totalValue = _totalValue;
-			remainingValue = _remainingValue;
-		}
-
-		@Override
-		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
-			List<ITextProperties> list = new ArrayList<>();
-
-			int witherRisk = value * 10;
-
-			list.add(new TranslationTextComponent("mutation.screen.corruption").mergeStyle(TextFormatting.WHITE));
-			list.add(new TranslationTextComponent("warpstone.screen.generic.level")
-					.appendSibling(new StringTextComponent(" "))
-					.appendSibling(new StringTextComponent(String.valueOf(value)))
-					.mergeStyle(TextFormatting.WHITE));
-			list.add(new TranslationTextComponent("warpstone.screen.generic.total")
-					.appendSibling(new StringTextComponent(" "))
-					.appendSibling(new StringTextComponent(String.valueOf(totalValue)))
-					.mergeStyle(TextFormatting.WHITE));
-
-			list.add(new TranslationTextComponent("warpstone.screen.generic.next_level")
-					.mergeStyle(TextFormatting.GRAY)
-					.mergeStyle(TextFormatting.ITALIC)
-					.appendSibling(new StringTextComponent(" "))
-					.appendSibling(new StringTextComponent(String.valueOf(remainingValue)).mergeStyle(TextFormatting.WHITE))
-			);
-
-			if (witherRisk > 0) {
-				list.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
-						.appendSibling(new StringTextComponent(" "))
-						.appendSibling(new StringTextComponent("-" + witherRisk + "%").mergeStyle(TextFormatting.GREEN))
-				);
-			}
-
-			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
-		}
-
-		@Override
-		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			FontRenderer fontRenderer = minecraft.fontRenderer;
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
-			RenderSystem.enableBlend();
-
-			matrixStack.push();
-
-			//matrixStack.scale(10, 10, 10);
-
-			matrixStack.pop();
-
-			TextFormatting color = value > 5 ? TextFormatting.DARK_RED : TextFormatting.BLACK;
-
-			fontRenderer.drawText(matrixStack, new TranslationTextComponent(String.valueOf(value)).mergeStyle(color), this.x, this.y, 0);
-
-			blit(matrixStack, x, y, width, height, 0, 0);
-		}
-	}
-
-		/*	Effect Widget	*/
-	class EffectWidget extends WarpWidget {
-		private final EffectMutation parent;
-
-		public EffectWidget(int x, int y, int width, int height, EffectMutation _parent) {
-			super(x, y, width, height, new TranslationTextComponent("mutation_screen." + _parent.getMutationName()));
-			parent = _parent;
-		}
-
-		@Override
-		public void renderWarpToolTip(MatrixStack matrixStack, int mouseX, int mouseY, int width, int height, FontRenderer font) {
-			List<ITextProperties> list = new ArrayList<>();
-
-			list.add(parent.getMutationName());
-			list.add(parent.getMutationDesc());
-
-			renderToolTip (matrixStack, list, mouseX, mouseY, width, height, font);
-		}
-
-		@Override
-		public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			Minecraft minecraft = Minecraft.getInstance();
-			minecraft.getTextureManager().bindTexture(parent.getTexture());
-			RenderSystem.enableDepthTest();
-			blit(matrixStack, x, y, 0, 0, this.width, this.height, 18, 18);
-		}
-	}
-
-		/*	SCREEN TOGGLE BUTTON	*/
-	class ReturnButton extends WarpButton {
-		public ReturnButton(int x, int y, int width, int height, Screen _parentGui) {
-			super(x, y, width, height, _parentGui);
-		}
-
-		@Override
-		public void onPress() {
-			Minecraft.getInstance().displayGuiScreen(new InventoryScreen(Minecraft.getInstance().player));
-		}
-	}
-
-	/*	TEXT WIDGET	*/
-	class TextWidget extends Widget {
-		private final String value;
-
-		public TextWidget(int x, int y, int width, int height, String _value) {
-			super(x, y, width, height, new TranslationTextComponent("mutation.screen." + _value));
-			value = _value;
-		}
-
-		@Override
-		public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			FontRenderer fontRenderer = minecraft.fontRenderer;
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
-			RenderSystem.enableBlend();
-
-			matrixStack.push();
-
-			matrixStack.scale(4, 4, 4);
-
-			matrixStack.pop();
-
-			fontRenderer.drawText(matrixStack, new TranslationTextComponent("mutation.screen." + value), this.x, this.y, 0);
-
-			blit(matrixStack, x, y, width, height, 0, 0);
+			blit(matrixStack, this.x, this.y, resource.posX, resource.posY, this.width, this.height, 256, 256);
 		}
 	}
 }

@@ -22,7 +22,7 @@ import java.util.List;
 public class HydrophilicMutation extends CounterEffectMutation implements IMutationTick {
 	public HydrophilicMutation() {
 		super(
-                "hydriophilic",
+                "hydrophilic",
 				"17782c2e-2438-4c81-b05b-507cb3c576b0",
 				Rarity.UNCOMMON,
 				100);

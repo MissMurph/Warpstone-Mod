@@ -24,13 +24,6 @@ public class ClientProxy extends CommonProxy {
 		super.attachListeners(bus);
 
 		bus.addListener(this::guiPostInit);
-
-		/*for (EffectMutation mut : Registration.EFFECT_MUTATIONS.getEntries()
-				.stream()
-				.map(RegistryObject::get)
-				.collect(Collectors.toList())) {
-			mut.attachClientListeners(bus);
-		}*/
 	}
 
 	public void guiPostInit(GuiScreenEvent.InitGuiEvent.Post event) {
