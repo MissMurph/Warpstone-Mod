@@ -22,7 +22,9 @@ public class ButtonComponent extends Component implements IClickable, IRenderabl
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        if (parentElement.isHovered()) imageComponent.updateTexture(hoveredTexture);
+        if (parentElement.isHovered()) {
+            imageComponent.updateTexture(hoveredTexture);
+        }
         else imageComponent.updateTexture(null);
     }
 

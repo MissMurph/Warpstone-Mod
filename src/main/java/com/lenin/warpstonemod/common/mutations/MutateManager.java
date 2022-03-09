@@ -14,6 +14,12 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -243,6 +249,63 @@ public class MutateManager {
         }
 
         return threshold - getCorruption();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public List<ITextComponent> getCorruptionTooltips () {
+        List<ITextComponent> toolTips = new ArrayList<>();
+        int witherEffect = getCorruptionLevel() * 10;
+
+        toolTips.add(new TranslationTextComponent("mutation.screen.corruption").mergeStyle(TextFormatting.WHITE));
+        toolTips.add(new TranslationTextComponent("warpstone.screen.generic.level")
+                .appendSibling(new StringTextComponent(" "))
+                .appendSibling(new StringTextComponent(String.valueOf(getCorruptionLevel())))
+                .mergeStyle(TextFormatting.WHITE));
+        toolTips.add(new TranslationTextComponent("warpstone.screen.generic.total")
+                .appendSibling(new StringTextComponent(" "))
+                .appendSibling(new StringTextComponent(String.valueOf(getCorruption())))
+                .mergeStyle(TextFormatting.WHITE));
+
+        toolTips.add(new TranslationTextComponent("warpstone.screen.generic.next_level")
+                .mergeStyle(TextFormatting.GRAY)
+                .mergeStyle(TextFormatting.ITALIC)
+                .appendSibling(new StringTextComponent(" "))
+                .appendSibling(new StringTextComponent(String.valueOf(getCorruptionToNextLevel())).mergeStyle(TextFormatting.WHITE))
+        );
+
+        if (witherEffect > 0) {
+            toolTips.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
+                    .appendSibling(new StringTextComponent(" "))
+                    .appendSibling(new StringTextComponent("-" + witherEffect + "%").mergeStyle(TextFormatting.GREEN))
+            );
+        }
+
+        return toolTips;
+    }
+
+    public List<ITextComponent> getInstabilityTooltips () {
+        List<ITextComponent> toolTips = new ArrayList<>();
+        TextFormatting color = getInstabilityLevel() > 5 ? TextFormatting.RED : TextFormatting.WHITE;
+
+        int witherEffect = getInstabilityLevel() * 10 - 30;
+
+        toolTips.add(new TranslationTextComponent("mutation.screen.instabilityWidget").mergeStyle(TextFormatting.WHITE));
+        toolTips.add(new TranslationTextComponent("warpstone.screen.generic.level")
+                .appendSibling(new StringTextComponent(" "))
+                .appendSibling(new StringTextComponent(String.valueOf(getInstabilityLevel()))
+                        .mergeStyle(color)));
+        toolTips.add(new TranslationTextComponent("warpstone.screen.generic.total")
+                .appendSibling(new StringTextComponent(" "))
+                .appendSibling(new StringTextComponent(String.valueOf(getInstability())))
+                .mergeStyle(TextFormatting.WHITE));
+        if (witherEffect > 0) {
+            toolTips.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
+                    .appendSibling(new StringTextComponent(" "))
+                    .appendSibling(new StringTextComponent("+" + witherEffect + "%").mergeStyle(TextFormatting.RED))
+            );
+        }
+
+        return toolTips;
     }
 
     public double getWitherRisk (int corruptionValue) {

@@ -57,98 +57,30 @@ public class MutationScreen extends WSScreen {
 				.build()
 		);
 
-
 			/*	Instability	*/
-		/*elements.add(new WSText(
-				//title above the widget
-				this.guiLeft + 121,
-				guiTop + 64,
-				25,
-				25,
-				new TranslationTextComponent("mutation.screen.instability")
-		));
+		//title above the widget
+		elements.add(new WSElement.Builder(this.guiLeft + 121, guiTop + 64, 25, 25, this)
+				.addComponent(new TextComponent(new TranslationTextComponent("mutation.screen.instability")))
+				.build());
 
-		WSElement instabilityWidget = new WSText(
-				//widget
-				this.guiLeft + 137,
-				this.guiTop + 80,
-				25,
-				25,
-				new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel())));
-
-		List<ITextComponent> instabilityList = new ArrayList<>();
-		TextFormatting color = clientManager.getInstabilityLevel() > 5 ? TextFormatting.RED : TextFormatting.WHITE;
-
-		int instWither = clientManager.getInstabilityLevel() * 10 - 30;
-
-		// TODO: Have referenced objects (corruption, instability, mutations) return their effectToolTips rather than hard keying here
-
-		instabilityList.add(new TranslationTextComponent("mutation.screen.instabilityWidget").mergeStyle(TextFormatting.WHITE));
-		instabilityList.add(new TranslationTextComponent("warpstone.screen.generic.level")
-				.appendSibling(new StringTextComponent(" "))
-				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel()))
-						.mergeStyle(color)));
-		instabilityList.add(new TranslationTextComponent("warpstone.screen.generic.total")
-				.appendSibling(new StringTextComponent(" "))
-				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getInstability())))
-				.mergeStyle(TextFormatting.WHITE));
-		if (instWither > 0) {
-			instabilityList.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
-					.appendSibling(new StringTextComponent(" "))
-					.appendSibling(new StringTextComponent("+" + instWither + "%").mergeStyle(TextFormatting.RED))
-			);
-		}
-
-		instabilityWidget.addToolTips(instabilityList.toArray(new ITextComponent[0]));
-		elements.add(instabilityWidget);
+		//widget
+		elements.add(new WSElement.Builder(this.guiLeft + 137, this.guiTop + 80, 25, 25, this)
+				.addComponent(new TextComponent(new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel()))))
+				.addTooltips(clientManager.getInstabilityTooltips().toArray(new ITextComponent[0]))
+				.build());
 
 			/* Corruption	*/
-		/*elements.add(new WSText(
-				//title above the widget
-				this.guiLeft + 121,
-				guiTop + 64,
-				25,
-				25,
-				new TranslationTextComponent("mutation.screen.corruption")
-		));
+		//title above the widget
+		elements.add(new WSElement.Builder(this.guiLeft + 121, guiTop + 64, 25, 25, this)
+				.addComponent(new TextComponent(new TranslationTextComponent("mutation.screen.corruption")))
+				.build());
 
-		WSElement corruptionWidget = new WSText(
-				//widget
-				this.guiLeft + 117,
-				this.guiTop + 102,
-				25,
-				25,
-				new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel())));
-
-		List<ITextComponent> corruptionTooltip = new ArrayList<>();
-		int corWither = clientManager.getCorruptionLevel() * 10;
-
-		corruptionTooltip.add(new TranslationTextComponent("mutation.screen.corruption").mergeStyle(TextFormatting.WHITE));
-		corruptionTooltip.add(new TranslationTextComponent("warpstone.screen.generic.level")
-				.appendSibling(new StringTextComponent(" "))
-				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getCorruptionLevel())))
-				.mergeStyle(TextFormatting.WHITE));
-		corruptionTooltip.add(new TranslationTextComponent("warpstone.screen.generic.total")
-				.appendSibling(new StringTextComponent(" "))
-				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getCorruption())))
-				.mergeStyle(TextFormatting.WHITE));
-
-		corruptionTooltip.add(new TranslationTextComponent("warpstone.screen.generic.next_level")
-				.mergeStyle(TextFormatting.GRAY)
-				.mergeStyle(TextFormatting.ITALIC)
-				.appendSibling(new StringTextComponent(" "))
-				.appendSibling(new StringTextComponent(String.valueOf(clientManager.getCorruptionToNextLevel())).mergeStyle(TextFormatting.WHITE))
+		//widget
+		elements.add(new WSElement.Builder(this.guiLeft + 117, this.guiTop + 102, 25, 25, this)
+				.addComponent(new TextComponent(new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel()))))
+				.addTooltips(clientManager.getCorruptionTooltips().toArray(new ITextComponent[0]))
+				.build()
 		);
-
-		if (corWither > 0) {
-			corruptionTooltip.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
-					.appendSibling(new StringTextComponent(" "))
-					.appendSibling(new StringTextComponent("-" + corWither + "%").mergeStyle(TextFormatting.GREEN))
-			);
-		}
-
-		corruptionWidget.addToolTips(corruptionTooltip.toArray(new ITextComponent[0]));
-		elements.add(corruptionWidget); */
 
 		List<AttributeMutation> muts = clientManager.getAttributeMutations();
 		List<String> effectMuts = clientManager.getEffectMutations();
@@ -170,11 +102,11 @@ public class MutationScreen extends WSScreen {
 			attrTooltips.add((new TranslationTextComponent(muts.get(i).getMutationName())).mergeStyle(TextFormatting.WHITE));
 			String levelText = "+";
 			TextFormatting color = TextFormatting.GREEN;
-			if (level < 25) { levelText = ""; color = TextFormatting.RED; }
+			if (level < 0) { levelText = ""; color = TextFormatting.RED; }
 
-			String strMaxLevel = (level < 25 ? "-" + 5 * clientManager.getCorruptionLevel() : "+" + 10 * clientManager.getCorruptionLevel()) + "%";
+			String strMaxLevel = (level < 0 ? "-" + 5 * clientManager.getCorruptionLevel() : "+" + 10 * clientManager.getCorruptionLevel()) + "%";
 
-			attrTooltips.add((new StringTextComponent(levelText + (level - 25) + "%")).mergeStyle(color));
+			attrTooltips.add((new StringTextComponent(levelText + (level) + "%")).mergeStyle(color));
 			attrTooltips.add(new StringTextComponent("")
 					.appendSibling(new TranslationTextComponent("warpstone.screen.generic.max_level"))
 					.appendSibling(new StringTextComponent(" " + strMaxLevel)

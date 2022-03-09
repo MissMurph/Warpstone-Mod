@@ -26,7 +26,7 @@ public class ImageComponent extends Component implements IRenderable {
         RenderSystem.enableDepthTest();
         RenderSystem.depthFunc(0);
         blit(matrixStack, parentElement.getX(), parentElement.getY(),
-                0, 0,
+                activeTexture.posX, activeTexture.posY,
                 parentElement.getWidth(), parentElement.getHeight(),
                 activeTexture.sourceSizeX, activeTexture.sourceSizeY);
     }

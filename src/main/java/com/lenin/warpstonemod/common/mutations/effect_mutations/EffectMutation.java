@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,6 +16,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -82,6 +85,13 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 	public IFormattableTextComponent getMutationDesc() {
 		return new TranslationTextComponent(translateKeyConstant + mutName + ".desc").mergeStyle(TextFormatting.WHITE);
+	}
+
+	public List<ITextComponent> getToolTips () {
+		List<ITextComponent> list = new ArrayList<>();
+		list.add(getMutationName());
+		list.add(getMutationDesc());
+		return list;
 	}
 
 	public boolean isLegalMutation(MutateManager manager){
