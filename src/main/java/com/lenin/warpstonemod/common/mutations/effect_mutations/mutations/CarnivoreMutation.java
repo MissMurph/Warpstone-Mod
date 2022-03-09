@@ -28,7 +28,7 @@ public class CarnivoreMutation extends HerbivoreMutation {
 
         Food food = event.getItem().getItem().getFood();
 
-        if (MEAT_FOOD.contains(food)) {
+        if (MEAT_FOOD.contains(food) || food.isMeat()) {
             float hunger = food.getHealing() * 0.25f;
             float saturation = food.getSaturation() * 0.25f;
 
@@ -36,7 +36,7 @@ public class CarnivoreMutation extends HerbivoreMutation {
             player.getFoodStats().addStats(Math.round(hunger), saturation);
         }
 
-        if (VEGE_FOOD.contains(food)) {
+        if (VEGE_FOOD.contains(food) || !food.isMeat()) {
             float hunger = food.getHealing() * 0.25f;
             float saturation = food.getSaturation() * 0.25f;
 

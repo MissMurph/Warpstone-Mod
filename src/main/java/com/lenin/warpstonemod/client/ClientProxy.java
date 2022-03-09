@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.client;
 
 import com.lenin.warpstonemod.client.gui.MutationScreenOpenButton;
+import com.lenin.warpstonemod.client.gui.Textures;
 import com.lenin.warpstonemod.common.CommonProxy;
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
@@ -17,6 +18,8 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init (){
 		super.init();
+
+		Textures.register();
 	}
 
 	@Override

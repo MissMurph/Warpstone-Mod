@@ -1,5 +1,9 @@
 package com.lenin.warpstonemod.client.gui;
 
+import com.lenin.warpstonemod.client.gui.components.ButtonComponent;
+import com.lenin.warpstonemod.client.gui.components.IClickable;
+import com.lenin.warpstonemod.client.gui.components.ImageComponent;
+import com.lenin.warpstonemod.client.gui.components.TextComponent;
 import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
@@ -44,14 +48,15 @@ public class MutationScreen extends WSScreen {
 
 		MutateManager clientManager = MutateHelper.getClientManager();
 
-		WSElement returnButton = new WSButton(this.guiLeft + 132,
-				guiTop + 144,
-				20,
-				18,
-				new ResourceLocation("warpstonemod","textures/gui/warp_icons.png"),
-				(onPress) -> Minecraft.getInstance().displayGuiScreen(new InventoryScreen(Minecraft.getInstance().player))
+		elements.add(new WSElement.Builder(this.guiLeft + 132, guiTop + 144, 20, 18, this)
+				.addComponent(new ImageComponent(Textures.MUT_OPEN_SCREEN_BUTTON))
+				.addComponent(
+						new ButtonComponent((onPress) -> Minecraft.getInstance().displayGuiScreen(
+								new InventoryScreen(Minecraft.getInstance().player)),
+								Textures.MUT_OPEN_SCREEN_BUTTON_HVRD))
+				.build()
 		);
-		elements.add(returnButton);
+
 
 			/*	Instability	*/
 		/*elements.add(new WSText(
@@ -76,7 +81,7 @@ public class MutationScreen extends WSScreen {
 
 		int instWither = clientManager.getInstabilityLevel() * 10 - 30;
 
-		// TODO: Have referenced objects (corruption, instability, mutations) return their tooltips rather than hard keying here
+		// TODO: Have referenced objects (corruption, instability, mutations) return their effectToolTips rather than hard keying here
 
 		instabilityList.add(new TranslationTextComponent("mutation.screen.instabilityWidget").mergeStyle(TextFormatting.WHITE));
 		instabilityList.add(new TranslationTextComponent("warpstone.screen.generic.level")
@@ -150,6 +155,7 @@ public class MutationScreen extends WSScreen {
 
 		for (int i = 0; i < muts.size(); i++) {
 			int level = muts.get(i).getMutationLevel();
+			System.out.println(level);
 
 			int levelMultiple = level < 0 ? 5 : 10;
 
@@ -159,19 +165,31 @@ public class MutationScreen extends WSScreen {
 
 			int frame = Math.round(((float)(level) / maxLevel) * maxFrame) + 25;
 
-			WSElement temp = new AttributeBar(
-					getGuiLeft() + 13 + (17 * i),
-					getGuiTop() + 60,
-					frame,
-					level,
-					clientManager.getCorruptionLevel(),
-					muts.get(i).getMutationName(),
-					Textures.SHEET_MUT_ATTR_BAR.resolve(frame)
+			List<ITextComponent> attrTooltips = new ArrayList<>();
+
+			attrTooltips.add((new TranslationTextComponent(muts.get(i).getMutationName())).mergeStyle(TextFormatting.WHITE));
+			String levelText = "+";
+			TextFormatting color = TextFormatting.GREEN;
+			if (level < 25) { levelText = ""; color = TextFormatting.RED; }
+
+			String strMaxLevel = (level < 25 ? "-" + 5 * clientManager.getCorruptionLevel() : "+" + 10 * clientManager.getCorruptionLevel()) + "%";
+
+			attrTooltips.add((new StringTextComponent(levelText + (level - 25) + "%")).mergeStyle(color));
+			attrTooltips.add(new StringTextComponent("")
+					.appendSibling(new TranslationTextComponent("warpstone.screen.generic.max_level"))
+					.appendSibling(new StringTextComponent(" " + strMaxLevel)
+							.mergeStyle(color)
+					)
 			);
 
-			System.out.println("X:" + temp.x + " Y:" + temp.y + " Width:" + temp.width + " Height:" + temp.height);
+			WSElement attrBar = new WSElement.Builder(getGuiLeft() + 13 + (17 * i), getGuiTop() + 60, 7, 78, this)
+					.addComponent(new ImageComponent(Textures.SHEET_MUT_ATTR_BAR.resolve(frame)))
+					.addTooltips(attrTooltips.toArray(new ITextComponent[0]))
+					.build();
 
-			elements.add(temp);
+			//System.out.println("X:" + attrBar.x + " Y:" + attrBar.y + " Width:" + attrBar.width + " Height:" + attrBar.height);
+
+			elements.add(attrBar);
 		}
 
 		for (int i = 0; i < effectMuts.size(); i++) {
@@ -182,15 +200,24 @@ public class MutationScreen extends WSScreen {
 				x = getGuiLeft() + 10 + (23 * (i - 7));
 			}
 
-			List<ITextComponent> tooltips = new ArrayList<>();
-			tooltips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationName().mergeStyle(TextFormatting.BOLD));
-			tooltips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationDesc());
+			List<ITextComponent> effectToolTips = new ArrayList<>();
+			effectToolTips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationName().mergeStyle(TextFormatting.BOLD));
+			effectToolTips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationDesc());
 
-			WSElement img = new WSImage(x, y, 18, 18, EffectMutations.getMutation(effectMuts.get(i)).getTexture());
-			img.addToolTips(tooltips.toArray(new ITextComponent[0]));
+			elements.add(new WSElement.Builder(x, y, 18, 18, this)
+					.addComponent(new ImageComponent(
+							new RawTextureResource(EffectMutations.getMutation(effectMuts.get(i)).getTexture(), 18, 18, 0, 0)))
+					.addTooltips(effectToolTips.toArray(new ITextComponent[0]))
+					.build()
+			);
 
-			elements.add(img);
+			//elements.add(img);
 		}
+
+		elements.add(new WSElement.Builder(0,0, 64, 64, this)
+				.addComponent(new TextComponent(new StringTextComponent("mouseX: " + 0 + " mouseY: " + 0)))
+				.build()
+		);
 	}
 
 	public MutationScreen(ITextComponent titleIn) {
@@ -199,7 +226,7 @@ public class MutationScreen extends WSScreen {
 
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		//this.renderBackground(matrixStack);
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(SCREEN_LOCATION);
@@ -235,73 +262,9 @@ public class MutationScreen extends WSScreen {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int click) {
-
+		elements.stream()
+				.forEach(element -> element.onClick(mouseX, mouseY, click));
 
 		return super.mouseClicked(mouseX, mouseY, click);
-	}
-
-	/*	ATTRIBUTE BAR	*/
-	class AttributeBar extends WSImage{
-		private final int frame;
-
-		private final RawTextureResource resource;
-
-		public AttributeBar(int x, int y, int _frame, int _level, int _corruptionLevel, String _attributeName, RawTextureResource _resource) {
-			super(x, y, 7, 78, new ResourceLocation("warpstonemod","textures/gui/mutation_attribute_bar.png"));
-			width = 7;
-			height = 78;
-			frame = _frame;
-			int level = _level + 25;
-			int corruptionLevel = _corruptionLevel + 1;
-
-			resource = _resource;
-
-				/*	Tooltips	*/
-			List<ITextComponent> list = new ArrayList<>();
-			list.add((new TranslationTextComponent(_attributeName)).mergeStyle(TextFormatting.WHITE));
-			String levelText = "+";
-			TextFormatting color = TextFormatting.GREEN;
-			if (level < 25) { levelText = ""; color = TextFormatting.RED; }
-
-			String maxLevel = (level < 25 ? "-" + 5 * corruptionLevel : "+" + 10 * corruptionLevel) + "%";
-
-			list.add((new StringTextComponent(levelText + (level - 25) + "%")).mergeStyle(color));
-			list.add(new StringTextComponent("")
-					.appendSibling(new TranslationTextComponent("warpstone.screen.generic.max_level"))
-					.appendSibling(new StringTextComponent(" " + maxLevel)
-							.mergeStyle(color)
-					)
-			);
-
-			addToolTips(list.toArray(new ITextComponent[0]));
-		}
-
-		@Override
-		public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-			super.render(matrixStack, mouseY, mouseY, partialTicks);
-
-			Minecraft minecraft = Minecraft.getInstance();
-			minecraft.getTextureManager().bindTexture(resource.resource);
-
-			/*int x2 = 0;
-			int y2 = 0;
-
-			if (frame < 25)  {
-				x2 = frame;
-				y2 = 0;
-			}
-			else if (frame >= 25 && frame < 57) {
-				x2 = frame - 25;
-				y2 = 1;
-			}
-			else if (frame >= 57) {
-				x2 = frame - 57;
-				y2 = 2;
-			}*/
-
-			RenderSystem.enableDepthTest();
-			RenderSystem.depthFunc(0);
-			blit(matrixStack, this.x, this.y, resource.posX, resource.posY, this.width, this.height, 256, 256);
-		}
 	}
 }
