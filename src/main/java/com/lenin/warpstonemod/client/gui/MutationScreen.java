@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @OnlyIn(Dist.CLIENT)
 public class MutationScreen extends WSScreen {
 	private static final ResourceLocation SCREEN_LOCATION = new ResourceLocation("warpstonemod", "textures/gui/mutation_screen.png");
-	//private static final ResourceLocation EFFECT_RESOURCE = new ResourceLocation("warpstonemod", "textures/gui/warp_icons.png");
 
 	private int guiLeft, guiTop;
 	private final int xSize = 176;
@@ -37,7 +36,7 @@ public class MutationScreen extends WSScreen {
 
 	private List<WSElement> elements = new ArrayList<>();
 
-	//Dont ever let me write UI code again
+	//okay you can let me write UI code again I've learnt my lesson
 
 	@Override
 	protected void init(){
@@ -71,13 +70,13 @@ public class MutationScreen extends WSScreen {
 
 			/* Corruption	*/
 		//title above the widget
-		elements.add(new WSElement.Builder(this.guiLeft + 121, guiTop + 64, 25, 25, this)
+		elements.add(new WSElement.Builder(this.guiLeft + 117, guiTop + 102, 25, 25, this)
 				.addComponent(new TextComponent(new TranslationTextComponent("mutation.screen.corruption")))
 				.build());
 
 		//widget
-		elements.add(new WSElement.Builder(this.guiLeft + 117, this.guiTop + 102, 25, 25, this)
-				.addComponent(new TextComponent(new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel()))))
+		elements.add(new WSElement.Builder(this.guiLeft + 136, this.guiTop + 119, 25, 25, this)
+				.addComponent(new TextComponent(new StringTextComponent(String.valueOf(clientManager.getCorruptionLevel()))))
 				.addTooltips(clientManager.getCorruptionTooltips().toArray(new ITextComponent[0]))
 				.build()
 		);
@@ -119,8 +118,6 @@ public class MutationScreen extends WSScreen {
 					.addTooltips(attrTooltips.toArray(new ITextComponent[0]))
 					.build();
 
-			//System.out.println("X:" + attrBar.x + " Y:" + attrBar.y + " Width:" + attrBar.width + " Height:" + attrBar.height);
-
 			elements.add(attrBar);
 		}
 
@@ -132,24 +129,13 @@ public class MutationScreen extends WSScreen {
 				x = getGuiLeft() + 10 + (23 * (i - 7));
 			}
 
-			List<ITextComponent> effectToolTips = new ArrayList<>();
-			effectToolTips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationName().mergeStyle(TextFormatting.BOLD));
-			effectToolTips.add(EffectMutations.getMutation(effectMuts.get(i)).getMutationDesc());
-
 			elements.add(new WSElement.Builder(x, y, 18, 18, this)
 					.addComponent(new ImageComponent(
 							new RawTextureResource(EffectMutations.getMutation(effectMuts.get(i)).getTexture(), 18, 18, 0, 0)))
-					.addTooltips(effectToolTips.toArray(new ITextComponent[0]))
+					.addTooltips(EffectMutations.getMutation(effectMuts.get(i)).getToolTips().toArray(new ITextComponent[0]))
 					.build()
 			);
-
-			//elements.add(img);
 		}
-
-		elements.add(new WSElement.Builder(0,0, 64, 64, this)
-				.addComponent(new TextComponent(new StringTextComponent("mouseX: " + 0 + " mouseY: " + 0)))
-				.build()
-		);
 	}
 
 	public MutationScreen(ITextComponent titleIn) {

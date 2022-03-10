@@ -22,9 +22,9 @@ public class TextComponent extends Component implements IRenderable {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, parentElement.getAlpha());
         RenderSystem.enableBlend();
 
-        fontRenderer.drawText(matrixStack, text, parentElement.getY(), parentElement.getWidth(), 1);
+        fontRenderer.drawText(matrixStack, text, parentElement.getX(), parentElement.getY(), 1);
 
-        blit(matrixStack, parentElement.getX(), parentElement.getY(), parentElement.getWidth(), parentElement.getHeight(), 0, 0);
+        blit(matrixStack, parentElement.getX(), parentElement.getY(), 0, 0, 0, 0);
     }
 
     public void updateText (ITextComponent _text) {

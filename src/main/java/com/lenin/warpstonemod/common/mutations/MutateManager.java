@@ -289,7 +289,7 @@ public class MutateManager {
 
         int witherEffect = getInstabilityLevel() * 10 - 30;
 
-        toolTips.add(new TranslationTextComponent("mutation.screen.instabilityWidget").mergeStyle(TextFormatting.WHITE));
+        toolTips.add(new TranslationTextComponent("mutation.screen.instability").mergeStyle(TextFormatting.WHITE));
         toolTips.add(new TranslationTextComponent("warpstone.screen.generic.level")
                 .appendSibling(new StringTextComponent(" "))
                 .appendSibling(new StringTextComponent(String.valueOf(getInstabilityLevel()))

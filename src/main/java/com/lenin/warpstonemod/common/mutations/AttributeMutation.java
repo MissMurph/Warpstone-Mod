@@ -2,7 +2,9 @@ package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.mutations.attributes.IAttributeSource;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.util.text.ITextComponent;
 
+import java.util.List;
 import java.util.UUID;
 
 public class AttributeMutation{
