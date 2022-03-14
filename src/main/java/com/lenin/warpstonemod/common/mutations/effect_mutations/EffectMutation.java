@@ -2,46 +2,41 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> {
 	protected final String mutName;
 	protected final UUID uuid;
 	protected final String translateKeyConstant = "mutation.effect.";
 
+	public final List<MutationTag> tags;
+
 	/**
-	 * {@link #rarity} by default determines required Corruption level required <br>
+	 * rarity by default determines required Corruption level required <br>
 	 * COMMON = 1 <br>
 	 * UNCOMMON = 2 <br>
 	 * RARE = 3 <br>
 	 * EPIC = 4 <br>
 	**/
 
-	protected Rarity rarity;
-
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
-	public EffectMutation(String _mutName, String _uuid, Rarity _rarity) {
+	public EffectMutation(String _mutName, String _uuid, MutationTag... _tags) {
 		uuid = UUID.fromString(_uuid);
 		mutName = _mutName;
-		rarity = _rarity;
+		tags = Arrays.asList(_tags);
 
 		setRegistryName(WarpstoneMain.MOD_ID, mutName);
 
@@ -80,7 +75,13 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	}
 
 	public IFormattableTextComponent getMutationName() {
-		return new TranslationTextComponent(translateKeyConstant + mutName).mergeStyle(rarity.color);
+		TranslationTextComponent text = new TranslationTextComponent(translateKeyConstant + mutName);
+
+		for (MutationTag tag : tags) {
+			if (tag.getFormatting() != null) text.mergeStyle(tag.getFormatting());
+		}
+
+		return text;
 	}
 
 	public IFormattableTextComponent getMutationDesc() {
@@ -95,16 +96,22 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	}
 
 	public boolean isLegalMutation(MutateManager manager){
-		switch (rarity){
-			case UNCOMMON:
-				return manager.getCorruptionLevel() >= 2;
-			case RARE:
-				return manager.getCorruptionLevel() >= 3;
-			case EPIC:
-				return manager.getCorruptionLevel() >= 4;
-			default:
-				return manager.getCorruptionLevel() >= 1;
+		MutationTag tag = getTagOfType(MutationTag.Type.RARITY);
+
+		if (tag != null && tag.getType() != null) {
+			switch (tag.getResource().getPath()) {
+				case "UNCOMMON":
+					return manager.getCorruptionLevel() >= 2;
+				case "RARE":
+					return manager.getCorruptionLevel() >= 3;
+				case "EPIC":
+					return manager.getCorruptionLevel() >= 4;
+				default:
+					return manager.getCorruptionLevel() >= 1;
+			}
 		}
+
+		return manager.getCorruptionLevel() >= 1;
 	}
 
 	public EffectMutationInstance getInstance (LivingEntity entity) {
@@ -128,6 +135,14 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		EffectMutationInstance instance = entity.world.isRemote() ? putClientInstance() : getInstanceType(entity);
 
 		if (instance != null) instanceMap.put(entity.getUniqueID(), instance);
+	}
+
+	public MutationTag getTagOfType (MutationTag.Type type) {
+		for (MutationTag tag : tags) {
+			if (tag.getType() == type) return tag;
+		}
+
+		return null;
 	}
 
 	@OnlyIn(Dist.CLIENT)

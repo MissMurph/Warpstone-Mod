@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -19,7 +20,8 @@ public class UndeadMutation extends EffectMutation {
 		super(
                 "undead",
 				"36588dba-9d9e-45be-b572-c0c571370054",
-				Rarity.RARE);
+				MutationTags.RARE
+		);
 	}
 
 	@Override

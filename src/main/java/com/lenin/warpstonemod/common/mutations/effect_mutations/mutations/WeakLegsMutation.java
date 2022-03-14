@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -17,7 +18,9 @@ public class WeakLegsMutation extends EffectMutation {
 		super(
 				"weak_legs",
 				"d198bf46-f9aa-4950-b0de-6f80d6396853",
-				Rarity.COMMON);
+				MutationTags.COMMON,
+				MutationTags.NEGATIVE
+		);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -13,7 +14,7 @@ public class BrawlerMutation extends EffectMutation {
 		super(
                 "brawler",
 				"af1bc073-2f9f-471e-a165-9681cfe4700c",
-				Rarity.UNCOMMON);
+				MutationTags.UNCOMMON);
 	}
 
 	/**

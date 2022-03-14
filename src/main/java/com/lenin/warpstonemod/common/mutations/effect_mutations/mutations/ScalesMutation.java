@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -16,7 +17,8 @@ public class ScalesMutation extends EffectMutation {
 		super(
                 "scales",
 				"265aebfe-d019-4fed-b1a7-a3311ffc7562",
-				Rarity.UNCOMMON);
+				MutationTags.UNCOMMON
+		);
 	}
 
 	/**

@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
@@ -22,8 +23,8 @@ public class FurMutation extends CounterEffectMutation implements IMutationTick 
         super(
                 "thick_fur",
                 "d20a2481-f5b9-4ad5-8557-3833b983673a",
-                Rarity.UNCOMMON,
-                200
+                200,
+                MutationTags.UNCOMMON
         );
     }
 

@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -17,7 +18,8 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 		super(
                 "night_vision",
 				"ba2f092b-76d6-4d71-85ba-51becadb4d19",
-				Rarity.COMMON);
+				MutationTags.COMMON
+		);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -17,7 +18,8 @@ public class JumpBoostMutation extends EffectMutation implements IMutationTick {
 		super(
                 "jump_boost",
 				"1020d46e-68db-45f4-9721-b14608ade167",
-				Rarity.COMMON);
+				MutationTags.COMMON
+		);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,9 +22,10 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 		super(
 				"weak_lungs",
 				"9216454f-c64d-4dcd-95f3-339df891aeef",
-				Rarity.COMMON,
-				5
-				);
+				5,
+				MutationTags.COMMON,
+				MutationTags.NEGATIVE
+		);
 	}
 
 	@Override

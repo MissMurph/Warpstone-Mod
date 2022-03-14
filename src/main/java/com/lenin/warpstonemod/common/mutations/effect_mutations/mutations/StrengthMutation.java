@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -14,13 +15,11 @@ public class StrengthMutation extends EffectMutation {
 		super(
                 "strength",
 				"0c0bbd77-a45b-4e92-8f95-ebdd8a565e02",
-				Rarity.COMMON);
+				MutationTags.COMMON
+		);
 	}
 
-	/**This mutation increases knockback with an extra strength of 0.4f <br>
-	 * TODO: Research how Strength is used in knockback calculations to understand
-	 * it mathematically
-	 */
+	//This mutation increases knockback with an extra strength of 0.4f
 
 	@Override
 	public void attachListeners(IEventBus bus) {

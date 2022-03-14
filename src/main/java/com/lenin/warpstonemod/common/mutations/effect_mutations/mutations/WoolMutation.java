@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,7 +27,7 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
         super(
                 "wool",
                 "ccb70e5e-bbc9-465e-b42f-449959295f5b",
-                Rarity.RARE
+                MutationTags.RARE
         );
     }
 

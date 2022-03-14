@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
@@ -20,7 +21,9 @@ public class WeakLiverMutation extends EffectMutation {
 		super(
                 "weak_liver",
 				"76635d17-d433-4464-bf8e-dc1a60d55229",
-				Rarity.COMMON);
+				MutationTags.COMMON,
+				MutationTags.NEGATIVE
+		);
 	}
 
 	/**This mutation inflicts Nausea on the player whenever they drink a potion

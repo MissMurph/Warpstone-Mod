@@ -16,6 +16,12 @@ public class Textures {
     public static final RawTextureResource MUT_SCREEN_ATTR_BAR = new RawTextureResource(
             new ResourceLocation(WarpstoneMain.MOD_ID,"textures/gui/mutation_attribute_bar.png"), 256, 256, 0, 19);
 
+    public static final RawTextureResource MUT_SCREEN = new RawTextureResource(
+            new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/mutation_screen.png"), 256, 256, 0, 0);
+
+    public static final RawTextureResource CORRUPTED_TOME_SCREEN = new RawTextureResource(
+            new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/corrupted_tome.png"), 256, 256, 0, 0);
+
         /*  Sprite Sheets   */
     public static final SpriteSheetResource SHEET_MUT_ATTR_BAR = new SpriteSheetResource(MUT_SCREEN_ATTR_BAR, 75,
             (int frame) -> {

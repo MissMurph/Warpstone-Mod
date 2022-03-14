@@ -1,21 +1,19 @@
-package com.lenin.warpstonemod.client.gui;
+package com.lenin.warpstonemod.client.gui.screens;
 
+import com.lenin.warpstonemod.client.gui.RawTextureResource;
+import com.lenin.warpstonemod.client.gui.Textures;
+import com.lenin.warpstonemod.client.gui.WSElement;
 import com.lenin.warpstonemod.client.gui.components.ButtonComponent;
-import com.lenin.warpstonemod.client.gui.components.IClickable;
 import com.lenin.warpstonemod.client.gui.components.ImageComponent;
 import com.lenin.warpstonemod.client.gui.components.TextComponent;
 import com.lenin.warpstonemod.common.mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
-import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
@@ -24,26 +22,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class MutationScreen extends WSScreen {
-	private static final ResourceLocation SCREEN_LOCATION = new ResourceLocation("warpstonemod", "textures/gui/mutation_screen.png");
-
-	private int guiLeft, guiTop;
-	private final int xSize = 176;
-	private final int ySize = 166;
-
-	private List<WSElement> elements = new ArrayList<>();
-
 	//okay you can let me write UI code again I've learnt my lesson
+
+	public MutationScreen(ITextComponent titleIn) {
+		super(titleIn, Textures.MUT_SCREEN, 176, 166);
+	}
 
 	@Override
 	protected void init(){
 		super.init();
-
-		this.guiLeft = (this.width - this.xSize) / 2;
-		this.guiTop = (this.height - this.ySize) / 2;
 
 		MutateManager clientManager = MutateHelper.getClientManager();
 
@@ -138,25 +128,6 @@ public class MutationScreen extends WSScreen {
 		}
 	}
 
-	public MutationScreen(ITextComponent titleIn) {
-		super(titleIn);
-	}
-
-	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
-
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(SCREEN_LOCATION);
-		int i = this.guiLeft;
-		int j = this.guiTop;
-		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-
-		for (WSElement w : elements) {
-			w.render(matrixStack, mouseX, mouseY, partialTicks);
-		}
-	}
-
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
@@ -169,20 +140,5 @@ public class MutationScreen extends WSScreen {
 		return true;
 	}
 
-	@Override
-	public boolean isPauseScreen() {
-		return false;
-	}
 
-	public int getGuiLeft () { return guiLeft; }
-
-	public int getGuiTop () { return guiTop; }
-
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int click) {
-		elements.stream()
-				.forEach(element -> element.onClick(mouseX, mouseY, click));
-
-		return super.mouseClicked(mouseX, mouseY, click);
-	}
 }

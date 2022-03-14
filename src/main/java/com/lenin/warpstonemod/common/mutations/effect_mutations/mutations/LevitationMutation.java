@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -15,8 +16,8 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 	public LevitationMutation() {
 		super("levitation",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
-				Rarity.UNCOMMON,
-				300
+				300,
+				MutationTags.UNCOMMON
 		);
 	}
 

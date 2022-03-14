@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
@@ -15,7 +16,9 @@ public class FrailBodyMutation extends EffectMutation {
 		super(
                 "frail_body",
 				"b09d14ec-beda-4ea9-bf80-2055535c1b99",
-				Rarity.COMMON);
+				MutationTags.COMMON,
+				MutationTags.NEGATIVE
+		);
 	}
 
 	@Override

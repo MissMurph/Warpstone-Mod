@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -20,7 +21,8 @@ public class IronGutMutation extends EffectMutation {
 		super(
                 "iron_gut",
 				"487b1027-3643-41ef-b3f5-e5f71abf503f",
-				Rarity.UNCOMMON);
+				MutationTags.UNCOMMON
+		);
 	}
 
 	/**This mutation makes the player immune to the negative effects of any food item

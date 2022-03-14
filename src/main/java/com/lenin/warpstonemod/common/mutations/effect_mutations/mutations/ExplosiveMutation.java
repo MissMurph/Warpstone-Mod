@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.DamageSource;
@@ -21,7 +22,9 @@ public class ExplosiveMutation extends EffectMutation {
 		super(
                 "explosive",
 				"7332e11c-ff66-439f-8808-4de93e9cf355",
-				Rarity.COMMON);
+				MutationTags.COMMON,
+				MutationTags.NEGATIVE
+		);
 	}
 
 	private final Set<DamageSource> fireSources = new HashSet<>(Arrays.asList(

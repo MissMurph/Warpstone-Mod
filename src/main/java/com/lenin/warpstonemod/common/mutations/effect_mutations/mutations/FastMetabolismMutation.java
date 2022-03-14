@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -14,7 +15,7 @@ public class FastMetabolismMutation extends EffectMutation {
 		super(
                 "fast_metabolism",
 				"1ce59983-cba5-4586-9186-3f69bd0487ce",
-				Rarity.COMMON);
+				MutationTags.COMMON);
 	}
 
 	@Override

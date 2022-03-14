@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Foods;
@@ -17,15 +18,15 @@ public class HerbivoreMutation extends EffectMutation {
         super(
                 "herbivore",
                 "a605523f-b225-44f1-a598-4d6dc5958337",
-                Rarity.COMMON
+                MutationTags.COMMON
         );
     }
 
-    protected HerbivoreMutation (String _name, String _uuid, Rarity _rarity) {
+    protected HerbivoreMutation (String _name, String _uuid) {
         super(
                 _name,
                 _uuid,
-                _rarity
+                MutationTags.COMMON
         );
     }
 

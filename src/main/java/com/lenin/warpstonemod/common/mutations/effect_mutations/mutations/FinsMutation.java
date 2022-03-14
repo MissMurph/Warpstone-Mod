@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.item.Rarity;
@@ -13,7 +14,7 @@ public class FinsMutation extends EffectMutation {
 		super(
                 "fins",
 				"26d0153a-08da-4c90-9287-44f1e6920e7d",
-				Rarity.COMMON);
+				MutationTags.COMMON);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
 import net.minecraft.item.Rarity;
@@ -24,8 +25,9 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 		super(
                 "hydrophilic",
 				"17782c2e-2438-4c81-b05b-507cb3c576b0",
-				Rarity.UNCOMMON,
-				100);
+				100,
+				MutationTags.UNCOMMON
+		);
 	}
 
 	/**This mutation replaces eating food with drinking water, you cannot eat food

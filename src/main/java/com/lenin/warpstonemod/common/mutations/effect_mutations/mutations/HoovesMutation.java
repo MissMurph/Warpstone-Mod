@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -18,7 +19,7 @@ public class HoovesMutation extends EffectMutation implements IMutationTick {
 		super(
                 "hooves",
 				"eeb67c1e-ef30-4d9a-b4ed-5b4ea156274a",
-				Rarity.RARE);
+				MutationTags.RARE);
 	}
 
 	@Override

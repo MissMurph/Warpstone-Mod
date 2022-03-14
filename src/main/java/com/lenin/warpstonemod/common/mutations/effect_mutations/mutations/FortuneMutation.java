@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -9,7 +10,7 @@ public class FortuneMutation extends EffectMutation {
 		super(
                 "fortune",
 				"9b0a8faa-1888-409f-a2a4-b0aab39cc065",
-				Rarity.RARE
+				MutationTags.RARE
 		);
 	}
 

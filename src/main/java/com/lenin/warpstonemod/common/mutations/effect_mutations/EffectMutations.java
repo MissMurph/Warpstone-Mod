@@ -65,5 +65,9 @@ public class EffectMutations {
 		return Registration.EFFECT_MUTATIONS.getValue(new ResourceLocation(WarpstoneMain.MOD_ID, key));
 	}
 
+	public static EffectMutation getMutation (EffectMutation mutation) {
+		return Registration.EFFECT_MUTATIONS.getValue(new ResourceLocation(WarpstoneMain.MOD_ID, mutation.getKey()));
+	}
+
 	public static void register() {}
 }

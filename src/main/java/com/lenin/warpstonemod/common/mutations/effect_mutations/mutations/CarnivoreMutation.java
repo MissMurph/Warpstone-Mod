@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Rarity;
@@ -12,8 +13,7 @@ public class CarnivoreMutation extends HerbivoreMutation {
     public CarnivoreMutation() {
         super(
                 "carnivore",
-                "b9de45cc-6dd2-468d-980e-3da40521b10a",
-                Rarity.COMMON
+                "b9de45cc-6dd2-468d-980e-3da40521b10a"
         );
     }
 

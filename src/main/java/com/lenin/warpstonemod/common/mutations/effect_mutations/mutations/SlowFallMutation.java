@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -15,7 +16,8 @@ public class SlowFallMutation extends EffectMutation implements IMutationTick {
 		super(
                 "slow_falling",
 				"4e80c5c4-07ef-4ddb-85f9-e1901ba17103",
-				Rarity.COMMON);
+				MutationTags.COMMON
+		);
 	}
 
 	@Override

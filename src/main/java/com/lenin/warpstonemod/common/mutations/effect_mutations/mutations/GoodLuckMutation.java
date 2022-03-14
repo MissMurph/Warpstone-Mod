@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -15,7 +16,7 @@ public class GoodLuckMutation extends EffectMutation {
 		super(
                 "good_luck",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d",
-				Rarity.COMMON);
+				MutationTags.COMMON);
 	}
 
 	@Override

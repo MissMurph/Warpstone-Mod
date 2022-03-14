@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -17,7 +18,7 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 		super(
                 "gills",
 				"bf69604d-0669-41d2-92e4-aafa8fa0acdc",
-				Rarity.COMMON);
+				MutationTags.COMMON);
 	}
 
 	@Override

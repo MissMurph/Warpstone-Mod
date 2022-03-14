@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -24,8 +25,8 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 		super(
                 "sharp_senses",
 				"6ba9291c-f067-410b-9579-9f11169ea0fd",
-				Rarity.RARE,
-				60
+				60,
+				MutationTags.RARE
 		);
 	}
 

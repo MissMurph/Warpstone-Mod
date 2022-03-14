@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
@@ -27,8 +28,9 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 		super(
                 "potassium",
 				"f74dfa9a-2104-403b-85a3-2a3f0c08e8c5",
-				Rarity.UNCOMMON,
-				100
+				100,
+				MutationTags.UNCOMMON,
+				MutationTags.NEGATIVE
 		);
 	}
 

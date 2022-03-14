@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -20,9 +21,9 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 		super(
                 "scarring",
 				"50cc914e-dbfb-4d26-8be3-03de8151932a",
-				Rarity.RARE,
-				400
-				);
+				400,
+				MutationTags.RARE
+		);
 	}
 
 	private Map<UUID, Integer> bonusMap = new HashMap<>();

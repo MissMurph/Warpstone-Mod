@@ -6,6 +6,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -34,6 +35,7 @@ public class CommonProxy {
 
 	public void init (){
 		MutateHelper.init();
+		MutationTags.init();
 
 		this.registration = new Registration();
 		this.tickHandlers.add(MutationTickHelper.INSTANCE);

@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -17,7 +18,8 @@ public class ThornsMutation extends EffectMutation {
 		super(
                 "thorns",
 				"cd74624b-9d68-4017-b4ab-eb326f45dd72",
-				Rarity.UNCOMMON);
+				MutationTags.UNCOMMON
+		);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -16,7 +17,7 @@ public class BloodSuckingMutation extends EffectMutation {
 		super(
                 "blood_sucking",
 				"0c3e6ecf-34ef-4ad6-8440-d06573f15fd3",
-				Rarity.RARE);
+				MutationTags.RARE);
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.DamageSource;
@@ -20,8 +22,8 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 		super(
 				"fire_breathing",
 				"9970d2cf-e6ba-4025-acf6-fc23ca0c3668",
-				Rarity.RARE,
-				40
+				40,
+				MutationTags.RARE
 				);
 	}
 

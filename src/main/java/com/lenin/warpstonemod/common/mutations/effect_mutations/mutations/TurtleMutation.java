@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +20,8 @@ public class TurtleMutation extends EffectMutation {
 		super(
                 "turtle",
 				"21fdd2d1-a7d3-44fd-a033-d155775e5d95",
-				Rarity.RARE);
+				MutationTags.RARE
+		);
 	}
 
 	@Override

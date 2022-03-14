@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Rarity;
@@ -17,7 +18,7 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 		super(
                 "glowing",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
-				Rarity.UNCOMMON);
+				MutationTags.UNCOMMON);
 
 	}
 
