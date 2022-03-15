@@ -22,7 +22,6 @@ public class ExplosiveMutation extends EffectMutation {
 		super(
                 "explosive",
 				"7332e11c-ff66-439f-8808-4de93e9cf355",
-				MutationTags.COMMON,
 				MutationTags.NEGATIVE
 		);
 	}

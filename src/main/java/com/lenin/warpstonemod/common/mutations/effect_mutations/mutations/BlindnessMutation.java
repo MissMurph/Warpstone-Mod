@@ -20,7 +20,6 @@ public class BlindnessMutation extends EffectMutation {
 		super(
                 "blindness",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
-				MutationTags.COMMON,
 				MutationTags.NEGATIVE
 		);
 	}

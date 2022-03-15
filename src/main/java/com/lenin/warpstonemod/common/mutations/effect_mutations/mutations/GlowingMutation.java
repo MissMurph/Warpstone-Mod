@@ -18,8 +18,8 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 		super(
                 "glowing",
 				"0d988324-bfef-4dd4-87a7-647364829c44",
-				MutationTags.UNCOMMON);
-
+				MutationTags.COMMON
+		);
 	}
 
 	@Override
@@ -57,11 +57,6 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 		if (entity.world.isRemote()) return;
 
 		entity.setGlowing(false);
-	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

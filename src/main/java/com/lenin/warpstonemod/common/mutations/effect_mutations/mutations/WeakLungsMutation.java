@@ -23,7 +23,6 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 				"weak_lungs",
 				"9216454f-c64d-4dcd-95f3-339df891aeef",
 				5,
-				MutationTags.COMMON,
 				MutationTags.NEGATIVE
 		);
 	}

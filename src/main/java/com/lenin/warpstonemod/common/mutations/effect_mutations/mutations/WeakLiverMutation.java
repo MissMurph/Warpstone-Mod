@@ -21,7 +21,6 @@ public class WeakLiverMutation extends EffectMutation {
 		super(
                 "weak_liver",
 				"76635d17-d433-4464-bf8e-dc1a60d55229",
-				MutationTags.COMMON,
 				MutationTags.NEGATIVE
 		);
 	}

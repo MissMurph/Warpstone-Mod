@@ -55,21 +55,25 @@ public class CorruptedTomeScreen extends WSScreen{
         super.render(matrixStack, mouseX, mouseY, partialTicks);
     }
 
+    /**Comparator sorts mutations so negatives are first sorted by rarity with the rest coming after sorted by rarity.
+     * Only needed for Tome Screen hence this isn't a part of the core Mutation Code
+     */
+
     public static class TagComporator implements Comparator<EffectMutation> {
 
         @Override
         public int compare(EffectMutation o1, EffectMutation o2) {
-            int o1Weight = 1;
-            int o2Weight = 1;
+            int o1Weight = 0;
+            int o2Weight = 0;
 
            for (MutationTag tag : o1.tags) {
                int tagWeight = getTagWeight(tag.getResource().getPath());
-               if (tagWeight > o1Weight) o1Weight =  tagWeight;
+               if (tagWeight > o1Weight) o1Weight +=  tagWeight;
            }
 
             for (MutationTag tag : o2.tags) {
                 int tagWeight = getTagWeight(tag.getResource().getPath());
-                if (tagWeight > o2Weight) o2Weight =  tagWeight;
+                if (tagWeight > o2Weight) o2Weight +=  tagWeight;
             }
 
             return o1Weight - o2Weight;
@@ -78,7 +82,7 @@ public class CorruptedTomeScreen extends WSScreen{
         private int getTagWeight (String key){
             switch (key){
                 case "negative":
-                    return 1;
+                    return -10;
                 case "uncommon":
                     return 3;
                 case "rare":

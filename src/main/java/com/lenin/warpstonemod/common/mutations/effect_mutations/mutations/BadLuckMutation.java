@@ -19,7 +19,6 @@ public class BadLuckMutation extends EffectMutation {
 		super(
                 "bad_luck",
 				"0942e8e9-295a-430f-9988-5537e4010648",
-				MutationTags.COMMON,
 				MutationTags.NEGATIVE
 		);
 	}

@@ -5,7 +5,7 @@ import net.minecraft.util.text.TextFormatting;
 
 public class MutationTags {
 
-    public static MutationTag NEGATIVE = registerTag("negative");
+    public static MutationTag NEGATIVE = registerTag("negative", TextFormatting.RED);
     public static MutationTag POSITIVE = registerTag("positive");
     public static MutationTag DAMAGE = registerTag("damage");
     public static MutationTag COMMON = registerTag("common", Rarity.COMMON.color).addType(MutationTag.Type.RARITY);

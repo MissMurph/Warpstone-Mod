@@ -17,7 +17,6 @@ public class SlowMetabolismMutation extends EffectMutation {
 		super(
                 "slow_metabolism",
 				"4e0ded20-d669-46e2-98c7-c70d023f4fc6",
-				MutationTags.COMMON,
 				MutationTags.NEGATIVE
 		);
 	}
