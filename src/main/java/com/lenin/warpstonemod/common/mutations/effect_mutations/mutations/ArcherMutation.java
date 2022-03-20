@@ -13,8 +13,7 @@ public class ArcherMutation extends EffectMutation {
 	public ArcherMutation() {
 		super(
                 "archer",
-				"d35e4fe7-73bc-4fb4-97fe-b47a0e6cf62c",
-				MutationTags.UNCOMMON);
+				"d35e4fe7-73bc-4fb4-97fe-b47a0e6cf62c");
 	}
 
 	@Override

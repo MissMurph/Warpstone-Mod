@@ -24,8 +24,7 @@ public class ColdBloodMutation extends CounterEffectMutation implements IMutatio
         super(
                 "cold_blood",
                 "ecf187d9-7a7d-4732-9a20-f44bfe64a615",
-                200,
-                MutationTags.UNCOMMON
+                200
         );
     }
 

@@ -1,0 +1,8 @@
+{
+  "name": "archer",
+  "uuid": "d35e4fe7-73bc-4fb4-97fe-b47a0e6cf62c",
+  "resource_path": "textures/gui/effect_mutations/archer.png",
+  "tags": [
+    "uncommon"
+  ]
+}

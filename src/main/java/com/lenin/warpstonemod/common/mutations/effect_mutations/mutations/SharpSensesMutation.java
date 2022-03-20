@@ -25,9 +25,10 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 		super(
                 "sharp_senses",
 				"6ba9291c-f067-410b-9579-9f11169ea0fd",
-				60,
-				MutationTags.RARE
+				60
 		);
+
+		this.textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/sharp_senses.png");
 	}
 
 	@Override
@@ -102,10 +103,5 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 
 		if (entity.isPotionActive(WarpEffects.SHARP_SENSES)) entity.removePotionEffect(WarpEffects.SHARP_SENSES);
 		if (entity.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
-	}
-
-	@Override
-	public ResourceLocation getTexture() {
-		return new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/sharp_senses.png");
 	}
 }

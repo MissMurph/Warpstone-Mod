@@ -1,0 +1,8 @@
+{
+  "name": "strength",
+  "uuid": "0c0bbd77-a45b-4e92-8f95-ebdd8a565e02",
+  "resource_path": "textures/gui/effect_mutations/strength.png",
+  "tags": [
+    "common"
+  ]
+}

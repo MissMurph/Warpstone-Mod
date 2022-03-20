@@ -17,8 +17,7 @@ public class WeakLegsMutation extends EffectMutation {
 	public WeakLegsMutation() {
 		super(
 				"weak_legs",
-				"d198bf46-f9aa-4950-b0de-6f80d6396853",
-				MutationTags.NEGATIVE
+				"d198bf46-f9aa-4950-b0de-6f80d6396853"
 		);
 	}
 

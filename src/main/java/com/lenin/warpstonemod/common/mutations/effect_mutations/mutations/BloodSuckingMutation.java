@@ -16,8 +16,8 @@ public class BloodSuckingMutation extends EffectMutation {
 	public BloodSuckingMutation() {
 		super(
                 "blood_sucking",
-				"0c3e6ecf-34ef-4ad6-8440-d06573f15fd3",
-				MutationTags.RARE);
+				"0c3e6ecf-34ef-4ad6-8440-d06573f15fd3"
+		);
 	}
 
 	@Override

@@ -17,8 +17,8 @@ public class ClawsMutation extends EffectMutation implements IMutationTick {
 	public ClawsMutation() {
 		super(
                 "claws",
-				"dde7cc2c-20b4-4fec-af34-0e41044b2587",
-				MutationTags.RARE);
+				"dde7cc2c-20b4-4fec-af34-0e41044b2587"
+		);
 	}
 
 	@Override

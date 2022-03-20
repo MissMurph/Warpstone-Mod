@@ -1,18 +1,18 @@
 package com.lenin.warpstonemod.common;
 
+import com.lenin.warpstonemod.common.data.tags.mutations.WarpstoneReloadListener;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import com.lenin.warpstonemod.common.network.PacketHandler;
+import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.FolderName;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -22,7 +22,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.io.File;
@@ -32,6 +31,8 @@ import java.util.List;
 public class CommonProxy {
 	private final List<ITickHandler> tickHandlers = new ArrayList<>();
 	protected Registration registration;
+
+	private static final JsonReloadListener MUTATION_LISTENER = new WarpstoneReloadListener();
 
 	public void init (){
 		MutateHelper.init();
@@ -54,6 +55,8 @@ public class CommonProxy {
 
 		bus.addListener(this::onPlayerTick);
 
+		bus.addListener(this::onRegisterReloadListeners);
+
 		bus.addListener(EventPriority.HIGH, WarpstoneWorldGen::onBiomeLoading);
 	}
 
@@ -71,29 +74,29 @@ public class CommonProxy {
 		}
 	}
 
-	public void onCommonSetup (FMLCommonSetupEvent event) {
+	private void onCommonSetup (FMLCommonSetupEvent event) {
 		WarpstoneWorldGen.init();
 	}
 
-	public void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
+	private void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
 		MutateHelper.loadMutData(player.getUniqueID());
 	}
 
-	public void onPlayerDisconnect (PlayerEvent.PlayerLoggedOutEvent event) {
+	private void onPlayerDisconnect (PlayerEvent.PlayerLoggedOutEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
 		MutateHelper.unloadManager(player.getUniqueID());
 	}
 
-	public void onServerSave (WorldEvent.Save event){
+	private void onServerSave (WorldEvent.Save event){
 		for (MutateManager m : MutateHelper.getManagers()) {
 			MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
 		}
 	}
 
-	public void onPlayerItemUse (PlayerInteractEvent.RightClickItem event){
+	private void onPlayerItemUse (PlayerInteractEvent.RightClickItem event){
 		if (event.getItemStack().getItem() instanceof IWarpstoneConsumable) {
 			IWarpstoneConsumable item = (IWarpstoneConsumable) event.getItemStack().getItem();
 			if (!item.canBeConsumed()) {
@@ -102,7 +105,7 @@ public class CommonProxy {
 		}
 	}
 
-	public void onPlayerDeath (LivingDeathEvent event){
+	private void onPlayerDeath (LivingDeathEvent event){
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) event.getEntityLiving();
 
@@ -110,6 +113,10 @@ public class CommonProxy {
 
 			if (m != null) m.resetMutations(true);
 		}
+	}
+
+	private void onRegisterReloadListeners (AddReloadListenerEvent event) {
+		event.addListener(MUTATION_LISTENER);
 	}
 
 	public File getWarpServerDataDirectory () {

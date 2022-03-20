@@ -17,8 +17,7 @@ public class JumpBoostMutation extends EffectMutation implements IMutationTick {
 	public JumpBoostMutation() {
 		super(
                 "jump_boost",
-				"1020d46e-68db-45f4-9721-b14608ade167",
-				MutationTags.COMMON
+				"1020d46e-68db-45f4-9721-b14608ade167"
 		);
 	}
 

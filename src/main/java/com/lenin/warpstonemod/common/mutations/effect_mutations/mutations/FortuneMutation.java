@@ -9,8 +9,7 @@ public class FortuneMutation extends EffectMutation {
 	public FortuneMutation() {
 		super(
                 "fortune",
-				"9b0a8faa-1888-409f-a2a4-b0aab39cc065",
-				MutationTags.RARE
+				"9b0a8faa-1888-409f-a2a4-b0aab39cc065"
 		);
 	}
 

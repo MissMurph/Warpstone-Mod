@@ -13,8 +13,8 @@ public class FinsMutation extends EffectMutation {
 	public FinsMutation() {
 		super(
                 "fins",
-				"26d0153a-08da-4c90-9287-44f1e6920e7d",
-				MutationTags.COMMON);
+				"26d0153a-08da-4c90-9287-44f1e6920e7d"
+		);
 	}
 
 	@Override

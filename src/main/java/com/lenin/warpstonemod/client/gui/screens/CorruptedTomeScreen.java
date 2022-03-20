@@ -36,10 +36,6 @@ public class CorruptedTomeScreen extends WSScreen{
 
             int y = getGuiTop() + 10 + (23 * row);
             int x = getGuiLeft() + 15 + (23 * (i - (10 * row)));
-            /*if (i >= 13) {
-                y += 23;
-                x = getGuiLeft() + 10 + (23 * (i - 13));
-            }*/
 
             elements.add(new WSElement.Builder(x, y, 18, 18, this)
                     .addComponent(new ImageComponent(
@@ -66,30 +62,14 @@ public class CorruptedTomeScreen extends WSScreen{
             int o1Weight = 0;
             int o2Weight = 0;
 
-           for (MutationTag tag : o1.tags) {
-               int tagWeight = getTagWeight(tag.getResource().getPath());
-               if (tagWeight > o1Weight) o1Weight +=  tagWeight;
-           }
-
+            for (MutationTag tag : o1.tags) {
+                o1Weight += tag.getWeight();
+            }
             for (MutationTag tag : o2.tags) {
-                int tagWeight = getTagWeight(tag.getResource().getPath());
-                if (tagWeight > o2Weight) o2Weight +=  tagWeight;
+                o2Weight += tag.getWeight();
             }
 
             return o1Weight - o2Weight;
-        }
-
-        private int getTagWeight (String key){
-            switch (key){
-                case "negative":
-                    return -10;
-                case "uncommon":
-                    return 3;
-                case "rare":
-                    return 4;
-                default:
-                    return 2;
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.client;
+package com.lenin.warpstonemod.client.data;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.blocks.WarpBlocks;

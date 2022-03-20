@@ -19,8 +19,7 @@ public class BlindnessMutation extends EffectMutation {
 	public BlindnessMutation() {
 		super(
                 "blindness",
-				"0d988324-bfef-4dd4-87a7-647364829c44",
-				MutationTags.NEGATIVE
+				"0d988324-bfef-4dd4-87a7-647364829c44"
 		);
 	}
 
@@ -68,11 +67,6 @@ public class BlindnessMutation extends EffectMutation {
 		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), instance);
 
 		return instance;
-	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

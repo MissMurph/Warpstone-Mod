@@ -5,7 +5,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import java.util.UUID;
 
 public interface IAttributeSource {
-	double getAttributeValue();
+	float getAttributeValue();
 	String getAttributeName();
 
 	void applyModifier (AttributeModifier source);

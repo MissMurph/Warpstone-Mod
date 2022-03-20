@@ -26,9 +26,10 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     public WoolMutation() {
         super(
                 "wool",
-                "ccb70e5e-bbc9-465e-b42f-449959295f5b",
-                MutationTags.RARE
+                "ccb70e5e-bbc9-465e-b42f-449959295f5b"
         );
+
+        this.textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/wool.png");
     }
 
     //RemoveList is so we dont cancel our own remove calls for the effect
@@ -146,10 +147,5 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
 
         entity.removePotionEffect(WarpEffects.WOOL);
         if (bonusMap.containsKey(entity.getUniqueID())) bonusMap.remove(entity.getUniqueID());
-    }
-
-    @Override
-    public ResourceLocation getTexture() {
-        return new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/wool.png");
     }
 }

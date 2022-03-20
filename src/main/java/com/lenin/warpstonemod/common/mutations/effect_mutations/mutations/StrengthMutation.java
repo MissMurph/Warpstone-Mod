@@ -14,8 +14,7 @@ public class StrengthMutation extends EffectMutation {
 	public StrengthMutation() {
 		super(
                 "strength",
-				"0c0bbd77-a45b-4e92-8f95-ebdd8a565e02",
-				MutationTags.COMMON
+				"0c0bbd77-a45b-4e92-8f95-ebdd8a565e02"
 		);
 	}
 

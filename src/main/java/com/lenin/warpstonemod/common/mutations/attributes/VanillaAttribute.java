@@ -16,8 +16,8 @@ public class VanillaAttribute implements IAttributeSource{
 	}
 
 	@Override
-	public double getAttributeValue() {
-		return attribute.getValue();
+	public float getAttributeValue() {
+		return (float) attribute.getValue();
 	}
 
 	public Attribute getAttributeSource() {

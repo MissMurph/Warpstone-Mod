@@ -20,8 +20,7 @@ public class IronGutMutation extends EffectMutation {
 	public IronGutMutation() {
 		super(
                 "iron_gut",
-				"487b1027-3643-41ef-b3f5-e5f71abf503f",
-				MutationTags.UNCOMMON
+				"487b1027-3643-41ef-b3f5-e5f71abf503f"
 		);
 	}
 

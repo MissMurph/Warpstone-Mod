@@ -14,8 +14,8 @@ public class CorrosiveTouchMutation extends EffectMutation {
 	public CorrosiveTouchMutation() {
 		super(
                 "corrosive_touch",
-				"8ee3692f-f855-43e3-8a9f-dffb37381995",
-				MutationTags.RARE);
+				"8ee3692f-f855-43e3-8a9f-dffb37381995"
+		);
 	}
 
 	@Override

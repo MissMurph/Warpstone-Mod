@@ -1,0 +1,8 @@
+{
+  "name": "brawler",
+  "uuid": "af1bc073-2f9f-471e-a165-9681cfe4700c",
+  "resource_path": "textures/gui/effect_mutations/brawler.png",
+  "tags": [
+    "uncommon"
+  ]
+}

@@ -17,8 +17,8 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 	public GillsMutation() {
 		super(
                 "gills",
-				"bf69604d-0669-41d2-92e4-aafa8fa0acdc",
-				MutationTags.COMMON);
+				"bf69604d-0669-41d2-92e4-aafa8fa0acdc"
+		);
 	}
 
 	@Override

@@ -1,0 +1,8 @@
+{
+  "name": "uncommon",
+  "type": "RARITY",
+  "weight": 2,
+  "formatting": [
+    "yellow"
+  ]
+}

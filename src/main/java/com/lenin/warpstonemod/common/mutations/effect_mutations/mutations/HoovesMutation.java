@@ -18,8 +18,8 @@ public class HoovesMutation extends EffectMutation implements IMutationTick {
 	public HoovesMutation() {
 		super(
                 "hooves",
-				"eeb67c1e-ef30-4d9a-b4ed-5b4ea156274a",
-				MutationTags.RARE);
+				"eeb67c1e-ef30-4d9a-b4ed-5b4ea156274a"
+		);
 	}
 
 	@Override

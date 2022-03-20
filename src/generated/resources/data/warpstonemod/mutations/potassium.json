@@ -1,0 +1,9 @@
+{
+  "name": "potassium",
+  "uuid": "f74dfa9a-2104-403b-85a3-2a3f0c08e8c5",
+  "resource_path": "textures/gui/effect_mutations/potassium.png",
+  "tags": [
+    "uncommon",
+    "negative"
+  ]
+}

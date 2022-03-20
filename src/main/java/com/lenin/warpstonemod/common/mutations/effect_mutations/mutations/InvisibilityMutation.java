@@ -15,8 +15,7 @@ public class InvisibilityMutation extends EffectMutation implements IMutationTic
 	public InvisibilityMutation() {
 		super(
 				"invisibility",
-				"a2361e8f-1be0-478f-9742-a873400e9b6d",
-				MutationTags.UNCOMMON
+				"a2361e8f-1be0-478f-9742-a873400e9b6d"
 		);
 	}
 

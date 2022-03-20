@@ -1,0 +1,8 @@
+{
+  "name": "rare",
+  "type": "RARITY",
+  "weight": 3,
+  "formatting": [
+    "aqua"
+  ]
+}

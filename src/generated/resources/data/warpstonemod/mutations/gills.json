@@ -1,0 +1,8 @@
+{
+  "name": "gills",
+  "uuid": "bf69604d-0669-41d2-92e4-aafa8fa0acdc",
+  "resource_path": "textures/gui/effect_mutations/gills.png",
+  "tags": [
+    "common"
+  ]
+}

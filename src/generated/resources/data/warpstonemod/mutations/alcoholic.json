@@ -1,0 +1,8 @@
+{
+  "name": "alcoholic",
+  "uuid": "3fe06fe0-6a8d-403a-b4da-4ed1a9d822fb",
+  "resource_path": "textures/gui/effect_mutations/alcoholic.png",
+  "tags": [
+    "uncommon"
+  ]
+}

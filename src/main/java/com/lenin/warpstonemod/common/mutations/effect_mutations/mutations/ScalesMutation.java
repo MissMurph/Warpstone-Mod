@@ -16,8 +16,7 @@ public class ScalesMutation extends EffectMutation {
 	public ScalesMutation() {
 		super(
                 "scales",
-				"265aebfe-d019-4fed-b1a7-a3311ffc7562",
-				MutationTags.UNCOMMON
+				"265aebfe-d019-4fed-b1a7-a3311ffc7562"
 		);
 	}
 

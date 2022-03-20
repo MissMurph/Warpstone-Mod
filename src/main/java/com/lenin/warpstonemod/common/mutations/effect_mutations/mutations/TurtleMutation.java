@@ -19,9 +19,10 @@ public class TurtleMutation extends EffectMutation {
 	public TurtleMutation() {
 		super(
                 "turtle",
-				"21fdd2d1-a7d3-44fd-a033-d155775e5d95",
-				MutationTags.RARE
+				"21fdd2d1-a7d3-44fd-a033-d155775e5d95"
 		);
+
+		this.textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/turtle.png");
 	}
 
 	@Override
@@ -71,10 +72,5 @@ public class TurtleMutation extends EffectMutation {
 			player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
 			player.removePotionEffect(WarpEffects.TURTLE);
 		}
-	}
-
-	@Override
-	public ResourceLocation getTexture() {
-		return new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/turtle.png");
 	}
 }

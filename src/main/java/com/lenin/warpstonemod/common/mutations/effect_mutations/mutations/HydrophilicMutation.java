@@ -25,8 +25,7 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 		super(
                 "hydrophilic",
 				"17782c2e-2438-4c81-b05b-507cb3c576b0",
-				100,
-				MutationTags.UNCOMMON
+				100
 		);
 	}
 

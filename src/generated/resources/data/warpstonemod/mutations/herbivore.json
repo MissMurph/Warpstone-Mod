@@ -1,0 +1,8 @@
+{
+  "name": "herbivore",
+  "uuid": "a605523f-b225-44f1-a598-4d6dc5958337",
+  "resource_path": "textures/gui/effect_mutations/herbivore.png",
+  "tags": [
+    "common"
+  ]
+}

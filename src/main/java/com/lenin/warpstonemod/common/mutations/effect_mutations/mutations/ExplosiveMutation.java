@@ -21,8 +21,7 @@ public class ExplosiveMutation extends EffectMutation {
 	public ExplosiveMutation() {
 		super(
                 "explosive",
-				"7332e11c-ff66-439f-8808-4de93e9cf355",
-				MutationTags.NEGATIVE
+				"7332e11c-ff66-439f-8808-4de93e9cf355"
 		);
 	}
 

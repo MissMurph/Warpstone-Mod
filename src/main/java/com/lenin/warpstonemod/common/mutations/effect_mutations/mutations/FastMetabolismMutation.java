@@ -14,8 +14,8 @@ public class FastMetabolismMutation extends EffectMutation {
 	public FastMetabolismMutation() {
 		super(
                 "fast_metabolism",
-				"1ce59983-cba5-4586-9186-3f69bd0487ce",
-				MutationTags.COMMON);
+				"1ce59983-cba5-4586-9186-3f69bd0487ce"
+		);
 	}
 
 	@Override

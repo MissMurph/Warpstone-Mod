@@ -15,8 +15,8 @@ public class GoodLuckMutation extends EffectMutation {
 	public GoodLuckMutation() {
 		super(
                 "good_luck",
-				"a2361e8f-1be0-478f-9742-a873400e9b6d",
-				MutationTags.COMMON);
+				"a2361e8f-1be0-478f-9742-a873400e9b6d"
+		);
 	}
 
 	@Override

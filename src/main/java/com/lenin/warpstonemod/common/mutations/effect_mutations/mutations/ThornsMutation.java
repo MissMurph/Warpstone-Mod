@@ -17,8 +17,7 @@ public class ThornsMutation extends EffectMutation {
 	public ThornsMutation() {
 		super(
                 "thorns",
-				"cd74624b-9d68-4017-b4ab-eb326f45dd72",
-				MutationTags.UNCOMMON
+				"cd74624b-9d68-4017-b4ab-eb326f45dd72"
 		);
 	}
 

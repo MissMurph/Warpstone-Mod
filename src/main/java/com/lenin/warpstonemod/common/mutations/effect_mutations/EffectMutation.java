@@ -1,8 +1,11 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateManager;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Rarity;
@@ -11,6 +14,7 @@ import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -18,10 +22,12 @@ import java.util.*;
 
 public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> {
 	protected final String mutName;
-	protected final UUID uuid;
+	protected UUID uuid;
 	protected final String translateKeyConstant = "mutation.effect.";
 
-	public final List<MutationTag> tags;
+	public List<MutationTag> tags;
+
+	protected ResourceLocation textureResource;
 
 	/**
 	 * rarity by default determines required Corruption level required <br>
@@ -37,6 +43,8 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		uuid = UUID.fromString(_uuid);
 		mutName = _mutName;
 		tags = Arrays.asList(_tags);
+
+		textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + _mutName + ".png");
 
 		setRegistryName(WarpstoneMain.MOD_ID, mutName);
 
@@ -78,7 +86,9 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		TranslationTextComponent text = new TranslationTextComponent(translateKeyConstant + mutName);
 
 		for (MutationTag tag : tags) {
-			if (tag.getFormatting() != null) text.mergeStyle(tag.getFormatting());
+			if (tag.formatting != null) {
+				tag.formatting.forEach(text::mergeStyle);
+			}
 		}
 
 		return text;
@@ -112,6 +122,42 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		}
 
 		return manager.getCorruptionLevel() >= 1;
+	}
+
+	public JsonObject serialize () {
+		JsonObject json = new JsonObject();
+
+		json.addProperty("name", mutName);
+		json.addProperty("uuid", String.valueOf(uuid));
+		json.addProperty("resource_path", getTexture().getPath());
+
+		JsonArray jsonTags = new JsonArray();
+
+		for (MutationTag tag : tags) {
+			jsonTags.add(tag.getResource().getPath());
+		}
+
+		json.add("tags", jsonTags);
+
+		return json;
+	}
+
+	public void deserialize (JsonObject json) {
+		if (json == null) {
+			System.out.println(getKey() + " JSON is null");
+			return;
+		}
+
+		uuid = UUID.fromString(json.get("uuid").getAsString());
+		textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, json.get("resource_path").getAsString());
+
+		List<String> newTags = new ArrayList<>();
+		json.getAsJsonArray("tags").forEach(jsonElement -> newTags.add(jsonElement.getAsString()));
+
+		for (String key : newTags) {
+			MutationTag tag = MutationTags.getTag(key);
+			if (tag != null && !tags.contains(tag)) tags.add(tag);
+		}
 	}
 
 	public EffectMutationInstance getInstance (LivingEntity entity) {
@@ -156,7 +202,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	}
 
 	public ResourceLocation getTexture () {
-		return new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + getKey() + ".png");
+		return textureResource;
 	}
 
 	public String getKey () {

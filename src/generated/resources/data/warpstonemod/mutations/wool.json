@@ -1,0 +1,8 @@
+{
+  "name": "wool",
+  "uuid": "ccb70e5e-bbc9-465e-b42f-449959295f5b",
+  "resource_path": "textures/mob_effect/wool.png",
+  "tags": [
+    "rare"
+  ]
+}

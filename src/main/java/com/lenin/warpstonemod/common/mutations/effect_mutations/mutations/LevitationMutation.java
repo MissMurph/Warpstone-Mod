@@ -16,8 +16,7 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 	public LevitationMutation() {
 		super("levitation",
 				"45c87f74-844f-410c-8de2-d9e8cf1cac2c",
-				300,
-				MutationTags.UNCOMMON
+				300
 		);
 	}
 

@@ -13,8 +13,8 @@ public class BrawlerMutation extends EffectMutation {
 	public BrawlerMutation() {
 		super(
                 "brawler",
-				"af1bc073-2f9f-471e-a165-9681cfe4700c",
-				MutationTags.UNCOMMON);
+				"af1bc073-2f9f-471e-a165-9681cfe4700c"
+		);
 	}
 
 	/**

@@ -17,16 +17,14 @@ public class HerbivoreMutation extends EffectMutation {
     public HerbivoreMutation() {
         super(
                 "herbivore",
-                "a605523f-b225-44f1-a598-4d6dc5958337",
-                MutationTags.COMMON
+                "a605523f-b225-44f1-a598-4d6dc5958337"
         );
     }
 
     protected HerbivoreMutation (String _name, String _uuid) {
         super(
                 _name,
-                _uuid,
-                MutationTags.COMMON
+                _uuid
         );
     }
 

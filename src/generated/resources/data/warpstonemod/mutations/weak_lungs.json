@@ -1,0 +1,8 @@
+{
+  "name": "weak_lungs",
+  "uuid": "9216454f-c64d-4dcd-95f3-339df891aeef",
+  "resource_path": "textures/gui/effect_mutations/weak_lungs.png",
+  "tags": [
+    "negative"
+  ]
+}

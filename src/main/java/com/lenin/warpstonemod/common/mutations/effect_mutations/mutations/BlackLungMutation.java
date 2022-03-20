@@ -10,8 +10,7 @@ public class BlackLungMutation extends EffectMutation {
     public BlackLungMutation() {
         super(
                 "black_lung",
-                "24d24ca3-4072-45d6-a7f0-29085b4f77fd",
-                MutationTags.COMMON
+                "24d24ca3-4072-45d6-a7f0-29085b4f77fd"
         );
     }
 

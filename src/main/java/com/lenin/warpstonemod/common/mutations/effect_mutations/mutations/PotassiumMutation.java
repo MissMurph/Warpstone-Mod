@@ -28,9 +28,7 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 		super(
                 "potassium",
 				"f74dfa9a-2104-403b-85a3-2a3f0c08e8c5",
-				100,
-				MutationTags.UNCOMMON,
-				MutationTags.NEGATIVE
+				100
 		);
 	}
 

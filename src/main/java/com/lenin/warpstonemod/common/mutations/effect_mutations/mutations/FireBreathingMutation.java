@@ -22,8 +22,7 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 		super(
 				"fire_breathing",
 				"9970d2cf-e6ba-4025-acf6-fc23ca0c3668",
-				40,
-				MutationTags.RARE
+				40
 				);
 	}
 

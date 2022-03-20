@@ -19,8 +19,7 @@ public class UndeadMutation extends EffectMutation {
 	public UndeadMutation() {
 		super(
                 "undead",
-				"36588dba-9d9e-45be-b572-c0c571370054",
-				MutationTags.RARE
+				"36588dba-9d9e-45be-b572-c0c571370054"
 		);
 	}
 

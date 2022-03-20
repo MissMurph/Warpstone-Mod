@@ -15,8 +15,7 @@ public class FrailBodyMutation extends EffectMutation {
 	public FrailBodyMutation() {
 		super(
                 "frail_body",
-				"b09d14ec-beda-4ea9-bf80-2055535c1b99",
-				MutationTags.NEGATIVE
+				"b09d14ec-beda-4ea9-bf80-2055535c1b99"
 		);
 	}
 

@@ -17,8 +17,7 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 	public GlowingMutation() {
 		super(
                 "glowing",
-				"0d988324-bfef-4dd4-87a7-647364829c44",
-				MutationTags.COMMON
+				"0d988324-bfef-4dd4-87a7-647364829c44"
 		);
 	}
 

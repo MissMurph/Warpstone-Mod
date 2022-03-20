@@ -17,8 +17,7 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 	public NightVisionMutation() {
 		super(
                 "night_vision",
-				"ba2f092b-76d6-4d71-85ba-51becadb4d19",
-				MutationTags.COMMON
+				"ba2f092b-76d6-4d71-85ba-51becadb4d19"
 		);
 	}
 

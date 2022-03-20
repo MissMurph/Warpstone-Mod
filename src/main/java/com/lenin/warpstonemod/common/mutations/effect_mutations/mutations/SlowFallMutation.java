@@ -15,8 +15,7 @@ public class SlowFallMutation extends EffectMutation implements IMutationTick {
 	public SlowFallMutation() {
 		super(
                 "slow_falling",
-				"4e80c5c4-07ef-4ddb-85f9-e1901ba17103",
-				MutationTags.COMMON
+				"4e80c5c4-07ef-4ddb-85f9-e1901ba17103"
 		);
 	}
 
