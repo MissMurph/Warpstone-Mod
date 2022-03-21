@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.mutations.attributes;
+package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;

@@ -1,10 +1,11 @@
-package com.lenin.warpstonemod.common.mutations.attributes;
+package com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes;
 
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class AttrHealing extends WSAttribute{
+public class AttrHealing extends WSAttribute {
 
     public AttrHealing(LivingEntity _parentEntity) {
         super(_parentEntity, "healing");

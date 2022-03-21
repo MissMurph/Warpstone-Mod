@@ -3,48 +3,49 @@ package com.lenin.warpstonemod.common.mutations;
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.*;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.Attributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.minecraftforge.registries.RegistryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class MutateManager {
+public class PlayerManager {
     protected final LivingEntity parentEntity;
     protected final List<AttributeMutation> attributeMutations = new ArrayList<>();
     protected List<String> effectMutations = new ArrayList<>();
 
+    protected List<IAttributeSource> attributes = new ArrayList<>();
+
     protected CompoundNBT mutData;
+
+    protected UUID parentUUID;
 
     protected int instability;
     protected int corruption;
 
-    public MutateManager (LivingEntity _parentEntity){
+    public PlayerManager(LivingEntity _parentEntity){
         parentEntity = _parentEntity;
         instability = 0;
         corruption = 0;
-
-        if (_parentEntity == null) return;
+        parentUUID = parentEntity.getUniqueID();
 
         WarpMutations[] array = WarpMutations.values();
         for (WarpMutations warpMutations : array) {
@@ -71,7 +72,7 @@ public class MutateManager {
                     EffectMutation mut = legalMutations.get(WarpstoneMain.getRandom().nextInt(legalMutations.size()));
 
                     effectMutations.add(mut.getKey());
-                    mut.applyMutation(parentEntity);
+                    mut.applyMutation(this);
 
                     hasEffectBeenCreated = true;
                     continue;
@@ -174,12 +175,12 @@ public class MutateManager {
                 effectMutations.add(mutKey);
 
                 EffectMutation mut = getEffect(mutKey);
-                mut.applyMutation(parentEntity);
+                mut.applyMutation(this);
             }
         }
 
         for (String mut : deletion) {
-            getEffect(mut).clearInstance(parentEntity);
+            getEffect(mut).clearInstance(this);
             effectMutations.remove(mut);
         }
     }
@@ -187,7 +188,7 @@ public class MutateManager {
     public void resetMutations (boolean death) {
         for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
 
-        for (String key : effectMutations) { getEffect(key).clearInstance(this.parentEntity); }
+        for (String key : effectMutations) { getEffect(key).clearInstance(this); }
         effectMutations.clear();
 
         if (!death) corruption = 0;
@@ -308,6 +309,24 @@ public class MutateManager {
         return toolTips;
     }
 
+    public UUID getUniqueId () {
+        return parentUUID;
+    }
+
+    public IAttributeSource getAttribute (String key) {
+        for (IAttributeSource attribute : attributes) {
+            if (attribute.getAttributeName().equals(key)) return attribute;
+        }
+
+        IAttributeSource newAttribute;
+
+        if (ForgeRegistries.ATTRIBUTES.containsKey(new ResourceLocation("minecraft", key))) newAttribute = new VanillaAttribute(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("minecraft", key)), getParentEntity());
+        else newAttribute = Attributes.createAttribute(key, getParentEntity());
+
+        attributes.add(newAttribute);
+        return newAttribute;
+    }
+
     public double getWitherRisk (int corruptionValue) {
         double value =  (((double) corruptionValue / 100f) * (((double) getInstabilityLevel() / 10 - 0.3) - (double) getCorruptionLevel() / 10));
 
@@ -324,7 +343,7 @@ public class MutateManager {
         saveData();
 
         for (String key : effectMutations) {
-            getEffect(key).clearInstance(this.parentEntity);
+            getEffect(key).clearInstance(this);
         }
 
         effectMutations.clear();

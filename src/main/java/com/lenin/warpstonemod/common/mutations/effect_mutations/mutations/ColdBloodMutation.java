@@ -1,12 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.biome.Biome;
@@ -91,7 +89,7 @@ public class ColdBloodMutation extends CounterEffectMutation implements IMutatio
     }
 
     @Override
-    public boolean isLegalMutation(MutateManager manager) {
+    public boolean isLegalMutation(PlayerManager manager) {
         return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.THICK_FUR);
     }
 }

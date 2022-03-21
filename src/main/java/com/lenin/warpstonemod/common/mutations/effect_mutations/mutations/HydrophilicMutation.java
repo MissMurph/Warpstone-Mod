@@ -1,13 +1,11 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
@@ -108,7 +106,7 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.POTASSIUM);
 	}
 }

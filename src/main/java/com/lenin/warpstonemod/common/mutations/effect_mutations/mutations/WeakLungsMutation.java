@@ -1,14 +1,12 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectUtils;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -63,13 +61,13 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 	}
 
 	@Override
@@ -78,7 +76,7 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GILLS);
 	}
 }

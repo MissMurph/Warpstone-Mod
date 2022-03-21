@@ -21,41 +21,41 @@ import java.util.UUID;
 
 public class MutateHelper {
 
-    private static MutateManager clientManager = new DummyMutateManager();
+    private static PlayerManager clientManager = new DummyPlayerManager();
 
-    protected static List<MutateManager> managers = new ArrayList<MutateManager>();
+    protected static List<PlayerManager> managers = new ArrayList<PlayerManager>();
 
-    public static MutateManager getManager (LivingEntity e) {
+    public static PlayerManager getManager (LivingEntity e) {
         return getManager(e.getUniqueID());
     }
 
-    public static MutateManager getManager (UUID playerUUID){
-        for (MutateManager m : managers) {
+    public static PlayerManager getManager (UUID playerUUID){
+        for (PlayerManager m : managers) {
             if (m.getParentEntity().getUniqueID() == playerUUID)
                 return m;
         }
         return null;
     }
 
-    public static List<MutateManager> getManagers () {
+    public static List<PlayerManager> getManagers () {
         return managers;
     }
 
-    public static MutateManager createManager (LivingEntity e) {
-        MutateManager m = new MutateManager(e);
+    public static PlayerManager createManager (LivingEntity e) {
+        PlayerManager m = new PlayerManager(e);
         managers.add(m);
         return m;
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static MutateManager getClientManager () {
-        if (clientManager instanceof DummyMutateManager) clientManager = new MutateManager(Minecraft.getInstance().player);
+    public static PlayerManager getClientManager () {
+        if (clientManager instanceof DummyPlayerManager) clientManager = new PlayerManager(Minecraft.getInstance().player);
         return clientManager;
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void updateClientMutations(SyncMutDataPacket pkt) {
-        MutateManager mut = getClientManager();
+        PlayerManager mut = getClientManager();
         mut.loadFromNBT(pkt.getData());
     }
 
@@ -74,7 +74,7 @@ public class MutateHelper {
         } catch (Exception ignored) {}
 
         MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
-        MutateManager manager = new MutateManager(server.getPlayerList().getPlayerByUUID(playerUUID));
+        PlayerManager manager = new PlayerManager(server.getPlayerList().getPlayerByUUID(playerUUID));
         managers.add(manager);
 
         if (nbt != null) manager.loadFromNBT(nbt);

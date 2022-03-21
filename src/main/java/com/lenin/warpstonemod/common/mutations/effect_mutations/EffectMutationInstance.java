@@ -1,19 +1,20 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.LivingEntity;
 
 public class EffectMutationInstance {
-	protected final LivingEntity parent;
+	protected final PlayerManager parent;
 
 	protected boolean active;
 
-	public EffectMutationInstance(LivingEntity _parent){
+	public EffectMutationInstance(PlayerManager _parent){
 		parent = _parent;
 
 		active = false;
 	}
 
-	public LivingEntity getParent (){
+	public PlayerManager getParent (){
 		return parent;
 	}
 

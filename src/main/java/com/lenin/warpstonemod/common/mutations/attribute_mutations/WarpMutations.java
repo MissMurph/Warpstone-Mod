@@ -1,8 +1,7 @@
-package com.lenin.warpstonemod.common.mutations;
+package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 
-import com.lenin.warpstonemod.common.mutations.attributes.AttrHarvestSpeed;
-import com.lenin.warpstonemod.common.mutations.attributes.VanillaAttribute;
-import net.minecraft.entity.LivingEntity;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttrHarvestSpeed;
 import net.minecraft.entity.ai.attributes.Attributes;
 
 public enum WarpMutations {
@@ -15,7 +14,7 @@ public enum WarpMutations {
 
     public static final String nameConst = "mutation.";
 
-    public static AttributeMutation constructAttributeMutation (WarpMutations type, MutateManager parent) {
+    public static AttributeMutation constructAttributeMutation (WarpMutations type, PlayerManager parent) {
         switch (type){
             case MAX_HEALTH:
                 return new AttributeMutation(new VanillaAttribute(Attributes.MAX_HEALTH, parent.getParentEntity()), parent, nameConst + Attributes.MAX_HEALTH.getAttributeName(), "358c0d76-adac-416a-ab2a-5e29b3bad0c6");

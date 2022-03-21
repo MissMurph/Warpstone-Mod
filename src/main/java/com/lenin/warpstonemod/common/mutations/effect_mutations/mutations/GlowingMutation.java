@@ -1,15 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
@@ -41,25 +36,25 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote()) return;
+		if (manager.world.isRemote()) return;
 
-		entity.setGlowing(true);
+		manager.setGlowing(true);
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote()) return;
+		if (manager.world.isRemote()) return;
 
-		entity.setGlowing(false);
+		manager.setGlowing(false);
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.INVISIBILITY);
 	}
 }

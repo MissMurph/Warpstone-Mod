@@ -3,29 +3,36 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Rarity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> {
 	protected final String mutName;
 	protected UUID uuid;
 	protected final String translateKeyConstant = "mutation.effect.";
 
-	public List<MutationTag> tags;
+	protected List<MutationTag> tags;
+
+	protected List<AttributeModifier> modifiers = new ArrayList<>();
 
 	protected ResourceLocation textureResource;
 
@@ -57,29 +64,37 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	@OnlyIn(Dist.CLIENT)
 	public abstract void attachClientListeners(IEventBus bus);
 
-	public void applyMutation (LivingEntity entity){
-		if (!containsInstance(entity.getUniqueID())) constructInstance(entity);
+	public void applyMutation (PlayerManager manager){
+		if (!containsInstance(manager.getUniqueId())) constructInstance(manager);
 
-		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
+		EffectMutationInstance mut = instanceMap.get(manager.getUniqueId());
 		mut.setActive(true);
+
+		for (AttributeModifier modifier : modifiers) {
+			manager.getAttribute(modifier.getName()).removeModifier(modifier.getID());
+		}
 	}
 
 	//This cannot clear instances as methods are overridden to deactivate mutations
-	public void deactivateMutation(LivingEntity entity) {
-		if (!containsInstance(entity.getUniqueID())) return;
+	public void deactivateMutation(PlayerManager manager) {
+		if (!containsInstance(manager.getUniqueId())) return;
 
-		instanceMap.get(entity.getUniqueID()).setActive(false);
+		instanceMap.get(manager.getUniqueId()).setActive(false);
+
+		for (AttributeModifier modifier : modifiers) {
+			manager.getAttribute(modifier.getName()).removeModifier(modifier.getID());
+		}
 	}
 
 	//Different from Deactivate Mutations as will deactivate then clear the instance
-	public void clearInstance (LivingEntity entity) {
-		if (entity.world.isRemote()) {
+	public void clearInstance (PlayerManager manager) {
+		if (manager.getParentEntity().world.isRemote()) {
 			clearClientInstance();
 			return;
 		}
 
-		deactivateMutation(entity);
-		instanceMap.remove(entity.getUniqueID());
+		deactivateMutation(manager);
+		instanceMap.remove(manager.getUniqueId());
 	}
 
 	public IFormattableTextComponent getMutationName() {
@@ -105,7 +120,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		return list;
 	}
 
-	public boolean isLegalMutation(MutateManager manager){
+	public boolean isLegalMutation(PlayerManager manager){
 		MutationTag tag = getTagOfType(MutationTag.Type.RARITY);
 
 		if (tag != null && tag.getType() != null) {
@@ -177,10 +192,10 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		return instanceMap.containsKey(playerUUID);
 	}
 
-	public void constructInstance(LivingEntity entity) {
-		EffectMutationInstance instance = entity.world.isRemote() ? putClientInstance() : getInstanceType(entity);
+	public void constructInstance(PlayerManager manager) {
+		EffectMutationInstance instance = manager.getParentEntity().world.isRemote() ? putClientInstance() : getInstanceType(manager);
 
-		if (instance != null) instanceMap.put(entity.getUniqueID(), instance);
+		if (instance != null) instanceMap.put(manager.getParentEntity().getUniqueID(), instance);
 	}
 
 	public MutationTag getTagOfType (MutationTag.Type type) {
@@ -209,7 +224,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		return mutName;
 	}
 
-	public EffectMutationInstance getInstanceType (LivingEntity entity) {
-		return new EffectMutationInstance(entity);
+	public EffectMutationInstance getInstanceType (PlayerManager manager) {
+		return new EffectMutationInstance(manager);
 	}
 }

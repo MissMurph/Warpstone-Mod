@@ -1,11 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -76,20 +75,20 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote()) return;
+		if (manager.world.isRemote()) return;
 
-		bonusMap.put(entity.getUniqueID(), 0);
+		bonusMap.put(manager.getUniqueID(), 0);
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote()) return;
+		if (manager.world.isRemote()) return;
 
-		bonusMap.remove(entity.getUniqueID());
+		bonusMap.remove(manager.getUniqueID());
 	}
 }

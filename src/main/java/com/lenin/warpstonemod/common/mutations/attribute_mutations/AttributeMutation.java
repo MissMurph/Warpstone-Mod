@@ -1,10 +1,9 @@
-package com.lenin.warpstonemod.common.mutations;
+package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 
-import com.lenin.warpstonemod.common.mutations.attributes.IAttributeSource;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.IAttributeSource;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.util.text.ITextComponent;
 
-import java.util.List;
 import java.util.UUID;
 
 public class AttributeMutation{
@@ -12,9 +11,9 @@ public class AttributeMutation{
 	protected final String name;
 	protected final UUID uuid;
 	protected int mutationLevel;
-	protected final MutateManager manager;
+	protected final PlayerManager manager;
 
-	public AttributeMutation(IAttributeSource _attributeSource, MutateManager _manager, String _name, String _uuid) {
+	public AttributeMutation(IAttributeSource _attributeSource, PlayerManager _manager, String _name, String _uuid) {
 		uuid = UUID.fromString(_uuid);
 		this.attributeSource = _attributeSource;
 		name = _name;
@@ -49,7 +48,7 @@ public class AttributeMutation{
 		setLevel(mutationLevel + value);
 	}
 
-	public boolean canMutate (MutateManager manager) {
+	public boolean canMutate (PlayerManager manager) {
 		return mutationLevel < Math.min((manager.getCorruptionLevel() + 1) * 10, 50) || mutationLevel > Math.max((manager.getCorruptionLevel() + 1) * -5, -25);
 	}
 

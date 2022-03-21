@@ -1,10 +1,8 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -51,7 +49,7 @@ public class ArcherMutation extends EffectMutation {
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BRAWLER);
 	}
 }

@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DummyMutateManager extends MutateManager{
+public class DummyPlayerManager extends PlayerManager {
 
-	public DummyMutateManager() {
+	public DummyPlayerManager() {
 		super(null);
 	}
 

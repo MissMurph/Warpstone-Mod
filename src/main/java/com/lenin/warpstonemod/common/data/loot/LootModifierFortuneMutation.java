@@ -3,7 +3,7 @@ package com.lenin.warpstonemod.common.data.loot;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -34,7 +34,7 @@ public class LootModifierFortuneMutation extends LootModifier {
 			if (!context.has(p) || !context.has(LootParameters.THIS_ENTITY)) return generatedLoot;
 		}
 
-		MutateManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
+		PlayerManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
 
 		if (manager != null && manager.containsEffect(EffectMutations.FORTUNE)) {
 			Block block = context.get(LootParameters.BLOCK_STATE).getBlock();

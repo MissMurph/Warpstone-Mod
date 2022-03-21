@@ -1,12 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -40,11 +38,11 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote()) return;
+		if (manager.world.isRemote()) return;
 
-		entity.removePotionEffect(Effects.LEVITATION);
+		manager.removePotionEffect(Effects.LEVITATION);
 	}
 }

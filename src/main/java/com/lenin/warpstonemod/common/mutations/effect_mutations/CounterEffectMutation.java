@@ -1,8 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.HashMap;
@@ -50,20 +49,20 @@ public class CounterEffectMutation extends EffectMutation {
     }
 
     @Override
-    public void constructInstance(LivingEntity entity) {
-        super.constructInstance(entity);
+    public void constructInstance(PlayerManager manager) {
+        super.constructInstance(manager);
 
-        if (entity.world.isRemote) return;
+        if (manager.getParentEntity().world.isRemote) return;
 
-        counterMap.put(entity.getUniqueID(), INTERVAL);
+        counterMap.put(manager.getUniqueId(), INTERVAL);
     }
 
     @Override
-    public void deactivateMutation(LivingEntity entity) {
-        super.deactivateMutation(entity);
+    public void deactivateMutation(PlayerManager manager) {
+        super.deactivateMutation(manager);
 
-        if (entity.world.isRemote) return;
+        if (manager.getParentEntity().world.isRemote) return;
 
-        counterMap.remove(entity.getUniqueID());
+        counterMap.remove(manager.getUniqueId());
     }
 }

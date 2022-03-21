@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.items;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -27,7 +27,7 @@ public class WarpstoneDust extends Item implements IWarpstoneConsumable{
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
 		if (worldIn.isRemote()) return super.onItemUseFinish(stack, worldIn, entity);
 
-		MutateManager m = MutateHelper.getManager(entity);
+		PlayerManager m = MutateHelper.getManager(entity);
 
 		if (m == null) m = MutateHelper.createManager(entity);
 
@@ -41,7 +41,7 @@ public class WarpstoneDust extends Item implements IWarpstoneConsumable{
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (worldIn == null) return;
 
-		MutateManager m = MutateHelper.getClientManager();
+		PlayerManager m = MutateHelper.getClientManager();
 		double chance = m.getWitherRisk(corruptionValue) * 100;
 
 		IFormattableTextComponent text = new TranslationTextComponent("warpstone.consumable.wither_risk");

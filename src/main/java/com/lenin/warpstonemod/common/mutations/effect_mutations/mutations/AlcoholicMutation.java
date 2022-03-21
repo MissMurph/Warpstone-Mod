@@ -1,19 +1,16 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -100,14 +97,14 @@ public class AlcoholicMutation extends EffectMutation {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
-		if (!valueMap.containsKey(entity.getUniqueID())) valueMap.put(entity.getUniqueID(), 0);
+		if (!valueMap.containsKey(manager.getParentEntity().getUniqueID())) valueMap.put(manager.getParentEntity().getUniqueID(), 0);
 
-		entity.getAttribute(Attributes.MAX_HEALTH).applyNonPersistentModifier(new AttributeModifier(
+		manager.getParentEntity().getAttribute(Attributes.MAX_HEALTH).applyNonPersistentModifier(new AttributeModifier(
 				uuid,
 				mutName,
 				-0.25f,
@@ -116,20 +113,20 @@ public class AlcoholicMutation extends EffectMutation {
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
-		entity.setAbsorptionAmount(entity.getAbsorptionAmount() - valueMap.get(entity.getUniqueID()));
-		valueMap.put(entity.getUniqueID(), 0);
-		entity.removePotionEffect(Effects.ABSORPTION);
+		manager.getParentEntity().setAbsorptionAmount(manager.getParentEntity().getAbsorptionAmount() - valueMap.get(manager.getUniqueId()));
+		valueMap.put(manager.getUniqueId(), 0);
+		manager.getParentEntity().removePotionEffect(Effects.ABSORPTION);
 
-		entity.getAttribute(Attributes.MAX_HEALTH).removeModifier(uuid);
+		manager.getParentEntity().getAttribute(Attributes.MAX_HEALTH).removeModifier(uuid);
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_METABOLISM) && !manager.containsEffect(EffectMutations.WEAK_LIVER);
 	}
 }

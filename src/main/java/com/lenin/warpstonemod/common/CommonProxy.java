@@ -3,7 +3,8 @@ package com.lenin.warpstonemod.common;
 import com.lenin.warpstonemod.common.data.tags.mutations.WarpstoneReloadListener;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.Attributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import com.lenin.warpstonemod.common.network.PacketHandler;
@@ -37,6 +38,7 @@ public class CommonProxy {
 	public void init (){
 		MutateHelper.init();
 		MutationTags.init();
+		Attributes.register();
 
 		this.registration = new Registration();
 		this.tickHandlers.add(MutationTickHelper.INSTANCE);
@@ -91,7 +93,7 @@ public class CommonProxy {
 	}
 
 	private void onServerSave (WorldEvent.Save event){
-		for (MutateManager m : MutateHelper.getManagers()) {
+		for (PlayerManager m : MutateHelper.getManagers()) {
 			MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
 		}
 	}
@@ -109,7 +111,7 @@ public class CommonProxy {
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) event.getEntityLiving();
 
-			MutateManager m = MutateHelper.getManager(p);
+			PlayerManager m = MutateHelper.getManager(p);
 
 			if (m != null) m.resetMutations(true);
 		}

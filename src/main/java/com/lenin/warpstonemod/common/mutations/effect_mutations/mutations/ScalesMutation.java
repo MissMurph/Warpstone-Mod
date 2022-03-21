@@ -1,14 +1,11 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -46,19 +43,19 @@ public class ScalesMutation extends EffectMutation {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		entity.getAttribute(Attributes.ARMOR).applyNonPersistentModifier(new AttributeModifier(
+		manager.getAttribute(Attributes.ARMOR).applyNonPersistentModifier(new AttributeModifier(
 				uuid,
 				mutName,
 				0.5f,
 				AttributeModifier.Operation.MULTIPLY_TOTAL
 		));
 
-		entity.getAttribute(Attributes.ARMOR_TOUGHNESS).applyNonPersistentModifier(new AttributeModifier(
+		manager.getAttribute(Attributes.ARMOR_TOUGHNESS).applyNonPersistentModifier(new AttributeModifier(
 				uuid,
 				mutName,
 				0.5f,
@@ -67,17 +64,17 @@ public class ScalesMutation extends EffectMutation {
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		entity.getAttribute(Attributes.ARMOR).removeModifier(uuid);
-		entity.getAttribute(Attributes.ARMOR_TOUGHNESS).removeModifier(uuid);
+		manager.getAttribute(Attributes.ARMOR).removeModifier(uuid);
+		manager.getAttribute(Attributes.ARMOR_TOUGHNESS).removeModifier(uuid);
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.THORNS);
 	}
 }

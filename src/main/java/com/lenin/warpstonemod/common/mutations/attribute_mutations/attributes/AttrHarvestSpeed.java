@@ -1,14 +1,9 @@
-package com.lenin.warpstonemod.common.mutations.attributes;
+package com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-
-import java.util.Map;
-import java.util.UUID;
 
 public class AttrHarvestSpeed extends WSAttribute {
 	public AttrHarvestSpeed (LivingEntity _parentEntity) {

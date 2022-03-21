@@ -1,15 +1,11 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -35,11 +31,11 @@ public class BlindnessMutation extends EffectMutation {
 	}
 
 	@Override
-	public void clearInstance(LivingEntity entity) {
-		super.clearInstance(entity);
+	public void clearInstance(PlayerManager manager) {
+		super.clearInstance(manager);
 
-		if (!entity.world.isRemote()) return;
-		if (instanceMap.containsKey(entity.getUniqueID())) instanceMap.remove(entity.getUniqueID());
+		if (!manager.getParentEntity().world.isRemote()) return;
+		if (instanceMap.containsKey(manager.getUniqueId())) instanceMap.remove(manager.getUniqueId());
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -62,7 +58,7 @@ public class BlindnessMutation extends EffectMutation {
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public EffectMutationInstance putClientInstance() {
-		EffectMutationInstance instance = new EffectMutationInstance(Minecraft.getInstance().player);
+		EffectMutationInstance instance = new EffectMutationInstance(MutateHelper.getClientManager());
 
 		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), instance);
 
@@ -70,25 +66,25 @@ public class BlindnessMutation extends EffectMutation {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote()) {
+		if (manager.getParentEntity().world.isRemote()) {
 			instanceMap.get(Minecraft.getInstance().player.getUniqueID()).setActive(true);
 		}
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote()) {
+		if (manager.getParentEntity().world.isRemote()) {
 			instanceMap.get(Minecraft.getInstance().player.getUniqueID()).setActive(false);
 		}
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.NIGHT_VISION);
 	}
 }

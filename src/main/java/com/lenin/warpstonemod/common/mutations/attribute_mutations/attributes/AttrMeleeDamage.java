@@ -1,11 +1,12 @@
-package com.lenin.warpstonemod.common.mutations.attributes;
+package com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes;
 
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class AttrMeleeDamage extends WSAttribute{
+public class AttrMeleeDamage extends WSAttribute {
     public AttrMeleeDamage(LivingEntity _parentEntity) {
         super(_parentEntity, "melee_damage");
     }

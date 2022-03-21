@@ -6,16 +6,13 @@ import com.lenin.warpstonemod.client.gui.WSElement;
 import com.lenin.warpstonemod.client.gui.components.ButtonComponent;
 import com.lenin.warpstonemod.client.gui.components.ImageComponent;
 import com.lenin.warpstonemod.client.gui.components.TextComponent;
-import com.lenin.warpstonemod.common.mutations.AttributeMutation;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -35,7 +32,7 @@ public class MutationScreen extends WSScreen {
 	protected void init(){
 		super.init();
 
-		MutateManager clientManager = MutateHelper.getClientManager();
+		PlayerManager clientManager = MutateHelper.getClientManager();
 
 		elements.add(new WSElement.Builder(this.guiLeft + 132, guiTop + 144, 20, 18, this)
 				.addComponent(new ImageComponent(Textures.MUT_OPEN_SCREEN_BUTTON))

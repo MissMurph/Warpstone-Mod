@@ -2,15 +2,13 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
@@ -96,12 +94,12 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote()) return;
+		if (manager.world.isRemote()) return;
 
-		if (entity.isPotionActive(WarpEffects.SHARP_SENSES)) entity.removePotionEffect(WarpEffects.SHARP_SENSES);
-		if (entity.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
+		if (manager.isPotionActive(WarpEffects.SHARP_SENSES)) manager.removePotionEffect(WarpEffects.SHARP_SENSES);
+		if (manager.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) manager.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
 	}
 }

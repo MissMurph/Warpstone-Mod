@@ -1,12 +1,9 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class FinsMutation extends EffectMutation {
@@ -28,12 +25,12 @@ public class FinsMutation extends EffectMutation {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		entity.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get()).applyNonPersistentModifier(new AttributeModifier(
+		manager.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get()).applyNonPersistentModifier(new AttributeModifier(
 				uuid,
 				mutName,
 				1f,
@@ -42,16 +39,16 @@ public class FinsMutation extends EffectMutation {
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		entity.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get()).removeModifier(uuid);
+		manager.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get()).removeModifier(uuid);
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.STRONG_LEGS);
 	}
 }

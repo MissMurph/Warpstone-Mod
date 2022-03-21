@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.items;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +18,7 @@ public class MutationReset extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		if (worldIn.isRemote()) return super.onItemRightClick(worldIn, playerIn, handIn);
 
-		MutateManager m = MutateHelper.getManager(playerIn);
+		PlayerManager m = MutateHelper.getManager(playerIn);
 
 		if (m != null) m.resetMutations(true); else System.out.println("Manager is null");
 

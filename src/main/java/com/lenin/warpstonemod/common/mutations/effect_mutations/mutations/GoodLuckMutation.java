@@ -1,14 +1,11 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class GoodLuckMutation extends EffectMutation {
@@ -28,30 +25,30 @@ public class GoodLuckMutation extends EffectMutation {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
+		EffectMutationInstance mut = instanceMap.get(manager.getUniqueID());
 
 		mut.getParent().getAttribute(Attributes.LUCK)
 				.applyNonPersistentModifier(new AttributeModifier(uuid, "mutation.good_luck", 1.0D, AttributeModifier.Operation.ADDITION));
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		instanceMap.get(entity.getUniqueID()).getParent()
+		instanceMap.get(manager.getUniqueID()).getParent()
 				.getAttribute(Attributes.LUCK)
 				.removeModifier(uuid);
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BAD_LUCK);
 	}
 }

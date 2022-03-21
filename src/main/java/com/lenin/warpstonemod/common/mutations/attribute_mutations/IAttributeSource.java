@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.mutations.attributes;
+package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 

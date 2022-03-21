@@ -1,13 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -51,25 +48,25 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 3600, 0, false, false));
+		manager.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 3600, 0, false, false));
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		entity.removePotionEffect(Effects.WATER_BREATHING);
+		manager.removePotionEffect(Effects.WATER_BREATHING);
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.WEAK_LUNGS);
 	}
 }

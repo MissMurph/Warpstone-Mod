@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.items;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +18,7 @@ public class WarpstoneShard extends Item implements IWarpstoneConsumable{
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
 		if (worldIn.isRemote()) return super.onItemUseFinish(stack, worldIn, entity);
 
-		MutateManager m = MutateHelper.getManager(entity);
+		PlayerManager m = MutateHelper.getManager(entity);
 
 		if (m == null) m = MutateHelper.createManager(entity);
 

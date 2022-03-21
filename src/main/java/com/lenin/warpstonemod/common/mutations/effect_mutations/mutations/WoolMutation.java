@@ -2,15 +2,13 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -123,12 +121,12 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     }
 
     @Override
-    public void applyMutation(LivingEntity entity) {
-        super.applyMutation(entity);
+    public void applyMutation(PlayerManager manager) {
+        super.applyMutation(manager);
 
-        if (entity.world.isRemote()) return;
+        if (manager.world.isRemote()) return;
 
-        entity.addPotionEffect(new EffectInstance(
+        manager.addPotionEffect(new EffectInstance(
                 WarpEffects.WOOL,
                 1200,
                 0,
@@ -138,14 +136,14 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     }
 
     @Override
-    public void deactivateMutation(LivingEntity entity) {
-        super.deactivateMutation(entity);
+    public void deactivateMutation(PlayerManager manager) {
+        super.deactivateMutation(manager);
 
-        if (entity.world.isRemote() && !entity.isPotionActive(WarpEffects.WOOL)) return;
+        if (manager.world.isRemote() && !manager.isPotionActive(WarpEffects.WOOL)) return;
 
-        removeList.add(entity.getUniqueID());
+        removeList.add(manager.getUniqueID());
 
-        entity.removePotionEffect(WarpEffects.WOOL);
-        if (bonusMap.containsKey(entity.getUniqueID())) bonusMap.remove(entity.getUniqueID());
+        manager.removePotionEffect(WarpEffects.WOOL);
+        if (bonusMap.containsKey(manager.getUniqueID())) bonusMap.remove(manager.getUniqueID());
     }
 }

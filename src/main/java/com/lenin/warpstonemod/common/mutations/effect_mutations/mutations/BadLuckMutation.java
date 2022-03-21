@@ -1,15 +1,11 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.MutateManager;
+import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.item.Rarity;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,12 +27,12 @@ public class BadLuckMutation extends EffectMutation {
 	}
 
 	@Override
-	public void applyMutation(LivingEntity entity) {
-		super.applyMutation(entity);
+	public void applyMutation(PlayerManager manager) {
+		super.applyMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		EffectMutationInstance mut = instanceMap.get(entity.getUniqueID());
+		EffectMutationInstance mut = instanceMap.get(manager.getUniqueID());
 
 		mut.getParent()
 				.getAttribute(Attributes.LUCK)
@@ -44,12 +40,12 @@ public class BadLuckMutation extends EffectMutation {
 	}
 
 	@Override
-	public void deactivateMutation(LivingEntity entity) {
-		super.deactivateMutation(entity);
+	public void deactivateMutation(PlayerManager manager) {
+		super.deactivateMutation(manager);
 
-		if (entity.world.isRemote) return;
+		if (manager.world.isRemote) return;
 
-		instanceMap.get(entity.getUniqueID()).getParent()
+		instanceMap.get(manager.getUniqueID()).getParent()
 				.getAttribute(Attributes.LUCK)
 				.removeModifier(uuid);
 	}
@@ -60,7 +56,7 @@ public class BadLuckMutation extends EffectMutation {
 	}
 
 	@Override
-	public boolean isLegalMutation(MutateManager manager) {
+	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GOOD_LUCK);
 	}
 }
