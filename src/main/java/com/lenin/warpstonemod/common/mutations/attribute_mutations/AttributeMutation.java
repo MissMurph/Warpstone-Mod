@@ -13,10 +13,10 @@ public class AttributeMutation{
 	protected int mutationLevel;
 	protected final PlayerManager manager;
 
-	public AttributeMutation(IAttributeSource _attributeSource, PlayerManager _manager, String _name, String _uuid) {
-		uuid = UUID.fromString(_uuid);
+	public AttributeMutation(IAttributeSource _attributeSource, PlayerManager _manager, UUID _uuid) {
+		uuid = _uuid;
 		this.attributeSource = _attributeSource;
-		name = _name;
+		name = _attributeSource.getAttributeName();
 		mutationLevel = 0;
 		manager = _manager;
 	}

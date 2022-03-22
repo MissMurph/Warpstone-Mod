@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttrHealing;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -19,6 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -32,7 +35,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 	protected List<MutationTag> tags;
 
-	protected List<AttributeModifier> modifiers = new ArrayList<>();
+	protected Map<String, AttributeModifier> modifiers = new HashMap<>();
 
 	protected ResourceLocation textureResource;
 
@@ -70,8 +73,8 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		EffectMutationInstance mut = instanceMap.get(manager.getUniqueId());
 		mut.setActive(true);
 
-		for (AttributeModifier modifier : modifiers) {
-			manager.getAttribute(modifier.getName()).removeModifier(modifier.getID());
+		for (String target : modifiers.keySet()) {
+			manager.getAttribute(target).applyModifier(modifiers.get(target));
 		}
 	}
 
@@ -81,8 +84,8 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 		instanceMap.get(manager.getUniqueId()).setActive(false);
 
-		for (AttributeModifier modifier : modifiers) {
-			manager.getAttribute(modifier.getName()).removeModifier(modifier.getID());
+		for (String target : modifiers.keySet()) {
+			manager.getAttribute(target).removeModifier(modifiers.get(target).getID());
 		}
 	}
 
@@ -204,6 +207,10 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		}
 
 		return null;
+	}
+
+	public List<MutationTag> getTags () {
+		return tags;
 	}
 
 	@OnlyIn(Dist.CLIENT)

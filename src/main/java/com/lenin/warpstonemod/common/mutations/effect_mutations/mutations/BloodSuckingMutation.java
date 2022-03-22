@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -15,6 +16,20 @@ public class BloodSuckingMutation extends EffectMutation {
                 "blood_sucking",
 				"0c3e6ecf-34ef-4ad6-8440-d06573f15fd3"
 		);
+
+		modifiers.put(Attributes.MAX_HEALTH.getAttributeName(), new AttributeModifier(
+				uuid,
+				mutName,
+				-0.25f,
+				AttributeModifier.Operation.MULTIPLY_TOTAL
+		));
+
+		modifiers.put(WSAttributes.HEALING.getAttributeName(), new AttributeModifier(
+				uuid,
+				mutName,
+				-0.25f,
+				AttributeModifier.Operation.MULTIPLY_TOTAL
+		));
 	}
 
 	@Override
@@ -42,23 +57,18 @@ public class BloodSuckingMutation extends EffectMutation {
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
-		manager.getAttribute(Attributes.MAX_HEALTH).applyNonPersistentModifier(new AttributeModifier(
-				uuid,
-				mutName,
-				-0.25f,
-				AttributeModifier.Operation.MULTIPLY_TOTAL
-		));
+		manager.getAttribute(Attributes.MAX_HEALTH.getAttributeName()).applyModifier();
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
-		manager.getAttribute(Attributes.MAX_HEALTH).removeModifier(uuid);
+		manager.getAttribute(Attributes.MAX_HEALTH.getAttributeName()).removeModifier(uuid);
 	}
 
 	@Override

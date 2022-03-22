@@ -62,10 +62,10 @@ public class CorruptedTomeScreen extends WSScreen{
             int o1Weight = 0;
             int o2Weight = 0;
 
-            for (MutationTag tag : o1.tags) {
+            for (MutationTag tag : o1.getTags()) {
                 o1Weight += tag.getWeight();
             }
-            for (MutationTag tag : o2.tags) {
+            for (MutationTag tag : o2.getTags()) {
                 o2Weight += tag.getWeight();
             }
 

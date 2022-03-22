@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 public abstract class WSAttribute implements IAttributeSource {
 
@@ -26,7 +27,11 @@ public abstract class WSAttribute implements IAttributeSource {
         parentEntity = _parentEntity;
         name = _name;
 
-        this.attachListeners(MinecraftForge.EVENT_BUS);
+        if (parentEntity != null) this.attachListeners(MinecraftForge.EVENT_BUS);
+    }
+
+    protected WSAttribute () {
+
     }
 
     protected abstract void attachListeners(IEventBus bus);
@@ -80,5 +85,9 @@ public abstract class WSAttribute implements IAttributeSource {
 
         modMap.remove(source);
         resultMap.remove(source);
+    }
+
+    public interface AttributeSupplier<T extends WSAttribute> {
+        T get(LivingEntity entity);
     }
 }

@@ -4,10 +4,12 @@ import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.*;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.Attributes;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttributeMutationUUIDs;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
@@ -47,10 +49,14 @@ public class PlayerManager {
         corruption = 0;
         parentUUID = parentEntity.getUniqueID();
 
-        WarpMutations[] array = WarpMutations.values();
-        for (WarpMutations warpMutations : array) {
-            attributeMutations.add(WarpMutations.constructAttributeMutation(warpMutations, this));
-        }
+        attributes.add(new VanillaAttribute(Attributes.MAX_HEALTH, getParentEntity()));
+
+        attributeMutations.add(new AttributeMutation(getAttribute("generic.max_health"), this, AttributeMutationUUIDs.MAX_HEALTH_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute("generic.attack_damage"), this, AttributeMutationUUIDs.ATTACK_DAMAGE_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute("generic.movement_speed"), this, AttributeMutationUUIDs.SPEED_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute("generic.armor"), this, AttributeMutationUUIDs.AMOUR_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute("generic.armor_toughness"), this, AttributeMutationUUIDs.ARMOUR_TOUGHNESS_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute("harvest_speed"), this, AttributeMutationUUIDs.MINING_SPEED_UUID));
 
         mutData = serialize();
     }
@@ -321,7 +327,7 @@ public class PlayerManager {
         IAttributeSource newAttribute;
 
         if (ForgeRegistries.ATTRIBUTES.containsKey(new ResourceLocation("minecraft", key))) newAttribute = new VanillaAttribute(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("minecraft", key)), getParentEntity());
-        else newAttribute = Attributes.createAttribute(key, getParentEntity());
+        else newAttribute = WSAttributes.createAttribute(key, getParentEntity());
 
         attributes.add(newAttribute);
         return newAttribute;

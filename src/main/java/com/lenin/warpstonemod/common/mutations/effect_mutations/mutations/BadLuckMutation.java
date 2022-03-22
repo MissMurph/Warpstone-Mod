@@ -30,12 +30,12 @@ public class BadLuckMutation extends EffectMutation {
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
-		EffectMutationInstance mut = instanceMap.get(manager.getUniqueID());
+		EffectMutationInstance mut = instanceMap.get(manager.getUniqueId());
 
 		mut.getParent()
-				.getAttribute(Attributes.LUCK)
+				.getAttribute(Attributes.LUCK.getAttributeName())
 				.applyNonPersistentModifier(new AttributeModifier(uuid, "mutation.bad_luck", -1.0D, AttributeModifier.Operation.ADDITION));
 	}
 
@@ -43,7 +43,7 @@ public class BadLuckMutation extends EffectMutation {
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
 		instanceMap.get(manager.getUniqueID()).getParent()
 				.getAttribute(Attributes.LUCK)
