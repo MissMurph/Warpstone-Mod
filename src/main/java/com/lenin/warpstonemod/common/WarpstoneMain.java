@@ -4,11 +4,13 @@ import com.lenin.warpstonemod.client.ClientProxy;
 import com.lenin.warpstonemod.common.data.loot.WarpLootModifierSerializers;
 import com.lenin.warpstonemod.common.items.WarpstoneItemGroup;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 
@@ -34,6 +36,9 @@ public class WarpstoneMain {
         WarpLootModifierSerializers.init(fmlEventBus);
 
         this.proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+
+        ForgeRegistries.ATTRIBUTES.getEntries().forEach(entry -> System.out.println("Forge: " + entry));
+        Registry.ATTRIBUTE.getEntries().forEach(entry -> System.out.println("Forge: " + entry));
 
         this.proxy.init();
         this.proxy.attachLifeCycle(fmlEventBus);

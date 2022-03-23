@@ -19,16 +19,6 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void attachListeners(IEventBus bus) {
-
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !instanceMap.containsKey(player.getUniqueID())
@@ -51,18 +41,18 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
-		manager.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 3600, 0, false, false));
+		manager.getParentEntity().addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 3600, 0, false, false));
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote) return;
+		if (manager.getParentEntity().world.isRemote) return;
 
-		manager.removePotionEffect(Effects.WATER_BREATHING);
+		manager.getParentEntity().removePotionEffect(Effects.WATER_BREATHING);
 	}
 
 	@Override

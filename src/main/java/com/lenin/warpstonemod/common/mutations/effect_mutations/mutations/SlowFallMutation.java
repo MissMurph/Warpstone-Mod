@@ -18,12 +18,6 @@ public class SlowFallMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void attachListeners(IEventBus bus) {}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (!instanceMap.containsKey(player.getUniqueID())
 				|| !instanceMap.get(player.getUniqueID()).isActive()) return;
@@ -44,17 +38,17 @@ public class SlowFallMutation extends EffectMutation implements IMutationTick {
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 3600, 0, false, false));
+		manager.getParentEntity().addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 3600, 0, false, false));
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.removePotionEffect(Effects.SLOW_FALLING);
+		manager.getParentEntity().removePotionEffect(Effects.SLOW_FALLING);
 	}
 }

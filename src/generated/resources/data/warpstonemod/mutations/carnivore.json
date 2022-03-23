@@ -2,7 +2,6 @@
   "name": "carnivore",
   "uuid": "b9de45cc-6dd2-468d-980e-3da40521b10a",
   "resource_path": "textures/gui/effect_mutations/carnivore.png",
-  "tags": [
-    "common"
-  ]
+  "tags": [],
+  "modifiers": []
 }

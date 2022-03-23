@@ -2,7 +2,6 @@
   "name": "hooves",
   "uuid": "eeb67c1e-ef30-4d9a-b4ed-5b4ea156274a",
   "resource_path": "textures/gui/effect_mutations/hooves.png",
-  "tags": [
-    "rare"
-  ]
+  "tags": [],
+  "modifiers": []
 }

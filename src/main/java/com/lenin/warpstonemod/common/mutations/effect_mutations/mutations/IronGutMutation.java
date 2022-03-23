@@ -30,11 +30,6 @@ public class IronGutMutation extends EffectMutation {
 		bus.addListener(this::onItemUseFinish);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	/**The method for this mutation is to check the consumed item for any potion Effects
 	 * matching the type {@link EffectType#HARMFUL}. By calling {@link LivingEntityUseItemEvent.Finish}
 	 * we're detecting the effects the tick they're applied, and then removing them

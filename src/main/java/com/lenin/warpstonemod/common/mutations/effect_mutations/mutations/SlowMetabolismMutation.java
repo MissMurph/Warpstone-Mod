@@ -23,11 +23,6 @@ public class SlowMetabolismMutation extends EffectMutation {
 		bus.addListener(this::onItemUseFinish);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !event.getItem().getItem().isFood()
@@ -38,11 +33,6 @@ public class SlowMetabolismMutation extends EffectMutation {
 
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
 		playerEntity.getFoodStats().addStats(-1, -2);
-	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

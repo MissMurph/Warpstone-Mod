@@ -31,8 +31,8 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 	public void clearInstance(PlayerManager manager) {
 		super.clearInstance(manager);
 
-		if (!manager.world.isRemote()) return;
-		if (instanceMap.containsKey(manager.getUniqueID())) instanceMap.remove(manager.getUniqueID());
+		if (!manager.getParentEntity().world.isRemote()) return;
+		instanceMap.remove(manager.getUniqueId());
 	}
 
 	@Override
@@ -58,18 +58,18 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 1200, 0, false, false));
+		manager.getParentEntity().addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 1200, 0, false, false));
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.removePotionEffect(Effects.NIGHT_VISION);
+		manager.getParentEntity().removePotionEffect(Effects.NIGHT_VISION);
 	}
 
 	@Override

@@ -2,7 +2,6 @@
   "name": "levitation",
   "uuid": "45c87f74-844f-410c-8de2-d9e8cf1cac2c",
   "resource_path": "textures/gui/effect_mutations/levitation.png",
-  "tags": [
-    "uncommon"
-  ]
+  "tags": [],
+  "modifiers": []
 }

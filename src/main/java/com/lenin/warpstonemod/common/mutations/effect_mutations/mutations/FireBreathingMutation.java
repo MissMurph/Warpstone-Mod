@@ -37,11 +37,6 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 	}
 
 	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)

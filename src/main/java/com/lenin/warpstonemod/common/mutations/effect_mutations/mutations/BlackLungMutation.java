@@ -13,14 +13,4 @@ public class BlackLungMutation extends EffectMutation {
                 "24d24ca3-4072-45d6-a7f0-29085b4f77fd"
         );
     }
-
-    @Override
-    public void attachListeners(IEventBus bus) {
-
-    }
-
-    @Override
-    public void attachClientListeners(IEventBus bus) {
-
-    }
 }

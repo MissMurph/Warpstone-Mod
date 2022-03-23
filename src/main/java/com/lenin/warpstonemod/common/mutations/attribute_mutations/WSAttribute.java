@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -16,22 +17,18 @@ public abstract class WSAttribute implements IAttributeSource {
     protected float modValue;
     protected LivingEntity parentEntity;
 
-    protected String name;
+    protected ResourceLocation key;
 
     protected Map<UUID, Double> resultMap = new Object2ObjectArrayMap<>();
     protected final Map<UUID, AttributeModifier> modMap = new Object2ObjectArrayMap<>();
 
-    public WSAttribute (LivingEntity _parentEntity, String _name) {
+    public WSAttribute (LivingEntity _parentEntity, ResourceLocation _key) {
         baseValue = 0;
         modValue = 0;
         parentEntity = _parentEntity;
-        name = _name;
+        key = _key;
 
         if (parentEntity != null) this.attachListeners(MinecraftForge.EVENT_BUS);
-    }
-
-    protected WSAttribute () {
-
     }
 
     protected abstract void attachListeners(IEventBus bus);
@@ -42,8 +39,8 @@ public abstract class WSAttribute implements IAttributeSource {
     }
 
     @Override
-    public String getAttributeName() {
-        return name;
+    public ResourceLocation getAttributeName() {
+        return key;
     }
 
     @Override
@@ -89,5 +86,23 @@ public abstract class WSAttribute implements IAttributeSource {
 
     public interface AttributeSupplier<T extends WSAttribute> {
         T get(LivingEntity entity);
+    }
+
+    public static class AttributeFactory<T extends WSAttribute> {
+        AttributeSupplier<T> supplier;
+        ResourceLocation key;
+
+        public AttributeFactory (AttributeSupplier<T> _supplier, ResourceLocation _key) {
+            supplier = _supplier;
+            key = _key;
+        }
+
+        public T get(LivingEntity entity) {
+            return supplier.get(entity);
+        }
+
+        public ResourceLocation getKey () {
+            return key;
+        }
     }
 }

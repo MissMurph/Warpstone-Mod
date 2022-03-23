@@ -18,17 +18,19 @@ public class UndeadMutation extends EffectMutation {
                 "undead",
 				"36588dba-9d9e-45be-b572-c0c571370054"
 		);
+
+		modifiers.put(Attributes.MAX_HEALTH.getRegistryName(), new AttributeModifier(
+				uuid,
+				mutName,
+				1f,
+				AttributeModifier.Operation.MULTIPLY_TOTAL
+		));
 	}
 
 	@Override
 	public void attachListeners(IEventBus bus) {
 		bus.addListener(this::onPotionApplicable);
 		bus.addListener(this::onHeal);
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
 	}
 
 	public void onPotionApplicable (PotionEvent.PotionApplicableEvent event) {
@@ -49,27 +51,6 @@ public class UndeadMutation extends EffectMutation {
 
 		float value = event.getAmount() * 0.75f;
 		event.setAmount(value);
-	}
-
-	@Override
-	public void applyMutation(PlayerManager manager) {
-		super.applyMutation(manager);
-
-		manager.getAttribute(Attributes.MAX_HEALTH).applyNonPersistentModifier(new AttributeModifier(
-				uuid,
-				mutName,
-				1f,
-				AttributeModifier.Operation.MULTIPLY_TOTAL
-		));
-	}
-
-	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
-
-		if (manager.world.isRemote) return;
-
-		manager.getAttribute(Attributes.MAX_HEALTH).removeModifier(uuid);
 	}
 
 	@Override

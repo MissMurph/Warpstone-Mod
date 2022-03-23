@@ -1,10 +1,10 @@
 package com.lenin.warpstonemod.common;
 
-import com.lenin.warpstonemod.common.data.tags.mutations.WarpstoneReloadListener;
+import com.lenin.warpstonemod.common.data.WarpstoneReloadListener;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.WSAttributes;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import com.lenin.warpstonemod.common.network.PacketHandler;

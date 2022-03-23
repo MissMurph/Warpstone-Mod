@@ -1,14 +1,16 @@
 package com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes;
 
+import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class AttrMeleeDamage extends WSAttribute {
     public AttrMeleeDamage(LivingEntity _parentEntity) {
-        super(_parentEntity, "melee_damage");
+        super(_parentEntity, new ResourceLocation(WarpstoneMain.MOD_ID, "melee_damage"));
     }
 
     @Override

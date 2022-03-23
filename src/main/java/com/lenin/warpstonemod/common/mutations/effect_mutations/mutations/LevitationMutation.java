@@ -41,8 +41,8 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.removePotionEffect(Effects.LEVITATION);
+		manager.getParentEntity().removePotionEffect(Effects.LEVITATION);
 	}
 }

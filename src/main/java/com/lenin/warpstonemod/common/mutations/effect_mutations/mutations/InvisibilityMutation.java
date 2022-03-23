@@ -17,16 +17,6 @@ public class InvisibilityMutation extends EffectMutation implements IMutationTic
 	}
 
 	@Override
-	public void attachListeners(IEventBus bus){
-
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !instanceMap.containsKey(player.getUniqueID())
@@ -40,18 +30,18 @@ public class InvisibilityMutation extends EffectMutation implements IMutationTic
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.setInvisible(true);
+		manager.getParentEntity().setInvisible(true);
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.setInvisible(false);
+		manager.getParentEntity().setInvisible(false);
 	}
 
 	@Override

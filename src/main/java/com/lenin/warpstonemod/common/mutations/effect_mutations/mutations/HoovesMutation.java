@@ -21,16 +21,6 @@ public class HoovesMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void attachListeners(IEventBus bus) {
-
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)

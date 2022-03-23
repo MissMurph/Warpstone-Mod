@@ -23,24 +23,27 @@ public class AlcoholicMutation extends EffectMutation {
 	public AlcoholicMutation() {
 		super(
                 "alcoholic",
-				"3fe06fe0-6a8d-403a-b4da-4ed1a9d822fb");
+				"3fe06fe0-6a8d-403a-b4da-4ed1a9d822fb"
+		);
+
+		modifiers.put(Attributes.MAX_HEALTH.getRegistryName(), new AttributeModifier(
+				uuid,
+				mutName,
+				-0.25f,
+				AttributeModifier.Operation.MULTIPLY_TOTAL
+		));
 	}
 
 	/**This mutation grants the player {@link Effects#ABSORPTION} every time
 	 * they drink any potion, but -25% {@link Attributes#MAX_HEALTH}
 	 */
 
-	private Map<UUID, Integer> valueMap = new HashMap<>();
+	private final Map<UUID, Integer> valueMap = new HashMap<>();
 
 	@Override
 	public void attachListeners(IEventBus bus) {
 		bus.addListener(this::onItemUseFinish);
 		bus.addListener(this::onPotionFinish);
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
 	}
 
 	/**The method for this becomes more complicated with the understanding that
@@ -63,7 +66,7 @@ public class AlcoholicMutation extends EffectMutation {
 	 * {@link LivingEntity#getAbsorptionAmount()}
 	 */
 
-	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
+	private void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
 		if (event.getEntityLiving().world.isRemote()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !(event.getItem().getItem() instanceof PotionItem)
@@ -83,7 +86,7 @@ public class AlcoholicMutation extends EffectMutation {
 		valueMap.put(entity.getUniqueID(), valueMap.get(entity.getUniqueID()) + (int) newValue);
 	}
 
-	public void onPotionFinish (PotionEvent.PotionExpiryEvent event) {
+	private void onPotionFinish (PotionEvent.PotionExpiryEvent event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| event.getPotionEffect().getPotion() != Effects.ABSORPTION
 				|| !containsInstance(event.getEntityLiving())
@@ -103,13 +106,6 @@ public class AlcoholicMutation extends EffectMutation {
 		if (manager.getParentEntity().world.isRemote) return;
 
 		if (!valueMap.containsKey(manager.getParentEntity().getUniqueID())) valueMap.put(manager.getParentEntity().getUniqueID(), 0);
-
-		manager.getParentEntity().getAttribute(Attributes.MAX_HEALTH).applyNonPersistentModifier(new AttributeModifier(
-				uuid,
-				mutName,
-				-0.25f,
-				AttributeModifier.Operation.MULTIPLY_TOTAL
-		));
 	}
 
 	@Override
@@ -121,8 +117,6 @@ public class AlcoholicMutation extends EffectMutation {
 		manager.getParentEntity().setAbsorptionAmount(manager.getParentEntity().getAbsorptionAmount() - valueMap.get(manager.getUniqueId()));
 		valueMap.put(manager.getUniqueId(), 0);
 		manager.getParentEntity().removePotionEffect(Effects.ABSORPTION);
-
-		manager.getParentEntity().getAttribute(Attributes.MAX_HEALTH).removeModifier(uuid);
 	}
 
 	@Override

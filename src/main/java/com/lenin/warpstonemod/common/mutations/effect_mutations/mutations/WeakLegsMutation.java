@@ -24,11 +24,6 @@ public class WeakLegsMutation extends EffectMutation {
 		bus.addListener(this::onDamage);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	public void onDamage(LivingDamageEvent event){
 		LivingEntity entity = event.getEntityLiving();
 		if (entity.world.isRemote() || !(entity instanceof PlayerEntity) || !(instanceMap.containsKey(entity.getUniqueID()))) return;
@@ -39,11 +34,6 @@ public class WeakLegsMutation extends EffectMutation {
 
 			if (event.getSource() == DamageSource.FALL) event.setAmount(damage);
 		}
-	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

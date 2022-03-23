@@ -2,7 +2,6 @@
   "name": "scarring",
   "uuid": "50cc914e-dbfb-4d26-8be3-03de8151932a",
   "resource_path": "textures/gui/effect_mutations/scarring.png",
-  "tags": [
-    "rare"
-  ]
+  "tags": [],
+  "modifiers": []
 }

@@ -2,7 +2,25 @@
   "name": "scales",
   "uuid": "265aebfe-d019-4fed-b1a7-a3311ffc7562",
   "resource_path": "textures/gui/effect_mutations/scales.png",
-  "tags": [
-    "uncommon"
+  "tags": [],
+  "modifiers": [
+    {
+      "target": "warpstonemod:healing",
+      "name": "scales",
+      "value": -0.25,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "target": "minecraft:generic.armor_toughness",
+      "name": "scales",
+      "value": 0.5,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "target": "minecraft:generic.armor",
+      "name": "scales",
+      "value": 0.5,
+      "operation": "MULTIPLY_TOTAL"
+    }
   ]
 }

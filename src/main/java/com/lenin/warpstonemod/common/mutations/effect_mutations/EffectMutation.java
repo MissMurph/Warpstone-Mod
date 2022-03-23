@@ -33,26 +33,19 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	protected UUID uuid;
 	protected final String translateKeyConstant = "mutation.effect.";
 
-	protected List<MutationTag> tags;
+	protected List<MutationTag> tags = new ArrayList<>();
 
-	protected Map<String, AttributeModifier> modifiers = new HashMap<>();
+	//Key is target attribute, this way we can have multiple modifiers on an attribute
+	protected Map<ResourceLocation, AttributeModifier> modifiers = new HashMap<>();
 
 	protected ResourceLocation textureResource;
-
-	/**
-	 * rarity by default determines required Corruption level required <br>
-	 * COMMON = 1 <br>
-	 * UNCOMMON = 2 <br>
-	 * RARE = 3 <br>
-	 * EPIC = 4 <br>
-	**/
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
 	public EffectMutation(String _mutName, String _uuid, MutationTag... _tags) {
 		uuid = UUID.fromString(_uuid);
 		mutName = _mutName;
-		tags = Arrays.asList(_tags);
+		//tags = Arrays.asList(_tags);
 
 		textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + _mutName + ".png");
 
@@ -62,10 +55,10 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		attachClientListeners(MinecraftForge.EVENT_BUS);
 	}
 
-	public abstract void attachListeners(IEventBus bus);
+	public void attachListeners(IEventBus bus) {}
 
 	@OnlyIn(Dist.CLIENT)
-	public abstract void attachClientListeners(IEventBus bus);
+	public void attachClientListeners(IEventBus bus) {}
 
 	public void applyMutation (PlayerManager manager){
 		if (!containsInstance(manager.getUniqueId())) constructInstance(manager);
@@ -73,7 +66,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		EffectMutationInstance mut = instanceMap.get(manager.getUniqueId());
 		mut.setActive(true);
 
-		for (String target : modifiers.keySet()) {
+		for (ResourceLocation target : modifiers.keySet()) {
 			manager.getAttribute(target).applyModifier(modifiers.get(target));
 		}
 	}
@@ -84,7 +77,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 		instanceMap.get(manager.getUniqueId()).setActive(false);
 
-		for (String target : modifiers.keySet()) {
+		for (ResourceLocation target : modifiers.keySet()) {
 			manager.getAttribute(target).removeModifier(modifiers.get(target).getID());
 		}
 	}
@@ -123,6 +116,14 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		return list;
 	}
 
+	/**
+	 * rarity by default determines required Corruption level required <br>
+	 * COMMON = 1 <br>
+	 * UNCOMMON = 2 <br>
+	 * RARE = 3 <br>
+	 * EPIC = 4 <br>
+	 **/
+
 	public boolean isLegalMutation(PlayerManager manager){
 		MutationTag tag = getTagOfType(MutationTag.Type.RARITY);
 
@@ -143,11 +144,11 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	}
 
 	public JsonObject serialize () {
-		JsonObject json = new JsonObject();
+		JsonObject out = new JsonObject();
 
-		json.addProperty("name", mutName);
-		json.addProperty("uuid", String.valueOf(uuid));
-		json.addProperty("resource_path", getTexture().getPath());
+		out.addProperty("name", mutName);
+		out.addProperty("uuid", String.valueOf(uuid));
+		out.addProperty("resource_path", getTexture().getPath());
 
 		JsonArray jsonTags = new JsonArray();
 
@@ -155,9 +156,26 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 			jsonTags.add(tag.getResource().getPath());
 		}
 
-		json.add("tags", jsonTags);
+		out.add("tags", jsonTags);
 
-		return json;
+		JsonArray jsonMods = new JsonArray();
+
+		for (ResourceLocation key : modifiers.keySet()) {
+			JsonObject modJSON = new JsonObject();
+			AttributeModifier modifier = modifiers.get(key);
+
+			modJSON.addProperty("target", key.toString());
+			modJSON.addProperty("name", modifier.getName());
+			if (modifier.getID() != uuid) modJSON.addProperty("UUID", modifier.getID().toString());
+			modJSON.addProperty("value", modifier.getAmount());
+			modJSON.addProperty("operation", modifier.getOperation().toString());
+
+			jsonMods.add(modJSON);
+		}
+
+		out.add("modifiers", jsonMods);
+
+		return out;
 	}
 
 	public void deserialize (JsonObject json) {

@@ -24,16 +24,11 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 		);
 	}
 
-	private Map<UUID, Integer> bonusMap = new HashMap<>();
+	private final Map<UUID, Integer> bonusMap = new HashMap<>();
 
 	@Override
 	public void attachListeners(IEventBus bus) {
 		bus.addListener(this::onLivingDamage);
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
 	}
 
 	@Override
@@ -78,17 +73,17 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		bonusMap.put(manager.getUniqueID(), 0);
+		bonusMap.put(manager.getUniqueId(), 0);
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		bonusMap.remove(manager.getUniqueID());
+		bonusMap.remove(manager.getUniqueId());
 	}
 }

@@ -39,18 +39,18 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.setGlowing(true);
+		manager.getParentEntity().setGlowing(true);
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.setGlowing(false);
+		manager.getParentEntity().setGlowing(false);
 	}
 
 	@Override

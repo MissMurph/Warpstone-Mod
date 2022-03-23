@@ -36,11 +36,6 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 	}
 
 	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
@@ -97,9 +92,9 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		if (manager.isPotionActive(WarpEffects.SHARP_SENSES)) manager.removePotionEffect(WarpEffects.SHARP_SENSES);
-		if (manager.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) manager.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
+		if (manager.getParentEntity().isPotionActive(WarpEffects.SHARP_SENSES)) manager.getParentEntity().removePotionEffect(WarpEffects.SHARP_SENSES);
+		if (manager.getParentEntity().getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) manager.getParentEntity().getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
 	}
 }

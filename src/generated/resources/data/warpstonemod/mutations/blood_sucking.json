@@ -2,7 +2,19 @@
   "name": "blood_sucking",
   "uuid": "0c3e6ecf-34ef-4ad6-8440-d06573f15fd3",
   "resource_path": "textures/gui/effect_mutations/blood_sucking.png",
-  "tags": [
-    "rare"
+  "tags": [],
+  "modifiers": [
+    {
+      "target": "minecraft:generic.max_health",
+      "name": "blood_sucking",
+      "value": -0.25,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "target": "warpstonemod:healing",
+      "name": "blood_sucking",
+      "value": -0.25,
+      "operation": "MULTIPLY_TOTAL"
+    }
   ]
 }

@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.data.tags.mutations;
+package com.lenin.warpstonemod.common.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

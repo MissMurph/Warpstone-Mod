@@ -2,7 +2,13 @@
   "name": "fins",
   "uuid": "26d0153a-08da-4c90-9287-44f1e6920e7d",
   "resource_path": "textures/gui/effect_mutations/fins.png",
-  "tags": [
-    "common"
+  "tags": [],
+  "modifiers": [
+    {
+      "target": "forge:swim_speed",
+      "name": "fins",
+      "value": 1.0,
+      "operation": "MULTIPLY_TOTAL"
+    }
   ]
 }

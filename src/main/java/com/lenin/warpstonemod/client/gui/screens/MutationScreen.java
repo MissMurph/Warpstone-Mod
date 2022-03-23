@@ -73,7 +73,6 @@ public class MutationScreen extends WSScreen {
 
 		for (int i = 0; i < muts.size(); i++) {
 			int level = muts.get(i).getMutationLevel();
-			System.out.println(level);
 
 			int levelMultiple = level < 0 ? 5 : 10;
 

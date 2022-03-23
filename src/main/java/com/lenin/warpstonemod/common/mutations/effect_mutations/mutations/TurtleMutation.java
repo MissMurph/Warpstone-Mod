@@ -31,11 +31,6 @@ public class TurtleMutation extends EffectMutation {
 		bus.addListener(this::onLivingDamage);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	public void onLivingAttack (LivingAttackEvent event) {
 		//This event is fired BEFORE damage is applied so we can't change any modifiers to damage for the attacker
 

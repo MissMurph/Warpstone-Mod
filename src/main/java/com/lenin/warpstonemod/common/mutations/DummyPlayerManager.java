@@ -12,7 +12,7 @@ import java.util.List;
 public class DummyPlayerManager extends PlayerManager {
 
 	public DummyPlayerManager() {
-		super(null);
+		super();
 	}
 
 	@Override

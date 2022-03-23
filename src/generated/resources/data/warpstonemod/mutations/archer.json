@@ -2,7 +2,19 @@
   "name": "archer",
   "uuid": "d35e4fe7-73bc-4fb4-97fe-b47a0e6cf62c",
   "resource_path": "textures/gui/effect_mutations/archer.png",
-  "tags": [
-    "uncommon"
+  "tags": [],
+  "modifiers": [
+    {
+      "target": "warpstonemod:melee_damage",
+      "name": "archer",
+      "value": -0.25,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "target": "warpstonemod:ranged_damage",
+      "name": "archer",
+      "value": 0.25,
+      "operation": "MULTIPLY_TOTAL"
+    }
   ]
 }

@@ -16,7 +16,7 @@ public class AttributeMutation{
 	public AttributeMutation(IAttributeSource _attributeSource, PlayerManager _manager, UUID _uuid) {
 		uuid = _uuid;
 		this.attributeSource = _attributeSource;
-		name = _attributeSource.getAttributeName();
+		name = _attributeSource.getAttributeName().getPath();
 		mutationLevel = 0;
 		manager = _manager;
 	}
@@ -61,7 +61,7 @@ public class AttributeMutation{
 	}
 
 	public String getMutationType() {
-		return this.attributeSource.getAttributeName();
+		return name;
 	}
 
 	public int getMutationLevel (){

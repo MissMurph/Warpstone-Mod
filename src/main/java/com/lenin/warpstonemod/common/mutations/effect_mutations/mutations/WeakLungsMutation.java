@@ -24,16 +24,6 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 		);
 	}
 
-	@Override
-	public void attachListeners(IEventBus bus) {
-
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	/**This code is replicating the behaviours of {@link LivingEntity#baseTick()} <br>
 	 * We perform the same check for if the player is under water then every 5 ticks
 	 * take away 1 unit of breath, making effectively +20% air consumption
@@ -58,21 +48,6 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 				reset(counterMap, player.getUniqueID());
 			}
 		}
-	}
-
-	@Override
-	public void applyMutation(PlayerManager manager) {
-		super.applyMutation(manager);
-	}
-
-	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
-	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

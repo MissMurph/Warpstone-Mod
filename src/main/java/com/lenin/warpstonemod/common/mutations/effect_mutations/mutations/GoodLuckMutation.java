@@ -14,37 +14,13 @@ public class GoodLuckMutation extends EffectMutation {
                 "good_luck",
 				"a2361e8f-1be0-478f-9742-a873400e9b6d"
 		);
-	}
 
-	@Override
-	public void attachListeners(IEventBus bus) { }
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
-	public void applyMutation(PlayerManager manager) {
-		super.applyMutation(manager);
-
-		if (manager.world.isRemote) return;
-
-		EffectMutationInstance mut = instanceMap.get(manager.getUniqueID());
-
-		mut.getParent().getAttribute(Attributes.LUCK)
-				.applyNonPersistentModifier(new AttributeModifier(uuid, "mutation.good_luck", 1.0D, AttributeModifier.Operation.ADDITION));
-	}
-
-	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
-
-		if (manager.world.isRemote) return;
-
-		instanceMap.get(manager.getUniqueID()).getParent()
-				.getAttribute(Attributes.LUCK)
-				.removeModifier(uuid);
+		modifiers.put(Attributes.LUCK.getRegistryName(), new AttributeModifier(
+				uuid,
+				mutName,
+				1.0D,
+				AttributeModifier.Operation.ADDITION
+		));
 	}
 
 	@Override

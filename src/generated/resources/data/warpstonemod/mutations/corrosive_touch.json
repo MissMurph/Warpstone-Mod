@@ -2,7 +2,6 @@
   "name": "corrosive_touch",
   "uuid": "8ee3692f-f855-43e3-8a9f-dffb37381995",
   "resource_path": "textures/gui/effect_mutations/corrosive_touch.png",
-  "tags": [
-    "rare"
-  ]
+  "tags": [],
+  "modifiers": []
 }

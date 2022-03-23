@@ -28,8 +28,8 @@ public class VanillaAttribute implements IAttributeSource{
 	}
 
 	@Override
-	public String getAttributeName() {
-		return attribute.getAttribute().getAttributeName();
+	public ResourceLocation getAttributeName() {
+		return attribute.getAttribute().getRegistryName();
 	}
 
 	@Override

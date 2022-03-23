@@ -52,11 +52,6 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 	}
 
 	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)

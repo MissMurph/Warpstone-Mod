@@ -31,11 +31,6 @@ public class WeakLiverMutation extends EffectMutation {
 		bus.addListener(this::onItemUseFinish);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event){
 		if (event.getEntityLiving().world.isRemote()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
@@ -53,9 +48,9 @@ public class WeakLiverMutation extends EffectMutation {
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.removePotionEffect(Effects.NAUSEA);
+		manager.getParentEntity().removePotionEffect(Effects.NAUSEA);
 	}
 
 	@Override

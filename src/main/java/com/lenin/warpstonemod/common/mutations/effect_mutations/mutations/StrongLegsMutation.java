@@ -24,11 +24,6 @@ public class StrongLegsMutation extends EffectMutation {
 		bus.addListener(this::onLivingJump);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	/**The method here is to fire a knockback whenever the player jumps while sprinting,
 	 * this creates a big leap forward, the vectors have to be reveresed otherwise the
 	 * player will leap backwards

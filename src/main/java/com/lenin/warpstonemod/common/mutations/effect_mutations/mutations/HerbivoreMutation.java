@@ -67,11 +67,6 @@ public class HerbivoreMutation extends EffectMutation {
         bus.addListener(this::onItemUseFinish);
     }
 
-    @Override
-    public void attachClientListeners(IEventBus bus) {
-
-    }
-
     public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
         if (event.getEntityLiving().world.isRemote()
                 || !(event.getEntityLiving() instanceof PlayerEntity)

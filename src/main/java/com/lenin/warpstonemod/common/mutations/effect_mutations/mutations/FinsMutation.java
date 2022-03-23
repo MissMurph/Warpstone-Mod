@@ -12,39 +12,13 @@ public class FinsMutation extends EffectMutation {
                 "fins",
 				"26d0153a-08da-4c90-9287-44f1e6920e7d"
 		);
-	}
 
-	@Override
-	public void attachListeners(IEventBus bus) {
-
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
-	public void applyMutation(PlayerManager manager) {
-		super.applyMutation(manager);
-
-		if (manager.world.isRemote) return;
-
-		manager.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get()).applyNonPersistentModifier(new AttributeModifier(
+		modifiers.put(net.minecraftforge.common.ForgeMod.SWIM_SPEED.getId(), new AttributeModifier(
 				uuid,
 				mutName,
 				1f,
 				AttributeModifier.Operation.MULTIPLY_TOTAL
 		));
-	}
-
-	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
-
-		if (manager.world.isRemote) return;
-
-		manager.getAttribute(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get()).removeModifier(uuid);
 	}
 
 	@Override

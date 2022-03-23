@@ -43,11 +43,6 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 	}
 
 	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
@@ -87,11 +82,6 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 				6f,
 				Explosion.Mode.BREAK
 		);
-	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
 	}
 
 	@Override

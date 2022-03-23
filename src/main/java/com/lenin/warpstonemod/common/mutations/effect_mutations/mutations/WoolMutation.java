@@ -31,19 +31,14 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     }
 
     //RemoveList is so we dont cancel our own remove calls for the effect
-    private List<UUID> removeList = new LinkedList<>();
-    private Map<UUID, Integer> bonusMap = new HashMap<>();
+    private final List<UUID> removeList = new LinkedList<>();
+    private final Map<UUID, Integer> bonusMap = new HashMap<>();
 
     @Override
     public void attachListeners(IEventBus bus) {
         bus.addListener(this::onPotionRemove);
         bus.addListener(this::onPotionExpiry);
         bus.addListener(this::onItemRightClick);
-    }
-
-    @Override
-    public void attachClientListeners(IEventBus bus) {
-
     }
 
     @Override
@@ -124,9 +119,9 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     public void applyMutation(PlayerManager manager) {
         super.applyMutation(manager);
 
-        if (manager.world.isRemote()) return;
+        if (manager.getParentEntity().world.isRemote()) return;
 
-        manager.addPotionEffect(new EffectInstance(
+        manager.getParentEntity().addPotionEffect(new EffectInstance(
                 WarpEffects.WOOL,
                 1200,
                 0,
@@ -139,11 +134,11 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     public void deactivateMutation(PlayerManager manager) {
         super.deactivateMutation(manager);
 
-        if (manager.world.isRemote() && !manager.isPotionActive(WarpEffects.WOOL)) return;
+        if (manager.getParentEntity().world.isRemote() && !manager.getParentEntity().isPotionActive(WarpEffects.WOOL)) return;
 
-        removeList.add(manager.getUniqueID());
+        removeList.add(manager.getUniqueId());
 
-        manager.removePotionEffect(WarpEffects.WOOL);
-        if (bonusMap.containsKey(manager.getUniqueID())) bonusMap.remove(manager.getUniqueID());
+        manager.getParentEntity().removePotionEffect(WarpEffects.WOOL);
+        bonusMap.remove(manager.getUniqueId());
     }
 }

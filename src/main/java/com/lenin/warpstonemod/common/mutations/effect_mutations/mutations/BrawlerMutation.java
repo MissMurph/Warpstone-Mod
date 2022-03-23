@@ -1,8 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -13,6 +15,20 @@ public class BrawlerMutation extends EffectMutation {
                 "brawler",
 				"af1bc073-2f9f-471e-a165-9681cfe4700c"
 		);
+
+		modifiers.put(WSAttributes.RANGED_DAMAGE.getKey(), new AttributeModifier(
+				uuid,
+				mutName,
+				-0.25f,
+				AttributeModifier.Operation.MULTIPLY_TOTAL
+		));
+
+		modifiers.put(WSAttributes.MELEE_DAMAGE.getKey(), new AttributeModifier(
+				uuid,
+				mutName,
+				0.25f,
+				AttributeModifier.Operation.MULTIPLY_TOTAL
+		));
 	}
 
 	/**
@@ -22,7 +38,7 @@ public class BrawlerMutation extends EffectMutation {
 
 	@Override
 	public void attachListeners(IEventBus bus) {
-		bus.addListener(this::onLivingHurt);
+		//bus.addListener(this::onLivingHurt);
 	}
 
 	@Override

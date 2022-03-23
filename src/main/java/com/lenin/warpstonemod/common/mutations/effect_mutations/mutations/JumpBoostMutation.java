@@ -48,18 +48,18 @@ public class JumpBoostMutation extends EffectMutation implements IMutationTick {
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 3600, 0, false, false));
+		manager.getParentEntity().addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, 3600, 0, false, false));
 	}
 
 	@Override
 	public void deactivateMutation(PlayerManager manager) {
 		super.deactivateMutation(manager);
 
-		if (manager.world.isRemote()) return;
+		if (manager.getParentEntity().world.isRemote()) return;
 
-		manager.removePotionEffect(Effects.JUMP_BOOST);
+		manager.getParentEntity().removePotionEffect(Effects.JUMP_BOOST);
 	}
 
 	@Override

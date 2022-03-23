@@ -2,7 +2,6 @@
   "name": "frail_body",
   "uuid": "b09d14ec-beda-4ea9-bf80-2055535c1b99",
   "resource_path": "textures/gui/effect_mutations/frail_body.png",
-  "tags": [
-    "negative"
-  ]
+  "tags": [],
+  "modifiers": []
 }

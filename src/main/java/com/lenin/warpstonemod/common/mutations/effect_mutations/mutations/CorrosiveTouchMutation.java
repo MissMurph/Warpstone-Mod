@@ -23,11 +23,6 @@ public class CorrosiveTouchMutation extends EffectMutation {
 		bus.addListener(this::onLivingDamage);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	public void onLivingDamage (LivingDamageEvent event) {
 		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)
 				|| !instanceMap.containsKey(event.getSource().getTrueSource().getUniqueID())

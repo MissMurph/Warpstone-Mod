@@ -2,7 +2,6 @@
   "name": "fire_breathing",
   "uuid": "9970d2cf-e6ba-4025-acf6-fc23ca0c3668",
   "resource_path": "textures/gui/effect_mutations/fire_breathing.png",
-  "tags": [
-    "rare"
-  ]
+  "tags": [],
+  "modifiers": []
 }

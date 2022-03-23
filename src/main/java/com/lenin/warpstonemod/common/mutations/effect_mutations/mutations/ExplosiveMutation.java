@@ -62,11 +62,6 @@ public class ExplosiveMutation extends EffectMutation {
 	}
 
 	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
-	}
-
-	@Override
 	public boolean isLegalMutation(PlayerManager manager) {
 		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FIRE_BREATHING);
 	}

@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -53,16 +54,6 @@ public class FurMutation extends CounterEffectMutation implements IMutationTick 
     ));
 
     @Override
-    public void attachListeners(IEventBus bus) {
-
-    }
-
-    @Override
-    public void attachClientListeners(IEventBus bus) {
-
-    }
-
-    @Override
     public void mutationTick(PlayerEntity player, LogicalSide side) {
         if (side == LogicalSide.CLIENT
                 || !containsInstance(player)
@@ -89,7 +80,6 @@ public class FurMutation extends CounterEffectMutation implements IMutationTick 
 
     @Override
     public boolean isLegalMutation(PlayerManager manager) {
-        //return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.COLD_BLOOD);
-        return false;
+        return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.COLD_BLOOD);
     }
 }

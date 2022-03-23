@@ -2,7 +2,6 @@
   "name": "slow_metabolism",
   "uuid": "4e0ded20-d669-46e2-98c7-c70d023f4fc6",
   "resource_path": "textures/gui/effect_mutations/slow_metabolism.png",
-  "tags": [
-    "negative"
-  ]
+  "tags": [],
+  "modifiers": []
 }

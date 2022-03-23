@@ -23,11 +23,6 @@ public class StrengthMutation extends EffectMutation {
 		bus.addListener(this::onKnockBack);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	/**This code is ripped from {@link LivingEntity#attackEntityFrom(DamageSource, float)} lines 1097 to 1105 <br>
 	 *
 	 */

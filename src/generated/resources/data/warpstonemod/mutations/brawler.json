@@ -2,7 +2,19 @@
   "name": "brawler",
   "uuid": "af1bc073-2f9f-471e-a165-9681cfe4700c",
   "resource_path": "textures/gui/effect_mutations/brawler.png",
-  "tags": [
-    "uncommon"
+  "tags": [],
+  "modifiers": [
+    {
+      "target": "warpstonemod:melee_damage",
+      "name": "brawler",
+      "value": 0.25,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "target": "warpstonemod:ranged_damage",
+      "name": "brawler",
+      "value": -0.25,
+      "operation": "MULTIPLY_TOTAL"
+    }
   ]
 }

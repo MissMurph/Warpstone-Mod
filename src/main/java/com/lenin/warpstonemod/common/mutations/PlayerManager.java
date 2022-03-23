@@ -5,7 +5,7 @@ import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.*;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttributeMutationUUIDs;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.WSAttributes;
+import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
@@ -16,6 +16,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -38,27 +39,26 @@ public class PlayerManager {
 
     protected CompoundNBT mutData;
 
-    protected UUID parentUUID;
-
-    protected int instability;
-    protected int corruption;
+    protected int instability = 0;
+    protected int corruption = 0;
 
     public PlayerManager(LivingEntity _parentEntity){
         parentEntity = _parentEntity;
-        instability = 0;
-        corruption = 0;
-        parentUUID = parentEntity.getUniqueID();
 
         attributes.add(new VanillaAttribute(Attributes.MAX_HEALTH, getParentEntity()));
 
-        attributeMutations.add(new AttributeMutation(getAttribute("generic.max_health"), this, AttributeMutationUUIDs.MAX_HEALTH_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute("generic.attack_damage"), this, AttributeMutationUUIDs.ATTACK_DAMAGE_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute("generic.movement_speed"), this, AttributeMutationUUIDs.SPEED_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute("generic.armor"), this, AttributeMutationUUIDs.AMOUR_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute("generic.armor_toughness"), this, AttributeMutationUUIDs.ARMOUR_TOUGHNESS_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute("harvest_speed"), this, AttributeMutationUUIDs.MINING_SPEED_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.max_health")), this, AttributeMutationUUIDs.MAX_HEALTH_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.attack_damage")), this, AttributeMutationUUIDs.ATTACK_DAMAGE_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.movement_speed")), this, AttributeMutationUUIDs.SPEED_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.armor")), this, AttributeMutationUUIDs.AMOUR_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.armor_toughness")), this, AttributeMutationUUIDs.ARMOUR_TOUGHNESS_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation(WarpstoneMain.MOD_ID, "harvest_speed")), this, AttributeMutationUUIDs.MINING_SPEED_UUID));
 
         mutData = serialize();
+    }
+
+    protected PlayerManager () {
+        parentEntity = null;
     }
 
     public void mutate(IWarpstoneConsumable item){
@@ -316,17 +316,18 @@ public class PlayerManager {
     }
 
     public UUID getUniqueId () {
-        return parentUUID;
+        return getParentEntity().getUniqueID();
     }
 
-    public IAttributeSource getAttribute (String key) {
+    public IAttributeSource getAttribute (ResourceLocation key) {
         for (IAttributeSource attribute : attributes) {
             if (attribute.getAttributeName().equals(key)) return attribute;
         }
 
         IAttributeSource newAttribute;
 
-        if (ForgeRegistries.ATTRIBUTES.containsKey(new ResourceLocation("minecraft", key))) newAttribute = new VanillaAttribute(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("minecraft", key)), getParentEntity());
+        if (ForgeRegistries.ATTRIBUTES.containsKey(key)) newAttribute = new VanillaAttribute(ForgeRegistries.ATTRIBUTES.getValue(key), getParentEntity());
+        //else if (Registry.ATTRIBUTE.containsKey(key)) newAttribute = new VanillaAttribute(Registry.ATTRIBUTE.getOrDefault(key), getParentEntity());
         else newAttribute = WSAttributes.createAttribute(key, getParentEntity());
 
         attributes.add(newAttribute);

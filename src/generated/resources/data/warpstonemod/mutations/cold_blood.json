@@ -2,7 +2,6 @@
   "name": "cold_blood",
   "uuid": "ecf187d9-7a7d-4732-9a20-f44bfe64a615",
   "resource_path": "textures/gui/effect_mutations/cold_blood.png",
-  "tags": [
-    "uncommon"
-  ]
+  "tags": [],
+  "modifiers": []
 }
