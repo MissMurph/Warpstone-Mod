@@ -11,21 +11,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MutationTag {
-    private ResourceLocation resourceLocation;
-    private String key;
+    private final ResourceLocation resourceLocation;
 
-    public final List<TextFormatting> formatting;
+    private final List<TextFormatting> formatting;
 
     private MutationTag.Type type;
 
     private int weight;
 
     public MutationTag (JsonObject json) {
-        key = json.get("name").getAsString();
-        resourceLocation = new ResourceLocation(WarpstoneMain.MOD_ID, key);
+        String key = json.get("key").getAsString();
+        resourceLocation = new ResourceLocation(key);
         weight = json.get("weight").getAsInt();
 
-        if (json.get("type") != null) type = Type.valueOf(json.get("type").getAsString());
+        if (json.has("type")) type = Type.valueOf(json.get("type").getAsString());
 
         List<TextFormatting> _formatting = new ArrayList<>();
 
@@ -56,7 +55,7 @@ public class MutationTag {
         return this;
     }
 
-    public JsonObject serialize () {
+    /*public JsonObject serialize () {
         JsonObject json = new JsonObject();
         json.addProperty("name", key);
         if (type != null) json.addProperty("type", type.toString());
@@ -71,7 +70,7 @@ public class MutationTag {
         json.add("formatting", array);
 
         return json;
-    }
+    }*/
 
     public void deserialize (JsonObject json) {
         if (json.has("type")) this.type = Type.valueOf(json.get("type").getAsString());

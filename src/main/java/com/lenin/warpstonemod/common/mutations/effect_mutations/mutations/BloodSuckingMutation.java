@@ -27,7 +27,7 @@ public class BloodSuckingMutation extends EffectMutation {
 		modifiers.put(WSAttributes.HEALING.getKey(), new AttributeModifier(
 				uuid,
 				mutName,
-				-0.25f,
+				0.25f,
 				AttributeModifier.Operation.MULTIPLY_TOTAL
 		));
 	}

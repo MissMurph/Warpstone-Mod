@@ -1,13 +1,19 @@
 {
-  "name": "undead",
+  "key": "warpstonemod:undead",
   "uuid": "36588dba-9d9e-45be-b572-c0c571370054",
   "resource_path": "textures/gui/effect_mutations/undead.png",
-  "tags": [],
+  "tags": [
+    "warpstonemod:rare"
+  ],
   "modifiers": [
     {
       "target": "minecraft:generic.max_health",
-      "name": "undead",
       "value": 1.0,
+      "operation": "MULTIPLY_TOTAL"
+    },
+    {
+      "target": "warpstonemod:healing",
+      "value": -0.25,
       "operation": "MULTIPLY_TOTAL"
     }
   ]

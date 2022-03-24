@@ -1,7 +1,9 @@
 {
-  "name": "weak_legs",
+  "key": "warpstonemod:weak_legs",
   "uuid": "d198bf46-f9aa-4950-b0de-6f80d6396853",
   "resource_path": "textures/gui/effect_mutations/weak_legs.png",
-  "tags": [],
+  "tags": [
+    "warpstonemod:negative"
+  ],
   "modifiers": []
 }

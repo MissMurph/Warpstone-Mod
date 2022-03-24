@@ -1,12 +1,13 @@
 {
-  "name": "good_luck",
+  "key": "warpstonemod:good_luck",
   "uuid": "a2361e8f-1be0-478f-9742-a873400e9b6d",
   "resource_path": "textures/gui/effect_mutations/good_luck.png",
-  "tags": [],
+  "tags": [
+    "warpstonemod:common"
+  ],
   "modifiers": [
     {
       "target": "minecraft:generic.luck",
-      "name": "good_luck",
       "value": 1.0,
       "operation": "ADDITION"
     }

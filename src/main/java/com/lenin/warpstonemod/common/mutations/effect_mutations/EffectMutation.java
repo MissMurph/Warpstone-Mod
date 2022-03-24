@@ -42,7 +42,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
-	public EffectMutation(String _mutName, String _uuid, MutationTag... _tags) {
+	public EffectMutation(String _mutName, String _uuid) {
 		uuid = UUID.fromString(_uuid);
 		mutName = _mutName;
 		//tags = Arrays.asList(_tags);
@@ -97,8 +97,8 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		TranslationTextComponent text = new TranslationTextComponent(translateKeyConstant + mutName);
 
 		for (MutationTag tag : tags) {
-			if (tag.formatting != null) {
-				tag.formatting.forEach(text::mergeStyle);
+			if (tag.getFormatting() != null) {
+				tag.getFormatting().forEach(text::mergeStyle);
 			}
 		}
 
@@ -153,7 +153,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		JsonArray jsonTags = new JsonArray();
 
 		for (MutationTag tag : tags) {
-			jsonTags.add(tag.getResource().getPath());
+			jsonTags.add(tag.getResource().toString());
 		}
 
 		out.add("tags", jsonTags);
@@ -191,7 +191,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		json.getAsJsonArray("tags").forEach(jsonElement -> newTags.add(jsonElement.getAsString()));
 
 		for (String key : newTags) {
-			MutationTag tag = MutationTags.getTag(key);
+			MutationTag tag = MutationTags.getTag(new ResourceLocation(key));
 			if (tag != null && !tags.contains(tag)) tags.add(tag);
 		}
 	}

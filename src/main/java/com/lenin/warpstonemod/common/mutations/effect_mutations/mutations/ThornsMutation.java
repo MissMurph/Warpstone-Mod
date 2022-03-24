@@ -30,11 +30,6 @@ public class ThornsMutation extends EffectMutation {
 		bus.addListener(this::onLivingDamage);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	public void onLivingDamage (LivingDamageEvent event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| event.getSource().getTrueSource() == null

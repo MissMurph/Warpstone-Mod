@@ -30,7 +30,6 @@ public class UndeadMutation extends EffectMutation {
 	@Override
 	public void attachListeners(IEventBus bus) {
 		bus.addListener(this::onPotionApplicable);
-		bus.addListener(this::onHeal);
 	}
 
 	public void onPotionApplicable (PotionEvent.PotionApplicableEvent event) {
@@ -41,16 +40,6 @@ public class UndeadMutation extends EffectMutation {
 		) return;
 
 		event.setResult(Event.Result.DENY);
-	}
-
-	public void onHeal (LivingHealEvent event) {
-		if (!(event.getEntityLiving() instanceof PlayerEntity)
-				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
-		) return;
-
-		float value = event.getAmount() * 0.75f;
-		event.setAmount(value);
 	}
 
 	@Override

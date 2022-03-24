@@ -1,7 +1,9 @@
 {
-  "name": "jump_boost",
+  "key": "warpstonemod:jump_boost",
   "uuid": "1020d46e-68db-45f4-9721-b14608ade167",
   "resource_path": "textures/gui/effect_mutations/jump_boost.png",
-  "tags": [],
+  "tags": [
+    "warpstonemod:uncommon"
+  ],
   "modifiers": []
 }

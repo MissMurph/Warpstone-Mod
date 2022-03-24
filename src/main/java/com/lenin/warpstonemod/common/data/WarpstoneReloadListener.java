@@ -29,7 +29,8 @@ public class WarpstoneReloadListener extends JsonReloadListener {
                 continue;
             }
 
-            Registration.EFFECT_MUTATIONS.getValue(new ResourceLocation(WarpstoneMain.MOD_ID, entry.getKey().getPath())).deserialize(entry.getValue().getAsJsonObject());
+            System.out.println(entry.getKey());
+            Registration.EFFECT_MUTATIONS.getValue(entry.getKey()).deserialize(entry.getValue().getAsJsonObject());
         }
     }
 }

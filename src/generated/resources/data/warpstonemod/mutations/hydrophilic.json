@@ -1,7 +1,9 @@
 {
-  "name": "hydrophilic",
+  "key": "warpstonemod:hydrophilic",
   "uuid": "17782c2e-2438-4c81-b05b-507cb3c576b0",
   "resource_path": "textures/gui/effect_mutations/hydrophilic.png",
-  "tags": [],
+  "tags": [
+    "warpstonemod:uncommon"
+  ],
   "modifiers": []
 }

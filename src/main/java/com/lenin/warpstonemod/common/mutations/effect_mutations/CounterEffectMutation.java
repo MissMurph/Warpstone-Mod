@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CounterEffectMutation extends EffectMutation {
-    public CounterEffectMutation(String _mutName, String _uuid, int _interval, MutationTag... _tags) {
-        super(_mutName, _uuid, _tags);
+    public CounterEffectMutation(String _mutName, String _uuid, int _interval) {
+        super(_mutName, _uuid);
         INTERVAL = _interval;
     }
 

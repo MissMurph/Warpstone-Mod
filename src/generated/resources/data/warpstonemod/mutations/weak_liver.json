@@ -1,7 +1,9 @@
 {
-  "name": "weak_liver",
+  "key": "warpstonemod:weak_liver",
   "uuid": "76635d17-d433-4464-bf8e-dc1a60d55229",
   "resource_path": "textures/gui/effect_mutations/weak_liver.png",
-  "tags": [],
+  "tags": [
+    "warpstonemod:negative"
+  ],
   "modifiers": []
 }
