@@ -145,7 +145,7 @@ public class PlayerManager {
 
         for (int i = 0; i < effectMutations.size(); i++) {
             CompoundNBT mut = new CompoundNBT();
-            mut.putString("effect_mutations" + i, EffectMutations.getMutation(effectMutations.get(i)).getKey());
+            mut.putString("effect_mutations" + i, EffectMutations.getMutation(effectMutations.get(i)).getRegistryName().toString());
             tagList.add(mut);
         }
 

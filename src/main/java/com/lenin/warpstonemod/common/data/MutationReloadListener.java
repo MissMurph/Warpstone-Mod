@@ -13,11 +13,11 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.Map;
 
-public class WarpstoneReloadListener extends JsonReloadListener {
+public class MutationReloadListener extends JsonReloadListener {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public WarpstoneReloadListener() {
+    public MutationReloadListener() {
         super(GSON, "mutations");
     }
 
@@ -30,7 +30,7 @@ public class WarpstoneReloadListener extends JsonReloadListener {
             }
 
             System.out.println(entry.getKey());
-            Registration.EFFECT_MUTATIONS.getValue(entry.getKey()).deserialize(entry.getValue().getAsJsonObject());
+            if (Registration.EFFECT_MUTATIONS.containsKey(entry.getKey())) Registration.EFFECT_MUTATIONS.getValue(entry.getKey()).deserialize(entry.getValue().getAsJsonObject());
         }
     }
 }

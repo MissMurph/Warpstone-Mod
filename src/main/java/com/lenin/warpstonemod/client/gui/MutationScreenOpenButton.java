@@ -52,9 +52,4 @@ public class MutationScreenOpenButton extends Button {
 	public void setPosition (int _x, int _y){
 		this.x = _x; this.y = _y;
 	}
-
-	/*@Override
-	public void onPress() {
-		Minecraft.getInstance().displayGuiScreen(new MutationScreen(new TranslationTextComponent("warpstonemod.mutation_screen")));
-	}*/
 }

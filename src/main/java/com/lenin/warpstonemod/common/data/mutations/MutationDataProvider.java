@@ -2,7 +2,9 @@ package com.lenin.warpstonemod.common.data.mutations;
 
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.data.MutationConditions;
 import com.lenin.warpstonemod.common.data.WarpstoneDataProvider;
+import com.lenin.warpstonemod.common.data.mutation_conditions.CorruptionLevelCondition;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.data.DataGenerator;
@@ -40,6 +42,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
         data.add(new MutationData.Builder(key("alcoholic"), "3fe06fe0-6a8d-403a-b4da-4ed1a9d822fb")
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addTag(key("uncommon"))
+                .addCondition(MutationConditions.getCondition(key("corruption_level")).serialize())
                 .create()
         );
 
@@ -68,7 +71,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
 
         data.add(new MutationData.Builder(key("blood_sucking"), "0c3e6ecf-34ef-4ad6-8440-d06573f15fd3")
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
-                .addModifier(WSAttributes.HEALING.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
+                .addModifier(WSAttributes.LIFE_STEAL.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addTag(key("rare"))
                 .create()
         );

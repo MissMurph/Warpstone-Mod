@@ -20,8 +20,7 @@ public class MutationTag {
     private int weight;
 
     public MutationTag (JsonObject json) {
-        String key = json.get("key").getAsString();
-        resourceLocation = new ResourceLocation(key);
+        resourceLocation = new ResourceLocation(json.get("key").getAsString());
         weight = json.get("weight").getAsInt();
 
         if (json.has("type")) type = Type.valueOf(json.get("type").getAsString());

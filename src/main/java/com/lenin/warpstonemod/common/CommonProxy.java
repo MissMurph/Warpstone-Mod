@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common;
 
-import com.lenin.warpstonemod.common.data.WarpstoneReloadListener;
+import com.lenin.warpstonemod.common.data.MutationReloadListener;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
@@ -33,7 +33,7 @@ public class CommonProxy {
 	private final List<ITickHandler> tickHandlers = new ArrayList<>();
 	protected Registration registration;
 
-	private static final JsonReloadListener MUTATION_LISTENER = new WarpstoneReloadListener();
+	private static final JsonReloadListener MUTATION_LISTENER = new MutationReloadListener();
 
 	public void init (){
 		MutateHelper.init();

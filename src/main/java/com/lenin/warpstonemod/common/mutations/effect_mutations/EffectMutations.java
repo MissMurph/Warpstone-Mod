@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.function.Supplier;
 
-@ObjectHolder("warpstonemod")
+//@ObjectHolder("warpstonemod")
 public class EffectMutations {
 	public static final EffectMutation INVISIBILITY = registerEffect(InvisibilityMutation::new);
 	public static final EffectMutation NIGHT_VISION = registerEffect(NightVisionMutation::new);
@@ -62,12 +62,15 @@ public class EffectMutations {
 	}
 
 	public static EffectMutation getMutation (String key) {
-		return Registration.EFFECT_MUTATIONS.getValue(new ResourceLocation(WarpstoneMain.MOD_ID, key));
+		return getMutation(new ResourceLocation(key));
 	}
 
 	public static EffectMutation getMutation (EffectMutation mutation) {
-		return Registration.EFFECT_MUTATIONS.getValue(new ResourceLocation(WarpstoneMain.MOD_ID, mutation.getKey()));
+		return getMutation(mutation.getRegistryName());
 	}
 
+	public static EffectMutation getMutation (ResourceLocation key) {
+		return Registration.EFFECT_MUTATIONS.getValue(key);
+	}
 	public static void register() {}
 }

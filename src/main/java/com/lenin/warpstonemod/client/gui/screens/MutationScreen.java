@@ -84,7 +84,7 @@ public class MutationScreen extends WSScreen {
 
 			List<ITextComponent> attrTooltips = new ArrayList<>();
 
-			attrTooltips.add((new TranslationTextComponent(muts.get(i).getMutationName())).mergeStyle(TextFormatting.WHITE));
+			attrTooltips.add(muts.get(i).getMutationName().mergeStyle(TextFormatting.WHITE));
 			String levelText = "+";
 			TextFormatting color = TextFormatting.GREEN;
 			if (level < 0) { levelText = ""; color = TextFormatting.RED; }
@@ -123,18 +123,4 @@ public class MutationScreen extends WSScreen {
 			);
 		}
 	}
-
-	@Override
-	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
-		if (super.keyPressed(keyCode, scanCode, modifiers)) {
-			return true;
-		} else if (this.minecraft.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)) {
-			this.closeScreen();
-			return true;
-		}
-		return true;
-	}
-
-
 }

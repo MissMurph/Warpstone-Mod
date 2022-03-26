@@ -12,7 +12,7 @@
       "operation": "MULTIPLY_TOTAL"
     },
     {
-      "target": "warpstonemod:healing",
+      "target": "warpstonemod:life_steal",
       "value": 0.25,
       "operation": "MULTIPLY_TOTAL"
     }

@@ -9,6 +9,7 @@ import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.At
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -117,7 +118,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	}
 
 	/**
-	 * rarity by default determines required Corruption level required <br>
+	 * rarity by default determines required Corruption level required using tag weight <br>
 	 * COMMON = 1 <br>
 	 * UNCOMMON = 2 <br>
 	 * RARE = 3 <br>
@@ -128,54 +129,19 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 		MutationTag tag = getTagOfType(MutationTag.Type.RARITY);
 
 		if (tag != null && tag.getType() != null) {
-			switch (tag.getResource().getPath()) {
-				case "UNCOMMON":
-					return manager.getCorruptionLevel() >= 2;
-				case "RARE":
-					return manager.getCorruptionLevel() >= 3;
-				case "EPIC":
-					return manager.getCorruptionLevel() >= 4;
-				default:
-					return manager.getCorruptionLevel() >= 1;
-			}
+			return manager.getCorruptionLevel() >= tag.getWeight();
 		}
 
 		return manager.getCorruptionLevel() >= 1;
 	}
 
-	public JsonObject serialize () {
-		JsonObject out = new JsonObject();
+	public JsonObject serializeArguments () {
+		return new JsonObject();
+	}
 
-		out.addProperty("name", mutName);
-		out.addProperty("uuid", String.valueOf(uuid));
-		out.addProperty("resource_path", getTexture().getPath());
 
-		JsonArray jsonTags = new JsonArray();
-
-		for (MutationTag tag : tags) {
-			jsonTags.add(tag.getResource().toString());
-		}
-
-		out.add("tags", jsonTags);
-
-		JsonArray jsonMods = new JsonArray();
-
-		for (ResourceLocation key : modifiers.keySet()) {
-			JsonObject modJSON = new JsonObject();
-			AttributeModifier modifier = modifiers.get(key);
-
-			modJSON.addProperty("target", key.toString());
-			modJSON.addProperty("name", modifier.getName());
-			if (modifier.getID() != uuid) modJSON.addProperty("UUID", modifier.getID().toString());
-			modJSON.addProperty("value", modifier.getAmount());
-			modJSON.addProperty("operation", modifier.getOperation().toString());
-
-			jsonMods.add(modJSON);
-		}
-
-		out.add("modifiers", jsonMods);
-
-		return out;
+	public void deserializeArguments () {
+		//do nothing
 	}
 
 	public void deserialize (JsonObject json) {
@@ -194,6 +160,8 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 			MutationTag tag = MutationTags.getTag(new ResourceLocation(key));
 			if (tag != null && !tags.contains(tag)) tags.add(tag);
 		}
+
+		deserializeArguments();
 	}
 
 	public EffectMutationInstance getInstance (LivingEntity entity) {

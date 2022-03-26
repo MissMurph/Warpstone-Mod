@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.IAttributeSource;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.UUID;
 
@@ -56,8 +57,8 @@ public class AttributeMutation{
 		attributeSource.removeModifier(uuid);
 	}
 
-	public String getMutationName() {
-		return name;
+	public TranslationTextComponent getMutationName() {
+		return new TranslationTextComponent("attribute." + name);
 	}
 
 	public String getMutationType() {

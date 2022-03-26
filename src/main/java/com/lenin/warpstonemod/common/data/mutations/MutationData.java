@@ -2,11 +2,13 @@ package com.lenin.warpstonemod.common.data.mutations;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.lenin.warpstonemod.common.Registration;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class MutationData {
     private ResourceLocation resource;
@@ -14,6 +16,7 @@ public class MutationData {
     private String resourcePath;
     private final List<String> tags = new ArrayList<>();
     private final List<AttrModifierData> modifiers = new ArrayList<>();
+    private final JsonArray conditions = new JsonArray();
 
     private MutationData () {}
 
@@ -39,6 +42,8 @@ public class MutationData {
         }
 
         out.add("modifiers", jsonMods);
+        out.add("arguments", Registration.EFFECT_MUTATIONS.getValue(resource).serializeArguments());
+        out.add("conditions", conditions);
 
         return out;
     }
@@ -75,6 +80,11 @@ public class MutationData {
             //If you have to define a unique name you also need a new UUID to match
         public Builder addModifier (ResourceLocation target, String name, String uuid, double value, String operation) {
             data.modifiers.add(new AttrModifierData(target.toString(), name, uuid, value, operation));
+            return this;
+        }
+
+        public Builder addCondition(JsonObject serializedCondition) {
+            if (serializedCondition != null) data.conditions.add(serializedCondition);
             return this;
         }
 
