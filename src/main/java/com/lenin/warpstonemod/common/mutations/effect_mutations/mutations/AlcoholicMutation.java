@@ -118,9 +118,4 @@ public class AlcoholicMutation extends EffectMutation {
 		valueMap.put(manager.getUniqueId(), 0);
 		manager.getParentEntity().removePotionEffect(Effects.ABSORPTION);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SLOW_METABOLISM) && !manager.containsEffect(EffectMutations.WEAK_LIVER);
-	}
 }

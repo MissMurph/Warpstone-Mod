@@ -1,0 +1,17 @@
+{
+  "key": "warpstonemod:night_vision",
+  "uuid": "ba2f092b-76d6-4d71-85ba-51becadb4d19",
+  "resource_path": "textures/gui/effect_mutations/night_vision.png",
+  "tags": [
+    "warpstonemod:common"
+  ],
+  "modifiers": [],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:blindness",
+      "result": false
+    }
+  ],
+  "arguments": {}
+}

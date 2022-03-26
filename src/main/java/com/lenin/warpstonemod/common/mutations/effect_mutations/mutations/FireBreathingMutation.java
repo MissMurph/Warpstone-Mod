@@ -62,9 +62,4 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 			canHeal = false;
 		}
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.EXPLOSIVE);
-	}
 }

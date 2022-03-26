@@ -25,8 +25,6 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 				"6ba9291c-f067-410b-9579-9f11169ea0fd",
 				60
 		);
-
-		this.textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/sharp_senses.png");
 	}
 
 	@Override

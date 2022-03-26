@@ -40,9 +40,4 @@ public class StrongLegsMutation extends EffectMutation {
 			event.getEntityLiving().applyKnockback(0.7f, -v.x, -v.z);
 		}
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FINS) && !manager.containsEffect(EffectMutations.WEAK_LEGS);
-	}
 }

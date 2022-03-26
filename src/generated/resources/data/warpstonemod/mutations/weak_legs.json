@@ -5,5 +5,18 @@
   "tags": [
     "warpstonemod:negative"
   ],
-  "modifiers": []
+  "modifiers": [],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:jump_boost",
+      "result": false
+    },
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:strong_legs",
+      "result": false
+    }
+  ],
+  "arguments": {}
 }

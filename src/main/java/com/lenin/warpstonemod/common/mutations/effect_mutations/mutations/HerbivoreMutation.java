@@ -93,9 +93,4 @@ public class HerbivoreMutation extends EffectMutation {
             player.getFoodStats().addStats(-Math.round(hunger), -saturation);
         }
     }
-
-    @Override
-    public boolean isLegalMutation(PlayerManager manager) {
-        return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.CARNIVORE);
-    }
 }

@@ -5,5 +5,13 @@
   "tags": [
     "warpstonemod:common"
   ],
-  "modifiers": []
+  "modifiers": [],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:slow_metabolism",
+      "result": false
+    }
+  ],
+  "arguments": {}
 }

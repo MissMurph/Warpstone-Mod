@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.data;
+package com.lenin.warpstonemod.common.mutations.conditions;
 
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;

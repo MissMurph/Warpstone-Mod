@@ -40,9 +40,4 @@ public class FrailBodyMutation extends EffectMutation {
 		int ticks = Math.max(Math.round((float)Math.random() * 100), 20);
 		event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.POISON, ticks));
 	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
-	}
 }

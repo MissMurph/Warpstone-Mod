@@ -15,14 +15,4 @@ public class FortuneMutation extends EffectMutation {
 
 	//This mutation is barren due to a need for a Global Loot Modifier to handle the logic
 	//LootModifierFortuneMutation.java contains all the logic
-
-	@Override
-	public void attachListeners(IEventBus bus) {
-
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
 }

@@ -60,9 +60,4 @@ public class ExplosiveMutation extends EffectMutation {
 
 		entity.world.createExplosion(entity, entity.getPosX(), entity.getPosYHeight(0.0625D), entity.getPosZ(), 4.0F, Explosion.Mode.BREAK);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FIRE_BREATHING);
-	}
 }

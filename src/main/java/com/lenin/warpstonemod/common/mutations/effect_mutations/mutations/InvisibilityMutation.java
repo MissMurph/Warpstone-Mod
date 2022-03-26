@@ -43,9 +43,4 @@ public class InvisibilityMutation extends EffectMutation implements IMutationTic
 
 		manager.getParentEntity().setInvisible(false);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GLOWING);
-	}
 }

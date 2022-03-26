@@ -83,9 +83,4 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 				Explosion.Mode.BREAK
 		);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.HYDROPHILIC);
-	}
 }

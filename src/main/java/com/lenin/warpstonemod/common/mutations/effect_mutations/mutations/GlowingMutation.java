@@ -17,16 +17,6 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 	}
 
 	@Override
-	public void attachListeners(IEventBus bus){
-
-	}
-
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
-	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT ||
 				!instanceMap.containsKey(player.getUniqueID()) ||
@@ -51,10 +41,5 @@ public class GlowingMutation extends EffectMutation implements IMutationTick {
 		if (manager.getParentEntity().world.isRemote()) return;
 
 		manager.getParentEntity().setGlowing(false);
-	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.INVISIBILITY);
 	}
 }

@@ -13,6 +13,7 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -69,7 +70,7 @@ public class MutationScreen extends WSScreen {
 		);
 
 		List<AttributeMutation> muts = clientManager.getAttributeMutations();
-		List<String> effectMuts = clientManager.getEffectMutations();
+		List<ResourceLocation> effectMuts = clientManager.getEffectMutations();
 
 		for (int i = 0; i < muts.size(); i++) {
 			int level = muts.get(i).getMutationLevel();

@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,7 +38,7 @@ public class DummyPlayerManager extends PlayerManager {
 	}
 
 	@Override
-	public List<String> getEffectMutations() {
+	public List<ResourceLocation> getEffectMutations() {
 		System.out.println("Dummy Manager is being Called!");
 		return new ArrayList<>();
 	}

@@ -41,11 +41,6 @@ public class BrawlerMutation extends EffectMutation {
 		//bus.addListener(this::onLivingHurt);
 	}
 
-	@Override
-	public void attachClientListeners(IEventBus bus) {
-
-	}
-
 	//Same method as Archer
 	//TODO: Turn the below into attributes
 	public void onLivingHurt (LivingHurtEvent event) {
@@ -61,10 +56,5 @@ public class BrawlerMutation extends EffectMutation {
 			float damage = event.getAmount() + Math.round(event.getAmount() * 0.25f);
 			event.setAmount(damage);
 		}
-	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.ARCHER);
 	}
 }

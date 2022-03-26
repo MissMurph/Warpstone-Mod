@@ -61,9 +61,4 @@ public class JumpBoostMutation extends EffectMutation implements IMutationTick {
 
 		manager.getParentEntity().removePotionEffect(Effects.JUMP_BOOST);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.WEAK_LEGS);
-	}
 }

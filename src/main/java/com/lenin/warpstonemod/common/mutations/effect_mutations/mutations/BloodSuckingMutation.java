@@ -31,9 +31,4 @@ public class BloodSuckingMutation extends EffectMutation {
 				AttributeModifier.Operation.MULTIPLY_TOTAL
 		));
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SCALES) && !manager.containsEffect(EffectMutations.UNDEAD);
-	}
 }

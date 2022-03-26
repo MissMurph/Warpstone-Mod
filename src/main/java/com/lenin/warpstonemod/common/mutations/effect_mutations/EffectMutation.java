@@ -6,6 +6,8 @@ import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttrHealing;
+import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
+import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -42,6 +44,8 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	protected ResourceLocation textureResource;
 
 	protected Map<UUID, EffectMutationInstance> instanceMap = new Object2ObjectArrayMap<>();
+
+	protected Map<ResourceLocation, IMutationCondition> conditions = new HashMap<>();
 
 	public EffectMutation(String _mutName, String _uuid) {
 		uuid = UUID.fromString(_uuid);
@@ -126,6 +130,10 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	 **/
 
 	public boolean isLegalMutation(PlayerManager manager){
+		for (IMutationCondition condition : conditions.values()) {
+			if (!condition.act(manager)) return false;
+		}
+
 		MutationTag tag = getTagOfType(MutationTag.Type.RARITY);
 
 		if (tag != null && tag.getType() != null) {
@@ -146,7 +154,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 	public void deserialize (JsonObject json) {
 		if (json == null) {
-			System.out.println(getKey() + " JSON is null");
+			System.out.println(getRegistryName() + " JSON is null");
 			return;
 		}
 
@@ -160,6 +168,12 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 			MutationTag tag = MutationTags.getTag(new ResourceLocation(key));
 			if (tag != null && !tags.contains(tag)) tags.add(tag);
 		}
+
+		json.getAsJsonArray("conditions").forEach(jsonElement -> {
+			JsonObject object = jsonElement.getAsJsonObject();
+			IMutationCondition condition = MutationConditions.getCondition(new ResourceLocation(object.get("key").getAsString())).deserialize(object);
+			conditions.put(condition.getKey(), condition);
+		});
 
 		deserializeArguments();
 	}
@@ -211,10 +225,6 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 	public ResourceLocation getTexture () {
 		return textureResource;
-	}
-
-	public String getKey () {
-		return mutName;
 	}
 
 	public EffectMutationInstance getInstanceType (PlayerManager manager) {

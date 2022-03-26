@@ -99,9 +99,4 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 
 		((PlayerEntity) event.getEntityLiving()).getFoodStats().addStats(foodValue, 1);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.POTASSIUM);
-	}
 }

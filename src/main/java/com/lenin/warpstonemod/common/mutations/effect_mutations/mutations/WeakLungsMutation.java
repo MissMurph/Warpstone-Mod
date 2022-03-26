@@ -49,9 +49,4 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 			}
 		}
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.GILLS);
-	}
 }

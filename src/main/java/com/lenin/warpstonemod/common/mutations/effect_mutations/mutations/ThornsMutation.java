@@ -40,9 +40,4 @@ public class ThornsMutation extends EffectMutation {
 		float damage = event.getAmount() * 0.25f;
 		event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(event.getEntityLiving()), damage);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.SCALES);
-	}
 }

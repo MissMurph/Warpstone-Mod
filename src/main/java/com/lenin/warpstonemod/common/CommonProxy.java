@@ -5,6 +5,7 @@ import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
+import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import com.lenin.warpstonemod.common.network.PacketHandler;
@@ -39,6 +40,7 @@ public class CommonProxy {
 		MutateHelper.init();
 		MutationTags.init();
 		WSAttributes.register();
+		MutationConditions.init();
 
 		this.registration = new Registration();
 		this.tickHandlers.add(MutationTickHelper.INSTANCE);

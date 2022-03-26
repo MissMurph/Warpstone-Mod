@@ -47,9 +47,4 @@ public class StrengthMutation extends EffectMutation {
 
 		entity.applyKnockback(0.4F, d1, d0);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager);
-	}
 }

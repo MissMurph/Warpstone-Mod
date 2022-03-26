@@ -6,5 +6,13 @@
     "warpstonemod:uncommon",
     "warpstonemod:negative"
   ],
-  "modifiers": []
+  "modifiers": [],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:hydrophilic",
+      "result": false
+    }
+  ],
+  "arguments": {}
 }

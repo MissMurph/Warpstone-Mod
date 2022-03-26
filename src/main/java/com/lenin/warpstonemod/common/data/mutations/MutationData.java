@@ -3,12 +3,13 @@ package com.lenin.warpstonemod.common.data.mutations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Registration;
+import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
+import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 public class MutationData {
     private ResourceLocation resource;
@@ -42,8 +43,8 @@ public class MutationData {
         }
 
         out.add("modifiers", jsonMods);
-        out.add("arguments", Registration.EFFECT_MUTATIONS.getValue(resource).serializeArguments());
         out.add("conditions", conditions);
+        out.add("arguments", Registration.EFFECT_MUTATIONS.getValue(resource).serializeArguments());
 
         return out;
     }
@@ -83,8 +84,8 @@ public class MutationData {
             return this;
         }
 
-        public Builder addCondition(JsonObject serializedCondition) {
-            if (serializedCondition != null) data.conditions.add(serializedCondition);
+        public Builder addCondition(IMutationCondition condition) {
+            data.conditions.add(MutationConditions.getCondition(condition.getKey()).serialize(condition));
             return this;
         }
 

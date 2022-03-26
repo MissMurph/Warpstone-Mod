@@ -44,9 +44,4 @@ public class HoovesMutation extends EffectMutation implements IMutationTick {
 			instance.removeModifier(uuid);
 		}
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager);
-	}
 }

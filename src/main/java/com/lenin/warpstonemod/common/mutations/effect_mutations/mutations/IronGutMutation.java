@@ -52,9 +52,4 @@ public class IronGutMutation extends EffectMutation {
 			event.getEntityLiving().removePotionEffect(effect);
 		});
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FAST_METABOLISM);
-	}
 }

@@ -59,9 +59,4 @@ public class ArcherMutation extends EffectMutation {
 			event.setAmount(damage);
 		}
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BRAWLER);
-	}
 }

@@ -11,5 +11,7 @@
       "value": -0.25,
       "operation": "MULTIPLY_TOTAL"
     }
-  ]
+  ],
+  "conditions": [],
+  "arguments": {}
 }

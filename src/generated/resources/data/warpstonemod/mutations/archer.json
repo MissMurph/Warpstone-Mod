@@ -16,5 +16,13 @@
       "value": 0.25,
       "operation": "MULTIPLY_TOTAL"
     }
-  ]
+  ],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:brawler",
+      "result": false
+    }
+  ],
+  "arguments": {}
 }

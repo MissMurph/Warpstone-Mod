@@ -77,9 +77,4 @@ public class FurMutation extends CounterEffectMutation implements IMutationTick 
             reset(counterMap, player.getUniqueID());
         }
     }
-
-    @Override
-    public boolean isLegalMutation(PlayerManager manager) {
-        return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.COLD_BLOOD);
-    }
 }

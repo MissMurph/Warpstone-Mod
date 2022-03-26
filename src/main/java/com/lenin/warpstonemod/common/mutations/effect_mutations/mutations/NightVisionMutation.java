@@ -71,9 +71,4 @@ public class NightVisionMutation extends EffectMutation implements IMutationTick
 
 		manager.getParentEntity().removePotionEffect(Effects.NIGHT_VISION);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BLINDNESS);
-	}
 }

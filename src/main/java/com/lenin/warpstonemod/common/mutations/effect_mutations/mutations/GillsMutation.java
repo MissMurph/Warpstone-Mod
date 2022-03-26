@@ -54,9 +54,4 @@ public class GillsMutation extends EffectMutation implements IMutationTick {
 
 		manager.getParentEntity().removePotionEffect(Effects.WATER_BREATHING);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.WEAK_LUNGS);
-	}
 }

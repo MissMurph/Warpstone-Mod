@@ -41,9 +41,4 @@ public class UndeadMutation extends EffectMutation {
 
 		event.setResult(Event.Result.DENY);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BLOOD_SUCKING);
-	}
 }

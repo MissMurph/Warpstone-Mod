@@ -87,9 +87,4 @@ public class ColdBloodMutation extends CounterEffectMutation implements IMutatio
     public void attachClientListeners(IEventBus bus) {
         super.attachClientListeners(bus);
     }
-
-    @Override
-    public boolean isLegalMutation(PlayerManager manager) {
-        return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.THICK_FUR);
-    }
 }

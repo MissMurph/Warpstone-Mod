@@ -35,9 +35,4 @@ public class WeakLegsMutation extends EffectMutation {
 			if (event.getSource() == DamageSource.FALL) event.setAmount(damage);
 		}
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.JUMP_BOOST) && !manager.containsEffect(EffectMutations.STRONG_LEGS);
-	}
 }

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class PlayerManager {
     protected final LivingEntity parentEntity;
     protected final List<AttributeMutation> attributeMutations = new ArrayList<>();
-    protected List<String> effectMutations = new ArrayList<>();
+    protected List<ResourceLocation> effectMutations = new ArrayList<>();
 
     protected List<IAttributeSource> attributes = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class PlayerManager {
                 if (legalMutations.size() > 0) {
                     EffectMutation mut = legalMutations.get(WarpstoneMain.getRandom().nextInt(legalMutations.size()));
 
-                    effectMutations.add(mut.getKey());
+                    effectMutations.add(mut.getRegistryName());
                     mut.applyMutation(this);
 
                     hasEffectBeenCreated = true;
@@ -170,12 +170,12 @@ public class PlayerManager {
 
         ListNBT list = (ListNBT) nbt.get("effect_mutations");
 
-        List<String> deletion = new ArrayList<>(effectMutations);
+        List<ResourceLocation> deletion = new ArrayList<>(effectMutations);
 
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 CompoundNBT tag = list.getCompound(i);
-                String mutKey = tag.getString("effect_mutations" + i);
+                ResourceLocation mutKey = new ResourceLocation(tag.getString("effect_mutations" + i));
 
                 if (containsEffect(mutKey)) { deletion.remove(mutKey); continue; }
                 effectMutations.add(mutKey);
@@ -185,7 +185,7 @@ public class PlayerManager {
             }
         }
 
-        for (String mut : deletion) {
+        for (ResourceLocation mut : deletion) {
             getEffect(mut).clearInstance(this);
             effectMutations.remove(mut);
         }
@@ -194,7 +194,7 @@ public class PlayerManager {
     public void resetMutations (boolean death) {
         for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
 
-        for (String key : effectMutations) { getEffect(key).clearInstance(this); }
+        for (ResourceLocation key : effectMutations) { getEffect(key).clearInstance(this); }
         effectMutations.clear();
 
         if (!death) corruption = 0;
@@ -208,7 +208,7 @@ public class PlayerManager {
         return attributeMutations;
     }
 
-    public List<String> getEffectMutations (){
+    public List<ResourceLocation> getEffectMutations (){
             return new ArrayList<>(effectMutations);
     }
 
@@ -349,7 +349,7 @@ public class PlayerManager {
     public void unload() {
         saveData();
 
-        for (String key : effectMutations) {
+        for (ResourceLocation key : effectMutations) {
             getEffect(key).clearInstance(this);
         }
 
@@ -363,16 +363,19 @@ public class PlayerManager {
         MutateHelper.savePlayerData(parentEntity.getUniqueID(), getMutData());
     }
 
-    private EffectMutation getEffect (String key) {
+    private EffectMutation getEffect (ResourceLocation key) {
         return EffectMutations.getMutation(key);
     }
 
     public boolean containsEffect (EffectMutation mut) {
-        return containsEffect(mut.getKey());
+        return containsEffect(mut.getRegistryName());
     }
 
     public boolean containsEffect (String key) {
-        if (effectMutations.contains(key)) return true;
-        return false;
+        return containsEffect(new ResourceLocation(key));
+    }
+
+    public boolean containsEffect (ResourceLocation key) {
+        return effectMutations.contains(key);
     }
 }

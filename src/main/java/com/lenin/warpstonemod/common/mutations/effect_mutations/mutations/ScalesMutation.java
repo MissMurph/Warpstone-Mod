@@ -58,9 +58,4 @@ public class ScalesMutation extends EffectMutation {
 		float amount = event.getAmount() - (event.getAmount() * 0.25f);
 		event.setAmount(amount);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.THORNS);
-	}
 }

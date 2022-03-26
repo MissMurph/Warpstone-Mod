@@ -34,9 +34,4 @@ public class SlowMetabolismMutation extends EffectMutation {
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
 		playerEntity.getFoodStats().addStats(-1, -2);
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.FAST_METABOLISM);
-	}
 }

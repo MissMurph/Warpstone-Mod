@@ -19,11 +19,6 @@ public class BlindnessMutation extends EffectMutation {
 		);
 	}
 
-	@Override
-	public void attachListeners (IEventBus bus) {
-
-	}
-
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void attachClientListeners(IEventBus bus) {
@@ -81,10 +76,5 @@ public class BlindnessMutation extends EffectMutation {
 		if (manager.getParentEntity().world.isRemote()) {
 			instanceMap.get(Minecraft.getInstance().player.getUniqueID()).setActive(false);
 		}
-	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.NIGHT_VISION);
 	}
 }

@@ -16,5 +16,18 @@
       "value": 0.25,
       "operation": "MULTIPLY_TOTAL"
     }
-  ]
+  ],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:scales",
+      "result": false
+    },
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:undead",
+      "result": false
+    }
+  ],
+  "arguments": {}
 }

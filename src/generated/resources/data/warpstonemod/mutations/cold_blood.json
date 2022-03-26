@@ -5,5 +5,13 @@
   "tags": [
     "warpstonemod:uncommon"
   ],
-  "modifiers": []
+  "modifiers": [],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:thick_fur",
+      "result": false
+    }
+  ],
+  "arguments": {}
 }

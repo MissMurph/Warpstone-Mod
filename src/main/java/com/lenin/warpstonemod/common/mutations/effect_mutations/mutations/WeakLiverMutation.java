@@ -52,14 +52,4 @@ public class WeakLiverMutation extends EffectMutation {
 
 		manager.getParentEntity().removePotionEffect(Effects.NAUSEA);
 	}
-
-	@Override
-	public IFormattableTextComponent getMutationName() {
-		return super.getMutationName().mergeStyle(TextFormatting.RED);
-	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.ALCOHOLIC);
-	}
 }

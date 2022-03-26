@@ -11,5 +11,13 @@
       "value": 1.0,
       "operation": "ADDITION"
     }
-  ]
+  ],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:bad_luck",
+      "result": false
+    }
+  ],
+  "arguments": {}
 }

@@ -22,9 +22,4 @@ public class GoodLuckMutation extends EffectMutation {
 				AttributeModifier.Operation.ADDITION
 		));
 	}
-
-	@Override
-	public boolean isLegalMutation(PlayerManager manager) {
-		return super.isLegalMutation(manager) && !manager.containsEffect(EffectMutations.BAD_LUCK);
-	}
 }
