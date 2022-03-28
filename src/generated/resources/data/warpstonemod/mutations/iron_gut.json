@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:iron_gut",
-  "uuid": "487b1027-3643-41ef-b3f5-e5f71abf503f",
   "resource_path": "textures/gui/effect_mutations/iron_gut.png",
   "tags": [
     "warpstonemod:uncommon"

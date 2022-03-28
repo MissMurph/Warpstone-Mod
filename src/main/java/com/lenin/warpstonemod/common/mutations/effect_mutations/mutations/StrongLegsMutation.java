@@ -1,8 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -11,9 +9,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class StrongLegsMutation extends EffectMutation {
 	public StrongLegsMutation() {
 		super(
-                "strong_legs",
-				"88a8026d-7ce3-4a21-8436-f3cce8840080"
-		);
+                "strong_legs"
+        );
 	}
 
 	/**This mutation makes the player leap forward every time they jump while sprinting

@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:blood_sucking",
-  "uuid": "0c3e6ecf-34ef-4ad6-8440-d06573f15fd3",
   "resource_path": "textures/gui/effect_mutations/blood_sucking.png",
   "tags": [
     "warpstonemod:rare"

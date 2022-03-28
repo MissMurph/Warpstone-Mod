@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:good_luck",
-  "uuid": "a2361e8f-1be0-478f-9742-a873400e9b6d",
   "resource_path": "textures/gui/effect_mutations/good_luck.png",
   "tags": [
     "warpstonemod:common"

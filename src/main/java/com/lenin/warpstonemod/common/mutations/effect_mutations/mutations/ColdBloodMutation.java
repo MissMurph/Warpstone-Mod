@@ -1,8 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -21,7 +19,6 @@ public class ColdBloodMutation extends CounterEffectMutation implements IMutatio
     public ColdBloodMutation() {
         super(
                 "cold_blood",
-                "ecf187d9-7a7d-4732-9a20-f44bfe64a615",
                 200
         );
     }

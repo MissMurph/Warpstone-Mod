@@ -4,7 +4,6 @@ import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.data.WarpstoneDataProvider;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.conditions.HasMutationCondition;
-import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -38,7 +37,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
     }
 
     private void buildMutationData () {
-        data.add(new MutationData.Builder(key("alcoholic"), "3fe06fe0-6a8d-403a-b4da-4ed1a9d822fb")
+        data.add(new MutationData.Builder(key("alcoholic"))
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(EffectMutations.SLOW_METABOLISM.getRegistryName(), false).build())
                 .addCondition(HasMutationCondition.builder(EffectMutations.WEAK_LIVER.getRegistryName(), false).build())
@@ -46,7 +45,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("archer"), "d35e4fe7-73bc-4fb4-97fe-b47a0e6cf62c")
+        data.add(new MutationData.Builder(key("archer"))
                 .addModifier(WSAttributes.MELEE_DAMAGE.getKey(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.RANGED_DAMAGE.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(EffectMutations.BRAWLER.getRegistryName(), false).build())
@@ -54,25 +53,25 @@ public class MutationDataProvider extends WarpstoneDataProvider {
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("bad_luck"), "0942e8e9-295a-430f-9988-5537e4010648")
+        data.add(new MutationData.Builder(key("bad_luck"))
                 .addModifier(Attributes.LUCK.getRegistryName(), -1.0, AttributeModifier.Operation.ADDITION.toString())
                 .addCondition(HasMutationCondition.builder(EffectMutations.GOOD_LUCK.getRegistryName(), false).build())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("black_lung"), "24d24ca3-4072-45d6-a7f0-29085b4f77fd")
+        data.add(new MutationData.Builder(key("black_lung"))
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("blindness"), "0d988324-bfef-4dd4-87a7-647364829c44")
+        data.add(new MutationData.Builder(key("blindness"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.NIGHT_VISION.getRegistryName(), false).build())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("blood_sucking"), "0c3e6ecf-34ef-4ad6-8440-d06573f15fd3")
+        data.add(new MutationData.Builder(key("blood_sucking"))
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.LIFE_STEAL.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(EffectMutations.SCALES.getRegistryName(), false).build())
@@ -81,7 +80,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("brawler"), "af1bc073-2f9f-471e-a165-9681cfe4700c")
+        data.add(new MutationData.Builder(key("brawler"))
                 .addModifier(WSAttributes.MELEE_DAMAGE.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.RANGED_DAMAGE.getKey(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(EffectMutations.ARCHER.getRegistryName(), false).build())
@@ -89,140 +88,140 @@ public class MutationDataProvider extends WarpstoneDataProvider {
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("carnivore"), "b9de45cc-6dd2-468d-980e-3da40521b10a")
+        data.add(new MutationData.Builder(key("carnivore"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.HERBIVORE.getRegistryName(), false).build())
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("claws"), "dde7cc2c-20b4-4fec-af34-0e41044b2587")
+        data.add(new MutationData.Builder(key("claws"))
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("cold_blood"), "ecf187d9-7a7d-4732-9a20-f44bfe64a615")
+        data.add(new MutationData.Builder(key("cold_blood"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.THICK_FUR.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("corrosive_touch"), "8ee3692f-f855-43e3-8a9f-dffb37381995")
+        data.add(new MutationData.Builder(key("corrosive_touch"))
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("explosive"), "7332e11c-ff66-439f-8808-4de93e9cf355")
+        data.add(new MutationData.Builder(key("explosive"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.FIRE_BREATHING.getRegistryName(), false).build())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("fast_metabolism"), "1ce59983-cba5-4586-9186-3f69bd0487ce")
+        data.add(new MutationData.Builder(key("fast_metabolism"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.SLOW_METABOLISM.getRegistryName(), false).build())
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("fins"), "26d0153a-08da-4c90-9287-44f1e6920e7d")
+        data.add(new MutationData.Builder(key("fins"))
                 .addModifier(ForgeMod.SWIM_SPEED.getId(), 1.0, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("fire_breathing"), "9970d2cf-e6ba-4025-acf6-fc23ca0c3668")
+        data.add(new MutationData.Builder(key("fire_breathing"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.EXPLOSIVE.getRegistryName(), false).build())
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("fortune"), "9b0a8faa-1888-409f-a2a4-b0aab39cc065")
+        data.add(new MutationData.Builder(key("fortune"))
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("frail_body"), "b09d14ec-beda-4ea9-bf80-2055535c1b99")
+        data.add(new MutationData.Builder(key("frail_body"))
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("gills"), "bf69604d-0669-41d2-92e4-aafa8fa0acdc")
+        data.add(new MutationData.Builder(key("gills"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.WEAK_LUNGS.getRegistryName(), false).build())
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("glowing"), "0d988324-bfef-4dd4-87a7-647364829c44")
+        data.add(new MutationData.Builder(key("glowing"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.INVISIBILITY.getRegistryName(), false).build())
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("good_luck"), "a2361e8f-1be0-478f-9742-a873400e9b6d")
+        data.add(new MutationData.Builder(key("good_luck"))
                 .addModifier(Attributes.LUCK.getRegistryName(), 1.0, AttributeModifier.Operation.ADDITION.toString())
                 .addCondition(HasMutationCondition.builder(EffectMutations.BAD_LUCK.getRegistryName(), false).build())
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("thick_fur"), "d20a2481-f5b9-4ad5-8557-3833b983673a")
+        data.add(new MutationData.Builder(key("thick_fur"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.COLD_BLOOD.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("herbivore"), "a605523f-b225-44f1-a598-4d6dc5958337")
+        data.add(new MutationData.Builder(key("herbivore"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.CARNIVORE.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("hooves"), "eeb67c1e-ef30-4d9a-b4ed-5b4ea156274a")
+        data.add(new MutationData.Builder(key("hooves"))
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("hydrophilic"), "17782c2e-2438-4c81-b05b-507cb3c576b0")
+        data.add(new MutationData.Builder(key("hydrophilic"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.POTASSIUM.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("invisibility"), "a2361e8f-1be0-478f-9742-a873400e9b6d")
+        data.add(new MutationData.Builder(key("invisibility"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.GLOWING.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("iron_gut"), "487b1027-3643-41ef-b3f5-e5f71abf503f")
+        data.add(new MutationData.Builder(key("iron_gut"))
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("jump_boost"), "1020d46e-68db-45f4-9721-b14608ade167")
+        data.add(new MutationData.Builder(key("jump_boost"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.WEAK_LEGS.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("levitation"), "45c87f74-844f-410c-8de2-d9e8cf1cac2c")
+        data.add(new MutationData.Builder(key("levitation"))
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("night_vision"), "ba2f092b-76d6-4d71-85ba-51becadb4d19")
+        data.add(new MutationData.Builder(key("night_vision"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.BLINDNESS.getRegistryName(), false).build())
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("potassium"), "f74dfa9a-2104-403b-85a3-2a3f0c08e8c5")
+        data.add(new MutationData.Builder(key("potassium"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.HYDROPHILIC.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("scales"), "265aebfe-d019-4fed-b1a7-a3311ffc7562")
+        data.add(new MutationData.Builder(key("scales"))
                 .addModifier(Attributes.ARMOR.getRegistryName(), 0.5, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(Attributes.ARMOR_TOUGHNESS.getRegistryName(), 0.5, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
@@ -230,52 +229,52 @@ public class MutationDataProvider extends WarpstoneDataProvider {
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("scarring"), "50cc914e-dbfb-4d26-8be3-03de8151932a")
+        data.add(new MutationData.Builder(key("scarring"))
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("sharp_senses"), "6ba9291c-f067-410b-9579-9f11169ea0fd")
+        data.add(new MutationData.Builder(key("sharp_senses"))
                 .addResourcePath("textures/mob_effect/sharp_senses.png")
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("slow_falling"), "4e80c5c4-07ef-4ddb-85f9-e1901ba17103")
+        data.add(new MutationData.Builder(key("slow_falling"))
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("slow_metabolism"), "4e0ded20-d669-46e2-98c7-c70d023f4fc6")
+        data.add(new MutationData.Builder(key("slow_metabolism"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.FAST_METABOLISM.getRegistryName(), false).build())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("strength"), "0c0bbd77-a45b-4e92-8f95-ebdd8a565e02")
+        data.add(new MutationData.Builder(key("strength"))
                 .addTag(key("common"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("strong_legs"), "88a8026d-7ce3-4a21-8436-f3cce8840080")
+        data.add(new MutationData.Builder(key("strong_legs"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.WEAK_LEGS.getRegistryName(), false).build())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("thorns"), "cd74624b-9d68-4017-b4ab-eb326f45dd72")
+        data.add(new MutationData.Builder(key("thorns"))
                 .addModifier(Attributes.ARMOR.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addTag(key("uncommon"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("turtle"), "21fdd2d1-a7d3-44fd-a033-d155775e5d95")
+        data.add(new MutationData.Builder(key("turtle"))
                 .addResourcePath("textures/mob_effect/turtle.png")
                 .addTag(key("rare"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("undead"), "36588dba-9d9e-45be-b572-c0c571370054")
+        data.add(new MutationData.Builder(key("undead"))
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), 1, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.HEALING.getKey(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(EffectMutations.BLOOD_SUCKING.getRegistryName(), false).build())
@@ -283,26 +282,26 @@ public class MutationDataProvider extends WarpstoneDataProvider {
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("weak_legs"), "d198bf46-f9aa-4950-b0de-6f80d6396853")
+        data.add(new MutationData.Builder(key("weak_legs"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.JUMP_BOOST.getRegistryName(), false).build())
                 .addCondition(HasMutationCondition.builder(EffectMutations.STRONG_LEGS.getRegistryName(), false).build())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("weak_liver"), "76635d17-d433-4464-bf8e-dc1a60d55229")
+        data.add(new MutationData.Builder(key("weak_liver"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.ALCOHOLIC.getRegistryName(), false).build())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("weak_lungs"), "9216454f-c64d-4dcd-95f3-339df891aeef")
+        data.add(new MutationData.Builder(key("weak_lungs"))
                 .addCondition(HasMutationCondition.builder(EffectMutations.GILLS.getRegistryName(), false).build())
                 .addTag(key("negative"))
                 .create()
         );
 
-        data.add(new MutationData.Builder(key("wool"), "ccb70e5e-bbc9-465e-b42f-449959295f5b")
+        data.add(new MutationData.Builder(key("wool"))
                 .addResourcePath("textures/mob_effect/wool.png")
                 .addTag(key("rare"))
                 .create()

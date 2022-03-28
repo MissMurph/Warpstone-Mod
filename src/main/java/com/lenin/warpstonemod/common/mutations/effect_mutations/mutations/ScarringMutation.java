@@ -19,8 +19,7 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 	public ScarringMutation() {
 		super(
                 "scarring",
-				"50cc914e-dbfb-4d26-8be3-03de8151932a",
-				400
+                400
 		);
 	}
 

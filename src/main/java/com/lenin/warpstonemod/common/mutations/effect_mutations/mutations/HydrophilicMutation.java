@@ -1,8 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
@@ -22,8 +20,7 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 	public HydrophilicMutation() {
 		super(
                 "hydrophilic",
-				"17782c2e-2438-4c81-b05b-507cb3c576b0",
-				100
+                100
 		);
 	}
 

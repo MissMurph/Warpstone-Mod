@@ -13,7 +13,6 @@ import java.util.Objects;
 
 public class MutationData {
     private ResourceLocation resource;
-    private String uuid;
     private String resourcePath;
     private final List<String> tags = new ArrayList<>();
     private final List<AttrModifierData> modifiers = new ArrayList<>();
@@ -25,7 +24,6 @@ public class MutationData {
         JsonObject out = new JsonObject();
 
         out.addProperty("key", resource.toString());
-        out.addProperty("uuid", uuid);
         out.addProperty("resource_path", resourcePath);
 
         JsonArray jsonTags = new JsonArray();
@@ -56,11 +54,10 @@ public class MutationData {
     public static class Builder {
         private final MutationData data;
 
-        public Builder(ResourceLocation _resource, String _uuid) {
+        public Builder(ResourceLocation _resource) {
             data = new MutationData();
 
             data.resource = _resource;
-            data.uuid = _uuid;
             data.resourcePath = "textures/gui/effect_mutations/" + _resource.getPath() + ".png";
         }
 
@@ -75,12 +72,11 @@ public class MutationData {
         }
 
         public Builder addModifier (ResourceLocation target, double value, String operation) {
-            return addModifier(target, data.resource.getPath(), data.uuid, value, operation);
+            return addModifier(target, data.resource.getPath(), value, operation);
         }
 
-            //If you have to define a unique name you also need a new UUID to match
-        public Builder addModifier (ResourceLocation target, String name, String uuid, double value, String operation) {
-            data.modifiers.add(new AttrModifierData(target.toString(), name, uuid, value, operation));
+        public Builder addModifier (ResourceLocation target, String name, double value, String operation) {
+            data.modifiers.add(new AttrModifierData(target.toString(), name, value, operation));
             return this;
         }
 
@@ -97,14 +93,12 @@ public class MutationData {
     private static class AttrModifierData {
         private final String target;
         private final String name;
-        private final String uuid;
         private final double value;
         private final String operation;
 
-        private AttrModifierData (String _target, String _name, String _uuid, double _value, String _operation) {
+        private AttrModifierData (String _target, String _name, double _value, String _operation) {
             target = _target;
             name = _name;
-            uuid = _uuid;
             value = _value;
             operation = _operation;
         }
@@ -114,7 +108,6 @@ public class MutationData {
 
             out.addProperty("target", target);
             if (!Objects.equals(data.resource.getPath(), this.name)) out.addProperty("name", name);
-            if (!Objects.equals(data.uuid, this.uuid)) out.addProperty("UUID", uuid);
             out.addProperty("value", value);
             out.addProperty("operation", operation);
 

@@ -128,7 +128,27 @@ public class PlayerManager {
             parentEntity.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1f, 1f);
         }
 
-        MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
+        MutateHelper.pushMutDataToClient(getUniqueId(), getMutData());
+    }
+
+    public void addMutation (EffectMutation mutation) {
+        if (effectMutations.contains(mutation.getRegistryName())
+                || !Registration.EFFECT_MUTATIONS.containsKey(mutation.getRegistryName())) return;
+
+        mutation.applyMutation(this);
+        effectMutations.add(mutation.getRegistryName());
+        mutData = serialize();
+        MutateHelper.pushMutDataToClient(getUniqueId(), getMutData());
+    }
+
+    public void removeMutation (EffectMutation mutation) {
+        if (!effectMutations.contains(mutation.getRegistryName())
+                || !Registration.EFFECT_MUTATIONS.containsKey(mutation.getRegistryName())) return;
+
+        mutation.deactivateMutation(this);
+        effectMutations.remove(mutation.getRegistryName());
+        mutData = serialize();
+        MutateHelper.pushMutDataToClient(getUniqueId(), getMutData());
     }
 
     protected CompoundNBT serialize (){

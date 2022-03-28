@@ -3,11 +3,9 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -18,11 +16,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class TurtleMutation extends EffectMutation {
 	public TurtleMutation() {
 		super(
-                "turtle",
-				"21fdd2d1-a7d3-44fd-a033-d155775e5d95"
-		);
-
-		this.textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/turtle.png");
+                "turtle"
+        );
 	}
 
 	@Override

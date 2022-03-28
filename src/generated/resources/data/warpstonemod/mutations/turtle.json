@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:turtle",
-  "uuid": "21fdd2d1-a7d3-44fd-a033-d155775e5d95",
   "resource_path": "textures/mob_effect/turtle.png",
   "tags": [
     "warpstonemod:rare"

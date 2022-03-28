@@ -1,12 +1,8 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,9 +14,8 @@ import java.util.Set;
 public class ExplosiveMutation extends EffectMutation {
 	public ExplosiveMutation() {
 		super(
-                "explosive",
-				"7332e11c-ff66-439f-8808-4de93e9cf355"
-		);
+                "explosive"
+        );
 	}
 
 	private final Set<DamageSource> fireSources = new HashSet<>(Arrays.asList(

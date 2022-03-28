@@ -4,7 +4,6 @@ import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutationInstance;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -14,9 +13,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class BlindnessMutation extends EffectMutation {
 	public BlindnessMutation() {
 		super(
-                "blindness",
-				"0d988324-bfef-4dd4-87a7-647364829c44"
-		);
+                "blindness"
+        );
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.HashMap;
@@ -9,8 +8,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CounterEffectMutation extends EffectMutation {
-    public CounterEffectMutation(String _mutName, String _uuid, int _interval) {
-        super(_mutName, _uuid);
+    public CounterEffectMutation(String _mutName, int _interval) {
+        super(_mutName);
         INTERVAL = _interval;
     }
 

@@ -13,9 +13,8 @@ public class AttrLifeSteal extends WSAttribute {
     public AttrLifeSteal (LivingEntity _parentEntity) {
         super(_parentEntity, new ResourceLocation(WarpstoneMain.MOD_ID, "life_steal"));
 
-        baseValue = 0;
+        baseValue = 1;
     }
-
 
     @Override
     public void attachListeners(IEventBus bus) {
@@ -27,7 +26,7 @@ public class AttrLifeSteal extends WSAttribute {
                 || event.getSource().getTrueSource() != parentEntity
         ) return;
 
-        int amount = Math.round(event.getAmount() * getAttributeValue());
+        int amount = Math.round(event.getAmount() * (getAttributeValue() - 1f));
         ((PlayerEntity) event.getSource().getTrueSource()).heal(amount);
     }
 }

@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,9 +10,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class StrengthMutation extends EffectMutation {
 	public StrengthMutation() {
 		super(
-                "strength",
-				"0c0bbd77-a45b-4e92-8f95-ebdd8a565e02"
-		);
+                "strength"
+        );
 	}
 
 	//This mutation increases knockback with an extra strength of 0.4f

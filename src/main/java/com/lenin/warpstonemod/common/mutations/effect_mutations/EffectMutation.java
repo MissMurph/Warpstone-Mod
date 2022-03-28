@@ -4,32 +4,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttrHealing;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> {
 	protected final String mutName;
@@ -47,8 +37,8 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 
 	protected Map<ResourceLocation, IMutationCondition> conditions = new HashMap<>();
 
-	public EffectMutation(String _mutName, String _uuid) {
-		uuid = UUID.fromString(_uuid);
+	public EffectMutation(String _mutName) {
+		uuid = UUID.randomUUID();
 		mutName = _mutName;
 		//tags = Arrays.asList(_tags);
 
@@ -148,7 +138,7 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 	}
 
 
-	public void deserializeArguments () {
+	public void deserializeArguments (JsonObject object) {
 		//do nothing
 	}
 
@@ -158,7 +148,6 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 			return;
 		}
 
-		uuid = UUID.fromString(json.get("uuid").getAsString());
 		textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, json.get("resource_path").getAsString());
 
 		List<String> newTags = new ArrayList<>();
@@ -169,13 +158,23 @@ public abstract class EffectMutation extends ForgeRegistryEntry<EffectMutation> 
 			if (tag != null && !tags.contains(tag)) tags.add(tag);
 		}
 
+		JsonArray mods = json.getAsJsonArray("modifiers");
+		mods.forEach(element -> {
+			JsonObject object = element.getAsJsonObject();
+			modifiers.put(new ResourceLocation(object.get("target").getAsString()), new AttributeModifier(
+					object.has("name") ? object.get("name").getAsString() : mutName,
+					object.get("value").getAsDouble(),
+					AttributeModifier.Operation.valueOf(object.get("operation").getAsString())
+			));
+		});
+
 		json.getAsJsonArray("conditions").forEach(jsonElement -> {
 			JsonObject object = jsonElement.getAsJsonObject();
 			IMutationCondition condition = MutationConditions.getCondition(new ResourceLocation(object.get("key").getAsString())).deserialize(object);
 			conditions.put(condition.getKey(), condition);
 		});
 
-		deserializeArguments();
+		deserializeArguments(json);
 	}
 
 	public EffectMutationInstance getInstance (LivingEntity entity) {

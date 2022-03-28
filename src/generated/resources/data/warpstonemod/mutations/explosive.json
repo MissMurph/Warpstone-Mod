@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:explosive",
-  "uuid": "7332e11c-ff66-439f-8808-4de93e9cf355",
   "resource_path": "textures/gui/effect_mutations/explosive.png",
   "tags": [
     "warpstonemod:negative"

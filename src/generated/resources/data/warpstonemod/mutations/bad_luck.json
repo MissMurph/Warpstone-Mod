@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:bad_luck",
-  "uuid": "0942e8e9-295a-430f-9988-5537e4010648",
   "resource_path": "textures/gui/effect_mutations/bad_luck.png",
   "tags": [
     "warpstonemod:negative"

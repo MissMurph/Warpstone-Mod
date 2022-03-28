@@ -1,8 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
@@ -18,8 +16,7 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 	public FireBreathingMutation() {
 		super(
 				"fire_breathing",
-				"9970d2cf-e6ba-4025-acf6-fc23ca0c3668",
-				40
+                40
 		);
 	}
 

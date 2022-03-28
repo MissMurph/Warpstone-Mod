@@ -1,10 +1,13 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
@@ -14,10 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PotionMutation extends EffectMutation implements IMutationTick {
-    List<Effect> potions = new ArrayList<>();
+    List<Effect> potions;
 
-    public PotionMutation(String _mutName, String _uuid, Effect... _potions) {
-        super(_mutName, _uuid);
+    public PotionMutation(String _mutName, Effect... _potions) {
+        super(_mutName);
         potions = Arrays.asList(_potions);
     }
 
@@ -77,5 +80,25 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
         for (Effect effect : potions) {
             manager.getParentEntity().removePotionEffect(effect);
         }
+    }
+
+    @Override
+    public JsonObject serializeArguments() {
+        JsonObject json = super.serializeArguments();
+        JsonArray array = new JsonArray();
+
+        for (Effect potion : potions) {
+            array.add(potion.getRegistryName().toString());
+        }
+
+        json.add("potions", array);
+        return json;
+    }
+
+    @Override
+    public void deserializeArguments(JsonObject object) {
+        super.deserializeArguments(object);
+
+        //Registry.EFFECTS
     }
 }

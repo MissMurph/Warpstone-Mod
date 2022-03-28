@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:slow_falling",
-  "uuid": "4e80c5c4-07ef-4ddb-85f9-e1901ba17103",
   "resource_path": "textures/gui/effect_mutations/slow_falling.png",
   "tags": [
     "warpstonemod:uncommon"

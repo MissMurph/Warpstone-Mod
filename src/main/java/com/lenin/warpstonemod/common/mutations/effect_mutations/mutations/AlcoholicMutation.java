@@ -2,7 +2,6 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -22,16 +21,8 @@ import java.util.UUID;
 public class AlcoholicMutation extends EffectMutation {
 	public AlcoholicMutation() {
 		super(
-                "alcoholic",
-				"3fe06fe0-6a8d-403a-b4da-4ed1a9d822fb"
+                "alcoholic"
 		);
-
-		modifiers.put(Attributes.MAX_HEALTH.getRegistryName(), new AttributeModifier(
-				uuid,
-				mutName,
-				-0.25f,
-				AttributeModifier.Operation.MULTIPLY_TOTAL
-		));
 	}
 
 	/**This mutation grants the player {@link Effects#ABSORPTION} every time

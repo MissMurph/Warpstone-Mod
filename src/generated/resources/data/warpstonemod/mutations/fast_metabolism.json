@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:fast_metabolism",
-  "uuid": "1ce59983-cba5-4586-9186-3f69bd0487ce",
   "resource_path": "textures/gui/effect_mutations/fast_metabolism.png",
   "tags": [
     "warpstonemod:common"

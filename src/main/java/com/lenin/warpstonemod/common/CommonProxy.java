@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common;
 
+import com.lenin.warpstonemod.common.commands.WarpstoneCommand;
 import com.lenin.warpstonemod.common.data.MutationReloadListener;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
@@ -15,6 +16,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.FolderName;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -60,6 +62,8 @@ public class CommonProxy {
 		bus.addListener(this::onPlayerTick);
 
 		bus.addListener(this::onRegisterReloadListeners);
+
+		bus.addListener(this::onRegisterCommands);
 
 		bus.addListener(EventPriority.HIGH, WarpstoneWorldGen::onBiomeLoading);
 	}
@@ -121,6 +125,10 @@ public class CommonProxy {
 
 	private void onRegisterReloadListeners (AddReloadListenerEvent event) {
 		event.addListener(MUTATION_LISTENER);
+	}
+
+	private void onRegisterCommands (RegisterCommandsEvent event) {
+		WarpstoneCommand.register(event.getDispatcher());
 	}
 
 	public File getWarpServerDataDirectory () {

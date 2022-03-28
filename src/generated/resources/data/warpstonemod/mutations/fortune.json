@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:fortune",
-  "uuid": "9b0a8faa-1888-409f-a2a4-b0aab39cc065",
   "resource_path": "textures/gui/effect_mutations/fortune.png",
   "tags": [
     "warpstonemod:rare"

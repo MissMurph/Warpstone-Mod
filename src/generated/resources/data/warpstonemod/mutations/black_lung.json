@@ -1,6 +1,5 @@
 {
   "key": "warpstonemod:black_lung",
-  "uuid": "24d24ca3-4072-45d6-a7f0-29085b4f77fd",
   "resource_path": "textures/gui/effect_mutations/black_lung.png",
   "tags": [
     "warpstonemod:common"

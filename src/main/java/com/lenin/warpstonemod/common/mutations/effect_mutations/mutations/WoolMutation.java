@@ -23,11 +23,8 @@ import java.util.*;
 public class WoolMutation extends EffectMutation implements IMutationTick {
     public WoolMutation() {
         super(
-                "wool",
-                "ccb70e5e-bbc9-465e-b42f-449959295f5b"
+                "wool"
         );
-
-        this.textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/mob_effect/wool.png");
     }
 
     //RemoveList is so we dont cancel our own remove calls for the effect
