@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -36,7 +36,7 @@ public class LootModifierFortuneMutation extends LootModifier {
 
 		PlayerManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
 
-		if (manager != null && manager.containsEffect(EffectMutations.FORTUNE)) {
+		if (manager != null && manager.containsEffect(Mutations.FORTUNE)) {
 			Block block = context.get(LootParameters.BLOCK_STATE).getBlock();
 
 			block.getTags().stream().filter(tag -> tag.equals(Tags.Blocks.ORES.getName())).forEach(tag -> {

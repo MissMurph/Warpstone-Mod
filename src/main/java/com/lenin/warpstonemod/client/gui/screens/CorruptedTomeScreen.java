@@ -5,11 +5,11 @@ import com.lenin.warpstonemod.client.gui.Textures;
 import com.lenin.warpstonemod.client.gui.WSElement;
 import com.lenin.warpstonemod.client.gui.components.ImageComponent;
 import com.lenin.warpstonemod.common.Registration;
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -26,7 +26,7 @@ public class CorruptedTomeScreen extends WSScreen{
     protected void init() {
         super.init();
 
-        List<EffectMutation> muts = new ArrayList<>(Registration.EFFECT_MUTATIONS.getValues());
+        List<Mutation> muts = new ArrayList<>(Registration.EFFECT_MUTATIONS.getValues());
 
         muts.sort(new TagComporator());
 
@@ -39,8 +39,8 @@ public class CorruptedTomeScreen extends WSScreen{
 
             elements.add(new WSElement.Builder(x, y, 18, 18, this)
                     .addComponent(new ImageComponent(
-                            new RawTextureResource(EffectMutations.getMutation(muts.get(i)).getTexture(), 18, 18, 0, 0)))
-                    .addTooltips(EffectMutations.getMutation(muts.get(i)).getToolTips().toArray(new ITextComponent[0]))
+                            new RawTextureResource(Mutations.getMutation(muts.get(i)).getTexture(), 18, 18, 0, 0)))
+                    .addTooltips(Mutations.getMutation(muts.get(i)).getToolTips().toArray(new ITextComponent[0]))
                     .build()
             );
         }
@@ -55,10 +55,10 @@ public class CorruptedTomeScreen extends WSScreen{
      * Only needed for Tome Screen hence this isn't a part of the core Mutation Code
      */
 
-    public static class TagComporator implements Comparator<EffectMutation> {
+    public static class TagComporator implements Comparator<Mutation> {
 
         @Override
-        public int compare(EffectMutation o1, EffectMutation o2) {
+        public int compare(Mutation o1, Mutation o2) {
             int o1Weight = 0;
             int o2Weight = 0;
 

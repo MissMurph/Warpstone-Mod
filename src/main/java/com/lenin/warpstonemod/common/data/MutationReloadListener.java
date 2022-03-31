@@ -3,18 +3,14 @@ package com.lenin.warpstonemod.common.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.lenin.warpstonemod.common.Registration;
-import com.lenin.warpstonemod.common.WarpstoneMain;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class MutationReloadListener extends JsonReloadListener {
 
@@ -42,6 +38,6 @@ public class MutationReloadListener extends JsonReloadListener {
         objectIn.entrySet().stream()
                 .filter(entry -> !entry.getKey().getPath().contains("tags"))
                 .map(Map.Entry::getValue)
-                .forEach(json -> EffectMutations.loadMutationData(json.getAsJsonObject()));
+                .forEach(json -> Mutations.loadMutationData(json.getAsJsonObject()));
     }
 }

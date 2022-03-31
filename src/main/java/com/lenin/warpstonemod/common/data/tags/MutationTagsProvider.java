@@ -58,5 +58,13 @@ public class MutationTagsProvider extends WarpstoneDataProvider {
                 .addFormatting(TextFormatting.RED)
                 .create()
         );
+
+        data.add(new MutationTagData.Builder(key("permanent"), 1)
+                .create()
+        );
+
+        data.add(new MutationTagData.Builder(key("child"), 0)
+                .create()
+        );
     }
 }

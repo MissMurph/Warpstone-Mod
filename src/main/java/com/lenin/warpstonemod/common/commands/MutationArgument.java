@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.commands;
 
 import com.lenin.warpstonemod.common.Registration;
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.StringReader;
@@ -21,12 +22,12 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public class MutationArgument implements ArgumentType<EffectMutation> {
+public class MutationArgument implements ArgumentType<Mutation> {
 
     public static final SimpleCommandExceptionType MUTATION_NOT_FOUND = new SimpleCommandExceptionType(new TranslationTextComponent("warpstonemod.commmand.mutation.not_found"));
 
     @Override
-    public EffectMutation parse(StringReader reader) throws CommandSyntaxException {
+    public Mutation parse(StringReader reader) throws CommandSyntaxException {
         ResourceLocation key = ResourceLocation.read(reader);
 
         if (Registration.EFFECT_MUTATIONS.containsKey(key)) {
@@ -39,7 +40,7 @@ public class MutationArgument implements ArgumentType<EffectMutation> {
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         return ISuggestionProvider.suggestIterable(
                 Registration.EFFECT_MUTATIONS.getValues().stream()
-                        .map(EffectMutation::getRegistryName)
+                        .map(Mutation::getRegistryName)
                         .collect(Collectors.toList()),
                 builder);
     }

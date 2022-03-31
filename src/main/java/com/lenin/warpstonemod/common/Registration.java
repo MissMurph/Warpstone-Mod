@@ -3,8 +3,9 @@ package com.lenin.warpstonemod.common;
 import com.lenin.warpstonemod.common.blocks.WarpBlocks;
 import com.lenin.warpstonemod.common.items.WarpItems;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class Registration {
     public static List<Block> BLOCKS;
-    public static IForgeRegistry<EffectMutation> EFFECT_MUTATIONS;
+    public static IForgeRegistry<Mutation> EFFECT_MUTATIONS;
 
     private final Map<Class<?>, List<IForgeRegistryEntry<?>>> initialized = new HashMap<>();
 
@@ -27,14 +28,14 @@ public class Registration {
     public void attachListeners (IEventBus bus) {
         bus.addGenericListener(Item.class, this::registerItems);
         bus.addGenericListener(Block.class, this::registerBlocks);
-        bus.addGenericListener(EffectMutation.class, this::registerMutations);
+        bus.addGenericListener(Mutation.class, this::registerMutations);
         bus.addGenericListener(Effect.class, this::registerEffects);
     }
 
     public static void onRegistryBuild(RegistryEvent.NewRegistry event) {
-        EFFECT_MUTATIONS = new RegistryBuilder<EffectMutation>()
+        EFFECT_MUTATIONS = new RegistryBuilder<Mutation>()
                 .setName(new ResourceLocation(WarpstoneMain.MOD_ID, "mutation"))
-                .setType(EffectMutation.class)
+                .setType(Mutation.class)
                 .create();
     }
 
@@ -67,8 +68,8 @@ public class Registration {
         fillRegistry(event.getRegistry().getRegistrySuperType(), event.getRegistry());
     }
 
-    private void registerMutations (RegistryEvent.Register<EffectMutation> event) {
-        EffectMutations.init();
+    private void registerMutations (RegistryEvent.Register<Mutation> event) {
+        Mutations.init();
         fillRegistry(event.getRegistry().getRegistrySuperType(), event.getRegistry());
     }
 

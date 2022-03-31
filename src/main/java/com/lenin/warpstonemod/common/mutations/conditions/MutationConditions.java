@@ -1,6 +1,8 @@
 package com.lenin.warpstonemod.common.mutations.conditions;
 
 import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.mutations.conditions.nbt.NbtMatchesStringCondition;
+import com.lenin.warpstonemod.common.mutations.conditions.nbt.NbtNumberCondition;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
@@ -11,6 +13,8 @@ public class MutationConditions {
 
     public static final IConditionSerializer CORRUPTION_LEVEL = register(key("corruption_level"), new CorruptionLevelCondition.Serializer());
     public static final IConditionSerializer HAS_MUTATION = register(key("has_mutation"), new HasMutationCondition.Serializer());
+    public static final IConditionSerializer NBT_MATCHES_STRING = register(key("nbt_matches_string"), new NbtMatchesStringCondition.Serializer());
+    public static final IConditionSerializer NBT_NUMBER = register(key("nbt_number"), new NbtNumberCondition.Serializer());
 
     public static IConditionSerializer register (ResourceLocation key, IConditionSerializer serializer) {
         registry.put(key, serializer);

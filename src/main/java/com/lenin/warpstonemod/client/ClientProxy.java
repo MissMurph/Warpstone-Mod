@@ -3,15 +3,9 @@ package com.lenin.warpstonemod.client;
 import com.lenin.warpstonemod.client.gui.MutationScreenOpenButton;
 import com.lenin.warpstonemod.client.gui.Textures;
 import com.lenin.warpstonemod.common.CommonProxy;
-import com.lenin.warpstonemod.common.Registration;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
-
-import java.util.stream.Collectors;
 
 public class ClientProxy extends CommonProxy {
 

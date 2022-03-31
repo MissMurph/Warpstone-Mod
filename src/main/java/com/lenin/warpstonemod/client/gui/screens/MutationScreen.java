@@ -9,10 +9,9 @@ import com.lenin.warpstonemod.client.gui.components.TextComponent;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
-import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
@@ -118,8 +117,8 @@ public class MutationScreen extends WSScreen {
 
 			elements.add(new WSElement.Builder(x, y, 18, 18, this)
 					.addComponent(new ImageComponent(
-							new RawTextureResource(EffectMutations.getMutation(effectMuts.get(i)).getTexture(), 18, 18, 0, 0)))
-					.addTooltips(EffectMutations.getMutation(effectMuts.get(i)).getToolTips().toArray(new ITextComponent[0]))
+							new RawTextureResource(Mutations.getMutation(effectMuts.get(i)).getTexture(), 18, 18, 0, 0)))
+					.addTooltips(Mutations.getMutation(effectMuts.get(i)).getToolTips().toArray(new ITextComponent[0]))
 					.build()
 			);
 		}

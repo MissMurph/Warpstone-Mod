@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutations;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
@@ -35,7 +35,7 @@ public class LootModifierBlackLungMutation extends LootModifier {
 
         PlayerManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
 
-        if (manager != null && manager.containsEffect(EffectMutations.BLACK_LUNG)) {
+        if (manager != null && manager.containsEffect(Mutations.BLACK_LUNG)) {
             Block block = context.get(LootParameters.BLOCK_STATE).getBlock();
 
             block.getTags().stream().filter(tag -> tag.equals(Tags.Blocks.ORES_COAL.getName())).forEach(tag -> {

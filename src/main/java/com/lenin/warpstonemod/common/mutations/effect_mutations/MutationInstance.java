@@ -3,12 +3,12 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.LivingEntity;
 
-public class EffectMutationInstance {
+public class MutationInstance {
 	protected final PlayerManager parent;
 
 	protected boolean active;
 
-	public EffectMutationInstance(PlayerManager _parent){
+	public MutationInstance(PlayerManager _parent){
 		parent = _parent;
 
 		active = false;

@@ -73,7 +73,7 @@ public class MutationCommand {
             return 0;
         }
 
-        manager.addMutation(mutation);
+        manager.addMutationCommand(mutation);
         return 0;
     }
 
@@ -93,7 +93,7 @@ public class MutationCommand {
             return 0;
         }
 
-        manager.removeMutation(mutation);
+        manager.removeMutationCommand(mutation);
         return 0;
     }
 }

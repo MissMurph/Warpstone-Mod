@@ -11,7 +11,7 @@ public interface IMutationCondition {
     boolean act(PlayerManager manager);
 
     @FunctionalInterface
-    public interface IBuilder {
+    interface IBuilder {
         IMutationCondition build();
     }
 }
