@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
@@ -20,7 +19,7 @@ public class WSAttributes {
     public static final WSAttribute.AttributeFactory<WSAttribute>  RANGED_DAMAGE = register("ranged_damage", AttrRangedDamage::new);
 
     public static WSAttribute.AttributeFactory<WSAttribute>  register (String key, WSAttribute.AttributeSupplier<WSAttribute> supplier) {
-        ResourceLocation resource = new ResourceLocation(WarpstoneMain.MOD_ID, key);
+        ResourceLocation resource = new ResourceLocation(Warpstone.MOD_ID, key);
         WSAttribute.AttributeFactory<WSAttribute>  factory = new WSAttribute.AttributeFactory<>(supplier, resource);
         ATTRIBUTE_MAP.put(resource, factory);
         return factory;

@@ -8,6 +8,7 @@ import net.minecraft.item.PotionItem;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,9 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PotassiumMutation extends CounterEffectMutation implements IMutationTick {
-	public PotassiumMutation() {
-		super(
-                "potassium",
+	public PotassiumMutation(ResourceLocation _key) {
+		super(_key,
                 100
 		);
 	}

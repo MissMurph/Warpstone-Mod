@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.conditions;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.conditions.nbt.NbtMatchesStringCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.nbt.NbtNumberCondition;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +28,6 @@ public class MutationConditions {
     public static void init () {}
 
     private static ResourceLocation key (String key) {
-        return new ResourceLocation(WarpstoneMain.MOD_ID, key);
+        return new ResourceLocation(Warpstone.MOD_ID, key);
     }
 }

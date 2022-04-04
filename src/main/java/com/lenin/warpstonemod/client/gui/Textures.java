@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.client.gui;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import net.minecraft.util.ResourceLocation;
 
 public class Textures {
@@ -8,19 +8,19 @@ public class Textures {
 
         /*  Raw Textures    */
     public static final RawTextureResource MUT_OPEN_SCREEN_BUTTON = new RawTextureResource(
-            new ResourceLocation(WarpstoneMain.MOD_ID,"textures/gui/warp_icons.png"), 20, 37, 0, 0);
+            new ResourceLocation(Warpstone.MOD_ID,"textures/gui/warp_icons.png"), 20, 37, 0, 0);
 
     public static final RawTextureResource MUT_OPEN_SCREEN_BUTTON_HVRD = new RawTextureResource(
-            new ResourceLocation(WarpstoneMain.MOD_ID,"textures/gui/warp_icons.png"), 20, 37, 0, 19);
+            new ResourceLocation(Warpstone.MOD_ID,"textures/gui/warp_icons.png"), 20, 37, 0, 19);
 
     public static final RawTextureResource MUT_SCREEN_ATTR_BAR = new RawTextureResource(
-            new ResourceLocation(WarpstoneMain.MOD_ID,"textures/gui/mutation_attribute_bar.png"), 256, 256, 0, 19);
+            new ResourceLocation(Warpstone.MOD_ID,"textures/gui/mutation_attribute_bar.png"), 256, 256, 0, 19);
 
     public static final RawTextureResource MUT_SCREEN = new RawTextureResource(
-            new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/mutation_screen.png"), 256, 256, 0, 0);
+            new ResourceLocation(Warpstone.MOD_ID, "textures/gui/mutation_screen.png"), 256, 256, 0, 0);
 
     public static final RawTextureResource CORRUPTED_TOME_SCREEN = new RawTextureResource(
-            new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/corrupted_tome.png"), 256, 256, 0, 0);
+            new ResourceLocation(Warpstone.MOD_ID, "textures/gui/corrupted_tome.png"), 256, 256, 0, 0);
 
         /*  Sprite Sheets   */
     public static final SpriteSheetResource SHEET_MUT_ATTR_BAR = new SpriteSheetResource(MUT_SCREEN_ATTR_BAR, 75,
@@ -41,7 +41,7 @@ public class Textures {
                     y = 2;
                 }
 
-                return new RawTextureResource(new ResourceLocation(WarpstoneMain.MOD_ID,"textures/gui/mutation_attribute_bar.png"), 256, 256, x*8, y*78);
+                return new RawTextureResource(new ResourceLocation(Warpstone.MOD_ID,"textures/gui/mutation_attribute_bar.png"), 256, 256, x*8, y*78);
             }
     );
 }

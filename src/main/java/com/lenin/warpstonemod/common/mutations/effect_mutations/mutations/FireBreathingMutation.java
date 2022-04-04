@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMut
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
@@ -13,9 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FireBreathingMutation extends CounterEffectMutation implements IMutationTick {
-	public FireBreathingMutation() {
-		super(
-				"fire_breathing",
+	public FireBreathingMutation(ResourceLocation _key) {
+		super(_key,
                 40
 		);
 	}

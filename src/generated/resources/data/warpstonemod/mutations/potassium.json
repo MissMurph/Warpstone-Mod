@@ -5,7 +5,6 @@
     "warpstonemod:uncommon",
     "warpstonemod:negative"
   ],
-  "modifiers": [],
   "conditions": [
     {
       "key": "warpstonemod:has_mutation",
@@ -13,5 +12,6 @@
       "result": false
     }
   ],
-  "arguments": {}
+  "arguments": {},
+  "modifiers": []
 }

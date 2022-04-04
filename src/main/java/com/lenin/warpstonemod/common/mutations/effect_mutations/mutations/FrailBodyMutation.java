@@ -4,14 +4,13 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class FrailBodyMutation extends EffectMutation {
-	public FrailBodyMutation() {
-		super(
-                "frail_body"
-        );
+	public FrailBodyMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	@Override

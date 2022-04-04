@@ -2,7 +2,7 @@ package com.lenin.warpstonemod.common.mutations.conditions.nbt;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IConditionSerializer;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
@@ -21,7 +21,7 @@ public class NbtNumberCondition extends NbtCondition {
     private final List<Operation> operations;
 
     protected NbtNumberCondition (ResourceLocation _targetMut, String _nbtKey, INBT _nbt, Operation... _operations) {
-        super(new ResourceLocation(WarpstoneMain.MOD_ID, "nbt_number"), _targetMut, _nbtKey, _nbt);
+        super(new ResourceLocation(Warpstone.MOD_ID, "nbt_number"), _targetMut, _nbtKey, _nbt);
 
         operations = Arrays.asList(_operations);
     }

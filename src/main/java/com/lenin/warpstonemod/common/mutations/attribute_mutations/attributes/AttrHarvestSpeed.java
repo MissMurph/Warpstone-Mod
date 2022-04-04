@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttribute;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class AttrHarvestSpeed extends WSAttribute {
 	public AttrHarvestSpeed (LivingEntity _parentEntity) {
-		super(_parentEntity, new ResourceLocation(WarpstoneMain.MOD_ID, "harvest_speed"));
+		super(_parentEntity, new ResourceLocation(Warpstone.MOD_ID, "harvest_speed"));
 	}
 
 	@Override

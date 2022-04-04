@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import com.lenin.warpstonemod.common.network.SyncMutDataPacket;
 import net.minecraft.client.Minecraft;
@@ -104,7 +104,7 @@ public class MutateHelper {
     }
 
     public static File getMutFile (UUID playerUUID) {
-        File f = new File(WarpstoneMain.getProxy().getWarpServerDataDirectory(), playerUUID.toString() + ".warpstone");
+        File f = new File(Warpstone.getProxy().getWarpServerDataDirectory(), playerUUID.toString() + ".warpstone");
         System.out.println("WARPLOGS: Loading NBT File");
         if (!f.exists()) {
             try {

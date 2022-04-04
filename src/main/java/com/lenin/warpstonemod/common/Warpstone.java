@@ -4,6 +4,7 @@ import com.lenin.warpstonemod.client.ClientProxy;
 import com.lenin.warpstonemod.common.data.loot.WarpLootModifierSerializers;
 import com.lenin.warpstonemod.common.items.WarpstoneItemGroup;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -14,8 +15,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 
-@Mod(WarpstoneMain.MOD_ID)
-public class WarpstoneMain {
+@Mod(Warpstone.MOD_ID)
+public class Warpstone {
 
     public static final String MOD_ID = "warpstonemod";
     public static final ItemGroup MOD_GROUP = new WarpstoneItemGroup("warpstone");
@@ -24,9 +25,9 @@ public class WarpstoneMain {
 
     private final CommonProxy proxy;
 
-    private static WarpstoneMain instance;
+    private static Warpstone instance;
 
-    public WarpstoneMain() {
+    public Warpstone() {
         instance = this;
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -47,7 +48,11 @@ public class WarpstoneMain {
 
     public static CommonProxy getProxy () { return getInstance().proxy; }
 
-    public static WarpstoneMain getInstance() { return instance; }
+    public static Warpstone getInstance() { return instance; }
+
+    public static ResourceLocation key (String name) {
+        return new ResourceLocation(MOD_ID, name);
+    }
 
     public static Random getRandom() { return random; }
 }

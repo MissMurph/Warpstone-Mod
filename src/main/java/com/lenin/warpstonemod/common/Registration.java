@@ -4,7 +4,6 @@ import com.lenin.warpstonemod.common.blocks.WarpBlocks;
 import com.lenin.warpstonemod.common.items.WarpItems;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.Mutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -34,7 +33,7 @@ public class Registration {
 
     public static void onRegistryBuild(RegistryEvent.NewRegistry event) {
         EFFECT_MUTATIONS = new RegistryBuilder<Mutation>()
-                .setName(new ResourceLocation(WarpstoneMain.MOD_ID, "mutation"))
+                .setName(new ResourceLocation(Warpstone.MOD_ID, "mutation"))
                 .setType(Mutation.class)
                 .create();
     }

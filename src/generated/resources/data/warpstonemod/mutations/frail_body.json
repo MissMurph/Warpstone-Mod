@@ -4,7 +4,7 @@
   "tags": [
     "warpstonemod:negative"
   ],
-  "modifiers": [],
   "conditions": [],
-  "arguments": {}
+  "arguments": {},
+  "modifiers": []
 }

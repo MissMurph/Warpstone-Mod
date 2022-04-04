@@ -136,7 +136,7 @@ public class CommonProxy {
 
 		if (server == null) { System.out.println("Server Not Found"); return null; }
 
-		File dir = server.func_240776_a_(new FolderName(WarpstoneMain.MOD_ID)).toFile();
+		File dir = server.func_240776_a_(new FolderName(Warpstone.MOD_ID)).toFile();
 
 		if (!dir.exists()) dir.mkdirs();
 

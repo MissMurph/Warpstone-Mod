@@ -12,8 +12,6 @@ public class EffectMutationData extends MutationData {
 
     protected final List<AttrModifierData> modifiers = new ArrayList<>();
 
-    protected ResourceLocation parentKey;
-
     protected EffectMutationData() {
         super();
     }

@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.client.data;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -9,7 +9,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class WarpItemModelProvider extends ItemModelProvider {
 	public WarpItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, WarpstoneMain.MOD_ID, existingFileHelper);
+		super(generator, Warpstone.MOD_ID, existingFileHelper);
 	}
 
 	@Override

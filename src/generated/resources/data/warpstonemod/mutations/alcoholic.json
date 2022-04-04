@@ -4,13 +4,6 @@
   "tags": [
     "warpstonemod:uncommon"
   ],
-  "modifiers": [
-    {
-      "target": "minecraft:generic.max_health",
-      "value": -0.25,
-      "operation": "MULTIPLY_TOTAL"
-    }
-  ],
   "conditions": [
     {
       "key": "warpstonemod:has_mutation",
@@ -23,5 +16,12 @@
       "result": false
     }
   ],
-  "arguments": {}
+  "arguments": {},
+  "modifiers": [
+    {
+      "target": "minecraft:generic.max_health",
+      "value": -0.25,
+      "operation": "MULTIPLY_TOTAL"
+    }
+  ]
 }

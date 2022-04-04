@@ -5,14 +5,13 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class ThornsMutation extends EffectMutation {
-	public ThornsMutation() {
-		super(
-                "thorns"
-        );
+	public ThornsMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	@Override

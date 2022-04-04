@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -13,10 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class IronGutMutation extends EffectMutation {
-	public IronGutMutation() {
-		super(
-                "iron_gut"
-        );
+	public IronGutMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	/**This mutation makes the player immune to the negative effects of any food item

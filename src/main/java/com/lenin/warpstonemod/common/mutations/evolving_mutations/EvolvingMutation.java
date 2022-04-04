@@ -1,19 +1,29 @@
 package com.lenin.warpstonemod.common.mutations.evolving_mutations;
 
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
+import com.lenin.warpstonemod.common.mutations.MutationSupplier;
 
 public abstract class EvolvingMutation extends Mutation {
 
-    protected final LinkedHashMap<ResourceLocation, Mutation> childMutations = new LinkedHashMap<>();
+    protected static final LinkedHashMap<ResourceLocation, Mutation> CHILDREN = new LinkedHashMap<>();
+    protected static final Map<ResourceLocation, MutationSupplier<Mutation>> LOCAL_REGISTRY = new HashMap<>();
 
-    public EvolvingMutation(String _name) {
-        super(_name);
+    public EvolvingMutation(ResourceLocation _key) {
+        super(_key);
+
+        fillRegistry();
+
+        for (Map.Entry<ResourceLocation, MutationSupplier<Mutation>> entry : LOCAL_REGISTRY.entrySet()) {
+            CHILDREN.put(entry.getKey(), Mutations.register(entry.getKey(), entry.getValue()));
+        }
     }
 
     @Override
@@ -21,14 +31,14 @@ public abstract class EvolvingMutation extends Mutation {
         super.applyMutation(manager);
 
         //apply effects of first mutation
-        childMutations.entrySet().iterator().next().getValue().applyMutation(getInstance(manager.getUniqueId()));
+        CHILDREN.entrySet().iterator().next().getValue().applyMutation(getInstance(manager.getUniqueId()));
     }
 
     @Override
     public void deactivateMutation(PlayerManager manager) {
         super.deactivateMutation(manager);
 
-        for (Mutation mutation : childMutations.values()) {
+        for (Mutation mutation : CHILDREN.values()) {
             mutation.deactivateMutation(manager);
         }
     }
@@ -37,7 +47,7 @@ public abstract class EvolvingMutation extends Mutation {
     public void clearInstance(PlayerManager manager) {
         super.clearInstance(manager);
 
-        for (Mutation mutation : childMutations.values()) {
+        for (Mutation mutation : CHILDREN.values()) {
             mutation.clearInstance(manager);
         }
     }
@@ -61,7 +71,7 @@ public abstract class EvolvingMutation extends Mutation {
     }
 
     protected void moveInstanceToChild (MutationInstance instance, Mutation moveTo) {
-        for (Mutation mutation : childMutations.values()) {
+        for (Mutation mutation : CHILDREN.values()) {
             removeInstanceFromChild(instance, mutation);
         }
 
@@ -71,5 +81,11 @@ public abstract class EvolvingMutation extends Mutation {
     @Override
     public MutationInstance getInstanceType(PlayerManager manager) {
         return new NbtMutationInstance(manager);
+    }
+
+    protected abstract void fillRegistry ();
+
+    protected static void registerChild (ResourceLocation _key, MutationSupplier<Mutation> _supplier) {
+        LOCAL_REGISTRY.put(_key, _supplier);
     }
 }

@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.data.loot;
 
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
@@ -42,7 +42,7 @@ public class LootModifierBlackLungMutation extends LootModifier {
                 List<ItemStack> stack = new ArrayList<>(generatedLoot);
 
                 for (ItemStack i : stack) {
-                    if (WarpstoneMain.getRandom().nextBoolean()) generatedLoot.add(i);
+                    if (Warpstone.getRandom().nextBoolean()) generatedLoot.add(i);
                 }
             });
         }

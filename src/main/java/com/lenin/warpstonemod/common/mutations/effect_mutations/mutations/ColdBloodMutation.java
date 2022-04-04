@@ -5,6 +5,7 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,9 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ColdBloodMutation extends CounterEffectMutation implements IMutationTick {
-    public ColdBloodMutation() {
-        super(
-                "cold_blood",
+    public ColdBloodMutation(ResourceLocation _key) {
+        super(_key,
                 200
         );
     }

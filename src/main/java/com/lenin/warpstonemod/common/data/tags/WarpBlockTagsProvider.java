@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.data.tags;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.blocks.WarpBlocks;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class WarpBlockTagsProvider extends BlockTagsProvider {
 
     public WarpBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, WarpstoneMain.MOD_ID, existingFileHelper);
+        super(generatorIn, Warpstone.MOD_ID, existingFileHelper);
     }
 
     @Override

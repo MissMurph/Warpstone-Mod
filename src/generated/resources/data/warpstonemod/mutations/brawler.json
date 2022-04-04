@@ -4,6 +4,14 @@
   "tags": [
     "warpstonemod:uncommon"
   ],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:archer",
+      "result": false
+    }
+  ],
+  "arguments": {},
   "modifiers": [
     {
       "target": "warpstonemod:melee_damage",
@@ -15,13 +23,5 @@
       "value": -0.25,
       "operation": "MULTIPLY_TOTAL"
     }
-  ],
-  "conditions": [
-    {
-      "key": "warpstonemod:has_mutation",
-      "mutation": "warpstonemod:archer",
-      "result": false
-    }
-  ],
-  "arguments": {}
+  ]
 }

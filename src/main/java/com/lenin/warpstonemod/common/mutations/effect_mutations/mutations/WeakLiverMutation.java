@@ -7,14 +7,13 @@ import net.minecraft.item.PotionItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class WeakLiverMutation extends EffectMutation {
-	public WeakLiverMutation() {
-		super(
-                "weak_liver"
-        );
+	public WeakLiverMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	/**This mutation inflicts Nausea on the player whenever they drink a potion

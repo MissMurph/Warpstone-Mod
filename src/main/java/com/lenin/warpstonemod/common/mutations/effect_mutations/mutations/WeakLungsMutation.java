@@ -7,13 +7,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectUtils;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.LogicalSide;
 
 public class WeakLungsMutation extends CounterEffectMutation implements IMutationTick {
-	public WeakLungsMutation() {
-		super(
-				"weak_lungs",
+	public WeakLungsMutation(ResourceLocation _key) {
+		super(_key,
 				5
 		);
 	}

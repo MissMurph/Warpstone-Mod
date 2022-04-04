@@ -1,9 +1,7 @@
 package com.lenin.warpstonemod.common.mob_effects;
 
-import com.lenin.warpstonemod.common.Registration;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import net.minecraft.potion.Effect;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -15,7 +13,7 @@ public class WarpEffects {
 
 	private static Effect registerEffects (String name, Supplier<Effect> effect) {
 		Effect e = effect.get().setRegistryName(name);
-		return WarpstoneMain.getProxy().getRegistration().register(e);
+		return Warpstone.getProxy().getRegistration().register(e);
 	}
 
 	public static void register() {}

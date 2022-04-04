@@ -4,22 +4,15 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Foods;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.*;
 
 public class HerbivoreMutation extends EffectMutation {
-    public HerbivoreMutation() {
-        super(
-                "herbivore"
-        );
-    }
-
-    protected HerbivoreMutation(String _name) {
-        super(
-                _name
-        );
+    public HerbivoreMutation(ResourceLocation _key) {
+        super(_key);
     }
 
     protected static final List<Food> VEGE_FOOD = new ArrayList<>(Arrays.asList(

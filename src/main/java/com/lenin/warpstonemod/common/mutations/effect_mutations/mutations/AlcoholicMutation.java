@@ -10,6 +10,7 @@ import net.minecraft.item.PotionItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,10 +20,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class AlcoholicMutation extends EffectMutation {
-	public AlcoholicMutation() {
-		super(
-                "alcoholic"
-		);
+	public AlcoholicMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	/**This mutation grants the player {@link Effects#ABSORPTION} every time

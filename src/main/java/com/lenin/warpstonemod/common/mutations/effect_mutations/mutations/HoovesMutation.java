@@ -7,14 +7,13 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.LogicalSide;
 
 public class HoovesMutation extends EffectMutation implements IMutationTick {
-	public HoovesMutation() {
-		super(
-                "hooves"
-        );
+	public HoovesMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	@Override

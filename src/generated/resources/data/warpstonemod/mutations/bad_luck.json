@@ -4,13 +4,6 @@
   "tags": [
     "warpstonemod:negative"
   ],
-  "modifiers": [
-    {
-      "target": "minecraft:generic.luck",
-      "value": -1.0,
-      "operation": "ADDITION"
-    }
-  ],
   "conditions": [
     {
       "key": "warpstonemod:has_mutation",
@@ -18,5 +11,12 @@
       "result": false
     }
   ],
-  "arguments": {}
+  "arguments": {},
+  "modifiers": [
+    {
+      "target": "minecraft:generic.luck",
+      "value": -1.0,
+      "operation": "ADDITION"
+    }
+  ]
 }

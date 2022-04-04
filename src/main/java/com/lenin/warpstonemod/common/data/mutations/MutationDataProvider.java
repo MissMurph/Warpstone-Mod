@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.data.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.data.WarpstoneDataProvider;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.conditions.HasMutationCondition;
@@ -35,7 +35,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
     }
 
     private ResourceLocation key (String key) {
-        return new ResourceLocation(WarpstoneMain.MOD_ID, key);
+        return new ResourceLocation(Warpstone.MOD_ID, key);
     }
 
     private void buildMutationData () {
@@ -313,14 +313,12 @@ public class MutationDataProvider extends WarpstoneDataProvider {
 
     private void buildEvolvingMutations () {
         data.add(new EvolvingMutationData.Builder(key("curse_ninja"))
-                .addChildEffect(new EffectMutationData.Builder(key("curse_ninja_child_1"))
+                .addChildMutation(new EffectMutationData.Builder(key("curse_ninja_child_1"))
                         .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
-                        .create()
                 )
-                .addChildEffect(new EffectMutationData.Builder(key("curse_ninja_child_2"))
+                .addChildMutation(new EffectMutationData.Builder(key("curse_ninja_child_2"))
                         .addModifier(Attributes.MAX_HEALTH.getRegistryName(), 1f, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                         .addNbtNumberCondition("fall_blocks", NbtNumberCondition.Type.INT, "1000", NbtNumberCondition.Operation.EQUAL_TO, NbtNumberCondition.Operation.GREATER_THAN)
-                        .create()
                 )
                 .addTag(key("uncommon"))
                 .create()

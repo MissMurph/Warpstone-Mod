@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.data.mutations;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
@@ -15,10 +16,12 @@ import java.util.Objects;
 
 public abstract class MutationData {
     protected ResourceLocation resource;
+    protected ResourceLocation parentKey;
     protected String resourcePath;
     protected final List<String> tags = new ArrayList<>();
 
-    protected final JsonArray conditions = new JsonArray();
+    //protected final List<IMutationCondition> conditions = new ArrayList<>();
+    protected JsonArray conditions = new JsonArray();
 
     protected MutationData () {}
 
@@ -37,7 +40,9 @@ public abstract class MutationData {
         out.add("tags", jsonTags);
 
         out.add("conditions", conditions);
-        out.add("arguments", Registration.EFFECT_MUTATIONS.getValue(resource).serializeArguments());
+
+        if (Registration.EFFECT_MUTATIONS.containsKey(resource)) out.add("arguments", Registration.EFFECT_MUTATIONS.getValue(resource).serializeArguments());
+        else out.add("arguments", new JsonObject());
 
         return out;
     }
@@ -80,6 +85,27 @@ public abstract class MutationData {
         public AbstractBuilder<T> addNbtNumberCondition (String nbtKey, NbtNumberCondition.Type type, String value, NbtNumberCondition.Operation... operations) {
             IMutationCondition condition = NbtNumberCondition.builder(data.resource, nbtKey, type, value, operations).build();
             data.conditions.add(MutationConditions.getCondition(condition.getKey()).serialize(condition));
+            return this;
+        }
+
+        protected AbstractBuilder<T> setParent (ResourceLocation key) {
+            data.parentKey = key;
+
+            JsonArray newConditions = new JsonArray();
+
+            for (JsonElement json : data.conditions) {
+                JsonObject object = json.getAsJsonObject();
+
+                if (object.has("target_mutation") && object.get("target_mutation").getAsString().equals(data.resource.toString())) {
+                    object.remove("target_mutation");
+                    object.addProperty("target_mutation", key.toString());
+                }
+
+                newConditions.add(object);
+            }
+
+            data.conditions = newConditions;
+
             return this;
         }
 

@@ -6,21 +6,19 @@ import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PotionMutation extends EffectMutation implements IMutationTick {
     List<Effect> potions;
 
-    public PotionMutation(String _mutName, Effect... _potions) {
-        super(_mutName);
+    public PotionMutation(ResourceLocation _key, Effect... _potions) {
+        super(_key);
         potions = Arrays.asList(_potions);
     }
 

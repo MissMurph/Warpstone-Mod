@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.conditions;
 
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -13,7 +13,7 @@ public class HasMutationCondition implements IMutationCondition {
     private final boolean test;
 
     private HasMutationCondition (ResourceLocation _key, boolean _test) {
-        resource = new ResourceLocation(WarpstoneMain.MOD_ID, "has_mutation");
+        resource = new ResourceLocation(Warpstone.MOD_ID, "has_mutation");
         key = _key;
         test = _test;
     }

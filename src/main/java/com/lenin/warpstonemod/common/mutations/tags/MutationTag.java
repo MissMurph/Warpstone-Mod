@@ -1,13 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.tags;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MutationTag {

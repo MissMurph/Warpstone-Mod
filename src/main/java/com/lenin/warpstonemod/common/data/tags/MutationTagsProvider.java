@@ -1,11 +1,8 @@
 package com.lenin.warpstonemod.common.data.tags;
 
-import com.google.gson.*;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.data.WarpstoneDataProvider;
-import com.lenin.warpstonemod.common.data.mutations.MutationData;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
-import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
@@ -32,7 +29,7 @@ public class MutationTagsProvider extends WarpstoneDataProvider {
     }
 
     private ResourceLocation key (String key) {
-        return new ResourceLocation(WarpstoneMain.MOD_ID, key);
+        return new ResourceLocation(Warpstone.MOD_ID, key);
     }
 
     private void buildTagData () {

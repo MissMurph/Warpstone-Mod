@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
@@ -16,9 +17,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ScarringMutation extends CounterEffectMutation implements IMutationTick {
-	public ScarringMutation() {
-		super(
-                "scarring",
+	public ScarringMutation(ResourceLocation _key) {
+		super(_key,
                 400
 		);
 	}

@@ -9,6 +9,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -17,9 +18,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
 public class SharpSensesMutation extends CounterEffectMutation implements IMutationTick {
-	public SharpSensesMutation() {
-		super(
-                "sharp_senses",
+	public SharpSensesMutation(ResourceLocation _key) {
+		super(_key,
                 60
 		);
 	}

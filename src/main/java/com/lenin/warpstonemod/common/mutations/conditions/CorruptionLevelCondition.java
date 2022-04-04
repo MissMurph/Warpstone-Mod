@@ -2,7 +2,7 @@ package com.lenin.warpstonemod.common.mutations.conditions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -18,7 +18,7 @@ public class CorruptionLevelCondition implements IMutationCondition {
     private final List<Operation> operations;
 
     private CorruptionLevelCondition (int _value, Operation... _operations) {
-        resource = new ResourceLocation(WarpstoneMain.MOD_ID, "corruption_level");
+        resource = new ResourceLocation(Warpstone.MOD_ID, "corruption_level");
         value = _value;
         operations = Arrays.asList(_operations);
     }

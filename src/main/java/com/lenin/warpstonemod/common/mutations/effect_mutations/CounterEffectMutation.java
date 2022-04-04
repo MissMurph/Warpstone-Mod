@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.HashMap;
@@ -8,8 +9,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CounterEffectMutation extends EffectMutation {
-    public CounterEffectMutation(String _mutName, int _interval) {
-        super(_mutName);
+    public CounterEffectMutation(ResourceLocation _key, int _interval) {
+        super(_key);
         INTERVAL = _interval;
     }
 

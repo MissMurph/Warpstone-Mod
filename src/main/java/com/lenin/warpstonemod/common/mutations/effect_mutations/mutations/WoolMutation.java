@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
@@ -21,10 +20,8 @@ import net.minecraftforge.fml.LogicalSide;
 import java.util.*;
 
 public class WoolMutation extends EffectMutation implements IMutationTick {
-    public WoolMutation() {
-        super(
-                "wool"
-        );
+    public WoolMutation(ResourceLocation _key) {
+        super(_key);
     }
 
     //RemoveList is so we dont cancel our own remove calls for the effect

@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
 import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -14,10 +13,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class TurtleMutation extends EffectMutation {
-	public TurtleMutation() {
-		super(
-                "turtle"
-        );
+	public TurtleMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	@Override

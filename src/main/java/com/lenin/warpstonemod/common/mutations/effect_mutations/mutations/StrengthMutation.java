@@ -4,14 +4,13 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class StrengthMutation extends EffectMutation {
-	public StrengthMutation() {
-		super(
-                "strength"
-        );
+	public StrengthMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	//This mutation increases knockback with an extra strength of 0.4f

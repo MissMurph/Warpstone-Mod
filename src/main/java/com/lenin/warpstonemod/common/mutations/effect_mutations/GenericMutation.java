@@ -1,8 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import net.minecraft.util.ResourceLocation;
+
 public class GenericMutation extends EffectMutation {
 
-    public GenericMutation(String _mutName) {
-        super(_mutName);
+    public GenericMutation(ResourceLocation _key) {
+        super(_key);
     }
 }

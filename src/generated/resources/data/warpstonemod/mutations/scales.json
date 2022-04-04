@@ -4,6 +4,8 @@
   "tags": [
     "warpstonemod:uncommon"
   ],
+  "conditions": [],
+  "arguments": {},
   "modifiers": [
     {
       "target": "minecraft:generic.armor",
@@ -20,7 +22,5 @@
       "value": -0.25,
       "operation": "MULTIPLY_TOTAL"
     }
-  ],
-  "conditions": [],
-  "arguments": {}
+  ]
 }

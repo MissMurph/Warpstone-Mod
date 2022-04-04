@@ -24,4 +24,8 @@ public class NbtMutationInstance extends MutationInstance {
     public void writeData (String key, INBT _data) {
         data.put(key, _data);
     }
+
+    public void writeIfAbsent (String key, INBT _data) {
+        data.put(key, _data);
+    }
 }

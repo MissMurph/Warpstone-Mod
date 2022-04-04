@@ -4,7 +4,6 @@
   "tags": [
     "warpstonemod:common"
   ],
-  "modifiers": [],
   "conditions": [
     {
       "key": "warpstonemod:has_mutation",
@@ -12,5 +11,10 @@
       "result": false
     }
   ],
-  "arguments": {}
+  "arguments": {
+    "potions": [
+      "minecraft:night_vision"
+    ]
+  },
+  "modifiers": []
 }

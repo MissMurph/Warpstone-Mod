@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,10 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ExplosiveMutation extends EffectMutation {
-	public ExplosiveMutation() {
-		super(
-                "explosive"
-        );
+	public ExplosiveMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	private final Set<DamageSource> fireSources = new HashSet<>(Arrays.asList(

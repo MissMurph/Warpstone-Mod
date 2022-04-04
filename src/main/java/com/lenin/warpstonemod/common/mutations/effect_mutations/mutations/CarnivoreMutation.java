@@ -2,14 +2,13 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 
 public class CarnivoreMutation extends HerbivoreMutation {
 
-    public CarnivoreMutation() {
-        super(
-                "carnivore"
-        );
+    public CarnivoreMutation(ResourceLocation _key) {
+        super(_key);
     }
 
     @Override

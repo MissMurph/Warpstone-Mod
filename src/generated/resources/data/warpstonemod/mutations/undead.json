@@ -4,6 +4,14 @@
   "tags": [
     "warpstonemod:rare"
   ],
+  "conditions": [
+    {
+      "key": "warpstonemod:has_mutation",
+      "mutation": "warpstonemod:blood_sucking",
+      "result": false
+    }
+  ],
+  "arguments": {},
   "modifiers": [
     {
       "target": "minecraft:generic.max_health",
@@ -15,13 +23,5 @@
       "value": -0.25,
       "operation": "MULTIPLY_TOTAL"
     }
-  ],
-  "conditions": [
-    {
-      "key": "warpstonemod:has_mutation",
-      "mutation": "warpstonemod:blood_sucking",
-      "result": false
-    }
-  ],
-  "arguments": {}
+  ]
 }

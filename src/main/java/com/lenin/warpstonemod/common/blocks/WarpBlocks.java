@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.common.blocks;
 
-import com.lenin.warpstonemod.common.Registration;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -9,7 +8,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -31,12 +29,12 @@ public class WarpBlocks {
 
 	private static Block blockRegistry(String name, Supplier<Block> block) {
 		Block b = block.get().setRegistryName(name);
-		return WarpstoneMain.getProxy().getRegistration().register(b);
+		return Warpstone.getProxy().getRegistration().register(b);
 	}
 
 	public static Block registerBlock(String name, Supplier<Block> block) {
 		Block ref = blockRegistry(name, block);
-		WarpstoneMain.getProxy().getRegistration().register(new BlockItem(ref, new Item.Properties().group(WarpstoneMain.MOD_GROUP)).setRegistryName(name));
+		Warpstone.getProxy().getRegistration().register(new BlockItem(ref, new Item.Properties().group(Warpstone.MOD_GROUP)).setRegistryName(name));
 		return ref;
 	}
 

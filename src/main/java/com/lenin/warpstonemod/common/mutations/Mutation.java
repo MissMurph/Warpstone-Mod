@@ -1,8 +1,7 @@
 package com.lenin.warpstonemod.common.mutations;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
@@ -10,7 +9,6 @@ import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.IFormattableTextComponent;
@@ -36,13 +34,13 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
     protected List<MutationTag> tags = new ArrayList<>();
     protected Map<ResourceLocation, IMutationCondition> conditions = new HashMap<>();
 
-    public Mutation (String _name) {
-        name = _name;
+    public Mutation (ResourceLocation _key) {
+        name = _key.getPath();
         uuid = UUID.randomUUID();
 
-        textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, "textures/gui/effect_mutations/" + _name + ".png");
+        textureResource = new ResourceLocation(_key.getNamespace(), "textures/gui/effect_mutations/" + _key.getPath() + ".png");
 
-        setRegistryName(WarpstoneMain.MOD_ID, name);
+        setRegistryName(_key);
 
         attachListeners(MinecraftForge.EVENT_BUS);
         attachClientListeners(MinecraftForge.EVENT_BUS);
@@ -151,7 +149,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
             return;
         }
 
-        textureResource = new ResourceLocation(WarpstoneMain.MOD_ID, json.get("resource_path").getAsString());
+        textureResource = new ResourceLocation(Warpstone.MOD_ID, json.get("resource_path").getAsString());
 
         List<String> newTags = new ArrayList<>();
         json.getAsJsonArray("tags").forEach(jsonElement -> newTags.add(jsonElement.getAsString()));

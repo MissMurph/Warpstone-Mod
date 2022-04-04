@@ -2,7 +2,7 @@ package com.lenin.warpstonemod.common.data;
 
 import com.lenin.warpstonemod.client.data.WarpBlockStateProvider;
 import com.lenin.warpstonemod.client.data.WarpItemModelProvider;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.data.loot.WarpLootModifierProvider;
 import com.lenin.warpstonemod.common.data.loot.WarpLootTableProvider;
 import com.lenin.warpstonemod.common.data.tags.WarpBlockTagsProvider;
@@ -15,7 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
-@Mod.EventBusSubscriber(modid = WarpstoneMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Warpstone.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class DataGenerators {
 	private DataGenerators() {}
 

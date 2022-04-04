@@ -32,7 +32,7 @@ public class WarpstoneWorldGen {
     );
 
     private static <FC extends IFeatureConfig> ConfiguredFeature<FC, ?> registerOre (String name, ConfiguredFeature<FC, ?> feature){
-        return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, WarpstoneMain.MOD_ID + ":" + name, feature);
+        return Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, Warpstone.MOD_ID + ":" + name, feature);
     }
 
     public static void onBiomeLoading(BiomeLoadingEvent event) {

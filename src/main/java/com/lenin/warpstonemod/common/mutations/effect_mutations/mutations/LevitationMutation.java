@@ -1,18 +1,19 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
 public class LevitationMutation extends CounterEffectMutation implements IMutationTick {
-	public LevitationMutation() {
-		super("levitation",
+	public LevitationMutation(ResourceLocation _key) {
+		super(_key,
                 300
 		);
 	}
@@ -30,8 +31,8 @@ public class LevitationMutation extends CounterEffectMutation implements IMutati
 				|| !instanceMap.get(player.getUniqueID()).isActive())
 			return;
 
-		if (decrement(counterMap, player.getUniqueID()) && WarpstoneMain.getRandom().nextInt(100) >= 90) {
-			int duration = 20 + WarpstoneMain.getRandom().nextInt(100);
+		if (decrement(counterMap, player.getUniqueID()) && Warpstone.getRandom().nextInt(100) >= 90) {
+			int duration = 20 + Warpstone.getRandom().nextInt(100);
 			player.addPotionEffect(new EffectInstance(Effects.LEVITATION, duration));
 		}
 	}

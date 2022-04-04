@@ -5,16 +5,15 @@ import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class BlindnessMutation extends EffectMutation {
-	public BlindnessMutation() {
-		super(
-                "blindness"
-        );
+	public BlindnessMutation(ResourceLocation _key) {
+		super(_key);
 	}
 
 	@OnlyIn(Dist.CLIENT)

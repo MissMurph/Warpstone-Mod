@@ -36,14 +36,30 @@ public class EvolvingMutationData extends MutationData {
             super(_resource, new EvolvingMutationData());
         }
 
-        public Builder addChildEffect (EffectMutationData _data) {
+        /*public Builder addChildEffect (EffectMutationData.Builder _data) {
             data.childMutations.add(_data);
             return this;
         }
 
-        public Builder addChildEvolve (EvolvingMutationData _data) {
+        public Builder addChildEvolve (EvolvingMutationData.Builder _data) {
             data.childMutations.add(_data);
             return this;
+        }*/
+
+        protected <T extends MutationData> Builder addChildMutation (BuilderSupplier<AbstractBuilder<T>> supplier) {
+            //T mutation = dataBuilder.setParent(data.resource).create();
+            //data.childMutations.add(mutation);
+            return this;
         }
+
+        protected <T extends MutationData> Builder addChildMutation (AbstractBuilder<T> dataBuilder) {
+            T mutation = dataBuilder.setParent(data.resource).create();
+            data.childMutations.add(mutation);
+            return this;
+        }
+    }
+
+    public interface BuilderSupplier <T extends AbstractBuilder<? extends MutationData>> {
+        T get(ResourceLocation key);
     }
 }

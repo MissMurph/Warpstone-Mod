@@ -4,13 +4,13 @@
   "tags": [
     "warpstonemod:negative"
   ],
+  "conditions": [],
+  "arguments": {},
   "modifiers": [
     {
       "target": "forge:swim_speed",
       "value": 1.0,
       "operation": "MULTIPLY_TOTAL"
     }
-  ],
-  "conditions": [],
-  "arguments": {}
+  ]
 }

@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.conditions.nbt;
 
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IConditionSerializer;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 public class NbtMatchesStringCondition extends NbtCondition {
 
     protected NbtMatchesStringCondition (ResourceLocation _targetMut, String _nbtKey, INBT _nbt) {
-        super(new ResourceLocation(WarpstoneMain.MOD_ID, "nbt_matches_string"), _targetMut, _nbtKey, _nbt);
+        super(new ResourceLocation(Warpstone.MOD_ID, "nbt_matches_string"), _targetMut, _nbtKey, _nbt);
     }
 
     @Override

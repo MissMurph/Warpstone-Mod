@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.Registration;
-import com.lenin.warpstonemod.common.WarpstoneMain;
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.*;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttributeMutationUUIDs;
@@ -50,7 +50,7 @@ public class PlayerManager {
         attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.movement_speed")), this, AttributeMutationUUIDs.SPEED_UUID));
         attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.armor")), this, AttributeMutationUUIDs.AMOUR_UUID));
         attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.armor_toughness")), this, AttributeMutationUUIDs.ARMOUR_TOUGHNESS_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation(WarpstoneMain.MOD_ID, "harvest_speed")), this, AttributeMutationUUIDs.MINING_SPEED_UUID));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation(Warpstone.MOD_ID, "harvest_speed")), this, AttributeMutationUUIDs.MINING_SPEED_UUID));
 
         mutData = serialize();
     }
@@ -65,7 +65,7 @@ public class PlayerManager {
         //Loop over every point of instablity and apply levels, no negatives if no instablity
         for (int i = 0; i < getInstabilityLevel() + 1; i++) {
                 /*  Effect Mutation Creation    */
-            if (mutations.size() < 14 && !hasEffectBeenCreated && WarpstoneMain.getRandom().nextInt(100) > 90) {
+            if (mutations.size() < 14 && !hasEffectBeenCreated && Warpstone.getRandom().nextInt(100) > 90) {
                 List<Mutation> legalMutations = Registration.EFFECT_MUTATIONS.getValues()
                         .stream()
                         .filter(mut -> !this.containsEffect(mut))
@@ -73,7 +73,7 @@ public class PlayerManager {
                         .collect(Collectors.toList());
 
                 if (legalMutations.size() > 0) {
-                    Mutation mut = legalMutations.get(WarpstoneMain.getRandom().nextInt(legalMutations.size()));
+                    Mutation mut = legalMutations.get(Warpstone.getRandom().nextInt(legalMutations.size()));
 
                     mutations.put(mut.getRegistryName(), mut);
                     mut.applyMutation(this);
@@ -91,28 +91,28 @@ public class PlayerManager {
                     .filter(attr -> attr.canMutate(this))
                     .collect(Collectors.toList());
 
-            int change = getCorruptionLevel() > 0 ? WarpstoneMain.getRandom().nextInt(getCorruptionLevel()) + 1 : 1;
+            int change = getCorruptionLevel() > 0 ? Warpstone.getRandom().nextInt(getCorruptionLevel()) + 1 : 1;
 
             if (i > 0) {
-                int index = WarpstoneMain.getRandom().nextInt(legal.size());
+                int index = Warpstone.getRandom().nextInt(legal.size());
                 legal.get(index).changeLevel(-change);
                 legal.remove(index);
             }
 
-            if (i >= 8) change = WarpstoneMain.getRandom().nextInt(100) > 100 - (5 * (getInstabilityLevel() - getCorruptionLevel())) ? change * -1 : change;
+            if (i >= 8) change = Warpstone.getRandom().nextInt(100) > 100 - (5 * (getInstabilityLevel() - getCorruptionLevel())) ? change * -1 : change;
 
-            legal.get(WarpstoneMain.getRandom().nextInt(legal.size()))
+            legal.get(Warpstone.getRandom().nextInt(legal.size()))
                     .changeLevel(change);
         }
 
         double witherRisk = getWitherRisk(item.getCorruptionValue());
         if (Math.random() > 1f - witherRisk) {
-            int duration = WarpstoneMain.getRandom().nextInt((int) Math.round(2400 * witherRisk));
+            int duration = Warpstone.getRandom().nextInt((int) Math.round(2400 * witherRisk));
             parentEntity.addPotionEffect(new EffectInstance(Effects.WITHER, duration));
         }
 
         int instabilityValue = item.getCorruptionValue() + (int) Math.round(item.getCorruptionValue() * (
-                (double)getInstability() / 100) * (double)(WarpstoneMain.getRandom().nextInt((getCorruptionLevel() + 2) * 10) / 100)
+                (double)getInstability() / 100) * (double)(Warpstone.getRandom().nextInt((getCorruptionLevel() + 2) * 10) / 100)
         );
         int corruptionValue = Math.round(instabilityValue * (getInstabilityLevel() /10f));
 
