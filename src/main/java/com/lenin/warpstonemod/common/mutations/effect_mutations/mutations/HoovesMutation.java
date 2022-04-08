@@ -31,7 +31,7 @@ public class HoovesMutation extends EffectMutation implements IMutationTick {
 			instance.applyNonPersistentModifier(
 					new AttributeModifier(
 							uuid,
-							((TranslationTextComponent)getMutationName()).getKey() + ".speed.boost",
+							name + ".speed.boost",
 							0.3f,
 							AttributeModifier.Operation.MULTIPLY_TOTAL
 					)

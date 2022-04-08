@@ -8,8 +8,8 @@ import net.minecraft.data.ItemTagsProvider;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class WarpItemTagsProvider extends ItemTagsProvider {
-    public WarpItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
+public class WSItemTagsProvider extends ItemTagsProvider {
+    public WSItemTagsProvider(DataGenerator dataGenerator, BlockTagsProvider blockTagProvider, ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockTagProvider, Warpstone.MOD_ID, existingFileHelper);
     }
 

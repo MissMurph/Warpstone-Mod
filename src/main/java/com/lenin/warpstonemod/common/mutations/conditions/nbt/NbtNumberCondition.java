@@ -6,7 +6,7 @@ import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IConditionSerializer;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
-import com.lenin.warpstonemod.common.mutations.evolving_mutations.NbtMutationInstance;
+import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutationInstance;
 import net.minecraft.nbt.FloatNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.IntNBT;
@@ -36,9 +36,9 @@ public class NbtNumberCondition extends NbtCondition {
 
     @Override
     public boolean act(PlayerManager manager) {
-        if (!(parent.getInstance(manager.getUniqueId()) instanceof NbtMutationInstance)) return false;
+        if (!(parent.getInstance(manager.getUniqueId()) instanceof EvolvingMutationInstance)) return false;
 
-        NbtMutationInstance instance = (NbtMutationInstance) parent.getInstance(manager.getUniqueId());
+        EvolvingMutationInstance instance = (EvolvingMutationInstance) parent.getInstance(manager.getUniqueId());
         NumberNBT testData = (NumberNBT) instance.readData(nbtKey);
 
         for (Operation operation : operations) {

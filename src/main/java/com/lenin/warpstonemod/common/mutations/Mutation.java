@@ -101,14 +101,10 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         return text;
     }
 
-    public IFormattableTextComponent getMutationDesc() {
-        return new TranslationTextComponent(translateKeyConstant + name + ".desc").mergeStyle(TextFormatting.WHITE);
-    }
-
     public List<ITextComponent> getToolTips () {
         List<ITextComponent> list = new ArrayList<>();
         list.add(getMutationName());
-        list.add(getMutationDesc());
+        list.add(new TranslationTextComponent(translateKeyConstant + name + ".desc").mergeStyle(TextFormatting.WHITE));
         return list;
     }
 
@@ -178,6 +174,10 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         return getInstance(entity.getUniqueID());
     }
 
+    public MutationInstance getInstance (PlayerManager manager) {
+        return getInstance(manager.getUniqueId());
+    }
+
     public MutationInstance getInstance (UUID playerUUID) {
         return instanceMap.getOrDefault(playerUUID, null);
     }
@@ -207,6 +207,14 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
 
     public List<MutationTag> getTags () {
         return tags;
+    }
+
+    public boolean hasTag (ResourceLocation key) {
+        for (MutationTag tag : tags) {
+            if (tag.getKey().equals(key)) return true;
+        }
+
+        return false;
     }
 
     @OnlyIn(Dist.CLIENT)

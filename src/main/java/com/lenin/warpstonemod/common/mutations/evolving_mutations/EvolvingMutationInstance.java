@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.evolving_mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,11 +10,13 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NbtMutationInstance extends MutationInstance {
+public class EvolvingMutationInstance extends MutationInstance {
 
     protected final Map<String, INBT> data = new HashMap<>();
 
-    public NbtMutationInstance(PlayerManager _parent) {
+    protected Mutation currentMutation;
+
+    public EvolvingMutationInstance(PlayerManager _parent) {
         super(_parent);
     }
 
@@ -27,5 +30,13 @@ public class NbtMutationInstance extends MutationInstance {
 
     public void writeIfAbsent (String key, INBT _data) {
         data.put(key, _data);
+    }
+
+    public boolean moveInstance (Mutation from, Mutation to) {
+        if (!currentMutation.equals(from) && !currentMutation.equals(to)) return false;
+
+        currentMutation = to;
+
+        return true;
     }
 }

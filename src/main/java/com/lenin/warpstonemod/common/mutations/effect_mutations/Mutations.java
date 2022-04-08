@@ -6,6 +6,7 @@ import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.MutationSupplier;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.mutations.*;
+import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutation;
 import com.lenin.warpstonemod.common.mutations.evolving_mutations.mutations.NinjaCurseMutation;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
@@ -110,6 +111,16 @@ public class Mutations {
 
 		if (Registration.EFFECT_MUTATIONS.containsKey(key)) {
 			Registration.EFFECT_MUTATIONS.getValue(key).deserialize(json);
+		}
+	}
+
+	public static void loadMutationTree (JsonObject json) {
+		ResourceLocation key = new ResourceLocation(json.get("key").getAsString());
+
+		Mutation mut = Registration.EFFECT_MUTATIONS.getValue(key);
+
+		if (mut instanceof EvolvingMutation) {
+			((EvolvingMutation) mut).loadTreeData(json);
 		}
 	}
 

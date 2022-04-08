@@ -29,7 +29,7 @@ public class MutationTag {
         formatting = _formatting;
     }
 
-    public ResourceLocation getResource () {
+    public ResourceLocation getKey() {
         return resourceLocation;
     }
 

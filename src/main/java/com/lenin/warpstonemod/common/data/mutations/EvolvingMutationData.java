@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.data.mutations;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.lenin.warpstonemod.common.Warpstone;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -53,7 +54,8 @@ public class EvolvingMutationData extends MutationData {
         }
 
         protected <T extends MutationData> Builder addChildMutation (AbstractBuilder<T> dataBuilder) {
-            T mutation = dataBuilder.setParent(data.resource).create();
+            AbstractBuilder<T> builder = dataBuilder.addTag(new ResourceLocation(Warpstone.MOD_ID, "child"));
+            T mutation = builder.setParent(data.resource).create();
             data.childMutations.add(mutation);
             return this;
         }

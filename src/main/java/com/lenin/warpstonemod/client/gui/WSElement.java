@@ -30,6 +30,8 @@ public class WSElement extends AbstractGui {
 
     protected Screen parentScreen;
 
+    protected WSElement hoveredElement;
+
     protected WSElement(WSElement.Builder builder) {
         x = builder.x;
         y = builder.y;
@@ -38,6 +40,7 @@ public class WSElement extends AbstractGui {
         components = builder.components;
         toolTips = builder.toolTips;
         parentScreen = builder.parentScreen;
+        hoveredElement = builder.hoverELement;
     }
 
     public void render (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
@@ -48,6 +51,7 @@ public class WSElement extends AbstractGui {
             //System.out.println("mouseX: " + mouseX + " mouseY: " + mouseY);
             //System.out.println("X: " + this.x + " Y: " + this.y);
             renderToolTip(matrixStack, mouseX, mouseY);
+            hoveredElement.render(matrixStack, mouseX, mouseY, partialTicks);
         }
 
         for (Component c : components) {
@@ -110,6 +114,7 @@ public class WSElement extends AbstractGui {
         private final Screen parentScreen;
         private final List<Component> components = new ArrayList<>();
         private final List<ITextComponent> toolTips = new ArrayList<>();
+        private WSElement hoverELement;
 
         public Builder (int _x, int _y, int _width, int _height, Screen _parentScreen){
             x = _x;
@@ -126,6 +131,11 @@ public class WSElement extends AbstractGui {
 
         public WSElement.Builder addTooltips (ITextComponent... lines) {
             Collections.addAll(toolTips, lines);
+            return this;
+        }
+
+        public WSElement.Builder addHoveredElement (WSElement element) {
+            hoverELement = element;
             return this;
         }
 

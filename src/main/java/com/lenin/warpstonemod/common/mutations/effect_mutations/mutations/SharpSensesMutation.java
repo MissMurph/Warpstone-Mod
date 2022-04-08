@@ -53,7 +53,7 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 		else if (player.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) == null) {
 			player.getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(
 					uuid,
-					((TranslationTextComponent) getMutationName()).getKey() + ".damage.boost",
+					name + ".damage.boost",
 					-0.25f,
 					AttributeModifier.Operation.MULTIPLY_TOTAL
 			));

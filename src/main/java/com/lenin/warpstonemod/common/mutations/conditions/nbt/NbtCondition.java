@@ -4,7 +4,7 @@ import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
-import com.lenin.warpstonemod.common.mutations.evolving_mutations.NbtMutationInstance;
+import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutationInstance;
 import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
 
@@ -28,6 +28,6 @@ public abstract class NbtCondition implements IMutationCondition {
 
     @Override
     public boolean act(PlayerManager manager) {
-        return ((NbtMutationInstance) parent.getInstance(manager.getUniqueId())).readData(nbtKey).equals(nbt);
+        return ((EvolvingMutationInstance) parent.getInstance(manager.getUniqueId())).readData(nbtKey).equals(nbt);
     }
 }

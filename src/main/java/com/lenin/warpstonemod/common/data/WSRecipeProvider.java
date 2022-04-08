@@ -9,8 +9,8 @@ import net.minecraft.data.ShapelessRecipeBuilder;
 
 import java.util.function.Consumer;
 
-public class WarpRecipeProvider extends RecipeProvider {
-    public WarpRecipeProvider(DataGenerator generatorIn) {
+public class WSRecipeProvider extends RecipeProvider {
+    public WSRecipeProvider(DataGenerator generatorIn) {
         super(generatorIn);
     }
 

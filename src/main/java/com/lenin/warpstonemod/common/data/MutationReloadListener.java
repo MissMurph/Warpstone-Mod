@@ -22,21 +22,19 @@ public class MutationReloadListener extends JsonReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, IResourceManager resourceManagerIn, IProfiler profilerIn) {
-        /*for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
-            if (entry.getKey().getPath().contains("tags")) {
-                MutationTags.loadTagData(entry.getValue().getAsJsonObject());
-                continue;
-            }
-            if (Registration.EFFECT_MUTATIONS.containsKey(entry.getKey())) Registration.EFFECT_MUTATIONS.getValue(entry.getKey()).deserialize(entry.getValue().getAsJsonObject());
-        }*/
-
         objectIn.entrySet().stream()
                 .filter(entry -> entry.getKey().getPath().contains("tags"))
                 .map(Map.Entry::getValue)
                 .forEach(json -> MutationTags.loadTagData(json.getAsJsonObject()));
 
         objectIn.entrySet().stream()
+                .filter(entry -> entry.getKey().getPath().contains("trees"))
+                .map(Map.Entry::getValue)
+                .forEach(json -> Mutations.loadMutationTree(json.getAsJsonObject()));
+
+        objectIn.entrySet().stream()
                 .filter(entry -> !entry.getKey().getPath().contains("tags"))
+                .filter(entry -> !entry.getKey().getPath().contains("trees"))
                 .map(Map.Entry::getValue)
                 .forEach(json -> Mutations.loadMutationData(json.getAsJsonObject()));
     }

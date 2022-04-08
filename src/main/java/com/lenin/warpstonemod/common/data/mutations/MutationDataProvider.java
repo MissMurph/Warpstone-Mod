@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MutationDataProvider extends WarpstoneDataProvider {
-    private static final List<MutationData> data = new ArrayList<>();
+    static final List<MutationData> data = new ArrayList<>();
 
     public MutationDataProvider (DataGenerator _generator) {
         super(_generator, "mutations");
@@ -34,293 +34,288 @@ public class MutationDataProvider extends WarpstoneDataProvider {
         }
     }
 
-    private ResourceLocation key (String key) {
-        return new ResourceLocation(Warpstone.MOD_ID, key);
-    }
-
     private void buildMutationData () {
-        data.add(new EffectMutationData.Builder(key("alcoholic"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("alcoholic"))
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(Mutations.SLOW_METABOLISM.getRegistryName(), false).build())
                 .addCondition(HasMutationCondition.builder(Mutations.WEAK_LIVER.getRegistryName(), false).build())
-                //.addNbtNumberCondition("fall_blocks", NbtNumberCondition.Type.INT, "1000", NbtNumberCondition.Operation.EQUAL_TO, NbtNumberCondition.Operation.GREATER_THAN)
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("archer"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("archer"))
                 .addModifier(WSAttributes.MELEE_DAMAGE.getKey(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.RANGED_DAMAGE.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(Mutations.BRAWLER.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("bad_luck"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("bad_luck"))
                 .addModifier(Attributes.LUCK.getRegistryName(), -1.0, AttributeModifier.Operation.ADDITION.toString())
                 .addCondition(HasMutationCondition.builder(Mutations.GOOD_LUCK.getRegistryName(), false).build())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("black_lung"))
-                .addTag(key("common"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("black_lung"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("blindness"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("blindness"))
                 .addCondition(HasMutationCondition.builder(Mutations.NIGHT_VISION.getRegistryName(), false).build())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("blood_sucking"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("blood_sucking"))
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.LIFE_STEAL.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(Mutations.SCALES.getRegistryName(), false).build())
                 .addCondition(HasMutationCondition.builder(Mutations.UNDEAD.getRegistryName(), false).build())
-                .addTag(key("rare"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("brawler"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("brawler"))
                 .addModifier(WSAttributes.MELEE_DAMAGE.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.RANGED_DAMAGE.getKey(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(Mutations.ARCHER.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("carnivore"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("carnivore"))
                 .addCondition(HasMutationCondition.builder(Mutations.HERBIVORE.getRegistryName(), false).build())
-                .addTag(key("common"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("claws"))
-                .addTag(key("rare"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("claws"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("cold_blood"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("cold_blood"))
                 .addCondition(HasMutationCondition.builder(Mutations.THICK_FUR.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("corrosive_touch"))
-                .addTag(key("rare"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("corrosive_touch"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("explosive"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("explosive"))
                 .addCondition(HasMutationCondition.builder(Mutations.FIRE_BREATHING.getRegistryName(), false).build())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("fast_metabolism"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("fast_metabolism"))
                 .addCondition(HasMutationCondition.builder(Mutations.SLOW_METABOLISM.getRegistryName(), false).build())
-                .addTag(key("common"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("fins"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("fins"))
                 .addModifier(ForgeMod.SWIM_SPEED.getId(), 1.0, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("fire_breathing"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("fire_breathing"))
                 .addCondition(HasMutationCondition.builder(Mutations.EXPLOSIVE.getRegistryName(), false).build())
-                .addTag(key("rare"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("fortune"))
-                .addTag(key("rare"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("fortune"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("frail_body"))
-                .addTag(key("negative"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("frail_body"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("gills"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("gills"))
                 .addCondition(HasMutationCondition.builder(Mutations.WEAK_LUNGS.getRegistryName(), false).build())
-                .addTag(key("common"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("glowing"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("glowing"))
                 .addCondition(HasMutationCondition.builder(Mutations.INVISIBILITY.getRegistryName(), false).build())
-                .addTag(key("common"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("good_luck"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("good_luck"))
                 .addModifier(Attributes.LUCK.getRegistryName(), 1.0, AttributeModifier.Operation.ADDITION.toString())
                 .addCondition(HasMutationCondition.builder(Mutations.BAD_LUCK.getRegistryName(), false).build())
-                .addTag(key("common"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("thick_fur"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("thick_fur"))
                 .addCondition(HasMutationCondition.builder(Mutations.COLD_BLOOD.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("herbivore"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("herbivore"))
                 .addCondition(HasMutationCondition.builder(Mutations.CARNIVORE.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("hooves"))
-                .addTag(key("rare"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("hooves"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("hydrophilic"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("hydrophilic"))
                 .addCondition(HasMutationCondition.builder(Mutations.POTASSIUM.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("invisibility"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("invisibility"))
                 .addCondition(HasMutationCondition.builder(Mutations.GLOWING.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("iron_gut"))
-                .addTag(key("uncommon"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("iron_gut"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("jump_boost"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("jump_boost"))
                 .addCondition(HasMutationCondition.builder(Mutations.WEAK_LEGS.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("levitation"))
-                .addTag(key("uncommon"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("levitation"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("night_vision"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("night_vision"))
                 .addCondition(HasMutationCondition.builder(Mutations.BLINDNESS.getRegistryName(), false).build())
-                .addTag(key("common"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("potassium"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("potassium"))
                 .addCondition(HasMutationCondition.builder(Mutations.HYDROPHILIC.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("uncommon"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("scales"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("scales"))
                 .addModifier(Attributes.ARMOR.getRegistryName(), 0.5, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(Attributes.ARMOR_TOUGHNESS.getRegistryName(), 0.5, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("scarring"))
-                .addTag(key("rare"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("scarring"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("sharp_senses"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("sharp_senses"))
                 .addResourcePath("textures/mob_effect/sharp_senses.png")
-                .addTag(key("rare"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("slow_falling"))
-                .addTag(key("uncommon"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("slow_falling"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("slow_metabolism"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("slow_metabolism"))
                 .addCondition(HasMutationCondition.builder(Mutations.FAST_METABOLISM.getRegistryName(), false).build())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("strength"))
-                .addTag(key("common"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("strength"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("strong_legs"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("strong_legs"))
                 .addCondition(HasMutationCondition.builder(Mutations.WEAK_LEGS.getRegistryName(), false).build())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("thorns"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("thorns"))
                 .addModifier(Attributes.ARMOR.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("turtle"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("turtle"))
                 .addResourcePath("textures/mob_effect/turtle.png")
-                .addTag(key("rare"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("undead"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("undead"))
                 .addModifier(Attributes.MAX_HEALTH.getRegistryName(), 1, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addModifier(WSAttributes.HEALING.getKey(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 .addCondition(HasMutationCondition.builder(Mutations.BLOOD_SUCKING.getRegistryName(), false).build())
-                .addTag(key("rare"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("weak_legs"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("weak_legs"))
                 .addCondition(HasMutationCondition.builder(Mutations.JUMP_BOOST.getRegistryName(), false).build())
                 .addCondition(HasMutationCondition.builder(Mutations.STRONG_LEGS.getRegistryName(), false).build())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("weak_liver"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("weak_liver"))
                 .addCondition(HasMutationCondition.builder(Mutations.ALCOHOLIC.getRegistryName(), false).build())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("weak_lungs"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("weak_lungs"))
                 .addCondition(HasMutationCondition.builder(Mutations.GILLS.getRegistryName(), false).build())
-                .addTag(key("negative"))
+                .addTag(Warpstone.key("negative"))
                 .create()
         );
 
-        data.add(new EffectMutationData.Builder(key("wool"))
+        data.add(new EffectMutationData.Builder(Warpstone.key("wool"))
                 .addResourcePath("textures/mob_effect/wool.png")
-                .addTag(key("rare"))
+                .addTag(Warpstone.key("rare"))
                 .create()
         );
     }
 
     private void buildEvolvingMutations () {
-        data.add(new EvolvingMutationData.Builder(key("curse_ninja"))
-                .addChildMutation(new EffectMutationData.Builder(key("curse_ninja_child_1"))
+        data.add(new EvolvingMutationData.Builder(Warpstone.key("curse_ninja"))
+                .addChildMutation(new EffectMutationData.Builder(Warpstone.key("curse_ninja_child_1"))
                         .addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                 )
-                .addChildMutation(new EffectMutationData.Builder(key("curse_ninja_child_2"))
+                .addChildMutation(new EffectMutationData.Builder(Warpstone.key("curse_ninja_child_2"))
                         .addModifier(Attributes.MAX_HEALTH.getRegistryName(), 1f, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                         .addNbtNumberCondition("fall_blocks", NbtNumberCondition.Type.INT, "1000", NbtNumberCondition.Operation.EQUAL_TO, NbtNumberCondition.Operation.GREATER_THAN)
                 )
-                .addTag(key("uncommon"))
+                .addTag(Warpstone.key("uncommon"))
                 .create()
         );
     }

@@ -34,7 +34,7 @@ public class ClawsMutation extends EffectMutation implements IMutationTick {
 					attribute.applyNonPersistentModifier(
 							new AttributeModifier(
 									uuid,
-									((TranslationTextComponent) getMutationName()).getKey() + ".damage.boost",
+									name + ".damage.boost",
 									bonusDamage,
 									AttributeModifier.Operation.ADDITION
 							)
@@ -45,7 +45,7 @@ public class ClawsMutation extends EffectMutation implements IMutationTick {
 				attribute.applyNonPersistentModifier(
 						new AttributeModifier(
 								uuid,
-								((TranslationTextComponent)getMutationName()).getKey() + ".damage.boost",
+								name + ".damage.boost",
 								bonusDamage,
 								AttributeModifier.Operation.MULTIPLY_TOTAL
 						)

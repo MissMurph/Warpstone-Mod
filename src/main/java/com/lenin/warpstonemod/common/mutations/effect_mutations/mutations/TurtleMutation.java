@@ -35,7 +35,7 @@ public class TurtleMutation extends EffectMutation {
 		if (event.getEntityLiving().isActiveItemStackBlocking() && !event.getEntityLiving().isPotionActive(WarpEffects.TURTLE)) {
 			event.getEntityLiving().getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(
 					uuid,
-					((TranslationTextComponent) getMutationName()).getKey() + ".damage.boost",
+					name + ".damage.boost",
 					1.0f,
 					AttributeModifier.Operation.MULTIPLY_TOTAL
 			));

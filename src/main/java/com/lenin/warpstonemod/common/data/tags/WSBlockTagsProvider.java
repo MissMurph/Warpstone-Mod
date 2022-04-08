@@ -7,9 +7,9 @@ import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-public class WarpBlockTagsProvider extends BlockTagsProvider {
+public class WSBlockTagsProvider extends BlockTagsProvider {
 
-    public WarpBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
+    public WSBlockTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
         super(generatorIn, Warpstone.MOD_ID, existingFileHelper);
     }
 
