@@ -1,5 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.evolving_mutations;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
@@ -57,6 +59,17 @@ public abstract class EvolvingMutation extends Mutation {
         super.loadData(nbt);
     }
 
+    @Override
+    public void deserialize(JsonObject json) {
+        super.deserialize(json);
+
+        JsonArray _children = json.getAsJsonArray("children");
+
+        for (JsonElement child : _children) {
+            Mutations.loadMutationData(child.getAsJsonObject());
+        }
+    }
+
     protected void moveInstanceToChild (MutationInstance instance, Mutation moveTo) {
         MutationTree.Node currentNode = TREE.getCurrentNode(instance.getParent().getUniqueId());
         MutationTree.Node chosenNode = TREE.getNode(moveTo.getRegistryName());
@@ -108,6 +121,10 @@ public abstract class EvolvingMutation extends Mutation {
 
     @Override
     public ResourceLocation getTexture() {
+        return TREE.getOrigin().getParent().getTexture();
+    }
+
+    public ResourceLocation getCurrentTexture() {
         return TREE.getCurrentNode(Minecraft.getInstance().player.getUniqueID()).getParent().getTexture();
     }
 

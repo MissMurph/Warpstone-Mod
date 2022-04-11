@@ -26,46 +26,39 @@ public class MutationScreen extends WSScreen {
 
 	public MutationScreen(ITextComponent titleIn) {
 		super(titleIn, Textures.MUT_SCREEN, 176, 166);
-	}
-
-	@Override
-	protected void init(){
-		super.init();
 
 		PlayerManager clientManager = MutateHelper.getClientManager();
 
-		elements.add(new WSElement.Builder(this.guiLeft + 132, guiTop + 144, 20, 18, this)
+		layer(new WSElement.Builder(132, 144, 20, 18, this)
 				.addComponent(new ImageComponent(Textures.MUT_OPEN_SCREEN_BUTTON))
 				.addComponent(
 						new ButtonComponent((onPress) -> Minecraft.getInstance().displayGuiScreen(
 								new InventoryScreen(Minecraft.getInstance().player)),
 								Textures.MUT_OPEN_SCREEN_BUTTON_HVRD))
-				.build()
 		);
 
-			/*	Instability	*/
+		/*	Instability	*/
 		//title above the widget
-		elements.add(new WSElement.Builder(this.guiLeft + 121, guiTop + 64, 25, 25, this)
+		layer(new WSElement.Builder(121, 64, 25, 25, this)
 				.addComponent(new TextComponent(new TranslationTextComponent("mutation.screen.instability")))
-				.build());
+		);
 
 		//widget
-		elements.add(new WSElement.Builder(this.guiLeft + 137, this.guiTop + 80, 25, 25, this)
+		layer(new WSElement.Builder(137, 80, 25, 25, this)
 				.addComponent(new TextComponent(new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel()))))
 				.addTooltips(clientManager.getInstabilityTooltips().toArray(new ITextComponent[0]))
-				.build());
+		);
 
-			/* Corruption	*/
+		/* Corruption	*/
 		//title above the widget
-		elements.add(new WSElement.Builder(this.guiLeft + 117, guiTop + 102, 25, 25, this)
+		layer(new WSElement.Builder(117, 102, 25, 25, this)
 				.addComponent(new TextComponent(new TranslationTextComponent("mutation.screen.corruption")))
-				.build());
+		);
 
 		//widget
-		elements.add(new WSElement.Builder(this.guiLeft + 136, this.guiTop + 119, 25, 25, this)
+		layer(new WSElement.Builder(136, 119, 25, 25, this)
 				.addComponent(new TextComponent(new StringTextComponent(String.valueOf(clientManager.getCorruptionLevel()))))
 				.addTooltips(clientManager.getCorruptionTooltips().toArray(new ITextComponent[0]))
-				.build()
 		);
 
 		List<AttributeMutation> muts = clientManager.getAttributeMutations();
@@ -99,27 +92,24 @@ public class MutationScreen extends WSScreen {
 					)
 			);
 
-			WSElement attrBar = new WSElement.Builder(getGuiLeft() + 13 + (17 * i), getGuiTop() + 60, 7, 78, this)
+			layer(new WSElement.Builder(13 + (17 * i), 60, 7, 78, this)
 					.addComponent(new ImageComponent(Textures.SHEET_MUT_ATTR_BAR.resolve(frame)))
 					.addTooltips(attrTooltips.toArray(new ITextComponent[0]))
-					.build();
-
-			elements.add(attrBar);
+			);
 		}
 
 		for (int i = 0; i < effectMuts.size(); i++) {
-			int y = getGuiTop() + 10;
-			int x = getGuiLeft() + 10 + (23 * i);
+			int y = 10;
+			int x = 10 + (23 * i);
 			if (i >= 7) {
 				y += 23;
-				x = getGuiLeft() + 10 + (23 * (i - 7));
+				x = 10 + (23 * (i - 7));
 			}
 
-			elements.add(new WSElement.Builder(x, y, 18, 18, this)
+			layer(new WSElement.Builder(x, y, 18, 18, this)
 					.addComponent(new ImageComponent(
 							new RawTextureResource(Mutations.getMutation(effectMuts.get(i)).getTexture(), 18, 18, 0, 0)))
 					.addTooltips(Mutations.getMutation(effectMuts.get(i)).getToolTips().toArray(new ITextComponent[0]))
-					.build()
 			);
 		}
 	}

@@ -7,7 +7,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class WarpLootModifierSerializers {
+public class WSLootModifierSerializers {
 	private static final DeferredRegister<GlobalLootModifierSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, Warpstone.MOD_ID);
 
 	public static final RegistryObject<LootModifierFortuneMutation.Serializer> LOOT_FORTUNE = SERIALIZERS.register(

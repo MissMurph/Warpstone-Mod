@@ -3,8 +3,9 @@ package com.lenin.warpstonemod.common.data;
 import com.lenin.warpstonemod.client.data.WarpBlockStateProvider;
 import com.lenin.warpstonemod.client.data.WarpItemModelProvider;
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.data.loot.WarpLootModifierProvider;
-import com.lenin.warpstonemod.common.data.loot.WarpLootTableProvider;
+import com.lenin.warpstonemod.common.data.loot.WSLootModifierProvider;
+import com.lenin.warpstonemod.common.data.loot.WSLootTableProvider;
+import com.lenin.warpstonemod.common.data.mutations.MutationTreeDataProvider;
 import com.lenin.warpstonemod.common.data.tags.WSBlockTagsProvider;
 import com.lenin.warpstonemod.common.data.tags.WSItemTagsProvider;
 import com.lenin.warpstonemod.common.data.mutations.MutationDataProvider;
@@ -35,9 +36,10 @@ public final class DataGenerators {
 		gen.addProvider(new MutationTagsProvider(gen));
 
 			//Misc.
-		gen.addProvider(new WarpLootTableProvider(gen));
+		gen.addProvider(new WSLootTableProvider(gen));
 		gen.addProvider(new WSRecipeProvider(gen));
-		gen.addProvider(new WarpLootModifierProvider(gen));
+		gen.addProvider(new WSLootModifierProvider(gen));
 		gen.addProvider(new MutationDataProvider(gen));
+		gen.addProvider(new MutationTreeDataProvider(gen));
 	}
 }

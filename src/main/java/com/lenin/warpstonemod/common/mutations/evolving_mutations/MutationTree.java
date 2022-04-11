@@ -66,11 +66,15 @@ public class MutationTree {
     }
 
     public class Node {
+        private final int x;
+        private final int y;
         private final ResourceLocation parentKey;
         private final List<ResourceLocation> next = new ArrayList<>();
 
         public Node (JsonObject json) {
             parentKey = new ResourceLocation(json.get("key").getAsString());
+            x = json.get("x").getAsInt();
+            y = json.get("y").getAsInt();
 
             JsonArray nextNodes = json.getAsJsonArray("next");
 
@@ -84,6 +88,14 @@ public class MutationTree {
                     .filter(entry -> next.contains(entry.getKey()))
                     .map(Map.Entry::getValue)
                     .collect(Collectors.toList());
+        }
+
+        public int getX () {
+            return x;
+        }
+
+        public int getY () {
+            return y;
         }
 
         public ResourceLocation getRegistryKey () {

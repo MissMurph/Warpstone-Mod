@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
+import com.lenin.warpstonemod.common.mob_effects.WSEffects;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
@@ -42,13 +42,13 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
                 || !getInstance(player).isActive()
         ) return;
 
-        if (!player.isPotionActive(WarpEffects.WOOL)) {
+        if (!player.isPotionActive(WSEffects.WOOL)) {
             int bonus = 0;
             if (bonusMap.containsKey(player.getUniqueID())) bonus = bonusMap.get(player.getUniqueID());
             int duration = bonus >= 9 ? 72000 : 1200;
 
             player.addPotionEffect(new EffectInstance(
-                    WarpEffects.WOOL,
+                    WSEffects.WOOL,
                     duration,
                     bonus,
                     false,
@@ -59,7 +59,7 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
 
     public void onPotionRemove(PotionEvent.PotionRemoveEvent event) {
         if (event.getEntityLiving().world.isRemote()
-                || event.getPotion() != WarpEffects.WOOL
+                || event.getPotion() != WSEffects.WOOL
                 || !containsInstance(event.getEntityLiving())
                 || !getInstance(event.getEntityLiving()).isActive()
         ) return;
@@ -72,7 +72,7 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
 
     public void onPotionExpiry (PotionEvent.PotionExpiryEvent event) {
         if (event.getEntityLiving().world.isRemote()
-                || event.getPotionEffect().getPotion() != WarpEffects.WOOL
+                || event.getPotionEffect().getPotion() != WSEffects.WOOL
                 || !containsInstance(event.getEntityLiving())
                 || !getInstance(event.getEntityLiving()).isActive()
         ) return;
@@ -84,7 +84,7 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
         if (event.getItemStack().getItem() != Items.SHEARS
                 || !containsInstance(event.getEntityLiving())
                 || !getInstance(event.getEntityLiving()).isActive()
-                || event.getEntityLiving().getActivePotionEffect(WarpEffects.WOOL).getAmplifier() < 1
+                || event.getEntityLiving().getActivePotionEffect(WSEffects.WOOL).getAmplifier() < 1
         ) return;
 
         PlayerEntity player = event.getPlayer();
@@ -92,7 +92,7 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
         if (event.getWorld().isRemote()) player.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1f, 1f);
         event.getWorld().playSound(player, player.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL, 1f, 1f);
 
-        int amount = event.getEntityLiving().getActivePotionEffect(WarpEffects.WOOL).getAmplifier() + 1;
+        int amount = event.getEntityLiving().getActivePotionEffect(WSEffects.WOOL).getAmplifier() + 1;
 
         ItemEntity entity = new ItemEntity(
                 event.getWorld(),
@@ -106,7 +106,7 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
 
         removeList.add(player.getUniqueID());
         bonusMap.remove(player.getUniqueID());
-        player.removePotionEffect(WarpEffects.WOOL);
+        player.removePotionEffect(WSEffects.WOOL);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
         if (manager.getParentEntity().world.isRemote()) return;
 
         manager.getParentEntity().addPotionEffect(new EffectInstance(
-                WarpEffects.WOOL,
+                WSEffects.WOOL,
                 1200,
                 0,
                 false,
@@ -128,11 +128,11 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     public void deactivateMutation(PlayerManager manager) {
         super.deactivateMutation(manager);
 
-        if (manager.getParentEntity().world.isRemote() && !manager.getParentEntity().isPotionActive(WarpEffects.WOOL)) return;
+        if (manager.getParentEntity().world.isRemote() && !manager.getParentEntity().isPotionActive(WSEffects.WOOL)) return;
 
         removeList.add(manager.getUniqueId());
 
-        manager.getParentEntity().removePotionEffect(WarpEffects.WOOL);
+        manager.getParentEntity().removePotionEffect(WSEffects.WOOL);
         bonusMap.remove(manager.getUniqueId());
     }
 }

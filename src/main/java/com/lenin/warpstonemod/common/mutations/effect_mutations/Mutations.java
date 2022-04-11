@@ -64,7 +64,7 @@ public class Mutations {
 
 		/*	Evolving Mutations	*/
 
-	public static final Mutation NINJA = register("ninja_curse", NinjaCurseMutation::new);
+	public static final Mutation NINJA = register("curse_ninja", NinjaCurseMutation::new);
 
 	public static Mutation register(ResourceLocation key, MutationSupplier<Mutation> mut){
 		return Warpstone.getProxy().getRegistration().register(mut.get(key));

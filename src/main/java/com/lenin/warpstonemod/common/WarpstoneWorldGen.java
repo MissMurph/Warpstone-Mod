@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.common;
 
-import com.lenin.warpstonemod.common.blocks.WarpBlocks;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.GenerationStage;
@@ -15,7 +14,7 @@ public class WarpstoneWorldGen {
             "warpstone_ore",
             Feature.ORE.withConfiguration(new OreFeatureConfig(
                             OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                            WarpBlocks.WARPSTONE_ORE.getDefaultState(),
+                            WSBlocks.WARPSTONE_ORE.getDefaultState(),
                             4))
                     .range(64)
                     .count(16)
@@ -25,7 +24,7 @@ public class WarpstoneWorldGen {
             "warpstone_ore",
             Feature.ORE.withConfiguration(new OreFeatureConfig(
                             OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                            WarpBlocks.WARPSTONE_ORE.getDefaultState(),
+                            WSBlocks.WARPSTONE_ORE.getDefaultState(),
                             6))
                     .range(16)
                     .count(10)

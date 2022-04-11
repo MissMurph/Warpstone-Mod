@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.blocks;
+package com.lenin.warpstonemod.common;
 
 import com.lenin.warpstonemod.common.Warpstone;
 import net.minecraft.block.AbstractBlock;
@@ -11,7 +11,7 @@ import net.minecraftforge.common.ToolType;
 
 import java.util.function.Supplier;
 
-public class WarpBlocks {
+public class WSBlocks {
 	public static final Block WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties
 			.create(Material.ROCK)
 			.setRequiresTool()

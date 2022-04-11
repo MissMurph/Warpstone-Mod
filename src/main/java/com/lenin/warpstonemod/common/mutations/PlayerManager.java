@@ -130,16 +130,16 @@ public class PlayerManager {
     }
 
     public void addMutation (Mutation mutation) {
-        if (mutations.containsKey(mutation.getRegistryName())
-                || !Registration.EFFECT_MUTATIONS.containsKey(mutation.getRegistryName())) return;
+        if (mutations.containsValue(mutation)
+                || !Registration.EFFECT_MUTATIONS.containsValue(mutation)) return;
 
         mutation.applyMutation(this);
         mutations.put(mutation.getRegistryName(),mutation);
     }
 
     public void removeMutation (Mutation mutation) {
-        if (!mutations.containsKey(mutation.getRegistryName())
-                || !Registration.EFFECT_MUTATIONS.containsKey(mutation.getRegistryName())) return;
+        if (!mutations.containsValue(mutation)
+                || !Registration.EFFECT_MUTATIONS.containsValue(mutation)) return;
 
         mutation.deactivateMutation(this);
         mutation.clearInstance(this);

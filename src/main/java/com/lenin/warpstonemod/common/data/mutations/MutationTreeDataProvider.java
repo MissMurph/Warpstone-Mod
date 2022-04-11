@@ -14,8 +14,8 @@ import java.util.List;
 public class MutationTreeDataProvider extends WarpstoneDataProvider {
     private static final List<MutationTreeData> data = new ArrayList<>();
 
-    public MutationTreeDataProvider(DataGenerator _generator, String _name) {
-        super(_generator, _name);
+    public MutationTreeDataProvider(DataGenerator _generator) {
+        super(_generator, "mutation_trees");
         buildTrees();
     }
 

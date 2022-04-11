@@ -1,8 +1,7 @@
 package com.lenin.warpstonemod.common;
 
-import com.lenin.warpstonemod.common.blocks.WarpBlocks;
-import com.lenin.warpstonemod.common.items.WarpItems;
-import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
+import com.lenin.warpstonemod.common.items.WSItems;
+import com.lenin.warpstonemod.common.mob_effects.WSEffects;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.block.Block;
@@ -46,13 +45,13 @@ public class Registration {
     }
 
     private void registerItems (RegistryEvent.Register<Item> event) {
-        WarpItems.register();
-        WarpFoods.register();
+        WSItems.register();
+        WSFoods.register();
         fillRegistry(event.getRegistry().getRegistrySuperType(), event.getRegistry());
     }
 
     private void registerBlocks (RegistryEvent.Register<Block> event) {
-        WarpBlocks.register();
+        WSBlocks.register();
 
         BLOCKS = initialized.get(event.getRegistry().getRegistrySuperType())
                 .stream()
@@ -63,7 +62,7 @@ public class Registration {
     }
 
     private void registerEffects (RegistryEvent.Register<Effect> event) {
-        WarpEffects.register();
+        WSEffects.register();
         fillRegistry(event.getRegistry().getRegistrySuperType(), event.getRegistry());
     }
 

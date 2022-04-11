@@ -10,7 +10,9 @@
     {
       "key": "warpstonemod:curse_ninja_child_1",
       "resource_path": "textures/gui/effect_mutations/curse_ninja_child_1.png",
-      "tags": [],
+      "tags": [
+        "warpstonemod:child"
+      ],
       "conditions": [],
       "arguments": {},
       "modifiers": [
@@ -24,7 +26,9 @@
     {
       "key": "warpstonemod:curse_ninja_child_2",
       "resource_path": "textures/gui/effect_mutations/curse_ninja_child_2.png",
-      "tags": [],
+      "tags": [
+        "warpstonemod:child"
+      ],
       "conditions": [
         {
           "key": "warpstonemod:nbt_number",

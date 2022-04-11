@@ -1,21 +1,21 @@
 package com.lenin.warpstonemod.common.items;
 
-import com.lenin.warpstonemod.common.WarpFoods;
+import com.lenin.warpstonemod.common.WSFoods;
 import com.lenin.warpstonemod.common.Warpstone;
 import net.minecraft.item.Item;
 
 import java.util.function.Supplier;
 
-public class WarpItems {
+public class WSItems {
     public static final Item WARPSTONE_SHARD = register("warpstone_shard", ()
             -> new WarpstoneShard(new Item.Properties()
                 .group(Warpstone.MOD_GROUP)
-                .food(WarpFoods.WARPSTONE_SHARD)));
+                .food(WSFoods.WARPSTONE_SHARD)));
 
     public static final Item WARPSTONE_DUST = register("warpstone_dust", ()
             -> new WarpstoneDust(new Item.Properties()
                 .group(Warpstone.MOD_GROUP)
-                .food(WarpFoods.WARPSTONE_DUST)));
+                .food(WSFoods.WARPSTONE_DUST)));
 
     public static final Item MUTATION_RESET = register("mutation_reset", () ->
             new MutationReset(new Item.Properties()

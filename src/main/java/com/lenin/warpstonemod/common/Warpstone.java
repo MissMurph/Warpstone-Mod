@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common;
 
 import com.lenin.warpstonemod.client.ClientProxy;
-import com.lenin.warpstonemod.common.data.loot.WarpLootModifierSerializers;
+import com.lenin.warpstonemod.common.data.loot.WSLootModifierSerializers;
 import com.lenin.warpstonemod.common.items.WarpstoneItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +34,7 @@ public class Warpstone {
 
         IEventBus fmlEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        WarpLootModifierSerializers.init(fmlEventBus);
+        WSLootModifierSerializers.init(fmlEventBus);
 
         this.proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 

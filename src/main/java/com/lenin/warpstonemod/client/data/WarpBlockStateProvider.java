@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.client.data;
 
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.blocks.WarpBlocks;
+import com.lenin.warpstonemod.common.WSBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -14,7 +14,7 @@ public class WarpBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlock(WarpBlocks.WARPSTONE_ORE);
-        simpleBlock(WarpBlocks.WARPSTONE_BLOCK);
+        simpleBlock(WSBlocks.WARPSTONE_ORE);
+        simpleBlock(WSBlocks.WARPSTONE_BLOCK);
     }
 }

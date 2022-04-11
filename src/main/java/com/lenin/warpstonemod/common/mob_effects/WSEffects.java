@@ -5,7 +5,7 @@ import net.minecraft.potion.Effect;
 
 import java.util.function.Supplier;
 
-public class WarpEffects {
+public class WSEffects {
 
 	public static final Effect SHARP_SENSES = registerEffects("sharp_senses", SharpSensesEffect::new);
 	public static final Effect TURTLE = registerEffects("turtle", TurtleEffect::new);

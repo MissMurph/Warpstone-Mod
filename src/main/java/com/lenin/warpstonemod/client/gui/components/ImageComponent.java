@@ -28,7 +28,8 @@ public class ImageComponent extends Component implements IRenderable {
         blit(matrixStack, parentElement.getX(), parentElement.getY(),
                 activeTexture.posX, activeTexture.posY,
                 parentElement.getWidth(), parentElement.getHeight(),
-                activeTexture.sourceSizeX, activeTexture.sourceSizeY);
+                activeTexture.sourceSizeX, activeTexture.sourceSizeY
+        );
     }
 
     public void updateTexture (RawTextureResource texture) {

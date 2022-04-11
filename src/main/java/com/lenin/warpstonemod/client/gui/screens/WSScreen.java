@@ -15,10 +15,11 @@ public class WSScreen extends Screen {
 
     protected final RawTextureResource screenResource;
 
+    protected static final int MAX_LAYERS = 10;
     protected List<WSElement> elements = new ArrayList<>();
+    protected final List<List<WSElement.Builder>> layers = new ArrayList<>(MAX_LAYERS);
 
     protected final int sizeX, sizeY;
-
     protected int guiLeft, guiTop;
 
     protected WSScreen(ITextComponent title, RawTextureResource _screenResource, int _sizeX, int _sizeY) {
@@ -26,17 +27,23 @@ public class WSScreen extends Screen {
         sizeX = _sizeX;
         sizeY = _sizeY;
         screenResource = _screenResource;
+
+        for (int i = 0; i < MAX_LAYERS; i++) {
+            layers.add(i, new ArrayList<>());
+        }
     }
 
     @Override
     protected void init() {
         super.init();
 
+        this.guiLeft = (this.width - this.sizeX) / 2;
+        this.guiTop = (this.height - this.sizeY) / 2;
+
         elements.forEach(WSElement::clearComponents);
         elements.clear();
 
-        this.guiLeft = (this.width - this.sizeX) / 2;
-        this.guiTop = (this.height - this.sizeY) / 2;
+        loadLayers();
     }
 
     @Override
@@ -73,6 +80,24 @@ public class WSScreen extends Screen {
         }
 
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    protected void layer (WSElement.Builder builder) {
+        layers.get(0).add(builder);
+    }
+
+    protected void layer (WSElement.Builder builder, int layer) {
+        int index = Math.max(Math.min(MAX_LAYERS - 1, layer), 0);
+
+        layers.get(index).add(builder);
+    }
+
+    protected void loadLayers () {
+        for (List<WSElement.Builder> layer : layers) {
+            for (WSElement.Builder builder : layer) {
+                elements.add(builder.build());
+            }
+        }
     }
 
     public int getGuiLeft () { return guiLeft; }

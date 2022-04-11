@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.data.tags;
 
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.items.WarpItems;
+import com.lenin.warpstonemod.common.items.WSItems;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
@@ -15,16 +15,16 @@ public class WSItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void registerTags (){
-        copy(WarpTags.Blocks.ORES_WARPSTONE, WarpTags.Items.ORES_WARPSTONE);
+        copy(WSTags.Blocks.ORES_WARPSTONE, WSTags.Items.ORES_WARPSTONE);
         copy(Tags.Blocks.ORES, Tags.Items.ORES);
 
-        copy(WarpTags.Blocks.STORAGE_BLOCKS_WARPSTONE, WarpTags.Items.STORAGE_BLOCKS_WARPSTONE);
+        copy(WSTags.Blocks.STORAGE_BLOCKS_WARPSTONE, WSTags.Items.STORAGE_BLOCKS_WARPSTONE);
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
 
-        getOrCreateBuilder(WarpTags.Items.GEMS_WARPSTONE).add(WarpItems.WARPSTONE_SHARD);
-        getOrCreateBuilder(Tags.Items.GEMS).addTag(WarpTags.Items.GEMS_WARPSTONE);
+        getOrCreateBuilder(WSTags.Items.GEMS_WARPSTONE).add(WSItems.WARPSTONE_SHARD);
+        getOrCreateBuilder(Tags.Items.GEMS).addTag(WSTags.Items.GEMS_WARPSTONE);
 
-        getOrCreateBuilder(WarpTags.Items.DUSTS_WARPSTONE).add(WarpItems.WARPSTONE_DUST);
-        getOrCreateBuilder(Tags.Items.DUSTS).addTag(WarpTags.Items.DUSTS_WARPSTONE);
+        getOrCreateBuilder(WSTags.Items.DUSTS_WARPSTONE).add(WSItems.WARPSTONE_DUST);
+        getOrCreateBuilder(Tags.Items.DUSTS).addTag(WSTags.Items.DUSTS_WARPSTONE);
     }
 }

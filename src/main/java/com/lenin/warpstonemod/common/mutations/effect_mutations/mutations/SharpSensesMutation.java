@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mob_effects.WarpEffects;
+import com.lenin.warpstonemod.common.mob_effects.WSEffects;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
@@ -37,7 +37,7 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 				|| !getInstance(player).isActive()
 			) return;
 
-		if (decrement(counterMap, player.getUniqueID()) && !player.isPotionActive(WarpEffects.SHARP_SENSES)) {
+		if (decrement(counterMap, player.getUniqueID()) && !player.isPotionActive(WSEffects.SHARP_SENSES)) {
 			ModifiableAttributeInstance attribute = player.getAttribute(Attributes.ATTACK_DAMAGE);
 
 			if (attribute.getModifier(uuid) != null) attribute.removeModifier(uuid);
@@ -48,7 +48,7 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 					AttributeModifier.Operation.MULTIPLY_TOTAL
 			));
 
-			player.addPotionEffect(new EffectInstance(WarpEffects.SHARP_SENSES, 72000, 1, false, false, true));
+			player.addPotionEffect(new EffectInstance(WSEffects.SHARP_SENSES, 72000, 1, false, false, true));
 		}
 		else if (player.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) == null) {
 			player.getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(
@@ -65,19 +65,19 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 				|| !(event.getSource().getTrueSource() instanceof PlayerEntity)
 				|| !containsInstance(event.getSource().getTrueSource().getUniqueID())
 				|| !getInstance(event.getSource().getTrueSource().getUniqueID()).isActive()
-				|| !((PlayerEntity) event.getSource().getTrueSource()).isPotionActive(WarpEffects.SHARP_SENSES)
+				|| !((PlayerEntity) event.getSource().getTrueSource()).isPotionActive(WSEffects.SHARP_SENSES)
 			) return;
 
 		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 
 		if (player.getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
-		player.removePotionEffect(WarpEffects.SHARP_SENSES);
+		player.removePotionEffect(WSEffects.SHARP_SENSES);
 	}
 
 	public void onPotionAdded (PotionEvent.PotionAddedEvent event) {
 		if (!event.getEntityLiving().world.isRemote()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
-				|| event.getPotionEffect().getPotion() != WarpEffects.SHARP_SENSES
+				|| event.getPotionEffect().getPotion() != WSEffects.SHARP_SENSES
 		) return;
 
 		event.getEntityLiving().playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
@@ -89,7 +89,7 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 
 		if (manager.getParentEntity().world.isRemote()) return;
 
-		if (manager.getParentEntity().isPotionActive(WarpEffects.SHARP_SENSES)) manager.getParentEntity().removePotionEffect(WarpEffects.SHARP_SENSES);
+		if (manager.getParentEntity().isPotionActive(WSEffects.SHARP_SENSES)) manager.getParentEntity().removePotionEffect(WSEffects.SHARP_SENSES);
 		if (manager.getParentEntity().getAttribute(Attributes.ATTACK_DAMAGE).getModifier(uuid) != null) manager.getParentEntity().getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
 	}
 }

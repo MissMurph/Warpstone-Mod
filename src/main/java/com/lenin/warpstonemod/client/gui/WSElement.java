@@ -2,18 +2,19 @@ package com.lenin.warpstonemod.client.gui;
 
 import com.lenin.warpstonemod.client.gui.components.Component;
 import com.lenin.warpstonemod.client.gui.components.IClickable;
+import com.lenin.warpstonemod.client.gui.elements.TileSheetElement;
+import com.lenin.warpstonemod.client.gui.screens.WSScreen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.IRenderable;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class WSElement extends AbstractGui {
     protected int x;
@@ -24,34 +25,27 @@ public class WSElement extends AbstractGui {
 
     protected boolean isHovered;
 
-    protected List<ITextComponent> toolTips;
+    protected List<ITextComponent> toolTips = new ArrayList<>();
 
-    protected List<Component> components;
+    protected List<Component> components = new ArrayList<>();
 
-    protected Screen parentScreen;
+    protected WSScreen parentScreen;
 
-    protected WSElement hoveredElement;
+    protected List<WSElement> childElements;
+    protected final List<WSElement.Builder<? extends WSElement>> childBuilders = new ArrayList<>();
 
-    protected WSElement(WSElement.Builder builder) {
-        x = builder.x;
-        y = builder.y;
-        width = builder.width;
-        height = builder.height;
-        components = builder.components;
-        toolTips = builder.toolTips;
-        parentScreen = builder.parentScreen;
-        hoveredElement = builder.hoverELement;
-    }
+    protected WSElement() {}
 
     public void render (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 
-        this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+        this.isHovered = isWithinChildBounds(mouseX, mouseY) || isWithinBounds(mouseX, mouseY);
 
         if (this.isHovered) {
-            //System.out.println("mouseX: " + mouseX + " mouseY: " + mouseY);
-            //System.out.println("X: " + this.x + " Y: " + this.y);
             renderToolTip(matrixStack, mouseX, mouseY);
-            hoveredElement.render(matrixStack, mouseX, mouseY, partialTicks);
+
+            for (WSElement element : childElements) {
+                element.render(matrixStack, mouseX, mouseY, partialTicks);
+            }
         }
 
         for (Component c : components) {
@@ -71,6 +65,18 @@ public class WSElement extends AbstractGui {
 
     public boolean isHovered () {
         return isHovered;
+    }
+
+    public boolean isWithinBounds (int mouseX, int mouseY) {
+        return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+    }
+
+    public boolean isWithinChildBounds (int mouseX, int mouseY) {
+        for (WSElement element : childElements) {
+            if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height) return true;
+        }
+
+        return false;
     }
 
     public int getX () {
@@ -109,39 +115,46 @@ public class WSElement extends AbstractGui {
                 .forEach(component -> ((IClickable) component).onClick(mouseX, mouseY, click));
     }
 
-    public static class Builder {
-        private final int x, y, width, height;
-        private final Screen parentScreen;
-        private final List<Component> components = new ArrayList<>();
-        private final List<ITextComponent> toolTips = new ArrayList<>();
-        private WSElement hoverELement;
+    public static class Builder<T extends WSElement> {
+        protected T element;
 
-        public Builder (int _x, int _y, int _width, int _height, Screen _parentScreen){
-            x = _x;
-            y = _y;
-            width = _width;
-            height = _height;
-            parentScreen = _parentScreen;
+        protected Builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen, T _element){
+            element = _element;
+            element.x = _x;
+            element.y = _y;
+            element.width = _width;
+            element.height = _height;
+            element.parentScreen = _parentScreen;
         }
 
-        public <T extends Component> WSElement.Builder addComponent (T component) {
-            components.add(component);
+        public Builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen){
+            new Builder<>(_x, _y, _width, _height, _parentScreen, new WSElement());
+        }
+
+        public <C extends Component> WSElement.Builder<T> addComponent (C component) {
+            component.setParent(element);
+            element.components.add(component);
             return this;
         }
 
-        public WSElement.Builder addTooltips (ITextComponent... lines) {
-            Collections.addAll(toolTips, lines);
+        public WSElement.Builder<T> addTooltips (ITextComponent... lines) {
+            Collections.addAll(element.toolTips, lines);
             return this;
         }
 
-        public WSElement.Builder addHoveredElement (WSElement element) {
-            hoverELement = element;
+        public WSElement.Builder<T> addChild (WSElement.Builder<? extends WSElement> builder) {
+            element.childBuilders.add(builder);
             return this;
         }
 
-        public WSElement build () {
-            WSElement element = new WSElement(this);
-            components.forEach(component -> component.setParent(element));
+        public T build () {
+            element.childElements = element.childBuilders.stream()
+                    .map(Builder::build)
+                    .collect(Collectors.toList());
+
+            element.x += element.parentScreen.getGuiLeft();
+            element.y += element.parentScreen.getGuiTop();
+
             return element;
         }
     }
