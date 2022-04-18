@@ -6,6 +6,10 @@ import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.*;
 
@@ -55,5 +59,39 @@ public abstract class EffectMutation extends Mutation {
 					AttributeModifier.Operation.valueOf(object.get("operation").getAsString())
 			));
 		});
+	}
+
+	@Override
+	public List<ITextComponent> getToolTips() {
+		List<ITextComponent> tooltips = super.getToolTips();
+
+		for (Map.Entry<ResourceLocation, AttributeModifier> entry : modifiers.entrySet()) {
+			double value = entry.getValue().getAmount();
+			String prefix = "+";
+			String suffix = "%";
+			TextFormatting formatting = TextFormatting.GREEN;
+
+			if (value < 0) {
+				prefix = "";
+				formatting = TextFormatting.RED;
+			}
+
+			if (entry.getValue().getOperation() == AttributeModifier.Operation.ADDITION) {
+				suffix = "";
+			} else {
+				value *= 100;
+			}
+
+			tooltips.add(
+					new StringTextComponent(prefix + ((int)value) + suffix)
+							.mergeStyle(formatting)
+							.appendString(" ")
+							.appendSibling(new TranslationTextComponent("attribute." + entry.getKey().getPath())
+									.mergeStyle(TextFormatting.WHITE)
+							)
+			);
+		}
+
+		return tooltips;
 	}
 }

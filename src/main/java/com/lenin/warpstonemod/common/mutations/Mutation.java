@@ -65,6 +65,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
             }
 
             instanceMap.put(instance.getParent().getUniqueId(), instance);
+            applyMutation(instance.getParent());
         }
     }
 
@@ -108,6 +109,16 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         return list;
     }
 
+    public List<ITextComponent> getConditionTooltips () {
+        List<ITextComponent> out = new ArrayList<>();
+
+        for (IMutationCondition condition : conditions.values()) {
+            out.add(condition.getTooltip());
+        }
+
+        return out;
+    }
+
     /**
      * rarity by default determines required Corruption level required using tag weight <br>
      * COMMON = 1 <br>
@@ -127,7 +138,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
             return manager.getCorruptionLevel() >= tag.getWeight();
         }
 
-        return manager.getCorruptionLevel() >= 1;
+        return true;
     }
 
     public JsonObject serializeArguments () {
@@ -164,7 +175,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         deserializeArguments(json);
     }
 
-    public CompoundNBT saveData () {
+    public CompoundNBT saveData (PlayerManager manager) {
         return null;
     }
 

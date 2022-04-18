@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.evolving_mutations.mutations;
 
+import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
@@ -14,7 +15,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class NinjaCurseMutation extends EvolvingMutation {
 
-    protected static int BLOCKS_TO_FALL = 1000;
+    protected static int BLOCKS_TO_FALL = 50;
 
     public static final Mutation CHILD_CURSE = registerChild(Warpstone.key("curse_ninja_child_1"), GenericMutation::new);
     public static final Mutation CHILD_GIFT = registerChild(Warpstone.key("curse_ninja_child_2"), GenericMutation::new);
@@ -38,7 +39,7 @@ public class NinjaCurseMutation extends EvolvingMutation {
 
         EvolvingMutationInstance instance = (EvolvingMutationInstance) getInstance(manager.getUniqueId());
 
-        instance.writeIfAbsent("distance_fallen", IntNBT.valueOf(0));
+        instance.writeIfAbsent("fall_blocks", IntNBT.valueOf(0));
     }
 
     private void onLivingFall (LivingFallEvent event) {
@@ -50,10 +51,16 @@ public class NinjaCurseMutation extends EvolvingMutation {
 
         EvolvingMutationInstance instance = (EvolvingMutationInstance) getInstance(event.getEntityLiving());
 
-        int value = ((IntNBT)instance.readData("distance_fallen")).getInt();
+        int value = ((IntNBT)instance.readData("fall_blocks")).getInt();
         if (value < BLOCKS_TO_FALL) {
-            instance.writeData("distance_fallen", IntNBT.valueOf(Math.min(BLOCKS_TO_FALL, value  + Math.round(event.getDistance()))));
-            checkNextConditions(instance.getParent());
+            instance.writeData("fall_blocks", IntNBT.valueOf(Math.min(BLOCKS_TO_FALL, value  + Math.round(event.getDistance()))));
         }
+
+        checkNextConditions(instance.getParent());
+    }
+
+    @Override
+    public void deserialize(JsonObject json) {
+        super.deserialize(json);
     }
 }

@@ -12,6 +12,8 @@
   "warpstone.screen.generic.total": "Total:",
   "warpstone.screen.generic.max_level": "Max Level:",
   "warpstone.screen.generic.next_level": "Next Level Threshold:",
+  "generic.required.conditions": "Step(s) to Evolve",
+  "generic.potion.grants": "Grants",
 
   "warpstone.consumable.wither_risk": "Wither Risk:",
 
@@ -20,7 +22,17 @@
   "attribute.generic.movement_speed": "Move Speed",
   "attribute.generic.armor": "Armor",
   "attribute.generic.armor_toughness": "Armor Toughness",
-  "attribute.mining_speed": "Mining Speed",
+  "attribute.generic.luck": "Luck",
+  "attribute.harvest_speed": "Mining Speed",
+  "attribute.healing": "Healing",
+  "attribute.swim_speed": "Swim Speed",
+  "attribute.life_steal": "Life Steal",
+  "attribute.melee_damage": "Melee Damage",
+  "attribute.ranged_damage": "Ranged Damage",
+
+  "condition.has_mutation": "Has Mutation",
+  "condition.corruption_level": "Corruption Level",
+  "condition.nbt.fall_blocks": "Blocks Fallen",
 
   "mutation.effect.slow_falling": "Slow Falling",
   "mutation.effect.slow_falling.desc": "Grants Slow Falling",

@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -29,16 +30,16 @@ public class MutationTree {
         }
     }
 
-    public Mutation advanceInstance (UUID uuid, int index) {
+    public void advanceInstance (UUID uuid, int index) {
         Node current = instanceNodes.get(uuid);
 
         if (index > current.next.size() || index < 0) throw new IllegalArgumentException("Index out of range");
 
-        return instanceNodes.put(uuid, nodes.get(current.next.get(index))).getParent();
+        instanceNodes.put(uuid, nodes.get(current.next.get(index)));
     }
 
-    public Mutation putInstance (UUID uuid) {
-        return instanceNodes.put(uuid, getOrigin()).getParent();
+    public void putInstance (UUID uuid) {
+        instanceNodes.put(uuid, getOrigin());
     }
 
     public void clearInstance (UUID uuid) {
@@ -63,6 +64,17 @@ public class MutationTree {
 
     public List<Node> getAll () {
         return new ArrayList<>(nodes.values());
+    }
+
+    public CompoundNBT saveInstance (UUID uuid) {
+        CompoundNBT out = new CompoundNBT();
+        out.putString("uuid", uuid.toString());
+        out.putString("current_mutation", getCurrentNode(uuid).getRegistryKey().toString());
+        return out;
+    }
+
+    public void loadInstance (CompoundNBT nbt) {
+        instanceNodes.put(UUID.fromString(nbt.getString("uuid")), getNode(new ResourceLocation(nbt.getString("current_mutation"))));
     }
 
     public class Node {

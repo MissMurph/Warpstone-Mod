@@ -13,32 +13,14 @@ import java.util.List;
 
 public class TileSheetElement extends WSElement {
 
+    //I've unlearnt my lesson, currently coming up with a method to make this more modular however atm I'll just leave like this
+
     protected final SpriteSheetResource spriteSheet;
 
     protected final List<RawTextureResource> textures = new ArrayList<>();
 
-    protected final RawTextureResource topLeft;
-    protected final RawTextureResource topMiddle;
-    protected final RawTextureResource topRight;
-    protected final RawTextureResource centerLeft;
-    protected final RawTextureResource center;
-    protected final RawTextureResource centerRight;
-    protected final RawTextureResource bottomLeft;
-    protected final RawTextureResource bottomMiddle;
-    protected final RawTextureResource bottomRight;
-
     protected TileSheetElement(SpriteSheetResource _spriteSheet) {
         spriteSheet = _spriteSheet;
-
-        topLeft = spriteSheet.resolve(0);
-        topMiddle = spriteSheet.resolve(1);
-        topRight = spriteSheet.resolve(2);
-        centerLeft = spriteSheet.resolve(3);
-        center = spriteSheet.resolve(4);
-        centerRight = spriteSheet.resolve(5);
-        bottomLeft = spriteSheet.resolve(6);
-        bottomMiddle = spriteSheet.resolve(7);
-        bottomRight = spriteSheet.resolve(8);
 
         for (int i = 0; i < 9; i++) {
             textures.add(spriteSheet.resolve(i));
@@ -110,7 +92,7 @@ public class TileSheetElement extends WSElement {
         }
     }
 
-    public static class Builder extends WSElement.Builder<TileSheetElement> {
+    public static class Builder extends WSElement.AbstractBuilder<TileSheetElement> {
         public Builder(int _x, int _y, int _width, int _height, WSScreen _parentScreen, SpriteSheetResource _spriteSheet) {
             super(_x, _y, _width, _height, _parentScreen, new TileSheetElement(_spriteSheet));
         }

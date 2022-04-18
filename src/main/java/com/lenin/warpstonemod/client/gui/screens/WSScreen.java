@@ -17,10 +17,12 @@ public class WSScreen extends Screen {
 
     protected static final int MAX_LAYERS = 10;
     protected List<WSElement> elements = new ArrayList<>();
-    protected final List<List<WSElement.Builder>> layers = new ArrayList<>(MAX_LAYERS);
+    protected final List<List<WSElement.AbstractBuilder<? extends WSElement>>> layers = new ArrayList<>(MAX_LAYERS);
 
     protected final int sizeX, sizeY;
     protected int guiLeft, guiTop;
+
+    protected WSElement currentlyHovered;
 
     protected WSScreen(ITextComponent title, RawTextureResource _screenResource, int _sizeX, int _sizeY) {
         super(title);
@@ -59,6 +61,8 @@ public class WSScreen extends Screen {
         for (WSElement w : elements) {
             w.render(matrixStack, mouseX, mouseY, partialTicks);
         }
+
+        if (currentlyHovered != null) currentlyHovered.onHover(matrixStack, mouseX, mouseY, partialTicks);
     }
 
     @Override
@@ -82,19 +86,27 @@ public class WSScreen extends Screen {
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
-    protected void layer (WSElement.Builder builder) {
+    public void setHovered (WSElement element) {
+        if (currentlyHovered == null) currentlyHovered = element;
+    }
+
+    public void clearHovered (WSElement element) {
+        if (currentlyHovered == element) currentlyHovered = null;
+    }
+
+    protected void layer (WSElement.AbstractBuilder<? extends WSElement> builder) {
         layers.get(0).add(builder);
     }
 
-    protected void layer (WSElement.Builder builder, int layer) {
+    protected void layer (WSElement.AbstractBuilder<? extends WSElement> builder, int layer) {
         int index = Math.max(Math.min(MAX_LAYERS - 1, layer), 0);
 
         layers.get(index).add(builder);
     }
 
     protected void loadLayers () {
-        for (List<WSElement.Builder> layer : layers) {
-            for (WSElement.Builder builder : layer) {
+        for (List<WSElement.AbstractBuilder<? extends WSElement>> layer : layers) {
+            for (WSElement.AbstractBuilder<? extends WSElement> builder : layer) {
                 elements.add(builder.build());
             }
         }

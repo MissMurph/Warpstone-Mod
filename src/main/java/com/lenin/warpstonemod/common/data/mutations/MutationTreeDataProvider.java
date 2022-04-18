@@ -28,9 +28,9 @@ public class MutationTreeDataProvider extends WarpstoneDataProvider {
 
     private void buildTrees () {
         data.add(new MutationTreeData.Builder(Warpstone.key("curse_ninja"),
-                newNode(Warpstone.key("curse_ninja_child_1"), 1, 0)
+                newNode(Warpstone.key("curse_ninja_child_1"), 0, 0)
                         .addNext(Warpstone.key("curse_ninja_child_2")))
-                .addNode(newNode(Warpstone.key("curse_ninja_child_2"), 1, 2))
+                .addNode(newNode(Warpstone.key("curse_ninja_child_2"), 0, 2))
                 .create()
         );
     }

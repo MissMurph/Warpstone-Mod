@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +44,21 @@ public class CorruptionLevelCondition implements IMutationCondition {
         }
 
         return !results.contains(false);
+    }
+
+    @Override
+    public ITextComponent getTooltip() {
+        TranslationTextComponent text = new TranslationTextComponent("condition." + resource.getPath());
+        text.appendString(": ");
+
+        for (int i = 0; i < operations.size(); i++) {
+            if (i > 0) text.appendString("& ");
+            text.appendString(operations.get(i).toString() + " ");
+        }
+
+        text.appendString(String.valueOf(value));
+
+        return text;
     }
 
     @Override

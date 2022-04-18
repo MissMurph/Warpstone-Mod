@@ -22,8 +22,11 @@ public class Textures {
     public static final RawTextureResource CORRUPTED_TOME_SCREEN = new RawTextureResource(
             Warpstone.key("textures/gui/corrupted_tome.png"), 256, 256, 0, 0);
 
-    public static final RawTextureResource CONTAINER_SHEET = new RawTextureResource(
-            Warpstone.key("textures/gui/container_sheet.png"), 54, 54, 0, 0);
+    public static final RawTextureResource MUTATION_TREE_LINE_HORIZONTAL = new RawTextureResource(
+            Warpstone.key("textures/gui/mutation_tree_line_horizontal.png"), 1, 8, 0, 0);
+
+    public static final RawTextureResource MUTATION_TREE_LINE_VERTICAL = new RawTextureResource(
+            Warpstone.key("textures/gui/mutation_tree_line_vertical.png"), 8, 1, 0, 0);
 
         /*  Sprite Sheets   */
     public static final SpriteSheetResource SHEET_MUT_ATTR_BAR = new SpriteSheetResource(MUT_SCREEN_ATTR_BAR, 75,
@@ -48,7 +51,7 @@ public class Textures {
             }
     );
 
-    public static final SpriteSheetResource SHEET_CONTAINER = new SpriteSheetResource(CONTAINER_SHEET, 9, (int frame) -> {
+    public static final SpriteSheetResource SHEET_CONTAINER = new SpriteSheetResource(null, 9, (int frame) -> {
            // int y = (int) (frame / 3f);
             //int x = frame - (y * 3);
 

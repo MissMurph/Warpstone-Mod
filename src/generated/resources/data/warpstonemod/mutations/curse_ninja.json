@@ -34,7 +34,7 @@
           "key": "warpstonemod:nbt_number",
           "target_nbt": "fall_blocks",
           "type": "INT",
-          "value": "1000",
+          "value": "50",
           "operations": [
             "EQUAL_TO",
             "GREATER_THAN"

@@ -10,6 +10,8 @@ import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance
 import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -50,13 +52,49 @@ public abstract class EvolvingMutation extends Mutation {
     }
 
     @Override
-    public CompoundNBT saveData () {
-        return super.saveData();
+    public CompoundNBT saveData (PlayerManager manager) {
+        CompoundNBT out = new CompoundNBT();
+        EvolvingMutationInstance instance = (EvolvingMutationInstance) getInstance(manager);
+
+        out.put("tree_data", TREE.saveInstance(manager.getUniqueId()));
+
+        ListNBT dataList = new ListNBT();
+
+        for (Map.Entry<String, INBT> entry : instance.data.entrySet()) {
+            CompoundNBT dataNbt = new CompoundNBT();
+
+            dataNbt.putString("uuid", instance.getParent().getUniqueId().toString());
+            dataNbt.putString("name", entry.getKey());
+            dataNbt.put("value", entry.getValue());
+
+            dataList.add(dataNbt);
+        }
+
+        out.put("data", dataList);
+
+        return out;
     }
 
     @Override
     public void loadData (CompoundNBT nbt) {
         super.loadData(nbt);
+
+        TREE.loadInstance(nbt.getCompound("tree_data"));
+
+        ListNBT dataList = (ListNBT) nbt.get("data");
+
+        if (dataList != null) {
+            for (int i = 0; i < dataList.size(); i++) {
+                CompoundNBT data = dataList.getCompound(i);
+
+                EvolvingMutationInstance instance = (EvolvingMutationInstance) getInstance(UUID.fromString(data.getString("uuid")));
+
+                String key = data.getString("name");
+                INBT value = data.get("value");
+
+                instance.writeData(key, value);
+            }
+        }
     }
 
     @Override

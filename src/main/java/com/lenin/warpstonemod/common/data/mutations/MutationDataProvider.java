@@ -122,7 +122,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
 
         data.add(new EffectMutationData.Builder(Warpstone.key("fins"))
                 .addModifier(ForgeMod.SWIM_SPEED.getId(), 1.0, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
-                .addTag(Warpstone.key("negative"))
+                .addTag(Warpstone.key("common"))
                 .create()
         );
 

@@ -6,6 +6,7 @@ import com.lenin.warpstonemod.client.gui.WSElement;
 import com.lenin.warpstonemod.client.gui.components.ButtonComponent;
 import com.lenin.warpstonemod.client.gui.components.ImageComponent;
 import com.lenin.warpstonemod.client.gui.components.TextComponent;
+import com.lenin.warpstonemod.client.gui.elements.MutationElement;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
@@ -75,7 +76,7 @@ public class MutationScreen extends WSScreen {
 
 			int frame = Math.round(((float)(level) / maxLevel) * maxFrame) + 25;
 
-			List<ITextComponent> attrTooltips = new ArrayList<>();
+			List<ITextComponent> attrTooltips = new ArrayList();
 
 			attrTooltips.add(muts.get(i).getMutationName().mergeStyle(TextFormatting.WHITE));
 			String levelText = "+";
@@ -106,11 +107,7 @@ public class MutationScreen extends WSScreen {
 				x = 10 + (23 * (i - 7));
 			}
 
-			layer(new WSElement.Builder(x, y, 18, 18, this)
-					.addComponent(new ImageComponent(
-							new RawTextureResource(Mutations.getMutation(effectMuts.get(i)).getTexture(), 18, 18, 0, 0)))
-					.addTooltips(Mutations.getMutation(effectMuts.get(i)).getToolTips().toArray(new ITextComponent[0]))
-			);
+			layer(new MutationElement.Builder(x, y, 18, 18, this, Mutations.getMutation(effectMuts.get(i))));
 		}
 	}
 }

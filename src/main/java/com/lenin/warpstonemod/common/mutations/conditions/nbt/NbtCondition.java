@@ -5,8 +5,14 @@ import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutationInstance;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class NbtCondition implements IMutationCondition {
     protected final ResourceLocation registryKey;
@@ -19,6 +25,21 @@ public abstract class NbtCondition implements IMutationCondition {
         parent = Mutations.getMutation(_targetMut);
         nbtKey = _nbtKey;
         nbt = _nbt;
+    }
+
+    @Override
+    public ITextComponent getTooltip() {
+        TranslationTextComponent text = new TranslationTextComponent("condition.nbt." + nbtKey);
+        text.appendString(": ");
+        text.appendString(nbt.getString());
+
+        if (parent.containsInstance(Minecraft.getInstance().player.getUniqueID())) {
+            INBT current = ((EvolvingMutationInstance) parent.getInstance(Minecraft.getInstance().player.getUniqueID())).readData(nbtKey);
+
+            text.appendString(" | Current: " + current.getString());
+        }
+
+        return text;
     }
 
     @Override

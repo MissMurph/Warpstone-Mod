@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
@@ -47,6 +49,23 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
                 player.addPotionEffect(new EffectInstance(effect, 3600, 0, false, false));
             }
         }
+    }
+
+    @Override
+    public List<ITextComponent> getToolTips() {
+        List<ITextComponent> out = super.getToolTips();
+
+        //Remove the description line
+        out.remove(1);
+
+        for (Effect potion : potions) {
+            out.add(new TranslationTextComponent("generic.potion.grants")
+                    .appendString(": ")
+                    .appendSibling(potion.getDisplayName())
+            );
+        }
+
+        return out;
     }
 
     public void onPotionApply (PotionEvent.PotionAddedEvent event) {

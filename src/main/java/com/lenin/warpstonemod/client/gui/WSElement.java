@@ -14,6 +14,7 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class WSElement extends AbstractGui {
@@ -32,26 +33,32 @@ public class WSElement extends AbstractGui {
     protected WSScreen parentScreen;
 
     protected List<WSElement> childElements;
-    protected final List<WSElement.Builder<? extends WSElement>> childBuilders = new ArrayList<>();
+    protected final List<WSElement.AbstractBuilder<? extends WSElement>> childBuilders = new ArrayList<>();
 
     protected WSElement() {}
 
     public void render (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-
-        this.isHovered = isWithinChildBounds(mouseX, mouseY) || isWithinBounds(mouseX, mouseY);
+        this.isHovered = (this.isHovered && isWithinChildBounds(mouseX, mouseY)) || isWithinBounds(mouseX, mouseY);
 
         if (this.isHovered) {
-            renderToolTip(matrixStack, mouseX, mouseY);
-
-            for (WSElement element : childElements) {
-                element.render(matrixStack, mouseX, mouseY, partialTicks);
-            }
+            parentScreen.setHovered(this);
+        } else {
+            parentScreen.clearHovered(this);
         }
 
         for (Component c : components) {
             if (c instanceof IRenderable) {
                 ((IRenderable) c).render(matrixStack, mouseX, mouseY, partialTicks);
             }
+        }
+    }
+
+    public void onHover (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        renderToolTip(matrixStack, mouseX, mouseY);
+
+        for (WSElement element : childElements) {
+            element.render(matrixStack, mouseX, mouseY, partialTicks);
+            if (element.isWithinBounds(mouseX, mouseY)) element.onHover(matrixStack, mouseX, mouseY, partialTicks);
         }
     }
 
@@ -73,7 +80,7 @@ public class WSElement extends AbstractGui {
 
     public boolean isWithinChildBounds (int mouseX, int mouseY) {
         for (WSElement element : childElements) {
-            if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height) return true;
+            if (mouseX >= element.x && mouseY >= element.y && mouseX < element.x + element.width && mouseY < element.y + element.height) return true;
         }
 
         return false;
@@ -115,10 +122,16 @@ public class WSElement extends AbstractGui {
                 .forEach(component -> ((IClickable) component).onClick(mouseX, mouseY, click));
     }
 
-    public static class Builder<T extends WSElement> {
+    public static class Builder extends AbstractBuilder<WSElement> {
+        public Builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen) {
+            super(_x, _y, _width, _height, _parentScreen, new WSElement());
+        }
+    }
+
+    public abstract static class AbstractBuilder<T extends WSElement> {
         protected T element;
 
-        protected Builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen, T _element){
+        protected AbstractBuilder (int _x, int _y, int _width, int _height, WSScreen _parentScreen, T _element){
             element = _element;
             element.x = _x;
             element.y = _y;
@@ -127,29 +140,25 @@ public class WSElement extends AbstractGui {
             element.parentScreen = _parentScreen;
         }
 
-        public Builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen){
-            new Builder<>(_x, _y, _width, _height, _parentScreen, new WSElement());
-        }
-
-        public <C extends Component> WSElement.Builder<T> addComponent (C component) {
+        public <C extends Component> WSElement.AbstractBuilder<T> addComponent (C component) {
             component.setParent(element);
             element.components.add(component);
             return this;
         }
 
-        public WSElement.Builder<T> addTooltips (ITextComponent... lines) {
+        public WSElement.AbstractBuilder<T> addTooltips (ITextComponent... lines) {
             Collections.addAll(element.toolTips, lines);
             return this;
         }
 
-        public WSElement.Builder<T> addChild (WSElement.Builder<? extends WSElement> builder) {
+        public WSElement.AbstractBuilder<T> addChild (WSElement.AbstractBuilder<? extends WSElement> builder) {
             element.childBuilders.add(builder);
             return this;
         }
 
         public T build () {
             element.childElements = element.childBuilders.stream()
-                    .map(Builder::build)
+                    .map(AbstractBuilder::build)
                     .collect(Collectors.toList());
 
             element.x += element.parentScreen.getGuiLeft();

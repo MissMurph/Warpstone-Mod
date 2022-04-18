@@ -4,7 +4,7 @@
   "nodes": [
     {
       "key": "warpstonemod:curse_ninja_child_1",
-      "x": 1,
+      "x": 0,
       "y": 0,
       "next": [
         "warpstonemod:curse_ninja_child_2"
@@ -12,7 +12,7 @@
     },
     {
       "key": "warpstonemod:curse_ninja_child_2",
-      "x": 1,
+      "x": 0,
       "y": 2,
       "next": []
     }

@@ -29,7 +29,7 @@ public class EvolvingMutationInstance extends MutationInstance {
     }
 
     public void writeIfAbsent (String key, INBT _data) {
-        data.put(key, _data);
+        if (!data.containsKey(key)) data.put(key, _data);
     }
 
     public boolean moveInstance (Mutation from, Mutation to) {

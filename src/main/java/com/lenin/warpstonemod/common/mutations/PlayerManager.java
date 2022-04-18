@@ -43,7 +43,7 @@ public class PlayerManager {
     public PlayerManager(LivingEntity _parentEntity){
         parentEntity = _parentEntity;
 
-        attributes.add(new VanillaAttribute(Attributes.MAX_HEALTH, getParentEntity()));
+        //attributes.add(new VanillaAttribute(Attributes.MAX_HEALTH, getParentEntity()));
 
         attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.max_health")), this, AttributeMutationUUIDs.MAX_HEALTH_UUID));
         attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.attack_damage")), this, AttributeMutationUUIDs.ATTACK_DAMAGE_UUID));
@@ -146,7 +146,7 @@ public class PlayerManager {
         mutations.remove(mutation.getRegistryName());
     }
 
-    public void addMutationCommand (EffectMutation mutation) {
+    public void addMutationCommand (Mutation mutation) {
         if (mutations.containsKey(mutation.getRegistryName())
                 || !Registration.EFFECT_MUTATIONS.containsKey(mutation.getRegistryName())) return;
 
@@ -179,19 +179,14 @@ public class PlayerManager {
 
         ListNBT tagList = new ListNBT();
 
-        /*for (int i = 0; i < mutations.size(); i++) {
-            CompoundNBT mut = new CompoundNBT();
-            mut.putString("effect_mutations" + i, EffectMutations.getMutation(mutations.get(i)).getRegistryName().toString());
-            tagList.add(mut);
-        }*/
-
         for (ResourceLocation key : mutations.keySet()) {
             CompoundNBT mut = new CompoundNBT();
             mut.putString("key", key.toString());
+            mut.put("mutation_data", mutations.get(key).saveData(this));
             tagList.add(mut);
         }
 
-        out.put("effect_mutations", tagList);
+        out.put("mutations", tagList);
 
         return out;
     }
@@ -210,7 +205,7 @@ public class PlayerManager {
             mut.setLevel(nbt.getInt(mut.getMutationType()));
         }
 
-        ListNBT list = (ListNBT) nbt.get("effect_mutations");
+        ListNBT list = (ListNBT) nbt.get("mutations");
 
         List<ResourceLocation> deletion = new ArrayList<>(mutations.keySet());
 
@@ -225,21 +220,9 @@ public class PlayerManager {
                 }
 
                 addMutation(getEffect(key));
+                getEffect(key).loadData(compound.getCompound("mutation_data"));
             }
         }
-
-        /*if (list != null) {
-            for (int i = 0; i < list.size(); i++) {
-                CompoundNBT tag = list.getCompound(i);
-                ResourceLocation mutKey = new ResourceLocation(tag.getString("effect_mutations" + i));
-
-                if (containsEffect(mutKey)) { deletion.remove(mutKey); continue; }
-                mutations.add(mutKey);
-
-                EffectMutation mut = getEffect(mutKey);
-                mut.applyMutation(this);
-            }
-        }*/
 
         for (ResourceLocation mut : deletion) {
             removeMutation(getEffect(mut));
