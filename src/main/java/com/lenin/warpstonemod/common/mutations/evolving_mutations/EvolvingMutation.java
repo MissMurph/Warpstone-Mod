@@ -3,11 +3,10 @@ package com.lenin.warpstonemod.common.mutations.evolving_mutations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.MutationInstance;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -18,7 +17,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.lenin.warpstonemod.common.mutations.MutationSupplier;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 
 public abstract class EvolvingMutation extends Mutation {
@@ -33,22 +31,14 @@ public abstract class EvolvingMutation extends Mutation {
     public void applyMutation (PlayerManager manager) {
         super.applyMutation(manager);
 
-        TREE.putInstance(manager.getUniqueId());
-        TREE.getMutation(manager.getUniqueId()).applyMutation(getInstance(manager));
+        TREE.putInstance(manager.getUniqueId()).getParent().applyMutation(getInstance(manager));
     }
 
     @Override
-    public void deactivateMutation (PlayerManager manager) {
-        super.deactivateMutation(manager);
+    public void clearMutation(PlayerManager manager) {
+        super.clearMutation(manager);
 
-        TREE.getMutation(manager.getUniqueId()).deactivateMutation(manager);
-    }
-
-    @Override
-    public void clearInstance (PlayerManager manager) {
-        super.clearInstance(manager);
-
-        TREE.getMutation(manager.getUniqueId()).clearInstance(manager);
+        TREE.getMutation(manager.getUniqueId()).clearMutation(manager);
     }
 
     @Override
@@ -76,10 +66,10 @@ public abstract class EvolvingMutation extends Mutation {
     }
 
     @Override
-    public void loadData (CompoundNBT nbt) {
-        super.loadData(nbt);
+    public void loadData (PlayerManager manager, CompoundNBT nbt) {
+        super.loadData(manager, nbt);
 
-        TREE.loadInstance(nbt.getCompound("tree_data"));
+        MutationTree.Node node = TREE.loadInstance(nbt.getCompound("tree_data"));
 
         ListNBT dataList = (ListNBT) nbt.get("data");
 
@@ -95,6 +85,8 @@ public abstract class EvolvingMutation extends Mutation {
                 instance.writeData(key, value);
             }
         }
+
+        node.getParent().applyMutation(manager);
     }
 
     @Override
@@ -118,7 +110,7 @@ public abstract class EvolvingMutation extends Mutation {
         Mutation fromMutation = currentNode.getParent();
         TREE.advanceInstance(instance.getParent().getUniqueId(), currentNode.getNext().indexOf(chosenNode));
 
-        fromMutation.clearInstance(instance.getParent());
+        fromMutation.clearMutation(instance.getParent());
         moveTo.applyMutation(instance);
     }
 

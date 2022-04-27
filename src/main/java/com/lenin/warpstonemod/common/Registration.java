@@ -3,7 +3,7 @@ package com.lenin.warpstonemod.common;
 import com.lenin.warpstonemod.common.items.WSItems;
 import com.lenin.warpstonemod.common.mob_effects.WSEffects;
 import com.lenin.warpstonemod.common.mutations.Mutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;

@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
@@ -62,7 +63,6 @@ public class AlcoholicMutation extends EffectMutation {
 				|| !(event.getItem().getItem() instanceof PotionItem)
 				|| PotionUtils.getEffectsFromStack(event.getItem()).isEmpty()
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		LivingEntity entity = event.getEntityLiving();
@@ -80,7 +80,6 @@ public class AlcoholicMutation extends EffectMutation {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| event.getPotionEffect().getPotion() != Effects.ABSORPTION
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		LivingEntity entity = event.getEntityLiving();
@@ -99,13 +98,13 @@ public class AlcoholicMutation extends EffectMutation {
 	}
 
 	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
+	public void clearMutation(PlayerManager manager) {
+		super.clearMutation(manager);
 
 		if (manager.getParentEntity().world.isRemote) return;
 
 		manager.getParentEntity().setAbsorptionAmount(manager.getParentEntity().getAbsorptionAmount() - valueMap.get(manager.getUniqueId()));
-		valueMap.put(manager.getUniqueId(), 0);
+		valueMap.remove(manager.getUniqueId());
 		manager.getParentEntity().removePotionEffect(Effects.ABSORPTION);
 	}
 }

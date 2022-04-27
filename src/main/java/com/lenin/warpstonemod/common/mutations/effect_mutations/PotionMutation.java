@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
@@ -35,7 +36,6 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
     public void mutationTick(PlayerEntity player, LogicalSide side) {
         if (side == LogicalSide.CLIENT
                 || !containsInstance(player)
-                || !getInstance(player).isActive()
         ) return;
 
         for (Effect effect : potions) {
@@ -70,7 +70,6 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
 
     public void onPotionApply (PotionEvent.PotionAddedEvent event) {
         if (!containsInstance(event.getEntityLiving())
-                || !getInstance(event.getEntityLiving()).isActive()
                 || !potions.contains(event.getPotionEffect().getPotion())
         ) return;
 
@@ -89,8 +88,8 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
     }
 
     @Override
-    public void deactivateMutation(PlayerManager manager) {
-        super.deactivateMutation(manager);
+    public void clearMutation(PlayerManager manager) {
+        super.clearMutation(manager);
 
         if (manager.getParentEntity().world.isRemote) return;
 

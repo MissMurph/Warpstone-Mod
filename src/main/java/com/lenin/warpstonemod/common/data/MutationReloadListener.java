@@ -3,7 +3,7 @@ package com.lenin.warpstonemod.common.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.profiler.IProfiler;

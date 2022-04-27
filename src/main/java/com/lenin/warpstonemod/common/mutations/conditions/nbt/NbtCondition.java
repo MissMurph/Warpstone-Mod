@@ -3,16 +3,13 @@ package com.lenin.warpstonemod.common.mutations.conditions.nbt;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutationInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class NbtCondition implements IMutationCondition {
     protected final ResourceLocation registryKey;

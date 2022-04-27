@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class StrengthMutation extends EffectMutation {
+public class StrengthMutation extends Mutation {
 	public StrengthMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -27,7 +28,6 @@ public class StrengthMutation extends EffectMutation {
 	public void onKnockBack (LivingDamageEvent event) {
 		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)
 				|| !containsInstance((LivingEntity) event.getSource().getTrueSource())
-				|| !getInstance((LivingEntity) event.getSource().getTrueSource()).isActive()
 		) return;
 
 		LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();

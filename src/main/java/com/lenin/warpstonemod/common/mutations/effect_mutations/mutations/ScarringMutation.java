@@ -1,8 +1,8 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ScarringMutation extends CounterEffectMutation implements IMutationTick {
+public class ScarringMutation extends CounterMutation implements IMutationTick {
 	public ScarringMutation(ResourceLocation _key) {
 		super(_key,
                 400
@@ -34,7 +34,6 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
-				|| !getInstance(player).isActive()
 			) return;
 
 		if (decrement(counterMap, player.getUniqueID())) {
@@ -45,7 +44,6 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 	public void onLivingDamage (LivingDamageEvent event) {
 		if (event.getEntityLiving().world.isRemote()
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 			) return;
 
 		UUID playerUUID = event.getEntityLiving().getUniqueID();
@@ -78,8 +76,8 @@ public class ScarringMutation extends CounterEffectMutation implements IMutation
 	}
 
 	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
+	public void clearMutation(PlayerManager manager) {
+		super.clearMutation(manager);
 
 		if (manager.getParentEntity().world.isRemote()) return;
 

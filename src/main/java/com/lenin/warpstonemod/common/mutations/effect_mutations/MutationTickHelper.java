@@ -2,15 +2,13 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.ITickHandler;
 import com.lenin.warpstonemod.common.Registration;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.stream.Collectors;
 
 public class MutationTickHelper implements ITickHandler {
 

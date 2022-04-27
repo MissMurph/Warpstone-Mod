@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.Warpstone;
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -9,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class CorrosiveTouchMutation extends EffectMutation {
+public class CorrosiveTouchMutation extends Mutation {
 	public CorrosiveTouchMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -22,7 +23,6 @@ public class CorrosiveTouchMutation extends EffectMutation {
 	public void onLivingDamage (LivingDamageEvent event) {
 		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)
 				|| !instanceMap.containsKey(event.getSource().getTrueSource().getUniqueID())
-				|| !instanceMap.get(event.getSource().getTrueSource().getUniqueID()).isActive()
 				|| !Warpstone.getRandom().nextBoolean()
 		) return;
 

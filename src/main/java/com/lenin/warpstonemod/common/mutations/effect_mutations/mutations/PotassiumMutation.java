@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PotassiumMutation extends CounterEffectMutation implements IMutationTick {
+public class PotassiumMutation extends CounterMutation implements IMutationTick {
 	public PotassiumMutation(ResourceLocation _key) {
 		super(_key,
                 100
@@ -41,7 +41,6 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
-				|| !getInstance(player).isActive()
 			) return;
 
 		if (player.isInWaterRainOrBubbleColumn()) {
@@ -62,7 +61,6 @@ public class PotassiumMutation extends CounterEffectMutation implements IMutatio
 		if (event.getEntityLiving().world.isRemote()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 				|| !(event.getItem().getItem() instanceof PotionItem)
 				|| !legalPotions.contains(PotionUtils.getPotionFromItem(event.getItem()))
 			) return;

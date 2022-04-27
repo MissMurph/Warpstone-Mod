@@ -17,7 +17,6 @@ public class CarnivoreMutation extends HerbivoreMutation {
                 || !(event.getEntityLiving() instanceof PlayerEntity)
                 || !event.getItem().isFood()
                 || !containsInstance(event.getEntityLiving())
-                || !getInstance(event.getEntityLiving()).isActive()
         ) return;
 
         Food food = event.getItem().getItem().getFood();

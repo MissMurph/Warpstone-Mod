@@ -1,10 +1,12 @@
-package com.lenin.warpstonemod.common.mutations.effect_mutations;
+package com.lenin.warpstonemod.common.mutations;
 
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.MutationSupplier;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.GenericMutation;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.PotionMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.mutations.*;
 import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutation;
 import com.lenin.warpstonemod.common.mutations.evolving_mutations.mutations.NinjaCurseMutation;

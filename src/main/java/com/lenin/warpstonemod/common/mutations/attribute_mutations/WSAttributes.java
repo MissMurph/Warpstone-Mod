@@ -13,10 +13,10 @@ public class WSAttributes {
     private static final Map<ResourceLocation, WSAttribute.AttributeFactory<WSAttribute>> ATTRIBUTE_MAP = new HashMap<>();
 
     public static final WSAttribute.AttributeFactory<WSAttribute> HARVEST_SPEED = register("harvest_speed", AttrHarvestSpeed::new);
-    public static final WSAttribute.AttributeFactory<WSAttribute>  HEALING = register("healing", AttrHealing::new);
-    public static final WSAttribute.AttributeFactory<WSAttribute>  LIFE_STEAL = register("life_steal", AttrLifeSteal::new);
-    public static final WSAttribute.AttributeFactory<WSAttribute>  MELEE_DAMAGE = register("melee_damage", AttrMeleeDamage::new);
-    public static final WSAttribute.AttributeFactory<WSAttribute>  RANGED_DAMAGE = register("ranged_damage", AttrRangedDamage::new);
+    public static final WSAttribute.AttributeFactory<WSAttribute> HEALING = register("healing", AttrHealing::new);
+    public static final WSAttribute.AttributeFactory<WSAttribute> LIFE_STEAL = register("life_steal", AttrLifeSteal::new);
+    public static final WSAttribute.AttributeFactory<WSAttribute> MELEE_DAMAGE = register("melee_damage", AttrMeleeDamage::new);
+    public static final WSAttribute.AttributeFactory<WSAttribute> RANGED_DAMAGE = register("ranged_damage", AttrRangedDamage::new);
 
     public static WSAttribute.AttributeFactory<WSAttribute>  register (String key, WSAttribute.AttributeSupplier<WSAttribute> supplier) {
         ResourceLocation resource = new ResourceLocation(Warpstone.MOD_ID, key);

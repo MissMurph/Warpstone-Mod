@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.LogicalSide;
 
-public class WeakLungsMutation extends CounterEffectMutation implements IMutationTick {
+public class WeakLungsMutation extends CounterMutation implements IMutationTick {
 	public WeakLungsMutation(ResourceLocation _key) {
 		super(_key,
 				5
@@ -27,7 +27,6 @@ public class WeakLungsMutation extends CounterEffectMutation implements IMutatio
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
-				|| !getInstance(player).isActive()
 		) return;
 
 		if (decrement(counterMap, player.getUniqueID())) {

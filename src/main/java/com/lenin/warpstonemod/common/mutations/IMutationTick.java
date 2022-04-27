@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.mutations.effect_mutations;
+package com.lenin.warpstonemod.common.mutations;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.LogicalSide;

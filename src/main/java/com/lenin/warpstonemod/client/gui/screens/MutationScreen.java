@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.client.gui.screens;
 
-import com.lenin.warpstonemod.client.gui.RawTextureResource;
 import com.lenin.warpstonemod.client.gui.Textures;
 import com.lenin.warpstonemod.client.gui.WSElement;
 import com.lenin.warpstonemod.client.gui.components.ButtonComponent;
@@ -10,7 +9,7 @@ import com.lenin.warpstonemod.client.gui.elements.MutationElement;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.util.ResourceLocation;

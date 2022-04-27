@@ -89,7 +89,7 @@ public class CommonProxy {
 	private void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
-		MutateHelper.loadMutData(player.getUniqueID());
+		MutateHelper.loadPlayerData(player.getUniqueID());
 	}
 
 	private void onPlayerDisconnect (PlayerEvent.PlayerLoggedOutEvent event) {

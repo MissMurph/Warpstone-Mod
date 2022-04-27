@@ -28,7 +28,6 @@ public class TurtleMutation extends EffectMutation {
 		if (event.getEntityLiving().world.isRemote()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 			) return;
 
 		if (event.getEntityLiving().isActiveItemStackBlocking() && !event.getEntityLiving().isPotionActive(WSEffects.TURTLE)) {
@@ -49,7 +48,6 @@ public class TurtleMutation extends EffectMutation {
 		if (event.getEntityLiving().world.isRemote()
 				|| !(event.getSource().getTrueSource() instanceof PlayerEntity)
 				|| !containsInstance(event.getSource().getTrueSource().getUniqueID())
-				|| !getInstance(event.getSource().getTrueSource().getUniqueID()).isActive()
 		) return;
 
 		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();

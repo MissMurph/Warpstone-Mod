@@ -63,6 +63,7 @@ public class MutationTreeData {
         private final int x;
         private final int y;
         private final List<ResourceLocation> nextNodes = new ArrayList<>();
+        private final List<ResourceLocation> optionalNodes = new ArrayList<>();
 
         private NodeData (ResourceLocation _nodeKey, int _x, int _y) {
             nodeKey = _nodeKey;
@@ -77,13 +78,20 @@ public class MutationTreeData {
             out.addProperty("x", x);
             out.addProperty("y", y);
 
-            JsonArray array = new JsonArray();
+            JsonArray nextArray = new JsonArray();
 
             for (ResourceLocation res : nextNodes) {
-                array.add(res.toString());
+                nextArray.add(res.toString());
             }
 
-            out.add("next", array);
+            JsonArray optionalArray = new JsonArray();
+
+            for (ResourceLocation res : optionalNodes) {
+                optionalArray.add(res.toString());
+            }
+
+            out.add("next", nextArray);
+            out.add("optional", optionalArray);
 
             return out;
         }
@@ -97,6 +105,11 @@ public class MutationTreeData {
 
             public Builder addNext (ResourceLocation nextKey) {
                 nodeData.nextNodes.add(nextKey);
+                return this;
+            }
+
+            public Builder addOptional (ResourceLocation nextKey) {
+                nodeData.optionalNodes.add(nextKey);
                 return this;
             }
 

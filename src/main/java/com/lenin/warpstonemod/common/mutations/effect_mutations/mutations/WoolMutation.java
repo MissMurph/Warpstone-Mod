@@ -3,7 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 import com.lenin.warpstonemod.common.mob_effects.WSEffects;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -39,7 +39,6 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     public void mutationTick(PlayerEntity player, LogicalSide side) {
         if (side == LogicalSide.CLIENT
                 || !containsInstance(player)
-                || !getInstance(player).isActive()
         ) return;
 
         if (!player.isPotionActive(WSEffects.WOOL)) {
@@ -61,7 +60,6 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
         if (event.getEntityLiving().world.isRemote()
                 || event.getPotion() != WSEffects.WOOL
                 || !containsInstance(event.getEntityLiving())
-                || !getInstance(event.getEntityLiving()).isActive()
         ) return;
 
         if (!removeList.contains(event.getEntityLiving().getUniqueID())) {
@@ -74,7 +72,6 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
         if (event.getEntityLiving().world.isRemote()
                 || event.getPotionEffect().getPotion() != WSEffects.WOOL
                 || !containsInstance(event.getEntityLiving())
-                || !getInstance(event.getEntityLiving()).isActive()
         ) return;
 
         if (event.getPotionEffect().getAmplifier() < 9) bonusMap.put(event.getEntityLiving().getUniqueID(), event.getPotionEffect().getAmplifier() + 1);
@@ -83,7 +80,6 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     public void onItemRightClick (PlayerInteractEvent.RightClickItem event) {
         if (event.getItemStack().getItem() != Items.SHEARS
                 || !containsInstance(event.getEntityLiving())
-                || !getInstance(event.getEntityLiving()).isActive()
                 || event.getEntityLiving().getActivePotionEffect(WSEffects.WOOL).getAmplifier() < 1
         ) return;
 
@@ -125,8 +121,8 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     }
 
     @Override
-    public void deactivateMutation(PlayerManager manager) {
-        super.deactivateMutation(manager);
+    public void clearMutation(PlayerManager manager) {
+        super.clearMutation(manager);
 
         if (manager.getParentEntity().world.isRemote() && !manager.getParentEntity().isPotionActive(WSEffects.WOOL)) return;
 

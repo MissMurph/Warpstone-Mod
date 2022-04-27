@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -8,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class CounterEffectMutation extends EffectMutation {
-    public CounterEffectMutation(ResourceLocation _key, int _interval) {
+public class CounterMutation extends Mutation {
+    public CounterMutation(ResourceLocation _key, int _interval) {
         super(_key);
         INTERVAL = _interval;
     }
@@ -17,16 +18,6 @@ public class CounterEffectMutation extends EffectMutation {
     protected Map<UUID, Integer> counterMap = new HashMap<>();
 
     protected final int INTERVAL;
-
-    @Override
-    public void attachListeners(IEventBus bus) {
-
-    }
-
-    @Override
-    public void attachClientListeners(IEventBus bus) {
-
-    }
 
     protected boolean decrement(Map<UUID, Integer> map, UUID playerUUID) {
         int value = map.get(playerUUID) - 1;
@@ -58,8 +49,8 @@ public class CounterEffectMutation extends EffectMutation {
     }
 
     @Override
-    public void deactivateMutation(PlayerManager manager) {
-        super.deactivateMutation(manager);
+    public void clearMutation(PlayerManager manager) {
+        super.clearMutation(manager);
 
         if (manager.getParentEntity().world.isRemote) return;
 

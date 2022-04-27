@@ -23,7 +23,6 @@ public class ThornsMutation extends EffectMutation {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| event.getSource().getTrueSource() == null
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		float damage = event.getAmount() * 0.25f;

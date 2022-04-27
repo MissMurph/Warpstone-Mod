@@ -5,13 +5,12 @@ import com.lenin.warpstonemod.common.data.WarpstoneDataProvider;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.conditions.HasMutationCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.nbt.NbtNumberCondition;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeMod;
 
 import java.io.IOException;

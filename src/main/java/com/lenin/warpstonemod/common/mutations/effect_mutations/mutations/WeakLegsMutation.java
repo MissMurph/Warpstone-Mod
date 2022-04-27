@@ -20,7 +20,9 @@ public class WeakLegsMutation extends EffectMutation {
 
 	public void onDamage(LivingDamageEvent event){
 		LivingEntity entity = event.getEntityLiving();
-		if (entity.world.isRemote() || !(entity instanceof PlayerEntity) || !(instanceMap.containsKey(entity.getUniqueID()))) return;
+		if (entity.world.isRemote()
+				|| !(entity instanceof PlayerEntity)
+				|| !(instanceMap.containsKey(entity.getUniqueID()))) return;
 
 		if (event.getSource() == DamageSource.FALL) {
 			float damage = (event.getAmount() * 1.25f);

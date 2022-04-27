@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
@@ -52,9 +51,6 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
 
     public void applyMutation (PlayerManager manager){
         if (!containsInstance(manager.getUniqueId())) constructInstance(manager);
-
-        MutationInstance mut = instanceMap.get(manager.getUniqueId());
-        mut.setActive(true);
     }
 
     public void applyMutation (MutationInstance instance) {
@@ -69,23 +65,15 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         }
     }
 
-    //This cannot clear instances as methods are overridden to deactivate mutations
-    public void deactivateMutation(PlayerManager manager) {
-        if (!containsInstance(manager.getUniqueId())) return;
-
-        instanceMap.get(manager.getUniqueId()).setActive(false);
-    }
-
 
     //Different from Deactivate Mutations as will deactivate then clear the instance
-    public void clearInstance (PlayerManager manager) {
+    public void clearMutation(PlayerManager manager) {
         if (containsInstance(manager.getUniqueId())) {
             if (manager.getParentEntity().world.isRemote()) {
                 clearClientInstance();
                 return;
             }
 
-            deactivateMutation(manager);
             instanceMap.remove(manager.getUniqueId());
         }
     }
@@ -179,7 +167,11 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         return null;
     }
 
-    public void loadData (CompoundNBT nbt) {}
+    public void loadData (PlayerManager manager, CompoundNBT nbt) {
+        if (!instanceMap.containsKey(manager.getUniqueId())) {
+            applyMutation(manager);
+        }
+    }
 
     public MutationInstance getInstance (LivingEntity entity) {
         return getInstance(entity.getUniqueID());

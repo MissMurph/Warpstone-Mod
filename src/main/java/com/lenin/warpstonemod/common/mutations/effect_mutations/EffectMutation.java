@@ -34,10 +34,9 @@ public abstract class EffectMutation extends Mutation {
 		}
 	}
 
-	//This cannot clear instances as methods are overridden to deactivate mutations
 	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
+	public void clearMutation(PlayerManager manager) {
+		super.clearMutation(manager);
 
 		if (manager.getParentEntity().world.isRemote()) return;
 

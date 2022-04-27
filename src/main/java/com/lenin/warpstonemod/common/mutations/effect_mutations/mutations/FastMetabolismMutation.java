@@ -1,13 +1,14 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class FastMetabolismMutation extends EffectMutation {
+public class FastMetabolismMutation extends Mutation {
 	public FastMetabolismMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -21,7 +22,6 @@ public class FastMetabolismMutation extends EffectMutation {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !event.getItem().getItem().isFood()
 				|| !instanceMap.containsKey(event.getEntityLiving().getUniqueID())
-				|| !instanceMap.get(event.getEntityLiving().getUniqueID()).isActive()
 				|| event.getItem().getItem() instanceof IWarpstoneConsumable
 		) return;
 

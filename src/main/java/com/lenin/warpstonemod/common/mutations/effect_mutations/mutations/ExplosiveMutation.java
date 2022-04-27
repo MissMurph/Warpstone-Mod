@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ExplosiveMutation extends EffectMutation {
+public class ExplosiveMutation extends Mutation {
 	public ExplosiveMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -38,7 +39,6 @@ public class ExplosiveMutation extends EffectMutation {
 	public void onLivingDamage (LivingDeathEvent event) {
 		if (!fireSources.contains(event.getSource())
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 1f);
@@ -47,7 +47,6 @@ public class ExplosiveMutation extends EffectMutation {
 	public void onLivingDeath (LivingDeathEvent event) {
 		if (!fireSources.contains(event.getSource())
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		LivingEntity entity = event.getEntityLiving();

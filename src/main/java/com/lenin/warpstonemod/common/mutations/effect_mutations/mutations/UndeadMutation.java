@@ -24,7 +24,6 @@ public class UndeadMutation extends EffectMutation {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !(event.getPotionEffect().getPotion() == Effects.POISON)
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		event.setResult(Event.Result.DENY);

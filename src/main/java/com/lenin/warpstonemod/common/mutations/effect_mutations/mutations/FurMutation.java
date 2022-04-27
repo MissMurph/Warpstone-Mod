@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FurMutation extends CounterEffectMutation implements IMutationTick {
+public class FurMutation extends CounterMutation implements IMutationTick {
     public FurMutation(ResourceLocation _key) {
         super(_key,
                 200
@@ -53,7 +53,6 @@ public class FurMutation extends CounterEffectMutation implements IMutationTick 
     public void mutationTick(PlayerEntity player, LogicalSide side) {
         if (side == LogicalSide.CLIENT
                 || !containsInstance(player)
-                || !getInstance(player).isActive()
         ) return;
 
         if (LEGAL_BIOMES.contains(player.world.getBiome(player.getPosition()))) {

@@ -23,14 +23,14 @@ public class MutateHelper {
 
     private static PlayerManager clientManager = new DummyPlayerManager();
 
-    protected static List<PlayerManager> managers = new ArrayList<PlayerManager>();
+    protected final static List<PlayerManager> MANAGERS = new ArrayList<>();
 
-    public static PlayerManager getManager (LivingEntity e) {
-        return getManager(e.getUniqueID());
+    public static PlayerManager getManager (LivingEntity entity) {
+        return getManager(entity.getUniqueID());
     }
 
     public static PlayerManager getManager (UUID playerUUID){
-        for (PlayerManager m : managers) {
+        for (PlayerManager m : MANAGERS) {
             if (m.getParentEntity().getUniqueID() == playerUUID)
                 return m;
         }
@@ -38,12 +38,12 @@ public class MutateHelper {
     }
 
     public static List<PlayerManager> getManagers () {
-        return managers;
+        return MANAGERS;
     }
 
-    public static PlayerManager createManager (LivingEntity e) {
-        PlayerManager m = new PlayerManager(e);
-        managers.add(m);
+    public static PlayerManager createManager (LivingEntity entity) {
+        PlayerManager m = new PlayerManager(entity);
+        MANAGERS.add(m);
         return m;
     }
 
@@ -59,13 +59,13 @@ public class MutateHelper {
         mut.loadFromNBT(pkt.getData());
     }
 
-    public static void pushMutDataToClient (UUID playerUUID, CompoundNBT nbt){
+    public static void pushPlayerDataToClient(UUID playerUUID, CompoundNBT nbt){
         SyncMutDataPacket pkt = new SyncMutDataPacket(nbt);
         MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         PacketHandler.CHANNEL.sendToPlayer(server.getPlayerList().getPlayerByUUID(playerUUID), pkt);
     }
 
-    public static void loadMutData (UUID playerUUID){
+    public static void loadPlayerData (UUID playerUUID){
         File f = getMutFile(playerUUID);
         CompoundNBT nbt = null;
 
@@ -75,12 +75,12 @@ public class MutateHelper {
 
         MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         PlayerManager manager = new PlayerManager(server.getPlayerList().getPlayerByUUID(playerUUID));
-        managers.add(manager);
+        MANAGERS.add(manager);
 
         if (nbt != null) manager.loadFromNBT(nbt);
         else System.out.println("nbt loaded from file returns null");
 
-        pushMutDataToClient(playerUUID, nbt);
+        pushPlayerDataToClient(playerUUID, nbt);
     }
 
     private static CompoundNBT load_unsafe(File file) throws Exception {
@@ -105,10 +105,10 @@ public class MutateHelper {
 
     public static File getMutFile (UUID playerUUID) {
         File f = new File(Warpstone.getProxy().getWarpServerDataDirectory(), playerUUID.toString() + ".warpstone");
-        System.out.println("WARPLOGS: Loading NBT File");
+        //System.out.println("WARPLOGS: Loading NBT File");
         if (!f.exists()) {
             try {
-                System.out.println("WARPLOGS: NBT File not found, writing new one");
+                //System.out.println("WARPLOGS: NBT File not found, writing new one");
                 CompressedStreamTools.write(new CompoundNBT(), f);
             } catch (IOException ignored) {}
         }

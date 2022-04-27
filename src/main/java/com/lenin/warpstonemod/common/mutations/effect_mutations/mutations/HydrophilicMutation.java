@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.PotionItem;
 import net.minecraft.potion.Potion;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HydrophilicMutation extends CounterEffectMutation implements IMutationTick {
+public class HydrophilicMutation extends CounterMutation implements IMutationTick {
 	public HydrophilicMutation(ResourceLocation _key) {
 		super(_key,
                 100
@@ -52,7 +52,6 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
-				|| !getInstance(player).isActive()
 			) return;
 
 		if (player.isInWaterRainOrBubbleColumn()) {
@@ -66,7 +65,6 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 	public void onItemUseStart (PlayerInteractEvent.RightClickItem event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 			) return;
 
 		if (event.getItemStack().isFood()) {
@@ -87,7 +85,6 @@ public class HydrophilicMutation extends CounterEffectMutation implements IMutat
 		if (event.getEntityLiving().world.isRemote
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 				|| !(event.getItem().getItem() instanceof PotionItem)
 				|| !legalPotions.contains(PotionUtils.getPotionFromItem(event.getItem()))
 		) return;

@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -8,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class FrailBodyMutation extends EffectMutation {
+public class FrailBodyMutation extends Mutation {
 	public FrailBodyMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -21,7 +22,6 @@ public class FrailBodyMutation extends EffectMutation {
 	public void onLivingDamge (LivingDamageEvent event){
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !instanceMap.containsKey(event.getEntityLiving().getUniqueID())
-				|| !instanceMap.get(event.getEntityLiving().getUniqueID()).isActive()
 				|| event.getSource().getTrueSource() == null
 				|| !(Math.random() > 0.75f)
 		) return;

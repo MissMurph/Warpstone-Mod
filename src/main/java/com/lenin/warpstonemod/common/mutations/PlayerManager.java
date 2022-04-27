@@ -6,8 +6,6 @@ import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.*;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttributeMutationUUIDs;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.nbt.CompoundNBT;
@@ -43,13 +41,11 @@ public class PlayerManager {
     public PlayerManager(LivingEntity _parentEntity){
         parentEntity = _parentEntity;
 
-        //attributes.add(new VanillaAttribute(Attributes.MAX_HEALTH, getParentEntity()));
-
-        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.max_health")), this, AttributeMutationUUIDs.MAX_HEALTH_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.attack_damage")), this, AttributeMutationUUIDs.ATTACK_DAMAGE_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.movement_speed")), this, AttributeMutationUUIDs.SPEED_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.armor")), this, AttributeMutationUUIDs.AMOUR_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation("minecraft", "generic.armor_toughness")), this, AttributeMutationUUIDs.ARMOUR_TOUGHNESS_UUID));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.MAX_HEALTH, _parentEntity), this, AttributeMutationUUIDs.MAX_HEALTH_UUID));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ATTACK_DAMAGE, _parentEntity), this, AttributeMutationUUIDs.ATTACK_DAMAGE_UUID));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.MOVEMENT_SPEED, _parentEntity), this, AttributeMutationUUIDs.SPEED_UUID));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ARMOR, _parentEntity), this, AttributeMutationUUIDs.AMOUR_UUID));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ARMOR_TOUGHNESS, _parentEntity), this, AttributeMutationUUIDs.ARMOUR_TOUGHNESS_UUID));
         attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation(Warpstone.MOD_ID, "harvest_speed")), this, AttributeMutationUUIDs.MINING_SPEED_UUID));
 
         mutData = serialize();
@@ -75,8 +71,7 @@ public class PlayerManager {
                 if (legalMutations.size() > 0) {
                     Mutation mut = legalMutations.get(Warpstone.getRandom().nextInt(legalMutations.size()));
 
-                    mutations.put(mut.getRegistryName(), mut);
-                    mut.applyMutation(this);
+                    addMutation(mut);
 
                     hasEffectBeenCreated = true;
                     continue;
@@ -121,12 +116,11 @@ public class PlayerManager {
         instability += instabilityValue;
         corruption += corruptionValue;
         mutData = serialize();
+        MutateHelper.pushPlayerDataToClient(getUniqueId(), getMutData());
 
         if (currentLevel != getCorruptionLevel()) {
             parentEntity.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1f, 1f);
         }
-
-        MutateHelper.pushMutDataToClient(getUniqueId(), getMutData());
     }
 
     public void addMutation (Mutation mutation) {
@@ -141,8 +135,7 @@ public class PlayerManager {
         if (!mutations.containsValue(mutation)
                 || !Registration.EFFECT_MUTATIONS.containsValue(mutation)) return;
 
-        mutation.deactivateMutation(this);
-        mutation.clearInstance(this);
+        mutation.clearMutation(this);
         mutations.remove(mutation.getRegistryName());
     }
 
@@ -150,21 +143,18 @@ public class PlayerManager {
         if (mutations.containsKey(mutation.getRegistryName())
                 || !Registration.EFFECT_MUTATIONS.containsKey(mutation.getRegistryName())) return;
 
-        mutation.applyMutation(this);
-        mutations.put(mutation.getRegistryName(),mutation);
+        addMutation(mutation);
         mutData = serialize();
-        MutateHelper.pushMutDataToClient(getUniqueId(), getMutData());
+        MutateHelper.pushPlayerDataToClient(getUniqueId(), getMutData());
     }
 
     public void removeMutationCommand (Mutation mutation) {
         if (!mutations.containsKey(mutation.getRegistryName())
                 || !Registration.EFFECT_MUTATIONS.containsKey(mutation.getRegistryName())) return;
 
-        mutation.deactivateMutation(this);
-        mutation.clearInstance(this);
-        mutations.remove(mutation.getRegistryName());
+        removeMutation(mutation);
         mutData = serialize();
-        MutateHelper.pushMutDataToClient(getUniqueId(), getMutData());
+        MutateHelper.pushPlayerDataToClient(getUniqueId(), getMutData());
     }
 
     protected CompoundNBT serialize (){
@@ -177,16 +167,18 @@ public class PlayerManager {
             out.putInt(mut.getMutationType(), mut.getMutationLevel());
         }
 
-        ListNBT tagList = new ListNBT();
+        ListNBT serializedMutations = new ListNBT();
 
         for (ResourceLocation key : mutations.keySet()) {
             CompoundNBT mut = new CompoundNBT();
+
             mut.putString("key", key.toString());
             mut.put("mutation_data", mutations.get(key).saveData(this));
-            tagList.add(mut);
+
+            serializedMutations.add(mut);
         }
 
-        out.put("mutations", tagList);
+        out.put("mutations", serializedMutations);
 
         return out;
     }
@@ -219,8 +211,8 @@ public class PlayerManager {
                     continue;
                 }
 
-                addMutation(getEffect(key));
-                getEffect(key).loadData(compound.getCompound("mutation_data"));
+                getEffect(key).loadData(this, compound.getCompound("mutation_data"));
+                mutations.put(key, getEffect(key));
             }
         }
 
@@ -241,7 +233,7 @@ public class PlayerManager {
         instability = 0;
         mutData = serialize();
 
-        MutateHelper.pushMutDataToClient(parentEntity.getUniqueID(), getMutData());
+        MutateHelper.pushPlayerDataToClient(parentEntity.getUniqueID(), getMutData());
     }
 
     public List<AttributeMutation> getAttributeMutations (){
@@ -395,7 +387,7 @@ public class PlayerManager {
 
         mutations.clear();
         attributeMutations.clear();
-        MutateHelper.managers.remove(this);
+        MutateHelper.MANAGERS.remove(this);
     }
 
     public void saveData (){
@@ -409,10 +401,6 @@ public class PlayerManager {
 
     public boolean containsEffect (Mutation mut) {
         return containsEffect(mut.getRegistryName());
-    }
-
-    public boolean containsEffect (String key) {
-        return containsEffect(new ResourceLocation(key));
     }
 
     public boolean containsEffect (ResourceLocation key) {

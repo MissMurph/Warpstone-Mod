@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
@@ -10,7 +11,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.*;
 
-public class HerbivoreMutation extends EffectMutation {
+public class HerbivoreMutation extends Mutation {
     public HerbivoreMutation(ResourceLocation _key) {
         super(_key);
     }
@@ -61,7 +62,6 @@ public class HerbivoreMutation extends EffectMutation {
                 || !(event.getEntityLiving() instanceof PlayerEntity)
                 || !event.getItem().isFood()
                 || !containsInstance(event.getEntityLiving())
-                || !getInstance(event.getEntityLiving()).isActive()
         ) return;
 
         Food food = event.getItem().getItem().getFood();

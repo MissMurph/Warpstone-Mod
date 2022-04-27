@@ -5,16 +5,9 @@ import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IConditionSerializer;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
-import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutationInstance;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-
-import java.util.List;
 
 public class NbtMatchesStringCondition extends NbtCondition {
 

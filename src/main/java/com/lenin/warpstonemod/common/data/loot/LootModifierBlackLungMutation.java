@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;

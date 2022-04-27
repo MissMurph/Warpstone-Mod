@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FireBreathingMutation extends CounterEffectMutation implements IMutationTick {
+public class FireBreathingMutation extends CounterMutation implements IMutationTick {
 	public FireBreathingMutation(ResourceLocation _key) {
 		super(_key,
                 40
@@ -37,7 +37,6 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
-				|| !instanceMap.get(player.getUniqueID()).isActive()
 		) return;
 
 		if (decrement(counterMap, player.getUniqueID())) {
@@ -49,7 +48,6 @@ public class FireBreathingMutation extends CounterEffectMutation implements IMut
 	public void onLivingAttack (LivingAttackEvent event) {
 		if (!fireSources.contains(event.getSource())
 				|| !containsInstance(event.getEntityLiving())
-				|| !instanceMap.get(event.getEntityLiving().getUniqueID()).isActive()
 		) return;
 
 		event.setCanceled(true);

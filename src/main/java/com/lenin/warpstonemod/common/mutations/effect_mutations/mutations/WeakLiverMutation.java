@@ -32,7 +32,6 @@ public class WeakLiverMutation extends EffectMutation {
 				|| !(event.getItem().getItem() instanceof PotionItem)
 				|| PotionUtils.getEffectsFromStack(event.getItem()).isEmpty()
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		int ticks = (int) Math.max(200, Math.random() * 400);
@@ -40,8 +39,8 @@ public class WeakLiverMutation extends EffectMutation {
 	}
 
 	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
+	public void clearMutation(PlayerManager manager) {
+		super.clearMutation(manager);
 
 		if (manager.getParentEntity().world.isRemote()) return;
 

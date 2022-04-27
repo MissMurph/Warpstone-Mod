@@ -2,11 +2,9 @@ package com.lenin.warpstonemod.common.mutations.evolving_mutations;
 
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
-import net.minecraft.nbt.CompoundNBT;
+import com.lenin.warpstonemod.common.mutations.MutationInstance;
 import net.minecraft.nbt.INBT;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 

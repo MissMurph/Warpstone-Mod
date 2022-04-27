@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -7,7 +8,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class StrongLegsMutation extends EffectMutation {
+public class StrongLegsMutation extends Mutation {
 	public StrongLegsMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -28,7 +29,6 @@ public class StrongLegsMutation extends EffectMutation {
 	public void onLivingJump (LivingEvent.LivingJumpEvent event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		if (event.getEntityLiving().isSprinting()) {

@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.mutations.Mutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
@@ -38,8 +38,8 @@ public class MutationTree {
         instanceNodes.put(uuid, nodes.get(current.next.get(index)));
     }
 
-    public void putInstance (UUID uuid) {
-        instanceNodes.put(uuid, getOrigin());
+    public Node putInstance (UUID uuid) {
+        return instanceNodes.put(uuid, getOrigin());
     }
 
     public void clearInstance (UUID uuid) {
@@ -73,8 +73,8 @@ public class MutationTree {
         return out;
     }
 
-    public void loadInstance (CompoundNBT nbt) {
-        instanceNodes.put(UUID.fromString(nbt.getString("uuid")), getNode(new ResourceLocation(nbt.getString("current_mutation"))));
+    public Node loadInstance (CompoundNBT nbt) {
+        return instanceNodes.put(UUID.fromString(nbt.getString("uuid")), getNode(new ResourceLocation(nbt.getString("current_mutation"))));
     }
 
     public class Node {
@@ -82,6 +82,7 @@ public class MutationTree {
         private final int y;
         private final ResourceLocation parentKey;
         private final List<ResourceLocation> next = new ArrayList<>();
+        private final List<ResourceLocation> optional = new ArrayList<>();
 
         public Node (JsonObject json) {
             parentKey = new ResourceLocation(json.get("key").getAsString());
@@ -93,11 +94,24 @@ public class MutationTree {
             for (JsonElement element : nextNodes) {
                 next.add(new ResourceLocation(element.getAsString()));
             }
+
+            JsonArray optionalNodes = json.getAsJsonArray("optional");
+
+            for (JsonElement element : optionalNodes) {
+                optional.add(new ResourceLocation(element.getAsString()));
+            }
         }
 
         public List<Node> getNext () {
             return nodes.entrySet().stream()
                     .filter(entry -> next.contains(entry.getKey()))
+                    .map(Map.Entry::getValue)
+                    .collect(Collectors.toList());
+        }
+
+        public List<Node> getOptional () {
+            return nodes.entrySet().stream()
+                    .filter(entry -> optional.contains(entry.getKey()))
                     .map(Map.Entry::getValue)
                     .collect(Collectors.toList());
         }

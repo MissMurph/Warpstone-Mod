@@ -1,9 +1,10 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationInstance;
+import com.lenin.warpstonemod.common.mutations.MutationInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -11,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-public class BlindnessMutation extends EffectMutation {
+public class BlindnessMutation extends Mutation {
 	public BlindnessMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -23,8 +24,8 @@ public class BlindnessMutation extends EffectMutation {
 	}
 
 	@Override
-	public void clearInstance(PlayerManager manager) {
-		super.clearInstance(manager);
+	public void clearMutation(PlayerManager manager) {
+		super.clearMutation(manager);
 
 		if (!manager.getParentEntity().world.isRemote()) return;
 		if (instanceMap.containsKey(manager.getUniqueId())) instanceMap.remove(manager.getUniqueId());
@@ -34,7 +35,6 @@ public class BlindnessMutation extends EffectMutation {
 	public void onRenderFog (EntityViewRenderEvent.FogDensity event) {
 		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
 				|| !instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
-				|| !instanceMap.get(Minecraft.getInstance().player.getUniqueID()).isActive()
 		) return;
 
 		float density = event.getDensity();
@@ -55,23 +55,5 @@ public class BlindnessMutation extends EffectMutation {
 		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), instance);
 
 		return instance;
-	}
-
-	@Override
-	public void applyMutation(PlayerManager manager) {
-		super.applyMutation(manager);
-
-		if (manager.getParentEntity().world.isRemote()) {
-			instanceMap.get(Minecraft.getInstance().player.getUniqueID()).setActive(true);
-		}
-	}
-
-	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
-
-		if (manager.getParentEntity().world.isRemote()) {
-			instanceMap.get(Minecraft.getInstance().player.getUniqueID()).setActive(false);
-		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
+import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +14,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class IronGutMutation extends EffectMutation {
+public class IronGutMutation extends Mutation {
 	public IronGutMutation(ResourceLocation _key) {
 		super(_key);
 	}
@@ -34,7 +35,6 @@ public class IronGutMutation extends EffectMutation {
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
-				|| !getInstance(event.getEntityLiving()).isActive()
 		) return;
 
 		List<Effect> effects = event.getItem().getItem().getFood().getEffects()

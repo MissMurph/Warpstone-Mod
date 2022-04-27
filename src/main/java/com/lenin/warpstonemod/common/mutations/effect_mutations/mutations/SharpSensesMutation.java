@@ -2,8 +2,8 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mob_effects.WSEffects;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterEffectMutation;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.IMutationTick;
+import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
+import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -17,7 +17,7 @@ import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 
-public class SharpSensesMutation extends CounterEffectMutation implements IMutationTick {
+public class SharpSensesMutation extends CounterMutation implements IMutationTick {
 	public SharpSensesMutation(ResourceLocation _key) {
 		super(_key,
                 60
@@ -34,7 +34,6 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
 				|| !containsInstance(player)
-				|| !getInstance(player).isActive()
 			) return;
 
 		if (decrement(counterMap, player.getUniqueID()) && !player.isPotionActive(WSEffects.SHARP_SENSES)) {
@@ -64,7 +63,6 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 		if (event.getEntityLiving().world.isRemote
 				|| !(event.getSource().getTrueSource() instanceof PlayerEntity)
 				|| !containsInstance(event.getSource().getTrueSource().getUniqueID())
-				|| !getInstance(event.getSource().getTrueSource().getUniqueID()).isActive()
 				|| !((PlayerEntity) event.getSource().getTrueSource()).isPotionActive(WSEffects.SHARP_SENSES)
 			) return;
 
@@ -84,8 +82,8 @@ public class SharpSensesMutation extends CounterEffectMutation implements IMutat
 	}
 
 	@Override
-	public void deactivateMutation(PlayerManager manager) {
-		super.deactivateMutation(manager);
+	public void clearMutation(PlayerManager manager) {
+		super.clearMutation(manager);
 
 		if (manager.getParentEntity().world.isRemote()) return;
 
