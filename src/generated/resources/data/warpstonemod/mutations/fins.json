@@ -2,7 +2,7 @@
   "key": "warpstonemod:fins",
   "resource_path": "textures/gui/effect_mutations/fins.png",
   "tags": [
-    "warpstonemod:negative"
+    "warpstonemod:common"
   ],
   "conditions": [],
   "arguments": {},

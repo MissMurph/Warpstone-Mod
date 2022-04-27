@@ -15,10 +15,11 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 public class NinjaCurseMutation extends EvolvingMutation {
 
-    protected static int BLOCKS_TO_FALL = 50;
+    protected static int BLOCKS_TO_FALL = 1000;
 
     public static final Mutation CHILD_CURSE = registerChild(Warpstone.key("curse_ninja_child_1"), GenericMutation::new);
     public static final Mutation CHILD_GIFT = registerChild(Warpstone.key("curse_ninja_child_2"), GenericMutation::new);
+    public static final Mutation CHILD_TEST = registerChild(Warpstone.key("curse_ninja_child_3"), GenericMutation::new);
 
     public NinjaCurseMutation(ResourceLocation _key) {
         super(_key);
@@ -60,7 +61,18 @@ public class NinjaCurseMutation extends EvolvingMutation {
     }
 
     @Override
-    public void deserialize(JsonObject json) {
-        super.deserialize(json);
+    public JsonObject serializeArguments() {
+        JsonObject out = super.serializeArguments();
+
+        out.addProperty("blocks_to_fall", 1000);
+
+        return out;
+    }
+
+    @Override
+    public void deserializeArguments(JsonObject object) {
+        super.deserializeArguments(object);
+
+        //BLOCKS_TO_FALL = object.get("blocks_to_fall").getAsInt();
     }
 }

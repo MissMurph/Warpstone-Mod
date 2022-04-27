@@ -123,7 +123,7 @@ public class PlayerManager {
         }
     }
 
-    public void addMutation (Mutation mutation) {
+    protected void addMutation (Mutation mutation) {
         if (mutations.containsValue(mutation)
                 || !Registration.EFFECT_MUTATIONS.containsValue(mutation)) return;
 
@@ -131,7 +131,7 @@ public class PlayerManager {
         mutations.put(mutation.getRegistryName(),mutation);
     }
 
-    public void removeMutation (Mutation mutation) {
+    protected void removeMutation (Mutation mutation) {
         if (!mutations.containsValue(mutation)
                 || !Registration.EFFECT_MUTATIONS.containsValue(mutation)) return;
 

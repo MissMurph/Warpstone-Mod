@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.data.mutations;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.data.WarpstoneDataProvider;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
+import com.lenin.warpstonemod.common.mutations.conditions.CorruptionLevelCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.HasMutationCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.nbt.NbtNumberCondition;
 import com.lenin.warpstonemod.common.mutations.Mutations;
@@ -313,6 +314,10 @@ public class MutationDataProvider extends WarpstoneDataProvider {
                 .addChildMutation(new EffectMutationData.Builder(Warpstone.key("curse_ninja_child_2"))
                         .addModifier(Attributes.MAX_HEALTH.getRegistryName(), 1f, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
                         .addNbtNumberCondition("fall_blocks", NbtNumberCondition.Type.INT, "1000", NbtNumberCondition.Operation.EQUAL_TO, NbtNumberCondition.Operation.GREATER_THAN)
+                )
+                .addChildMutation(new EffectMutationData.Builder(Warpstone.key("curse_ninja_child_3"))
+                        .addModifier(Attributes.MAX_HEALTH.getRegistryName(), 2f, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
+                        .addCondition(CorruptionLevelCondition.builder(1, CorruptionLevelCondition.Operation.EQUAL_TO, CorruptionLevelCondition.Operation.GREATER_THAN).build())
                 )
                 .addTag(Warpstone.key("uncommon"))
                 .create()

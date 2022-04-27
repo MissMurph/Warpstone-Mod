@@ -51,7 +51,10 @@ public class MutationElement extends WSElement {
                     x = (x * 18) + element.x + 18 + 9;
                     y = (y * 18) + element.y + 9;
 
-                    for (MutationTree.Node next : node.getNext()) {
+                    List<MutationTree.Node> allNodes = node.getNext();
+                    allNodes.addAll(node.getOptional());
+
+                    for (MutationTree.Node next : allNodes) {
                         int nextX = (next.getX() * 18) + element.x + 18 + 9;
                         int nextY = (next.getY() * 18) + element.y + 9;
 

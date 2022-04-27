@@ -5,7 +5,9 @@
     "warpstonemod:uncommon"
   ],
   "conditions": [],
-  "arguments": {},
+  "arguments": {
+    "blocks_to_fall": 1000
+  },
   "children": [
     {
       "key": "warpstonemod:curse_ninja_child_1",
@@ -34,7 +36,7 @@
           "key": "warpstonemod:nbt_number",
           "target_nbt": "fall_blocks",
           "type": "INT",
-          "value": "50",
+          "value": "1000",
           "operations": [
             "EQUAL_TO",
             "GREATER_THAN"
@@ -47,6 +49,31 @@
         {
           "target": "minecraft:generic.max_health",
           "value": 1.0,
+          "operation": "MULTIPLY_TOTAL"
+        }
+      ]
+    },
+    {
+      "key": "warpstonemod:curse_ninja_child_3",
+      "resource_path": "textures/gui/effect_mutations/curse_ninja_child_3.png",
+      "tags": [
+        "warpstonemod:child"
+      ],
+      "conditions": [
+        {
+          "key": "warpstonemod:corruption_level",
+          "value": 1,
+          "operations": [
+            "EQUAL_TO",
+            "GREATER_THAN"
+          ]
+        }
+      ],
+      "arguments": {},
+      "modifiers": [
+        {
+          "target": "minecraft:generic.max_health",
+          "value": 2.0,
           "operation": "MULTIPLY_TOTAL"
         }
       ]

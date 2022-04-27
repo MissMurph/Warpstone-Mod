@@ -25,7 +25,7 @@ public class NbtNumberCondition extends NbtCondition {
     private final List<Operation> operations;
 
     protected NbtNumberCondition (ResourceLocation _targetMut, String _nbtKey, INBT _nbt, Operation... _operations) {
-        super(Warpstone.key(_nbtKey), _targetMut, _nbtKey, _nbt);
+        super(Warpstone.key("nbt_number"), _targetMut, _nbtKey, _nbt);
 
         operations = Arrays.asList(_operations);
     }

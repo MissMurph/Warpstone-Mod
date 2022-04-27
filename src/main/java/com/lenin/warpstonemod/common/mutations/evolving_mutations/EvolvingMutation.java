@@ -114,20 +114,17 @@ public abstract class EvolvingMutation extends Mutation {
         moveTo.applyMutation(instance);
     }
 
-    protected List<Mutation> checkNextConditions (PlayerManager manager) {
+    protected void checkNextConditions (PlayerManager manager) {
         List<Mutation> next = TREE.getCurrentNode(manager.getUniqueId()).getNext().stream()
                 .map(MutationTree.Node::getParent)
                 .collect(Collectors.toList());
 
-        if (next.size() == 1 && next.get(0).isLegalMutation(manager)) {
-            moveInstanceToChild(getInstance(manager), next.get(0));
-
-            return next;
+        for (Mutation mutation : next) {
+            if (mutation.isLegalMutation(manager)) {
+                moveInstanceToChild(getInstance(manager), mutation);
+                return;
+            }
         }
-
-        return next.stream()
-                .filter(mutation -> mutation.isLegalMutation(manager))
-                .collect(Collectors.toList());
     }
 
     @Override
