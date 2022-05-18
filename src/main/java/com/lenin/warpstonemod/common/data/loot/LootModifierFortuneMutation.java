@@ -36,7 +36,7 @@ public class LootModifierFortuneMutation extends LootModifier {
 
 		PlayerManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
 
-		if (manager != null && manager.containsEffect(Mutations.FORTUNE)) {
+		if (manager != null && manager.containsMutation(Mutations.FORTUNE)) {
 			Block block = context.get(LootParameters.BLOCK_STATE).getBlock();
 
 			block.getTags().stream().filter(tag -> tag.equals(Tags.Blocks.ORES.getName())).forEach(tag -> {

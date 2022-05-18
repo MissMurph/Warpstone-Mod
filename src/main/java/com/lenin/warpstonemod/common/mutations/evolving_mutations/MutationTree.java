@@ -30,12 +30,12 @@ public class MutationTree {
         }
     }
 
-    public void advanceInstance (UUID uuid, int index) {
+    public void advanceInstance (UUID uuid, ResourceLocation target) {
         Node current = instanceNodes.get(uuid);
 
-        if (index > current.next.size() || index < 0) throw new IllegalArgumentException("Index out of range");
+        if (!current.getAll().contains(nodes.get(target))) throw new IllegalArgumentException("Can't move Instance, target Mutation isn't next in tree");
 
-        instanceNodes.put(uuid, nodes.get(current.next.get(index)));
+        instanceNodes.put(uuid, nodes.get(target));
     }
 
     public Node putInstance (UUID uuid) {
@@ -114,6 +114,12 @@ public class MutationTree {
                     .filter(entry -> optional.contains(entry.getKey()))
                     .map(Map.Entry::getValue)
                     .collect(Collectors.toList());
+        }
+
+        public List<Node> getAll () {
+            List<Node> combined = getNext();
+            combined.addAll(getOptional());
+            return combined;
         }
 
         public int getX () {

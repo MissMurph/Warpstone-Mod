@@ -28,7 +28,7 @@ public class HasMutationCondition implements IMutationCondition {
 
     @Override
     public boolean act(PlayerManager manager) {
-        return manager.containsEffect(mutationKey) == test;
+        return manager.containsMutation(mutationKey) == test;
     }
 
     @Override

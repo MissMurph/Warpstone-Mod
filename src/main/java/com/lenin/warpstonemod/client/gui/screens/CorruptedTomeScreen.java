@@ -18,7 +18,7 @@ public class CorruptedTomeScreen extends WSScreen {
     public CorruptedTomeScreen() {
         super(new TranslationTextComponent("warpstone.screen.corrupted_tome"), Textures.CORRUPTED_TOME_SCREEN, 256, 180);
 
-        List<Mutation> muts = Registration.EFFECT_MUTATIONS.getValues().stream()
+        List<Mutation> muts = Registration.MUTATIONS.getValues().stream()
                 .filter(mutation -> !mutation.hasTag(Warpstone.key("child")))
                 .sorted(new TagComporator())
                 .collect(Collectors.toList());

@@ -20,12 +20,17 @@ public class ButtonComponent extends Component implements IClickable, IRenderabl
         hoveredTexture = _hoveredTexture;
     }
 
+    public ButtonComponent (ButtonComponent.IPressable function) {
+        new ButtonComponent(function, null);
+    }
+
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        if (hoveredTexture == null) return;
+
         if (parentElement.isHovered()) {
             imageComponent.updateTexture(hoveredTexture);
-        }
-        else imageComponent.updateTexture(null);
+        } else imageComponent.updateTexture(null);
     }
 
     @Override

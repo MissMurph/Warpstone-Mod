@@ -3,8 +3,6 @@ package com.lenin.warpstonemod.common.mutations;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.mutations.Mutation;
-import com.lenin.warpstonemod.common.mutations.MutationSupplier;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.GenericMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.PotionMutation;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.mutations.*;
@@ -105,21 +103,21 @@ public class Mutations {
 	}
 
 	public static Mutation getMutation (ResourceLocation key) {
-		return Registration.EFFECT_MUTATIONS.getValue(key);
+		return Registration.MUTATIONS.getValue(key);
 	}
 
 	public static void loadMutationData (JsonObject json) {
 		ResourceLocation key = new ResourceLocation(json.get("key").getAsString());
 
-		if (Registration.EFFECT_MUTATIONS.containsKey(key)) {
-			Registration.EFFECT_MUTATIONS.getValue(key).deserialize(json);
+		if (Registration.MUTATIONS.containsKey(key)) {
+			Registration.MUTATIONS.getValue(key).deserialize(json);
 		}
 	}
 
 	public static void loadMutationTree (JsonObject json) {
 		ResourceLocation key = new ResourceLocation(json.get("key").getAsString());
 
-		Mutation mut = Registration.EFFECT_MUTATIONS.getValue(key);
+		Mutation mut = Registration.MUTATIONS.getValue(key);
 
 		if (mut instanceof EvolvingMutation) {
 			((EvolvingMutation) mut).loadTreeData(json);

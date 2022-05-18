@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class Registration {
     public static List<Block> BLOCKS;
-    public static IForgeRegistry<Mutation> EFFECT_MUTATIONS;
+    public static IForgeRegistry<Mutation> MUTATIONS;
 
     private final Map<Class<?>, List<IForgeRegistryEntry<?>>> initialized = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class Registration {
     }
 
     public static void onRegistryBuild(RegistryEvent.NewRegistry event) {
-        EFFECT_MUTATIONS = new RegistryBuilder<Mutation>()
+        MUTATIONS = new RegistryBuilder<Mutation>()
                 .setName(new ResourceLocation(Warpstone.MOD_ID, "mutation"))
                 .setType(Mutation.class)
                 .create();

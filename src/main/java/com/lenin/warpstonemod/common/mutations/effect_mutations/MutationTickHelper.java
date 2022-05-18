@@ -20,7 +20,7 @@ public class MutationTickHelper implements ITickHandler {
 		PlayerEntity entity = (PlayerEntity) context[0];
 		LogicalSide side = (LogicalSide) context[1];
 
-		for (Mutation mut : new ArrayList<>(Registration.EFFECT_MUTATIONS.getValues())) {
+		for (Mutation mut : new ArrayList<>(Registration.MUTATIONS.getValues())) {
 			if (mut instanceof IMutationTick) ((IMutationTick) mut).mutationTick(entity, side);
 		}
 	}

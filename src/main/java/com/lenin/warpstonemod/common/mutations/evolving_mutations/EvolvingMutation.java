@@ -39,6 +39,7 @@ public abstract class EvolvingMutation extends Mutation {
         super.clearMutation(manager);
 
         TREE.getMutation(manager.getUniqueId()).clearMutation(manager);
+        TREE.clearInstance(manager.getUniqueId());
     }
 
     @Override
@@ -100,18 +101,24 @@ public abstract class EvolvingMutation extends Mutation {
         }
     }
 
-    protected void moveInstanceToChild (MutationInstance instance, Mutation moveTo) {
+    private void moveInstanceToChild (MutationInstance instance, Mutation moveTo) {
         MutationTree.Node currentNode = TREE.getCurrentNode(instance.getParent().getUniqueId());
         MutationTree.Node chosenNode = TREE.getNode(moveTo.getRegistryName());
 
-        if (!currentNode.getNext().contains(chosenNode))
-            throw new IllegalArgumentException("Can't move Instance, target Mutation isn't next in tree");
-
         Mutation fromMutation = currentNode.getParent();
-        TREE.advanceInstance(instance.getParent().getUniqueId(), currentNode.getNext().indexOf(chosenNode));
+        TREE.advanceInstance(instance.getParent().getUniqueId(), chosenNode.getRegistryKey());
 
         fromMutation.clearMutation(instance.getParent());
         moveTo.applyMutation(instance);
+    }
+
+    public void chooseOptional (PlayerManager manager, Mutation moveTo) {
+        MutationTree.Node chosenNode = TREE.getNode(moveTo.getRegistryName());
+
+        if (!chosenNode.getParent().isLegalMutation(manager))
+            throw new IllegalArgumentException("Can't move Instance, target Mutation's conditions haven't been met");
+
+        moveInstanceToChild(getInstance(manager), moveTo);
     }
 
     protected void checkNextConditions (PlayerManager manager) {
@@ -125,6 +132,10 @@ public abstract class EvolvingMutation extends Mutation {
                 return;
             }
         }
+    }
+
+    public MutationTree.Node getCurrentNode(UUID uuid) {
+        return TREE.getCurrentNode(uuid);
     }
 
     @Override

@@ -12,7 +12,6 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class MutationData {
     protected ResourceLocation resource;
@@ -41,7 +40,7 @@ public abstract class MutationData {
 
         out.add("conditions", conditions);
 
-        if (Registration.EFFECT_MUTATIONS.containsKey(resource)) out.add("arguments", Registration.EFFECT_MUTATIONS.getValue(resource).serializeArguments());
+        if (Registration.MUTATIONS.containsKey(resource)) out.add("arguments", Registration.MUTATIONS.getValue(resource).serializeArguments());
         else out.add("arguments", new JsonObject());
 
         return out;

@@ -11,7 +11,6 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Util;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
@@ -50,7 +49,7 @@ public class MutationCommand {
         PlayerEntity player = target != null ? target : source.asPlayer();
         PlayerManager manager = MutateHelper.getManager(player);
 
-        if (manager.containsEffect(mutation)) {
+        if (manager.containsMutation(mutation)) {
             player.sendMessage(new StringTextComponent("Error: ")
                     .appendSibling(player.getDisplayName())
                     .appendString(" Already Has ")
@@ -62,7 +61,7 @@ public class MutationCommand {
             return 0;
         }
 
-        if (!Registration.EFFECT_MUTATIONS.containsValue(mutation)) {
+        if (!Registration.MUTATIONS.containsValue(mutation)) {
             player.sendMessage(new StringTextComponent("Error: ")
                     .appendSibling(mutation.getMutationName())
                     .appendString(" Not Found ")
@@ -81,7 +80,7 @@ public class MutationCommand {
         PlayerEntity player = target != null ? target : source.asPlayer();
         PlayerManager manager = MutateHelper.getManager(player);
 
-        if (!manager.containsEffect(mutation)) {
+        if (!manager.containsMutation(mutation)) {
             player.sendMessage(new StringTextComponent("Error: ")
                             .appendSibling(player.getDisplayName())
                             .appendString(" Doesn't have ")

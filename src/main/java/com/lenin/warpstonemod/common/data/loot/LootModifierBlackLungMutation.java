@@ -35,7 +35,7 @@ public class LootModifierBlackLungMutation extends LootModifier {
 
         PlayerManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
 
-        if (manager != null && manager.containsEffect(Mutations.BLACK_LUNG)) {
+        if (manager != null && manager.containsMutation(Mutations.BLACK_LUNG)) {
             Block block = context.get(LootParameters.BLOCK_STATE).getBlock();
 
             block.getTags().stream().filter(tag -> tag.equals(Tags.Blocks.ORES_COAL.getName())).forEach(tag -> {

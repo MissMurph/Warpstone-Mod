@@ -2,7 +2,7 @@ package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.network.PacketHandler;
-import com.lenin.warpstonemod.common.network.SyncMutDataPacket;
+import com.lenin.warpstonemod.common.network.SyncPlayerDataPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -54,13 +54,13 @@ public class MutateHelper {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void updateClientMutations(SyncMutDataPacket pkt) {
+    public static void updateClientMutations(SyncPlayerDataPacket pkt) {
         PlayerManager mut = getClientManager();
         mut.loadFromNBT(pkt.getData());
     }
 
     public static void pushPlayerDataToClient(UUID playerUUID, CompoundNBT nbt){
-        SyncMutDataPacket pkt = new SyncMutDataPacket(nbt);
+        SyncPlayerDataPacket pkt = new SyncPlayerDataPacket(nbt);
         MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
         PacketHandler.CHANNEL.sendToPlayer(server.getPlayerList().getPlayerByUUID(playerUUID), pkt);
     }

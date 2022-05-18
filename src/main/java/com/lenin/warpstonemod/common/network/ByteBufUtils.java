@@ -9,6 +9,7 @@ import net.minecraft.network.PacketBuffer;
 import javax.annotation.Nonnull;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.UUID;
 
 public class ByteBufUtils {
 	public static void writeNBT (PacketBuffer buf, @Nonnull CompoundNBT nbt) {

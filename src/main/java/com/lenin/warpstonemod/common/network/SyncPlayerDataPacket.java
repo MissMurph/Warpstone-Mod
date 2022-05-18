@@ -11,14 +11,13 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import javax.annotation.Nonnull;
 
-public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
+public class SyncPlayerDataPacket extends WarpPacket<SyncPlayerDataPacket> {
 
 	private CompoundNBT data;
-	//public UUID playerUUID;
 
-	public SyncMutDataPacket () {}
+	public SyncPlayerDataPacket() {}
 
-	public SyncMutDataPacket (CompoundNBT _data) {
+	public SyncPlayerDataPacket(CompoundNBT _data) {
 		data = _data;
 	}
 
@@ -28,17 +27,15 @@ public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
 
 	@Nonnull
 	@Override
-	public Encoder<SyncMutDataPacket> encoder() {
-		return (packet, buffer) -> {
-			ByteBufUtils.writeNBT(buffer, packet.data);
-		};
+	public Encoder<SyncPlayerDataPacket> encoder() {
+		return (packet, buffer) -> ByteBufUtils.writeNBT(buffer, packet.data);
 	}
 
 	@Nonnull
 	@Override
-	public Decoder<SyncMutDataPacket> decoder() {
+	public Decoder<SyncPlayerDataPacket> decoder() {
 		return buffer -> {
-			SyncMutDataPacket pkt = new SyncMutDataPacket();
+			SyncPlayerDataPacket pkt = new SyncPlayerDataPacket();
 			pkt.data = ByteBufUtils.readNBT(buffer);
 
 			return pkt;
@@ -47,11 +44,11 @@ public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
 
 	@Nonnull
 	@Override
-	public Handler<SyncMutDataPacket> handler() {
-		return new Handler<SyncMutDataPacket>() {
+	public Handler<SyncPlayerDataPacket> handler() {
+		return new Handler<SyncPlayerDataPacket>() {
 			@Override
 			@OnlyIn(Dist.CLIENT)
-			public void handleClient(SyncMutDataPacket packet, NetworkEvent.Context context) {
+			public void handleClient(SyncPlayerDataPacket packet, NetworkEvent.Context context) {
 				context.enqueueWork(() -> {
 					PlayerEntity p = Minecraft.getInstance().player;
 					if (p != null) {
@@ -61,7 +58,7 @@ public class SyncMutDataPacket extends WarpPacket<SyncMutDataPacket> {
 			}
 
 			@Override
-			public void handle(SyncMutDataPacket packet, NetworkEvent.Context context, LogicalSide side) {}
+			public void handle(SyncPlayerDataPacket packet, NetworkEvent.Context context, LogicalSide side) {}
 		};
 	}
 }
