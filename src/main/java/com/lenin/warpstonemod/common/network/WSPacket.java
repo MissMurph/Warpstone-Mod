@@ -11,7 +11,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public abstract class WarpPacket<T extends WarpPacket<T>> {
+public abstract class WSPacket<T extends WSPacket<T>> {
 
 	@Nonnull
 	public abstract Encoder<T> encoder();
@@ -22,11 +22,11 @@ public abstract class WarpPacket<T extends WarpPacket<T>> {
 	@Nonnull
 	public abstract Handler<T> handler();
 
-	public interface Encoder<T extends WarpPacket<T>> extends BiConsumer<T, PacketBuffer> {}
+	public interface Encoder<T extends WSPacket<T>> extends BiConsumer<T, PacketBuffer> {}
 
-	public interface Decoder<T extends WarpPacket<T>> extends Function<PacketBuffer, T> {}
+	public interface Decoder<T extends WSPacket<T>> extends Function<PacketBuffer, T> {}
 
-	public interface Handler<T extends WarpPacket<T>> extends BiConsumer<T, Supplier<NetworkEvent.Context>> {
+	public interface Handler<T extends WSPacket<T>> extends BiConsumer<T, Supplier<NetworkEvent.Context>> {
 
 		@Override
 		default void accept(T t, Supplier<NetworkEvent.Context> contextSupplier) {

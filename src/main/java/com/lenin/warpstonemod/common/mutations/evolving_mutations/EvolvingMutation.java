@@ -68,7 +68,7 @@ public abstract class EvolvingMutation extends Mutation {
 
     @Override
     public void loadData (PlayerManager manager, CompoundNBT nbt) {
-        super.loadData(manager, nbt);
+        //super.loadData(manager, nbt);
 
         MutationTree.Node node = TREE.loadInstance(nbt.getCompound("tree_data"));
 

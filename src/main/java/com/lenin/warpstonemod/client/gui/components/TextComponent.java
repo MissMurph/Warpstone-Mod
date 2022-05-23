@@ -1,5 +1,7 @@
 package com.lenin.warpstonemod.client.gui.components;
 
+import com.lenin.warpstonemod.client.gui.RawTextureResource;
+import com.lenin.warpstonemod.client.gui.WSElement;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -10,8 +12,12 @@ import net.minecraft.util.text.ITextComponent;
 public class TextComponent extends Component implements IRenderable {
     protected ITextComponent text;
 
-    public TextComponent(ITextComponent _text) {
-        super();
+    public static IFactory factory (ITextComponent _text) {
+        return (screen) -> new TextComponent(_text, screen);
+    }
+
+    protected TextComponent(ITextComponent _text, WSElement _parentScreen) {
+        super(_parentScreen);
 
         text = _text;
     }

@@ -1,8 +1,6 @@
 package com.lenin.warpstonemod.client.gui;
 
 import com.lenin.warpstonemod.client.gui.components.Component;
-import com.lenin.warpstonemod.client.gui.components.IClickable;
-import com.lenin.warpstonemod.client.gui.elements.TileSheetElement;
 import com.lenin.warpstonemod.client.gui.screens.WSScreen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -11,10 +9,7 @@ import net.minecraft.client.gui.IRenderable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Supplier;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WSElement extends AbstractGui {
@@ -26,16 +21,35 @@ public class WSElement extends AbstractGui {
 
     protected boolean isHovered;
 
-    protected List<ITextComponent> toolTips = new ArrayList<>();
+    protected List<ITextComponent> toolTips;
 
-    protected List<Component> components = new ArrayList<>();
+    protected List<Component> components;
 
     protected WSScreen parentScreen;
 
     protected List<WSElement> childElements;
-    protected final List<WSElement.AbstractBuilder<? extends WSElement>> childBuilders = new ArrayList<>();
 
-    protected WSElement() {}
+    public static Builder builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen) {
+        return new Builder(_x, _y, _width, _height, _parentScreen);
+    }
+
+    protected WSElement(Builder builder) {
+        parentScreen = builder.parentScreen;
+        x = builder.x + parentScreen.getGuiLeft();
+        y = builder.y + parentScreen.getGuiTop();
+        width = builder.width;
+        height = builder.height;
+        toolTips = builder.toolTips;
+
+        for (Layer layer : builder.layers.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).collect(Collectors.toList())) {
+            childElements.addAll(layer.build());
+        }
+
+        components = builder.componentFactories
+                .stream()
+                .map(factory -> factory.build(this))
+                .collect(Collectors.toList());
+    }
 
     public void render (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.isHovered = (this.isHovered && isWithinChildBounds(mouseX, mouseY)) || isWithinBounds(mouseX, mouseY);
@@ -86,6 +100,10 @@ public class WSElement extends AbstractGui {
         return false;
     }
 
+    public List<WSElement> getChildren () {
+        return childElements;
+    }
+
     public int getX () {
         return x;
     }
@@ -122,49 +140,46 @@ public class WSElement extends AbstractGui {
                 .forEach(component -> ((IClickable) component).onClick(mouseX, mouseY, click));
     }
 
-    public static class Builder extends AbstractBuilder<WSElement> {
-        public Builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen) {
-            super(_x, _y, _width, _height, _parentScreen, new WSElement());
+    public static class Builder {
+        protected final int x;
+        protected final int y;
+        protected final int width;
+        protected final int height;
+        protected final WSScreen parentScreen;
+        protected final List<Component.IFactory> componentFactories = new ArrayList<>();
+        protected final List<ITextComponent> toolTips = new ArrayList<>();
+        protected final Map<Integer, Layer> layers = new HashMap<>();
+
+        protected Builder(int _x, int _y, int _width, int _height, WSScreen _parentScreen){
+            x = _x;
+            y = _y;
+            width = _width;
+            height = _height;
+            parentScreen = _parentScreen;
         }
-    }
 
-    public abstract static class AbstractBuilder<T extends WSElement> {
-        protected T element;
-
-        protected AbstractBuilder (int _x, int _y, int _width, int _height, WSScreen _parentScreen, T _element){
-            element = _element;
-            element.x = _x;
-            element.y = _y;
-            element.width = _width;
-            element.height = _height;
-            element.parentScreen = _parentScreen;
-        }
-
-        public <C extends Component> WSElement.AbstractBuilder<T> addComponent (C component) {
-            component.setParent(element);
-            element.components.add(component);
+        public <F extends Component.IFactory> Builder addComponent (F factory) {
+            componentFactories.add(factory);
             return this;
         }
 
-        public WSElement.AbstractBuilder<T> addTooltips (ITextComponent... lines) {
-            Collections.addAll(element.toolTips, lines);
+        public Builder addTooltips (ITextComponent... lines) {
+            Collections.addAll(toolTips, lines);
             return this;
         }
 
-        public WSElement.AbstractBuilder<T> addChild (WSElement.AbstractBuilder<? extends WSElement> builder) {
-            element.childBuilders.add(builder);
+        public Builder addChild (Builder builder) {
+            return addChild(builder, 0);
+        }
+
+        public Builder addChild (Builder builder, int layer) {
+            layers.computeIfAbsent(layer, Layer::new);
+            layers.get(layer).addBuilder(builder);
             return this;
         }
 
-        public T build () {
-            element.childElements = element.childBuilders.stream()
-                    .map(AbstractBuilder::build)
-                    .collect(Collectors.toList());
-
-            element.x += element.parentScreen.getGuiLeft();
-            element.y += element.parentScreen.getGuiTop();
-
-            return element;
+        public WSElement build () {
+            return new WSElement(this);
         }
     }
 }

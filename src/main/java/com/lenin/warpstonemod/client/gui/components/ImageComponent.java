@@ -2,6 +2,7 @@ package com.lenin.warpstonemod.client.gui.components;
 
 import com.lenin.warpstonemod.client.gui.RawTextureResource;
 import com.lenin.warpstonemod.client.gui.WSElement;
+import com.lenin.warpstonemod.client.gui.screens.WSScreen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -13,7 +14,12 @@ public class ImageComponent extends Component implements IRenderable {
     protected RawTextureResource baseTexture;
     protected RawTextureResource activeTexture;
 
-    public ImageComponent (RawTextureResource _texture) {
+    public static IFactory factory (RawTextureResource _texture) {
+        return (screen) -> new ImageComponent(_texture, screen);
+    }
+
+    protected ImageComponent (RawTextureResource _texture, WSElement _parentScreen) {
+        super(_parentScreen);
         baseTexture = _texture;
         activeTexture = baseTexture;
     }

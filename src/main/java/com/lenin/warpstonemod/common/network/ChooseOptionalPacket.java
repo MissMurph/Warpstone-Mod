@@ -11,7 +11,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class ChooseOptionalPacket extends WarpPacket<ChooseOptionalPacket> {
+public class ChooseOptionalPacket extends WSPacket<ChooseOptionalPacket> {
     private CompoundNBT data;
 
     public ChooseOptionalPacket() {}

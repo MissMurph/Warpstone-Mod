@@ -11,7 +11,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import javax.annotation.Nonnull;
 
-public class SyncPlayerDataPacket extends WarpPacket<SyncPlayerDataPacket> {
+public class SyncPlayerDataPacket extends WSPacket<SyncPlayerDataPacket> {
 
 	private CompoundNBT data;
 

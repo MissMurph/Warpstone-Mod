@@ -12,15 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileSheetElement extends WSElement {
-
-    //I've unlearnt my lesson, currently coming up with a method to make this more modular however atm I'll just leave like this
+    //prototype implementation
 
     protected final SpriteSheetResource spriteSheet;
 
     protected final List<RawTextureResource> textures = new ArrayList<>();
 
-    protected TileSheetElement(SpriteSheetResource _spriteSheet) {
-        spriteSheet = _spriteSheet;
+    public static WSElement.Builder builder (int _x, int _y, int _width, int _height, WSScreen _parentScreen, SpriteSheetResource _spriteSheet) {
+        return new Builder(_x, _y, _width, _height, _parentScreen, _spriteSheet);
+    }
+
+    protected TileSheetElement(Builder builder) {
+        super(builder);
+        spriteSheet = builder.spriteSheet;
 
         for (int i = 0; i < 9; i++) {
             textures.add(spriteSheet.resolve(i));
@@ -92,9 +96,19 @@ public class TileSheetElement extends WSElement {
         }
     }
 
-    public static class Builder extends WSElement.AbstractBuilder<TileSheetElement> {
+    public static class Builder extends WSElement.Builder {
+
+        SpriteSheetResource spriteSheet;
+
         public Builder(int _x, int _y, int _width, int _height, WSScreen _parentScreen, SpriteSheetResource _spriteSheet) {
-            super(_x, _y, _width, _height, _parentScreen, new TileSheetElement(_spriteSheet));
+            super(_x, _y, _width, _height, _parentScreen);
+
+            spriteSheet = _spriteSheet;
+        }
+
+        @Override
+        public WSElement build() {
+            return new TileSheetElement(this);
         }
     }
 }

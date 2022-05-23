@@ -1,7 +1,13 @@
 package com.lenin.warpstonemod.client.gui.screens;
 
+import com.lenin.warpstonemod.client.gui.Layer;
 import com.lenin.warpstonemod.client.gui.RawTextureResource;
 import com.lenin.warpstonemod.client.gui.WSElement;
+import com.lenin.warpstonemod.client.gui.WSElement.*;
+import com.lenin.warpstonemod.client.gui.elements.EvoElement;
+import com.lenin.warpstonemod.client.gui.elements.MutationElement;
+import com.lenin.warpstonemod.common.mutations.Mutation;
+import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutation;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.Screen;
@@ -9,15 +15,18 @@ import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.text.ITextComponent;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WSScreen extends Screen {
 
     protected final RawTextureResource screenResource;
 
-    protected static final int MAX_LAYERS = 10;
     protected List<WSElement> elements = new ArrayList<>();
-    protected final List<List<WSElement.AbstractBuilder<? extends WSElement>>> layers = new ArrayList<>(MAX_LAYERS);
+
+    protected Map<Integer, Layer> layers = new LinkedHashMap<>();
 
     protected final int sizeX, sizeY;
     protected int guiLeft, guiTop;
@@ -29,10 +38,6 @@ public class WSScreen extends Screen {
         sizeX = _sizeX;
         sizeY = _sizeY;
         screenResource = _screenResource;
-
-        for (int i = 0; i < MAX_LAYERS; i++) {
-            layers.add(i, new ArrayList<>());
-        }
     }
 
     @Override
@@ -45,7 +50,14 @@ public class WSScreen extends Screen {
         elements.forEach(WSElement::clearComponents);
         elements.clear();
 
-        loadLayers();
+        List<Layer> sortedLayers = layers.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+
+        for (Layer sortedLayer : sortedLayers) {
+            elements.addAll(sortedLayer.build());
+        }
     }
 
     @Override
@@ -94,22 +106,13 @@ public class WSScreen extends Screen {
         if (currentlyHovered == element) currentlyHovered = null;
     }
 
-    protected void layer (WSElement.AbstractBuilder<? extends WSElement> builder) {
-        layers.get(0).add(builder);
+    protected void layer (Builder builder) {
+        layer(builder, 0);
     }
 
-    protected void layer (WSElement.AbstractBuilder<? extends WSElement> builder, int layer) {
-        int index = Math.max(Math.min(MAX_LAYERS - 1, layer), 0);
-
-        layers.get(index).add(builder);
-    }
-
-    protected void loadLayers () {
-        for (List<WSElement.AbstractBuilder<? extends WSElement>> layer : layers) {
-            for (WSElement.AbstractBuilder<? extends WSElement> builder : layer) {
-                elements.add(builder.build());
-            }
-        }
+    protected void layer (Builder builder, int index) {
+        layers.computeIfAbsent(index, Layer::new);
+        layers.get(index).addBuilder(builder);
     }
 
     public int getGuiLeft () { return guiLeft; }
@@ -119,5 +122,11 @@ public class WSScreen extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    protected Builder mutationElement (int x, int y, int width, int height, Mutation mut) {
+        if (mut instanceof EvolvingMutation) return new EvoElement(x, y, width, height, this, (EvolvingMutation) mut);
+
+        else return new MutationElement(x, y, width, height, this, mut);
     }
 }

@@ -1,13 +1,10 @@
 package com.lenin.warpstonemod.client.gui.components;
 
+import com.lenin.warpstonemod.client.gui.IClickable;
 import com.lenin.warpstonemod.client.gui.RawTextureResource;
 import com.lenin.warpstonemod.client.gui.WSElement;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.IRenderable;
-import net.minecraft.util.SoundEvents;
 
 public class ButtonComponent extends Component implements IClickable, IRenderable {
     protected RawTextureResource hoveredTexture;
@@ -15,18 +12,19 @@ public class ButtonComponent extends Component implements IClickable, IRenderabl
 
     protected ImageComponent imageComponent;
 
-    public ButtonComponent (ButtonComponent.IPressable function, RawTextureResource _hoveredTexture) {
+    public static IFactory factory (ButtonComponent.IPressable function, RawTextureResource _hoveredTexture) {
+        return (screen) -> new ButtonComponent(function, _hoveredTexture, screen);
+    }
+
+    protected ButtonComponent (ButtonComponent.IPressable function, RawTextureResource _hoveredTexture, WSElement _parentScreen) {
+        super(_parentScreen);
         onPress = function;
         hoveredTexture = _hoveredTexture;
     }
 
-    public ButtonComponent (ButtonComponent.IPressable function) {
-        new ButtonComponent(function, null);
-    }
-
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        if (hoveredTexture == null) return;
+        if (hoveredTexture == null || imageComponent == null) return;
 
         if (parentElement.isHovered()) {
             imageComponent.updateTexture(hoveredTexture);
@@ -40,12 +38,5 @@ public class ButtonComponent extends Component implements IClickable, IRenderabl
 
     public interface IPressable {
         void onPress(ButtonComponent button);
-    }
-
-    @Override
-    public void setParent(WSElement element) {
-        super.setParent(element);
-
-        imageComponent = (ImageComponent) parentElement.getComponent(ImageComponent.class);
     }
 }

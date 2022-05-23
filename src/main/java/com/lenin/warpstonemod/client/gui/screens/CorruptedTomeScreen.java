@@ -34,7 +34,7 @@ public class CorruptedTomeScreen extends WSScreen {
 
             if (muts.get(i) instanceof EvolvingMutation) layer = 1;
 
-            layer(new MutationElement.Builder(x, y, 18, 18, this, muts.get(i)), layer);
+            layer(mutationElement(x, y, 18, 18, muts.get(i)), layer);
         }
     }
 
