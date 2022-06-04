@@ -28,6 +28,12 @@ public class Textures {
     public static final RawTextureResource MUTATION_TREE_LINE_VERTICAL = new RawTextureResource(
             Warpstone.key("textures/gui/mutation_tree_line_vertical.png"), 8, 1, 0, 0);
 
+    public static final RawTextureResource MUTATION_BORDER = new RawTextureResource(
+            Warpstone.key("textures/gui/effect_mutations/borders/border.png"), 24, 24, 0, 0);
+
+    public static final RawTextureResource MUTATION_BORDER_HIGHLIGHT = new RawTextureResource(
+            Warpstone.key("textures/gui/effect_mutations/borders/trim_white.png"), 24, 24, 0, 0);
+
         /*  Sprite Sheets   */
     public static final SpriteSheetResource SHEET_MUT_ATTR_BAR = new SpriteSheetResource(MUT_SCREEN_ATTR_BAR, 75,
             (int frame) -> {

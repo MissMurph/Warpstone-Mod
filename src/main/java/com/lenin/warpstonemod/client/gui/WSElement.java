@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.client.gui;
 
 import com.lenin.warpstonemod.client.gui.components.Component;
+import com.lenin.warpstonemod.client.gui.components.HoveredElementComponent;
 import com.lenin.warpstonemod.client.gui.screens.WSScreen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -21,8 +22,6 @@ public class WSElement extends AbstractGui {
 
     protected boolean isHovered;
 
-    protected List<ITextComponent> toolTips;
-
     protected List<Component> components;
 
     protected WSScreen parentScreen;
@@ -39,7 +38,6 @@ public class WSElement extends AbstractGui {
         y = builder.y + parentScreen.getGuiTop();
         width = builder.width;
         height = builder.height;
-        toolTips = builder.toolTips;
 
         for (Layer layer : builder.layers.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).collect(Collectors.toList())) {
             childElements.addAll(layer.build());
@@ -52,10 +50,10 @@ public class WSElement extends AbstractGui {
     }
 
     public void render (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.isHovered = (this.isHovered && isWithinChildBounds(mouseX, mouseY)) || isWithinBounds(mouseX, mouseY);
+        //this.isHovered = ();
 
-        if (this.isHovered) {
-            parentScreen.setHovered(this);
+        if (this.isHovered && isWithinChildBounds(mouseX, mouseY) || isWithinBounds(mouseX, mouseY)) {
+            this.isHovered = parentScreen.setHovered(this);
         } else {
             parentScreen.clearHovered(this);
         }
@@ -65,19 +63,16 @@ public class WSElement extends AbstractGui {
                 ((IRenderable) c).render(matrixStack, mouseX, mouseY, partialTicks);
             }
         }
-    }
-
-    public void onHover (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        renderToolTip(matrixStack, mouseX, mouseY);
 
         for (WSElement element : childElements) {
             element.render(matrixStack, mouseX, mouseY, partialTicks);
-            if (element.isWithinBounds(mouseX, mouseY)) element.onHover(matrixStack, mouseX, mouseY, partialTicks);
         }
     }
 
-    public void renderToolTip (MatrixStack matrixStack, int mouseX, int mouseY) {
-        GuiUtils.drawHoveringText(matrixStack, toolTips, mouseX, mouseY, parentScreen.width, parentScreen.height, -1, Minecraft.getInstance().fontRenderer);
+    public void onHover (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        //renderToolTip(matrixStack, mouseX, mouseY);
+
+
     }
 
     public void clearComponents (){
@@ -124,6 +119,10 @@ public class WSElement extends AbstractGui {
         return alpha;
     }
 
+    public WSScreen getScreen () {
+        return parentScreen;
+    }
+
     public <T extends Component> Component getComponent (Class<T> type) {
         for (Component c : components) {
             if (c.getClass() == type) {
@@ -147,7 +146,6 @@ public class WSElement extends AbstractGui {
         protected final int height;
         protected final WSScreen parentScreen;
         protected final List<Component.IFactory> componentFactories = new ArrayList<>();
-        protected final List<ITextComponent> toolTips = new ArrayList<>();
         protected final Map<Integer, Layer> layers = new HashMap<>();
 
         protected Builder(int _x, int _y, int _width, int _height, WSScreen _parentScreen){
@@ -158,13 +156,8 @@ public class WSElement extends AbstractGui {
             parentScreen = _parentScreen;
         }
 
-        public <F extends Component.IFactory> Builder addComponent (F factory) {
+        public <C extends Component.IFactory> Builder addComponent (C factory) {
             componentFactories.add(factory);
-            return this;
-        }
-
-        public Builder addTooltips (ITextComponent... lines) {
-            Collections.addAll(toolTips, lines);
             return this;
         }
 

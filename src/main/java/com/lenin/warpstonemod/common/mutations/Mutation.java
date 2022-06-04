@@ -200,14 +200,6 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         if (instance != null) instanceMap.put(manager.getParentEntity().getUniqueID(), instance);
     }
 
-    public MutationTag getTagOfType (MutationTag.Type type) {
-        for (MutationTag tag : tags) {
-            if (tag.getType() == type) return tag;
-        }
-
-        return null;
-    }
-
     public List<MutationTag> getTags () {
         return tags;
     }
@@ -218,6 +210,14 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         }
 
         return false;
+    }
+
+    public MutationTag getTagOfType (MutationTag.Type type) {
+        for (MutationTag tag : tags) {
+            if (tag.getType() == type) return tag;
+        }
+
+        return null;
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -1,6 +1,5 @@
 package com.lenin.warpstonemod.client.gui.screens;
 
-import com.lenin.warpstonemod.client.gui.elements.MutationElement;
 import com.lenin.warpstonemod.client.gui.Textures;
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.Warpstone;
@@ -27,14 +26,14 @@ public class CorruptedTomeScreen extends WSScreen {
             //Casting to int always rounds down
             int row = ((int) ((float)i / 10));
 
-            int y = getGuiTop() + 10 + (23 * row);
-            int x = getGuiLeft() + 15 + (23 * (i - (10 * row)));
+            int y = getGuiTop() + 9 + (24 * row);
+            int x = getGuiLeft() + 14 + (24 * (i - (10 * row)));
 
             int layer = 0;
 
             if (muts.get(i) instanceof EvolvingMutation) layer = 1;
 
-            layer(mutationElement(x, y, 18, 18, muts.get(i)), layer);
+            layer(mutationElement(x, y, muts.get(i)), layer);
         }
     }
 

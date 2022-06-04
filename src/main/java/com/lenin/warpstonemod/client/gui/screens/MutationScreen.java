@@ -5,11 +5,13 @@ import com.lenin.warpstonemod.client.gui.WSElement;
 import com.lenin.warpstonemod.client.gui.components.ButtonComponent;
 import com.lenin.warpstonemod.client.gui.components.ImageComponent;
 import com.lenin.warpstonemod.client.gui.components.TextComponent;
-import com.lenin.warpstonemod.client.gui.elements.MutationElement;
+import com.lenin.warpstonemod.client.gui.components.ToolTipComponent;
+import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.Mutations;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.util.ResourceLocation;
@@ -46,7 +48,7 @@ public class MutationScreen extends WSScreen {
 		//widget
 		layer(WSElement.builder(137, 80, 25, 25, this)
 				.addComponent(TextComponent.factory(new StringTextComponent(String.valueOf(clientManager.getInstabilityLevel()))))
-				.addTooltips(clientManager.getInstabilityTooltips().toArray(new ITextComponent[0]))
+				.addComponent(ToolTipComponent.factory(clientManager.getInstabilityTooltips().toArray(new ITextComponent[0])))
 		);
 
 		/* Corruption	*/
@@ -58,7 +60,7 @@ public class MutationScreen extends WSScreen {
 		//widget
 		layer(WSElement.builder(136, 119, 25, 25, this)
 				.addComponent(TextComponent.factory(new StringTextComponent(String.valueOf(clientManager.getCorruptionLevel()))))
-				.addTooltips(clientManager.getCorruptionTooltips().toArray(new ITextComponent[0]))
+				.addComponent(ToolTipComponent.factory(clientManager.getCorruptionTooltips().toArray(new ITextComponent[0])))
 		);
 
 		List<AttributeMutation> muts = clientManager.getAttributeMutations();
@@ -94,19 +96,19 @@ public class MutationScreen extends WSScreen {
 
 			layer(WSElement.builder(13 + (17 * i), 60, 7, 78, this)
 					.addComponent(ImageComponent.factory(Textures.SHEET_MUT_ATTR_BAR.resolve(frame)))
-					.addTooltips(attrTooltips.toArray(new ITextComponent[0]))
+					.addComponent(ToolTipComponent.factory(attrTooltips.toArray(new ITextComponent[0])))
 			);
 		}
 
 		for (int i = 0; i < effectMuts.size(); i++) {
-			int y = 10;
-			int x = 10 + (23 * i);
+			int y = 9;
+			int x = 9 + (24 * i);
 			if (i >= 7) {
-				y += 23;
-				x = 10 + (23 * (i - 7));
+				y += 24;
+				x = 10 + (24 * (i - 7));
 			}
 
-			layer(mutationElement(x, y, 18, 18, Mutations.getMutation(effectMuts.get(i))));
+			layer(mutationElement(x, y, Mutations.getMutation(effectMuts.get(i))), 2);
 		}
 	}
 }

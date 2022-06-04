@@ -12,6 +12,8 @@ public class MutationTag {
 
     private final List<TextFormatting> formatting;
 
+    private TextFormatting textFormat;
+
     private MutationTag.Type type;
 
     private int weight;

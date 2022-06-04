@@ -27,4 +27,8 @@ public class Layer {
                 .map(Builder::build)
                 .collect(Collectors.toList());
     }
+
+    public List<Builder> getBuilders () {
+        return builders;
+    }
 }
