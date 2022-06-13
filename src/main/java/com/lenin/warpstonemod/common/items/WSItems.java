@@ -2,6 +2,8 @@ package com.lenin.warpstonemod.common.items;
 
 import com.lenin.warpstonemod.common.WSFoods;
 import com.lenin.warpstonemod.common.Warpstone;
+import com.lenin.warpstonemod.common.items.warpstone_consumables.WarpstoneDust;
+import com.lenin.warpstonemod.common.items.warpstone_consumables.WarpstoneShard;
 import net.minecraft.item.Item;
 
 import java.util.function.Supplier;

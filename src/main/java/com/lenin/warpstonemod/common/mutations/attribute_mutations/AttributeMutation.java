@@ -1,7 +1,9 @@
 package com.lenin.warpstonemod.common.mutations.attribute_mutations;
 
+import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.IAttributeSource;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -14,12 +16,16 @@ public class AttributeMutation{
 	protected int mutationLevel;
 	protected final PlayerManager manager;
 
-	public AttributeMutation(IAttributeSource _attributeSource, PlayerManager _manager, UUID _uuid) {
-		uuid = _uuid;
+	protected final MutationTag tag;
+
+	public AttributeMutation(IAttributeSource _attributeSource, PlayerManager _manager) {
+		uuid = UUID.randomUUID();
 		this.attributeSource = _attributeSource;
 		name = _attributeSource.getAttributeName().getPath();
 		mutationLevel = 0;
 		manager = _manager;
+
+		tag = MutationTags.getTag(Warpstone.key(name));
 	}
 
 	protected void addModifier () {

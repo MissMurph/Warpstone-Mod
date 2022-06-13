@@ -2,12 +2,16 @@ package com.lenin.warpstonemod.common.mutations;
 
 import com.lenin.warpstonemod.common.Registration;
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.events.MutateWeightCollectEvent;
+import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.*;
-import com.lenin.warpstonemod.common.mutations.attribute_mutations.attributes.AttributeMutationUUIDs;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
+import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
+import com.lenin.warpstonemod.common.mutations.weights.MutateModifier;
+import com.lenin.warpstonemod.common.mutations.weights.MutateWeight;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -21,6 +25,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
@@ -41,12 +46,12 @@ public class PlayerManager {
     public PlayerManager(LivingEntity _parentEntity){
         parentEntity = _parentEntity;
 
-        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.MAX_HEALTH, _parentEntity), this, AttributeMutationUUIDs.MAX_HEALTH_UUID));
-        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ATTACK_DAMAGE, _parentEntity), this, AttributeMutationUUIDs.ATTACK_DAMAGE_UUID));
-        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.MOVEMENT_SPEED, _parentEntity), this, AttributeMutationUUIDs.SPEED_UUID));
-        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ARMOR, _parentEntity), this, AttributeMutationUUIDs.AMOUR_UUID));
-        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ARMOR_TOUGHNESS, _parentEntity), this, AttributeMutationUUIDs.ARMOUR_TOUGHNESS_UUID));
-        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation(Warpstone.MOD_ID, "harvest_speed")), this, AttributeMutationUUIDs.MINING_SPEED_UUID));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.MAX_HEALTH, _parentEntity), this));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ATTACK_DAMAGE, _parentEntity), this));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.MOVEMENT_SPEED, _parentEntity), this));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ARMOR, _parentEntity), this));
+        attributeMutations.add(new AttributeMutation(new VanillaAttribute(Attributes.ARMOR_TOUGHNESS, _parentEntity), this));
+        attributeMutations.add(new AttributeMutation(getAttribute(new ResourceLocation(Warpstone.MOD_ID, "harvest_speed")), this));
 
         mutData = serialize();
     }
@@ -58,20 +63,53 @@ public class PlayerManager {
     public void mutate(IWarpstoneConsumable item){
         boolean hasEffectBeenCreated = false;
 
-        //Loop over every point of instablity and apply levels, no negatives if no instablity
+        int totalWeight = 0;
+
+        //Loop over every point of instability and apply levels, no negatives if no instablity
         for (int i = 0; i < getInstabilityLevel() + 1; i++) {
                 /*  Effect Mutation Creation    */
             if (mutations.size() < 14 && !hasEffectBeenCreated && Warpstone.getRandom().nextInt(100) > 90) {
-                List<Mutation> legalMutations = Registration.MUTATIONS.getValues()
+                List<MutateWeight> legalWeights = Registration.MUTATIONS.getValues()
                         .stream()
-                        .filter(mut -> !this.containsMutation(mut))
                         .filter(mut -> mut.isLegalMutation(this))
+                        .map(Mutation::getWeight)
                         .collect(Collectors.toList());
 
-                if (legalMutations.size() > 0) {
-                    Mutation mut = legalMutations.get(Warpstone.getRandom().nextInt(legalMutations.size()));
+                if (legalWeights.size() > 0) {
 
-                    addMutation(mut);
+                    MutateWeightCollectEvent event = new MutateWeightCollectEvent((PlayerEntity) getParentEntity());
+
+                    MinecraftForge.EVENT_BUS.post(event);
+
+                    Map<ResourceLocation, List<MutateModifier>> modMap = event.getModifiers();
+
+                    for (MutateWeight weight : legalWeights) {
+                        if (modMap.containsKey(weight.getParent().getRegistryName())) {
+                            modMap.get(weight.getParent().getRegistryName()).forEach(weight::applyModifier);
+                        }
+
+                        for (MutationTag tag : weight.getParent().getTags()) {
+                            if (modMap.containsKey(tag.getKey())) {
+                                modMap.get(tag.getKey()).forEach(weight::applyModifier);
+                            }
+                        }
+
+                        totalWeight += weight.getCombinedWeight();
+                    }
+
+                    int result = Warpstone.getRandom().nextInt(totalWeight);
+                    MutateWeight resultWeight = null;
+
+                    for (int l = legalWeights.size() - 1; l > 0; l--) {
+                        totalWeight -= legalWeights.get(l).getCombinedWeight();
+
+                        if (result >= totalWeight) {
+                            resultWeight = legalWeights.get(l);
+                            break;
+                        }
+                    }
+
+                    addMutation(resultWeight.getParent());
 
                     hasEffectBeenCreated = true;
                     continue;
@@ -100,13 +138,13 @@ public class PlayerManager {
                     .changeLevel(change);
         }
 
-        double witherRisk = getWitherRisk(item.getCorruptionValue());
+        double witherRisk = getWitherRisk(item.getCorruption());
         if (Math.random() > 1f - witherRisk) {
             int duration = Warpstone.getRandom().nextInt((int) Math.round(2400 * witherRisk));
             parentEntity.addPotionEffect(new EffectInstance(Effects.WITHER, duration));
         }
 
-        int instabilityValue = item.getCorruptionValue() + (int) Math.round(item.getCorruptionValue() * (
+        int instabilityValue = item.getCorruption() + (int) Math.round(item.getCorruption() * (
                 (double)getInstability() / 100) * (double)(Warpstone.getRandom().nextInt((getCorruptionLevel() + 2) * 10) / 100)
         );
         int corruptionValue = Math.round(instabilityValue * (getInstabilityLevel() /10f));
@@ -359,7 +397,6 @@ public class PlayerManager {
         IAttributeSource newAttribute;
 
         if (ForgeRegistries.ATTRIBUTES.containsKey(key)) newAttribute = new VanillaAttribute(ForgeRegistries.ATTRIBUTES.getValue(key), getParentEntity());
-        //else if (Registry.ATTRIBUTE.containsKey(key)) newAttribute = new VanillaAttribute(Registry.ATTRIBUTE.getOrDefault(key), getParentEntity());
         else newAttribute = WSAttributes.createAttribute(key, getParentEntity());
 
         attributes.add(newAttribute);

@@ -1,4 +1,4 @@
-package com.lenin.warpstonemod.common.items;
+package com.lenin.warpstonemod.common.items.warpstone_consumables;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
@@ -57,8 +57,18 @@ public class WarpstoneDust extends Item implements IWarpstoneConsumable{
 	}
 
 	@Override
-	public int getCorruptionValue() {
+	public int getCorruption() {
 		return corruptionValue;
+	}
+
+	@Override
+	public int getInstability() {
+		return 0;
+	}
+
+	@Override
+	public int getWither() {
+		return 0;
 	}
 
 	@Override

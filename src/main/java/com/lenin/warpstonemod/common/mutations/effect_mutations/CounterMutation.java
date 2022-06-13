@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.mutations.Mutation;
+import com.lenin.warpstonemod.common.mutations.MutationInstance;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -40,12 +41,14 @@ public class CounterMutation extends Mutation {
     }
 
     @Override
-    public void constructInstance(PlayerManager manager) {
-        super.constructInstance(manager);
+    public MutationInstance constructInstance(PlayerManager manager) {
+        MutationInstance instance = super.constructInstance(manager);
 
-        if (manager.getParentEntity().world.isRemote) return;
+        if (manager.getParentEntity().world.isRemote) return instance;
 
         counterMap.put(manager.getUniqueId(), INTERVAL);
+
+        return instance;
     }
 
     @Override

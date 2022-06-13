@@ -59,5 +59,39 @@ public class MutationTagsProvider extends WarpstoneDataProvider {
         data.add(new MutationTagData.Builder(Warpstone.key("child"), 0)
                 .create()
         );
+
+        data.add(new MutationTagData.Builder(Warpstone.key("evolving"), 0)
+                .create()
+        );
+
+        data.add(new MutationTagData.Builder(Warpstone.key("generic.max_health"), 0)
+                .addType(MutationTag.Type.ATTRIBUTE)
+                .create()
+        );
+
+        data.add(new MutationTagData.Builder(Warpstone.key("generic.attack_damage"), 0)
+                .addType(MutationTag.Type.ATTRIBUTE)
+                .create()
+        );
+
+        data.add(new MutationTagData.Builder(Warpstone.key("generic.movement_speed"), 0)
+                .addType(MutationTag.Type.ATTRIBUTE)
+                .create()
+        );
+
+        data.add(new MutationTagData.Builder(Warpstone.key("generic.armor"), 0)
+                .addType(MutationTag.Type.ATTRIBUTE)
+                .create()
+        );
+
+        data.add(new MutationTagData.Builder(Warpstone.key("generic.armor_toughness"), 0)
+                .addType(MutationTag.Type.ATTRIBUTE)
+                .create()
+        );
+
+        data.add(new MutationTagData.Builder(Warpstone.key("generic.harvest_speed"), 0)
+                .addType(MutationTag.Type.ATTRIBUTE)
+                .create()
+        );
     }
 }

@@ -38,9 +38,6 @@ public class Warpstone {
 
         this.proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
-        ForgeRegistries.ATTRIBUTES.getEntries().forEach(entry -> System.out.println("Forge: " + entry));
-        Registry.ATTRIBUTE.getEntries().forEach(entry -> System.out.println("Forge: " + entry));
-
         this.proxy.init();
         this.proxy.attachLifeCycle(fmlEventBus);
         this.proxy.attachListeners(MinecraftForge.EVENT_BUS);

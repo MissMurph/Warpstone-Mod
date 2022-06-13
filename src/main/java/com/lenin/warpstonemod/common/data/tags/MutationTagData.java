@@ -25,7 +25,7 @@ public class MutationTagData {
     public JsonObject serialize () {
         JsonObject json = new JsonObject();
         json.addProperty("key", resource.toString());
-        if (type != null) json.addProperty("type", type);
+        json.addProperty("type", type);
         json.addProperty("weight", weight);
 
         JsonArray array = new JsonArray();

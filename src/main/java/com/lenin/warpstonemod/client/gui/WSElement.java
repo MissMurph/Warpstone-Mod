@@ -39,6 +39,8 @@ public class WSElement extends AbstractGui {
         width = builder.width;
         height = builder.height;
 
+        childElements = new ArrayList<>();
+
         for (Layer layer : builder.layers.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).collect(Collectors.toList())) {
             childElements.addAll(layer.build());
         }

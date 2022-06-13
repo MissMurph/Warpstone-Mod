@@ -50,7 +50,6 @@ public abstract class WSAttribute implements IAttributeSource {
             throw new IllegalArgumentException("Modifier is already applied on this attribute!");
         }
 
-            //
         double resultValue;
         switch (source.getOperation()){
             case ADDITION:

@@ -54,7 +54,6 @@ public abstract class EvolvingMutation extends Mutation {
         for (Map.Entry<String, INBT> entry : instance.data.entrySet()) {
             CompoundNBT dataNbt = new CompoundNBT();
 
-            dataNbt.putString("uuid", instance.getParent().getUniqueId().toString());
             dataNbt.putString("name", entry.getKey());
             dataNbt.put("value", entry.getValue());
 
@@ -72,11 +71,11 @@ public abstract class EvolvingMutation extends Mutation {
 
         ListNBT dataList = (ListNBT) nbt.get("data");
 
+        EvolvingMutationInstance instance =  (EvolvingMutationInstance) getInstance(manager);
+
         if (dataList != null) {
             for (int i = 0; i < dataList.size(); i++) {
                 CompoundNBT data = dataList.getCompound(i);
-
-                EvolvingMutationInstance instance = (EvolvingMutationInstance) getInstance(UUID.fromString(data.getString("uuid")));
 
                 String key = data.getString("name");
                 INBT value = data.get("value");
@@ -85,7 +84,7 @@ public abstract class EvolvingMutation extends Mutation {
             }
         }
 
-        node.getParent().applyMutation(manager);
+        node.getParent().applyMutation(instance);
     }
 
     @Override

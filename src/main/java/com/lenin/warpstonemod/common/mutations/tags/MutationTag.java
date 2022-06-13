@@ -5,34 +5,30 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MutationTag {
-    private final ResourceLocation resourceLocation;
+    private final ResourceLocation key;
 
-    private final List<TextFormatting> formatting;
+    private Type type;
+
+    private List<TextFormatting> formatting;
 
     private TextFormatting textFormat;
 
-    private MutationTag.Type type;
-
     private int weight;
 
-    public MutationTag (JsonObject json) {
-        resourceLocation = new ResourceLocation(json.get("key").getAsString());
-        weight = json.get("weight").getAsInt();
+    public MutationTag (ResourceLocation _key, TextFormatting... _formatting) {
+        key = _key;
 
-        if (json.has("type")) type = Type.valueOf(json.get("type").getAsString());
+        formatting = new ArrayList<>();
 
-        List<TextFormatting> _formatting = new ArrayList<>();
-
-        json.getAsJsonArray("formatting").forEach(format -> _formatting.add(TextFormatting.getValueByName(format.getAsString())));
-
-        formatting = _formatting;
+        Collections.addAll(formatting, _formatting);
     }
 
     public ResourceLocation getKey() {
-        return resourceLocation;
+        return key;
     }
 
     public List<TextFormatting> getFormatting () {
@@ -71,12 +67,19 @@ public class MutationTag {
     }*/
 
     public void deserialize (JsonObject json) {
-        if (json.has("type")) this.type = Type.valueOf(json.get("type").getAsString());
+        this.type = Type.valueOf(json.get("type").getAsString());
         this.weight = json.get("weight").getAsInt();
+
+        List<TextFormatting> _formatting = new ArrayList<>();
+
+        json.getAsJsonArray("formatting").forEach(format -> _formatting.add(TextFormatting.getValueByName(format.getAsString())));
+
+        formatting = _formatting;
     }
 
     public enum Type {
         RARITY,
-        CATEGORY
+        CATEGORY,
+        ATTRIBUTE
     }
 }

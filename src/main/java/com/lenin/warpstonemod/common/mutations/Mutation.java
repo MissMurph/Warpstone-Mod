@@ -6,6 +6,7 @@ import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
+import com.lenin.warpstonemod.common.mutations.weights.MutateWeight;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,11 +28,13 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
     protected Map<UUID, MutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
     protected final String name;
-    protected UUID uuid;
+    protected final UUID uuid;
     protected ResourceLocation textureResource;
 
     protected List<MutationTag> tags = new ArrayList<>();
     protected Map<ResourceLocation, IMutationCondition> conditions = new HashMap<>();
+
+    protected int weight = 100;
 
     public Mutation (ResourceLocation _key) {
         name = _key.getPath();
@@ -116,6 +119,8 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
      **/
 
     public boolean isLegalMutation(PlayerManager manager){
+        if (manager.containsMutation(this)) return false;
+
         for (IMutationCondition condition : conditions.values()) {
             if (!condition.act(manager)) return false;
         }
@@ -145,6 +150,8 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         }
 
         textureResource = new ResourceLocation(Warpstone.MOD_ID, json.get("resource_path").getAsString());
+
+        weight = json.get("weight").getAsInt();
 
         List<String> newTags = new ArrayList<>();
         json.getAsJsonArray("tags").forEach(jsonElement -> newTags.add(jsonElement.getAsString()));
@@ -178,7 +185,8 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
     }
 
     public MutationInstance getInstance (PlayerManager manager) {
-        return getInstance(manager.getUniqueId());
+        //return getInstance(manager.getUniqueId());
+        return instanceMap.computeIfAbsent(manager.getUniqueId(), instance -> constructInstance(manager));
     }
 
     public MutationInstance getInstance (UUID playerUUID) {
@@ -194,10 +202,11 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         return instanceMap.containsKey(playerUUID);
     }
 
-    public void constructInstance(PlayerManager manager) {
+    public MutationInstance constructInstance(PlayerManager manager) {
         MutationInstance instance = manager.getParentEntity().world.isRemote() ? putClientInstance() : getInstanceType(manager);
 
-        if (instance != null) instanceMap.put(manager.getParentEntity().getUniqueID(), instance);
+        if (instance != null) return instanceMap.put(manager.getParentEntity().getUniqueID(), instance);
+        return null;
     }
 
     public List<MutationTag> getTags () {
@@ -236,5 +245,9 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
 
     public MutationInstance getInstanceType (PlayerManager manager) {
         return new MutationInstance(manager);
+    }
+
+    public MutateWeight getWeight () {
+        return new MutateWeight(this, weight);
     }
 }

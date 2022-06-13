@@ -18,6 +18,7 @@ public abstract class MutationData {
     protected ResourceLocation parentKey;
     protected String resourcePath;
     protected final List<String> tags = new ArrayList<>();
+    protected int weight = 100;
 
     //protected final List<IMutationCondition> conditions = new ArrayList<>();
     protected JsonArray conditions = new JsonArray();
@@ -29,6 +30,7 @@ public abstract class MutationData {
 
         out.addProperty("key", resource.toString());
         out.addProperty("resource_path", resourcePath);
+        out.addProperty("weight", weight);
 
         JsonArray jsonTags = new JsonArray();
 
@@ -84,6 +86,11 @@ public abstract class MutationData {
         public AbstractBuilder<T> addNbtNumberCondition (String nbtKey, NbtNumberCondition.Type type, String value, NbtNumberCondition.Operation... operations) {
             IMutationCondition condition = NbtNumberCondition.builder(data.resource, nbtKey, type, value, operations).build();
             data.conditions.add(MutationConditions.getCondition(condition.getKey()).serialize(condition));
+            return this;
+        }
+
+        public AbstractBuilder<T> setWeight (int weight) {
+            data.weight = weight;
             return this;
         }
 

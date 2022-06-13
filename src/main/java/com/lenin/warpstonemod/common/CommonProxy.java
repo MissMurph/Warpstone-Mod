@@ -2,7 +2,7 @@ package com.lenin.warpstonemod.common;
 
 import com.lenin.warpstonemod.common.commands.WarpstoneCommand;
 import com.lenin.warpstonemod.common.data.MutationReloadListener;
-import com.lenin.warpstonemod.common.items.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
