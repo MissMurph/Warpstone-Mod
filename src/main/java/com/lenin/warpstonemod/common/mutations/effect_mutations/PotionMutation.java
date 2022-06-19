@@ -3,7 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.mutations.IMutationTick;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;

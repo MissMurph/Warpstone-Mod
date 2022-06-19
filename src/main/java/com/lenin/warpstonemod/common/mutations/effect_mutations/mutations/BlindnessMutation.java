@@ -2,8 +2,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import com.lenin.warpstonemod.common.mutations.effect_mutations.EffectMutation;
+import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.MutationInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

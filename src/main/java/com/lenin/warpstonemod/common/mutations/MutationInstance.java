@@ -1,7 +1,6 @@
 package com.lenin.warpstonemod.common.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
-import net.minecraft.entity.LivingEntity;
+import com.lenin.warpstonemod.common.PlayerManager;
 
 public class MutationInstance {
 	protected final PlayerManager parent;

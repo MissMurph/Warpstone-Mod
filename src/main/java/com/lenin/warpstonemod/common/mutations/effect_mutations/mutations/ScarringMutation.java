@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.CounterMutation;
 import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import net.minecraft.entity.LivingEntity;

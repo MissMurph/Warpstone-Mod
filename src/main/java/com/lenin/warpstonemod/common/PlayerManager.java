@@ -1,14 +1,17 @@
-package com.lenin.warpstonemod.common.mutations;
+package com.lenin.warpstonemod.common;
 
-import com.lenin.warpstonemod.common.Registration;
-import com.lenin.warpstonemod.common.Warpstone;
+import com.ibm.icu.impl.Pair;
 import com.lenin.warpstonemod.common.events.MutateWeightCollectEvent;
 import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.mutations.MutateHelper;
+import com.lenin.warpstonemod.common.mutations.Mutation;
+import com.lenin.warpstonemod.common.mutations.Mutations;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.*;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
-import com.lenin.warpstonemod.common.mutations.weights.MutateModifier;
-import com.lenin.warpstonemod.common.mutations.weights.MutateWeight;
+import com.lenin.warpstonemod.common.weighted_random.WeightEntry;
+import com.lenin.warpstonemod.common.weighted_random.WeightModifier;
+import com.lenin.warpstonemod.common.weighted_random.WeightedRange;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -61,81 +64,89 @@ public class PlayerManager {
     }
 
     public void mutate(IWarpstoneConsumable item){
-        boolean hasEffectBeenCreated = false;
-
-        int totalWeight = 0;
-
-        //Loop over every point of instability and apply levels, no negatives if no instablity
-        for (int i = 0; i < getInstabilityLevel() + 1; i++) {
-                /*  Effect Mutation Creation    */
-            if (mutations.size() < 14 && !hasEffectBeenCreated && Warpstone.getRandom().nextInt(100) > 90) {
-                List<MutateWeight> legalWeights = Registration.MUTATIONS.getValues()
-                        .stream()
-                        .filter(mut -> mut.isLegalMutation(this))
-                        .map(Mutation::getWeight)
-                        .collect(Collectors.toList());
-
-                if (legalWeights.size() > 0) {
-
-                    MutateWeightCollectEvent event = new MutateWeightCollectEvent((PlayerEntity) getParentEntity());
-
-                    MinecraftForge.EVENT_BUS.post(event);
-
-                    Map<ResourceLocation, List<MutateModifier>> modMap = event.getModifiers();
-
-                    for (MutateWeight weight : legalWeights) {
-                        if (modMap.containsKey(weight.getParent().getRegistryName())) {
-                            modMap.get(weight.getParent().getRegistryName()).forEach(weight::applyModifier);
-                        }
-
-                        for (MutationTag tag : weight.getParent().getTags()) {
-                            if (modMap.containsKey(tag.getKey())) {
-                                modMap.get(tag.getKey()).forEach(weight::applyModifier);
-                            }
-                        }
-
-                        totalWeight += weight.getCombinedWeight();
-                    }
-
-                    int result = Warpstone.getRandom().nextInt(totalWeight);
-                    MutateWeight resultWeight = null;
-
-                    for (int l = legalWeights.size() - 1; l > 0; l--) {
-                        totalWeight -= legalWeights.get(l).getCombinedWeight();
-
-                        if (result >= totalWeight) {
-                            resultWeight = legalWeights.get(l);
-                            break;
-                        }
-                    }
-
-                    addMutation(resultWeight.getParent());
-
-                    hasEffectBeenCreated = true;
-                    continue;
-                }
-
-                //If no effect mutations can be added then there's no point checking this each iteration so we stop it here
-                hasEffectBeenCreated = true;
-            }
-
-            List<AttributeMutation> legal = attributeMutations
+        if (mutations.size() < 14 && Warpstone.getRandom().nextInt(100) > 90) {
+            List<Mutation> legalMuts = Registration.MUTATIONS.getValues()
                     .stream()
-                    .filter(attr -> attr.canMutate(this))
+                    .filter(mut -> mut.isLegalMutation(this))
                     .collect(Collectors.toList());
 
-            int change = getCorruptionLevel() > 0 ? Warpstone.getRandom().nextInt(getCorruptionLevel()) + 1 : 1;
+            if (legalMuts.size() > 0) {
 
-            if (i > 0) {
-                int index = Warpstone.getRandom().nextInt(legal.size());
-                legal.get(index).changeLevel(-change);
-                legal.remove(index);
+                MutateWeightCollectEvent event = new MutateWeightCollectEvent((PlayerEntity) getParentEntity());
+                MinecraftForge.EVENT_BUS.post(event);
+
+                Map<ResourceLocation, List<WeightModifier>> modMap = event.getModifiers();
+                WeightedRange<Mutation> range = new WeightedRange<>(legalMuts.toArray(new Mutation[0]));
+
+                for (WeightEntry<Mutation> weight : range.getEntries()) {
+                    Mutation mut = weight.get();
+
+                    if (modMap.containsKey(mut.getRegistryName())) {
+                        modMap.get(mut.getRegistryName()).forEach(weight::applyModifier);
+                    }
+
+                    for (MutationTag tag : mut.getTags()) {
+                        if (modMap.containsKey(tag.getKey())) {
+                            modMap.get(tag.getKey()).forEach(weight::applyModifier);
+                        }
+                    }
+                }
+
+                addMutation(range.getResult().get());
             }
 
-            if (i >= 8) change = Warpstone.getRandom().nextInt(100) > 100 - (5 * (getInstabilityLevel() - getCorruptionLevel())) ? change * -1 : change;
+            //Can only mutate either a mutation OR attr changes
+            return;
+        }
 
-            legal.get(Warpstone.getRandom().nextInt(legal.size()))
-                    .changeLevel(change);
+        //Loop over every point of instability and apply levels, no negatives if no instablity
+        //This is low key kind of fucked lol
+        for (int i = 0; i < getInstabilityLevel() + 1; i++) {
+            MutateWeightCollectEvent event = new MutateWeightCollectEvent((PlayerEntity) getParentEntity());
+            MinecraftForge.EVENT_BUS.post(event);
+
+            Map<ResourceLocation, List<WeightModifier>> modMap = event.getModifiers();
+            WeightedRange<AttributeMutation> range = new WeightedRange<>();
+
+            Map<AttributeMutation, Pair<UUID, UUID>> uuidMap = new HashMap<>();
+            Map<UUID, WeightEntry<AttributeMutation>> posNegMap = new HashMap<>();
+
+            for (AttributeMutation attr : attributeMutations) {
+                uuidMap.computeIfAbsent(attr, key -> Pair.of(UUID.randomUUID(), UUID.randomUUID()));
+
+                WeightEntry<AttributeMutation> posWeight = attr.getWeight(true);
+                WeightEntry<AttributeMutation> negWeight = attr.getWeight(false);
+
+                if (posWeight != null) {
+                    posWeight.applyModifier(new WeightModifier((Math.max(0, Math.min(10, 20 - (getInstabilityLevel() - getCorruptionLevel())))) / 10f, WeightModifier.Operation.MULTIPLY_TOTAL));
+                    range.entry(posWeight);
+                }
+
+                if (negWeight != null) {
+                    negWeight.applyModifier(new WeightModifier((-10 + (Math.max(0, getInstabilityLevel() - getCorruptionLevel()))) / 10f, WeightModifier.Operation.MULTIPLY_TOTAL));
+                    range.entry(negWeight);
+                }
+
+                /*if (attr.canMutate(true)) {
+                    //After Instability 10 we want positive weights to gradually degrade
+                    WeightEntry<AttributeMutation> weight = posNegMap.put(uuidMap.get(attr).first, range.entry(attr, attr.getWeight()));
+                    weight.applyModifier(new WeightModifier((Math.max(0, Math.min(10, 20 - (getInstabilityLevel() - getCorruptionLevel())))) / 10f, WeightModifier.Operation.MULTIPLY_TOTAL));
+                }
+                if (attr.canMutate(false)) {
+                    WeightEntry<AttributeMutation> weight = posNegMap.put(uuidMap.get(attr).first, range.entry(attr, attr.getWeight()));
+                    weight.applyModifier(new WeightModifier((-10 + (Math.max(0, getInstabilityLevel() - getCorruptionLevel()))) / 10f, WeightModifier.Operation.MULTIPLY_TOTAL));
+                }*/
+            }
+
+            for (WeightEntry<AttributeMutation> weight : range.getEntries()) {
+                AttributeMutation mut = weight.get();
+                if (modMap.containsKey(mut.getTag().getKey())) {
+                    modMap.get(mut.getTag().getKey()).forEach(weight::applyModifier);
+                }
+            }
+
+            WeightEntry<AttributeMutation> result = range.getResult();
+            result.get().mutate(result);
         }
 
         double witherRisk = getWitherRisk(item.getCorruption());
@@ -202,7 +213,7 @@ public class PlayerManager {
         out.putInt("corruption", getCorruption());
 
         for (AttributeMutation mut : getAttributeMutations()) {
-            out.putInt(mut.getMutationType(), mut.getMutationLevel());
+            out.putInt(mut.getName(), mut.getMutationLevel());
         }
 
         ListNBT serializedMutations = new ListNBT();
@@ -232,7 +243,7 @@ public class PlayerManager {
         }
 
         for (AttributeMutation mut : getAttributeMutations()) {
-            mut.setLevel(nbt.getInt(mut.getMutationType()));
+            mut.setLevel(nbt.get(mut.getName()));
         }
 
         ListNBT list = (ListNBT) nbt.get("mutations");
@@ -260,7 +271,7 @@ public class PlayerManager {
     }
 
     public void resetMutations (boolean death) {
-        for (AttributeMutation m : attributeMutations) { m.setLevel(0); }
+        for (AttributeMutation m : attributeMutations) { m.reset(); }
 
         for (Mutation mut : mutations.values()) {
             removeMutation(mut);
@@ -424,7 +435,6 @@ public class PlayerManager {
 
         mutations.clear();
         attributeMutations.clear();
-        MutateHelper.MANAGERS.remove(this);
     }
 
     public void saveData (){

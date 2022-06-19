@@ -3,7 +3,7 @@ package com.lenin.warpstonemod.common.mutations.conditions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;

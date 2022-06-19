@@ -2,9 +2,8 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.MutationInstance;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.HashMap;
 import java.util.Map;

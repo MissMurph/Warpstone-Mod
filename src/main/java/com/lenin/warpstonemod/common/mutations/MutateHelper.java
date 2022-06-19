@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations;
 
+import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.network.PacketHandler;
 import com.lenin.warpstonemod.common.network.SyncPlayerDataPacket;
@@ -101,6 +102,7 @@ public class MutateHelper {
 
     public static void unloadManager (UUID uuid) {
         getManager(uuid).unload();
+        MANAGERS.remove(getManager(uuid));
     }
 
     public static File getMutFile (UUID playerUUID) {

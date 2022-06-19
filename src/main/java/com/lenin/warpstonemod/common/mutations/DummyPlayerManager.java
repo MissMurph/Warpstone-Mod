@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations;
 
+import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.AttributeMutation;
 import net.minecraft.entity.LivingEntity;

@@ -3,7 +3,7 @@ package com.lenin.warpstonemod.common.mutations.effect_mutations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.mutations.Mutation;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;

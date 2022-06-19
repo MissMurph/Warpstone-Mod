@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.conditions.nbt;
 
 import com.lenin.warpstonemod.common.mutations.Mutation;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.Mutations;
 import com.lenin.warpstonemod.common.mutations.evolving_mutations.EvolvingMutationInstance;

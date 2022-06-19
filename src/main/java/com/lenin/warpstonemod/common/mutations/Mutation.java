@@ -1,12 +1,13 @@
 package com.lenin.warpstonemod.common.mutations;
 
 import com.google.gson.JsonObject;
+import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTag;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
-import com.lenin.warpstonemod.common.mutations.weights.MutateWeight;
+import com.lenin.warpstonemod.common.weighted_random.IWeightable;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.*;
 
-public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
+public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements IWeightable<Mutation> {
     protected String translateKeyConstant = "mutation.";
     protected Map<UUID, MutationInstance> instanceMap = new Object2ObjectArrayMap<>();
 
@@ -247,7 +248,12 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> {
         return new MutationInstance(manager);
     }
 
-    public MutateWeight getWeight () {
-        return new MutateWeight(this, weight);
+    public int getWeight () {
+        return weight;
+    }
+
+    @Override
+    public Mutation get() {
+        return this;
     }
 }

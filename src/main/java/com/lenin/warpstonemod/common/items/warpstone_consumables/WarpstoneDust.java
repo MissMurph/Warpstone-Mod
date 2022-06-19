@@ -1,7 +1,7 @@
 package com.lenin.warpstonemod.common.items.warpstone_consumables;
 
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -63,12 +63,12 @@ public class WarpstoneDust extends Item implements IWarpstoneConsumable{
 
 	@Override
 	public int getInstability() {
-		return 0;
+		return corruptionValue;
 	}
 
 	@Override
 	public int getWither() {
-		return 0;
+		return corruptionValue;
 	}
 
 	@Override

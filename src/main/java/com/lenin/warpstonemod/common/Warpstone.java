@@ -43,13 +43,19 @@ public class Warpstone {
         this.proxy.attachListeners(MinecraftForge.EVENT_BUS);
     }
 
-    public static CommonProxy getProxy () { return getInstance().proxy; }
+    public static CommonProxy getProxy () {
+        return getInstance().proxy;
+    }
 
-    public static Warpstone getInstance() { return instance; }
+    public static Warpstone getInstance() {
+        return instance;
+    }
 
     public static ResourceLocation key (String name) {
         return new ResourceLocation(MOD_ID, name);
     }
 
-    public static Random getRandom() { return random; }
+    public static Random getRandom() {
+        return random;
+    }
 }

@@ -2,7 +2,7 @@ package com.lenin.warpstonemod.common.mutations.conditions.nbt;
 
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.mutations.PlayerManager;
+import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.conditions.IConditionSerializer;
 import com.lenin.warpstonemod.common.mutations.conditions.IMutationCondition;
 import net.minecraft.nbt.INBT;

@@ -1,18 +1,36 @@
-package com.lenin.warpstonemod.common.mutations.weights;
+package com.lenin.warpstonemod.common.weighted_random;
 
-import com.lenin.warpstonemod.common.mutations.Mutation;
+import net.minecraft.nbt.INBT;
 
-public class MutateWeight {
-    private final Mutation parent;
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class WeightEntry <T> {
+    private final T parent;
     private final int baseWeight;
+
     private int modWeight;
 
-    public MutateWeight (Mutation _parent, int _baseWeight) {
+    private final INBT value;
+
+    public WeightEntry (T _parent, int _baseWeight, @Nullable INBT _value) {
         parent = _parent;
         baseWeight = _baseWeight;
+
+        value = _value;
     }
 
-    public boolean applyModifier (MutateModifier modifier) {
+    public WeightEntry (T _parent, int _baseWeight) {
+        this(_parent, _baseWeight, null);
+    }
+
+    public T get () {
+        return parent;
+    }
+
+    public boolean applyModifier (WeightModifier modifier) {
         switch (modifier.getOp()){
             case ADDITION:
                 modWeight += modifier.getValue();
@@ -34,7 +52,7 @@ public class MutateWeight {
         return baseWeight + modWeight;
     }
 
-    public Mutation getParent () {
-        return parent;
+    public INBT getValue () {
+        return value;
     }
 }
