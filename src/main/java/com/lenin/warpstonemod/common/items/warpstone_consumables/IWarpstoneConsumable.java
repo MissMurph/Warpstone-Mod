@@ -7,8 +7,5 @@ public interface IWarpstoneConsumable {
 	int getInstability();
 	int getWither();
 
-	CompoundNBT serialize();
-	void deserialize();
-
 	boolean canBeConsumed ();
 }

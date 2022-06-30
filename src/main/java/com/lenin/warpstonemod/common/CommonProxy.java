@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common;
 
 import com.lenin.warpstonemod.common.commands.WarpstoneCommand;
+import com.lenin.warpstonemod.common.data.DataGenerators;
 import com.lenin.warpstonemod.common.data.MutationReloadListener;
 import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
@@ -34,6 +35,7 @@ import java.util.List;
 public class CommonProxy {
 	private final List<ITickHandler> tickHandlers = new ArrayList<>();
 	protected Registration registration;
+	protected DataGenerators dataGen;
 
 	private static final JsonReloadListener MUTATION_LISTENER = new MutationReloadListener();
 
@@ -69,6 +71,7 @@ public class CommonProxy {
 
 	public void attachLifeCycle (IEventBus bus) {
 		bus.addListener(this::onCommonSetup);
+		bus.addListener(DataGenerators::gatherData);
 		registration.attachListeners(bus);
 
 		bus.addListener(Registration::onRegistryBuild);

@@ -119,6 +119,4 @@ public abstract class MutationData {
             return data;
         }
     }
-
-
 }
