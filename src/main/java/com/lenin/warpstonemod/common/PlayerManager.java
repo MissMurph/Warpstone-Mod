@@ -2,7 +2,8 @@ package com.lenin.warpstonemod.common;
 
 import com.ibm.icu.impl.Pair;
 import com.lenin.warpstonemod.common.events.MutateWeightCollectEvent;
-import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.items.MutateItem;
+import com.lenin.warpstonemod.common.items.MutateItem.*;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.mutations.Mutations;
@@ -63,7 +64,9 @@ public class PlayerManager {
         parentEntity = null;
     }
 
-    public void mutate(IWarpstoneConsumable item){
+    public void mutate(MutateItem item){
+        MutateProperties properties = item.getMutateProperties();
+
         if (mutations.size() < 14 && Warpstone.getRandom().nextInt(100) > 90) {
             List<Mutation> legalMuts = Registration.MUTATIONS.getValues()
                     .stream()
@@ -149,13 +152,13 @@ public class PlayerManager {
             result.get().mutate(result);
         }
 
-        double witherRisk = getWitherRisk(item.getCorruption());
+        double witherRisk = getWitherRisk(properties.corruption);
         if (Math.random() > 1f - witherRisk) {
             int duration = Warpstone.getRandom().nextInt((int) Math.round(2400 * witherRisk));
             parentEntity.addPotionEffect(new EffectInstance(Effects.WITHER, duration));
         }
 
-        int instabilityValue = item.getCorruption() + (int) Math.round(item.getCorruption() * (
+        int instabilityValue = properties.instability + (int) Math.round(properties.instability * (
                 (double)getInstability() / 100) * (double)(Warpstone.getRandom().nextInt((getCorruptionLevel() + 2) * 10) / 100)
         );
         int corruptionValue = Math.round(instabilityValue * (getInstabilityLevel() /10f));

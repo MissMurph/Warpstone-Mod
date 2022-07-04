@@ -1,23 +1,16 @@
 package com.lenin.warpstonemod.common.items;
 
-import com.lenin.warpstonemod.common.WSFoods;
 import com.lenin.warpstonemod.common.Warpstone;
-import com.lenin.warpstonemod.common.items.warpstone_consumables.WarpstoneDust;
-import com.lenin.warpstonemod.common.items.warpstone_consumables.WarpstoneShard;
 import net.minecraft.item.Item;
 
 import java.util.function.Supplier;
 
 public class WSItems {
     public static final Item WARPSTONE_SHARD = register("warpstone_shard", ()
-            -> new WarpstoneShard(new Item.Properties()
-                .group(Warpstone.MOD_GROUP)
-                .food(WSFoods.WARPSTONE_SHARD)));
+            -> new Item(new Item.Properties()
+                .group(Warpstone.MOD_GROUP)));
 
-    public static final Item WARPSTONE_DUST = register("warpstone_dust", ()
-            -> new WarpstoneDust(new Item.Properties()
-                .group(Warpstone.MOD_GROUP)
-                .food(WSFoods.WARPSTONE_DUST)));
+    public static final Item WARPSTONE_DUST = register("warpstone_dust", MutateItem::new);
 
     public static final Item MUTATION_RESET = register("mutation_reset", () ->
             new MutationReset(new Item.Properties()
@@ -34,4 +27,6 @@ public class WSItems {
     }
 
     public static void register () {}
+
+    
 }

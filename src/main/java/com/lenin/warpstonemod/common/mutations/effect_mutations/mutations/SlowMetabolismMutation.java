@@ -1,6 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations.mutations;
 
-import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.items.MutateItem;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +21,7 @@ public class SlowMetabolismMutation extends Mutation {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
 				|| !event.getItem().getItem().isFood()
 				|| !instanceMap.containsKey(event.getEntityLiving().getUniqueID())
-				|| event.getItem().getItem() instanceof IWarpstoneConsumable
+				|| event.getItem().getItem() instanceof MutateItem
 		) return;
 
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();

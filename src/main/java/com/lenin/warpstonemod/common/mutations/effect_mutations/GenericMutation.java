@@ -1,5 +1,6 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
+import com.lenin.warpstonemod.api.AbstractMutationDataBuilder;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -8,12 +9,8 @@ import java.util.List;
 
 public class GenericMutation extends Mutation {
 
-    protected GenericMutation(ResourceLocation _key) {
+    public GenericMutation(ResourceLocation _key) {
         super(_key);
-    }
-
-    public static AbstractBuilder<GenericMutation> builder (ResourceLocation key) {
-        return new AbstractBuilder<GenericMutation>(key);
     }
 
     /*@Override
@@ -25,6 +22,4 @@ public class GenericMutation extends Mutation {
 
         return out;
     }*/
-
-    public
 }

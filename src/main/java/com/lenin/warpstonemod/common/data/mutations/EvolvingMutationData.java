@@ -47,21 +47,11 @@ public class EvolvingMutationData extends MutationData {
             return this;
         }*/
 
-        protected <T extends MutationData> Builder addChildMutation (BuilderSupplier<AbstractBuilder<T>> supplier) {
-            //T mutation = dataBuilder.setParent(data.resource).create();
-            //data.childMutations.add(mutation);
-            return this;
-        }
-
         protected <T extends MutationData> Builder addChildMutation (AbstractBuilder<T> dataBuilder) {
             AbstractBuilder<T> builder = dataBuilder.addTag(new ResourceLocation(Warpstone.MOD_ID, "child"));
             T mutation = builder.setParent(data.resource).create();
             data.childMutations.add(mutation);
             return this;
         }
-    }
-
-    public interface BuilderSupplier <T extends AbstractBuilder<? extends MutationData>> {
-        T get(ResourceLocation key);
     }
 }

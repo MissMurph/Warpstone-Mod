@@ -1,21 +1,19 @@
 package com.lenin.warpstonemod.common;
 
+import com.lenin.warpstonemod.api.JSONBuffer;
+import com.lenin.warpstonemod.api.WarpstoneAPI;
 import com.lenin.warpstonemod.common.commands.WarpstoneCommand;
-import com.lenin.warpstonemod.common.data.DataGenerators;
-import com.lenin.warpstonemod.common.data.MutationReloadListener;
-import com.lenin.warpstonemod.common.items.warpstone_consumables.IWarpstoneConsumable;
+import com.lenin.warpstonemod.common.items.MutateItem;
 import com.lenin.warpstonemod.common.mutations.MutateHelper;
 import com.lenin.warpstonemod.common.mutations.attribute_mutations.WSAttributes;
 import com.lenin.warpstonemod.common.mutations.conditions.MutationConditions;
 import com.lenin.warpstonemod.common.mutations.effect_mutations.MutationTickHelper;
 import com.lenin.warpstonemod.common.mutations.tags.MutationTags;
 import com.lenin.warpstonemod.common.network.PacketHandler;
-import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.FolderName;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -35,9 +33,10 @@ import java.util.List;
 public class CommonProxy {
 	private final List<ITickHandler> tickHandlers = new ArrayList<>();
 	protected Registration registration;
-	protected DataGenerators dataGen;
+	//protected DataGenerators dataGen;
+	private WarpstoneAPI api;
 
-	private static final JsonReloadListener MUTATION_LISTENER = new MutationReloadListener();
+	private final JSONBuffer jsonBuffer = new JSONBuffer(Warpstone.MOD_ID);
 
 	public void init (){
 		MutateHelper.init();
@@ -47,6 +46,8 @@ public class CommonProxy {
 
 		this.registration = new Registration();
 		this.tickHandlers.add(MutationTickHelper.INSTANCE);
+
+		api = WarpstoneAPI.init(this, jsonBuffer, registration);
 
 		PacketHandler.registerPackets();
 	}
@@ -62,17 +63,17 @@ public class CommonProxy {
 
 		bus.addListener(this::onPlayerTick);
 
-		bus.addListener(this::onRegisterReloadListeners);
-
 		bus.addListener(this::onRegisterCommands);
 
 		bus.addListener(EventPriority.HIGH, WarpstoneWorldGen::onBiomeLoading);
+
+		jsonBuffer.attachListener(bus);
 	}
 
 	public void attachLifeCycle (IEventBus bus) {
 		bus.addListener(this::onCommonSetup);
-		bus.addListener(DataGenerators::gatherData);
 		registration.attachListeners(bus);
+		jsonBuffer.attachLifecycle(bus);
 
 		bus.addListener(Registration::onRegistryBuild);
 	}
@@ -107,11 +108,11 @@ public class CommonProxy {
 	}
 
 	private void onPlayerItemUse (PlayerInteractEvent.RightClickItem event){
-		if (event.getItemStack().getItem() instanceof IWarpstoneConsumable) {
-			IWarpstoneConsumable item = (IWarpstoneConsumable) event.getItemStack().getItem();
-			if (!item.canBeConsumed()) {
+		if (event.getItemStack().getItem() instanceof MutateItem) {
+			MutateItem item = (MutateItem) event.getItemStack().getItem();
+			/*if (!item.canBeConsumed()) {
 				event.setCanceled(true);
-			}
+			}*/
 		}
 	}
 
@@ -123,10 +124,6 @@ public class CommonProxy {
 
 			if (m != null) m.resetMutations(true);
 		}
-	}
-
-	private void onRegisterReloadListeners (AddReloadListenerEvent event) {
-		event.addListener(MUTATION_LISTENER);
 	}
 
 	private void onRegisterCommands (RegisterCommandsEvent event) {
@@ -147,5 +144,9 @@ public class CommonProxy {
 
 	public Registration getRegistration(){
 		return this.registration;
+	}
+
+	public JSONBuffer getBuffer () {
+		return this.jsonBuffer;
 	}
 }

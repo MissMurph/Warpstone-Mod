@@ -1,18 +1,22 @@
 package com.lenin.warpstonemod.common.mutations.effect_mutations;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lenin.warpstonemod.common.mutations.IMutationTick;
 import com.lenin.warpstonemod.common.PlayerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Arrays;
 import java.util.List;
@@ -99,22 +103,19 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
     }
 
     @Override
-    public JsonObject serializeArguments() {
-        JsonObject json = super.serializeArguments();
-        JsonArray array = new JsonArray();
+    public void deserialize(JsonObject json) {
+        super.deserialize(json);
 
-        for (Effect potion : potions) {
-            array.add(potion.getRegistryName().toString());
+        JsonArray effects = json.getAsJsonArray("potions");
+
+        if (effects != null) {
+            for (JsonElement jElement : effects) {
+                ResourceLocation key = new ResourceLocation(jElement.getAsString());
+
+                if (ForgeRegistries.POTIONS.containsKey(key)) {
+                    potions.add(ForgeRegistries.POTIONS.getValue(key));
+                }
+            }
         }
-
-        json.add("potions", array);
-        return json;
-    }
-
-    @Override
-    public void deserializeArguments(JsonObject object) {
-        super.deserializeArguments(object);
-
-        //Registry.EFFECTS
     }
 }

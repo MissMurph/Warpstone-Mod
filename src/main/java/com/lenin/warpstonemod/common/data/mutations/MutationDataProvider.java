@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MutationDataProvider extends WarpstoneDataProvider {
-    static final List<MutationData> data = new ArrayList<>();
+    private static final List<MutationData> data = new ArrayList<>();
 
     public MutationDataProvider (DataGenerator _generator) {
         super(_generator, "mutations");
