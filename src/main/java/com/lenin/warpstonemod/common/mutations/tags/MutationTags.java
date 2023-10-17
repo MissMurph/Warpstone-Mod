@@ -52,7 +52,9 @@ public class MutationTags {
 
 
     public static MutationTag registerTag(ResourceLocation key) {
-        return tagMap.put(key, new MutationTag(key));
+        MutationTag newTag = new MutationTag(key);
+        tagMap.put(key, newTag);
+        return newTag;
     }
 
     public static List<MutationTag> getEntries () {

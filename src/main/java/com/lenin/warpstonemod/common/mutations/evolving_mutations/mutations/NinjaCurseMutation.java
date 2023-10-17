@@ -1,6 +1,7 @@
 package com.lenin.warpstonemod.common.mutations.evolving_mutations.mutations;
 
 import com.google.gson.JsonObject;
+import com.lenin.warpstonemod.api.GenericMutationBuilder;
 import com.lenin.warpstonemod.common.Warpstone;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.PlayerManager;
@@ -17,9 +18,9 @@ public class NinjaCurseMutation extends EvolvingMutation {
 
     protected static int BLOCKS_TO_FALL = 1000;
 
-    public static final Mutation CHILD_CURSE = registerChild(Warpstone.key("curse_ninja_child_1"), GenericMutation::new);
-    public static final Mutation CHILD_GIFT = registerChild(Warpstone.key("curse_ninja_child_2"), GenericMutation::new);
-    public static final Mutation CHILD_TEST = registerChild(Warpstone.key("curse_ninja_child_3"), GenericMutation::new);
+    public static final Mutation CHILD_CURSE = registerChild(new GenericMutationBuilder<>(Warpstone.key("curse_ninja_child_1"), NinjaCurseMutation::new));
+    public static final Mutation CHILD_GIFT = registerChild(new GenericMutationBuilder<>(Warpstone.key("curse_ninja_child_2"), NinjaCurseMutation::new));
+    public static final Mutation CHILD_TEST = registerChild(new GenericMutationBuilder<>(Warpstone.key("curse_ninja_child_3"), NinjaCurseMutation::new));
 
     public NinjaCurseMutation(ResourceLocation _key) {
         super(_key);

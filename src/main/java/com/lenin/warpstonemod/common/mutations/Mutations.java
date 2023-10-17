@@ -29,23 +29,23 @@ public class Mutations {
 
 	public static final Mutation INVISIBILITY = register(new PotionMutationBuilder(Warpstone.key("invisibility"))
 			.addPotion(Effects.INVISIBILITY)
-			.addCondition(HasMutationCondition.builder(Mutations.GLOWING.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("glowing"), false).build())
 			.addTag(MutationTags.UNCOMMON));
 
 	public static final Mutation NIGHT_VISION = register(new PotionMutationBuilder(Warpstone.key("night_vision"))
 			.addPotion(Effects.NIGHT_VISION)
-			.addCondition(HasMutationCondition.builder(Mutations.BLINDNESS.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("blindness"), false).build())
 			.addTag(MutationTags.COMMON));
 
 	public static final Mutation JUMP_BOOST = register(new PotionMutationBuilder(Warpstone.key("jump_boost"))
 			.addPotion(Effects.JUMP_BOOST)
-			.addCondition(HasMutationCondition.builder(Mutations.WEAK_LEGS.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("weak_legs"), false).build())
 			.addTag(MutationTags.UNCOMMON));
 
 	public static final Mutation GOOD_LUCK = register(
 			new EffectMutationBuilder(Warpstone.key("good_luck"))
 					.addModifier(Attributes.LUCK, 1.0, AttributeModifier.Operation.ADDITION)
-					.addCondition(HasMutationCondition.builder(Mutations.GOOD_LUCK.getRegistryName(), false).build())
+					.addCondition(HasMutationCondition.builder(Warpstone.key("bad_luck"), false).build())
 					.addTag(MutationTags.UNCOMMON));
 
 	public static final Mutation SLOW_FALLING = register(new PotionMutationBuilder(Warpstone.key("slow_falling"))
@@ -59,7 +59,7 @@ public class Mutations {
 	public static final Mutation WEAK_LEGS = register(
 			new GenericMutationBuilder<>(Warpstone.key("weak_legs"), WeakLegsMutation::new)
 					.addCondition(HasMutationCondition.builder(Mutations.JUMP_BOOST.getRegistryName(), false).build())
-					.addCondition(HasMutationCondition.builder(Mutations.STRONG_LEGS.getRegistryName(), false).build())
+					.addCondition(HasMutationCondition.builder(Warpstone.key("strong_legs"), false).build())
 					.addTag(MutationTags.NEGATIVE));
 
 	public static final Mutation BAD_LUCK = register(new EffectMutationBuilder(Warpstone.key("bad_luck"))
@@ -73,14 +73,13 @@ public class Mutations {
 			.addTag(MutationTags.COMMON));
 
 	public static final Mutation BLINDNESS = register(new GenericMutationBuilder<>(Warpstone.key("blindness"), BlindnessMutation::new)
-			.addCondition(HasMutationCondition.builder(Mutations.BLINDNESS.getRegistryName(), false).build())
 			.addTag(MutationTags.COMMON));
 
 	public static final Mutation FORTUNE = register(new GenericMutationBuilder<>(Warpstone.key("fortune"), GenericMutation::new)
 			.addTag(MutationTags.RARE));
 
 	public static final Mutation FAST_METABOLISM = register(new GenericMutationBuilder<>(Warpstone.key("fast_metabolism"), FastMetabolismMutation::new)
-			.addCondition(HasMutationCondition.builder(Mutations.SLOW_METABOLISM.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("slow_metabolism"), false).build())
 			.addTag(MutationTags.COMMON));
 
 	public static final Mutation SLOW_METABOLISM = register(new GenericMutationBuilder<>(Warpstone.key("slow_metabolism"), SlowMetabolismMutation::new)
@@ -98,7 +97,6 @@ public class Mutations {
 
 	public static final Mutation GILLS = register(new PotionMutationBuilder(Warpstone.key("gills"))
 			.addPotion(Effects.WATER_BREATHING)
-			.addCondition(HasMutationCondition.builder(Mutations.GILLS.getRegistryName(), false).build())
 			.addTag(MutationTags.NEGATIVE));
 
 	public static final Mutation WEAK_LUNGS = register(new GenericMutationBuilder<>(Warpstone.key("weak_lungs"), WeakLungsMutation::new)
@@ -106,7 +104,7 @@ public class Mutations {
 			.addTag(MutationTags.NEGATIVE));
 
 	public static final Mutation FIRE_BREATHING = register(new GenericMutationBuilder<>(Warpstone.key("fire_breathing"), FireBreathingMutation::new)
-			.addCondition(HasMutationCondition.builder(Mutations.EXPLOSIVE.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("explosive"), false).build())
 			.addTag(MutationTags.RARE));
 
 	public static final Mutation EXPLOSIVE = register(new GenericMutationBuilder<>(Warpstone.key("explosive"), ExplosiveMutation::new)
@@ -116,7 +114,7 @@ public class Mutations {
 	public static final Mutation ARCHER = register(new EffectMutationBuilder(Warpstone.key("archer"))
 			.addModifier(WSAttributes.MELEE_DAMAGE.getKey(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
 			.addModifier(WSAttributes.RANGED_DAMAGE.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
-			.addCondition(HasMutationCondition.builder(Mutations.BRAWLER.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("brawler"), false).build())
 			.addTag(MutationTags.UNCOMMON));
 
 	public static final Mutation BRAWLER = register(new EffectMutationBuilder(Warpstone.key("brawler"))
@@ -149,7 +147,7 @@ public class Mutations {
 	public static final Mutation ALCOHOLIC = register(new EffectMutationBuilder(Warpstone.key("alcoholic"), AlcoholicMutation::new)
 			.addModifier(Attributes.MAX_HEALTH.getRegistryName(), -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
 			.addCondition(HasMutationCondition.builder(Mutations.SLOW_METABOLISM.getRegistryName(), false).build())
-			.addCondition(HasMutationCondition.builder(Mutations.WEAK_LIVER.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("weak_liver"), false).build())
 			.addTag(MutationTags.UNCOMMON));
 
 	public static final Mutation WEAK_LIVER = register(new EffectMutationBuilder(Warpstone.key("weak_liver"), WeakLiverMutation::new)
@@ -160,7 +158,7 @@ public class Mutations {
 			.addModifier(Attributes.MAX_HEALTH, -0.25, AttributeModifier.Operation.MULTIPLY_TOTAL)
 			.addModifier(WSAttributes.LIFE_STEAL.getKey(), 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL.toString())
 			.addCondition(HasMutationCondition.builder(Mutations.SCALES.getRegistryName(), false).build())
-			.addCondition(HasMutationCondition.builder(Mutations.UNDEAD.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("undead"), false).build())
 			.addTag(MutationTags.RARE));
 
 	public static final Mutation UNDEAD = register(new EffectMutationBuilder(Warpstone.key("undead"), UndeadMutation::new)
@@ -173,7 +171,7 @@ public class Mutations {
 			.addTag(MutationTags.RARE));
 
 	public static final Mutation HYDROPHILIC = register(new GenericMutationBuilder<>(Warpstone.key("hydrophilic"), HydrophilicMutation::new)
-			.addCondition(HasMutationCondition.builder(Mutations.POTASSIUM.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("potassium"), false).build())
 			.addTag(MutationTags.UNCOMMON));
 
 	public static final Mutation POTASSIUM = register(new GenericMutationBuilder<>(Warpstone.key("potassium"), PotassiumMutation::new)
@@ -196,7 +194,7 @@ public class Mutations {
 			.addTag(MutationTags.RARE));
 
 	public static final Mutation THICK_FUR = register(new GenericMutationBuilder<>(Warpstone.key("thick_fur"), FurMutation::new)
-			.addCondition(HasMutationCondition.builder(Mutations.COLD_BLOOD.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("cold_blood"), false).build())
 			.addTag(MutationTags.UNCOMMON));
 
 	public static final Mutation COLD_BLOOD = register(new GenericMutationBuilder<>(Warpstone.key("cold_blood"), ColdBloodMutation::new)
@@ -208,7 +206,7 @@ public class Mutations {
 			.addTag(MutationTags.RARE));
 
 	public static final Mutation HERBIVORE = register(new GenericMutationBuilder<>(Warpstone.key("herbivore"), HerbivoreMutation::new)
-			.addCondition(HasMutationCondition.builder(Mutations.HERBIVORE.getRegistryName(), false).build())
+			.addCondition(HasMutationCondition.builder(Warpstone.key("carnivore"), false).build())
 			.addTag(MutationTags.COMMON));
 
 	public static final Mutation CARNIVORE = register(new GenericMutationBuilder<>(Warpstone.key("carnivore"), CarnivoreMutation::new)
@@ -219,11 +217,11 @@ public class Mutations {
 
 		/*	Evolving Mutations	*/
 
-	public static final Mutation NINJA = register("curse_ninja", NinjaCurseMutation::new);
+	public static final Mutation NINJA = register(new GenericMutationBuilder<>(Warpstone.key("curse_ninja"), NinjaCurseMutation::new));
 
 		/* Registration Functions	*/
 
-	private static <M extends Mutation, B extends AbstractMutationDataBuilder<M>> M register (B builder) {
+	public static <M extends Mutation, B extends AbstractMutationDataBuilder<M>> M register (B builder) {
 		return WarpstoneAPI.registerMutation(builder);
 	}
 

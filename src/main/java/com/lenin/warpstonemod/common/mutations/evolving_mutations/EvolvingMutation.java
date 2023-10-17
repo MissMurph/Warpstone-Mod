@@ -3,6 +3,7 @@ package com.lenin.warpstonemod.common.mutations.evolving_mutations;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.lenin.warpstonemod.api.AbstractMutationDataBuilder;
 import com.lenin.warpstonemod.common.mutations.Mutation;
 import com.lenin.warpstonemod.common.PlayerManager;
 import com.lenin.warpstonemod.common.mutations.MutationInstance;
@@ -140,8 +141,8 @@ public abstract class EvolvingMutation extends Mutation {
         return new EvolvingMutationInstance(manager);
     }
 
-    protected static Mutation registerChild (ResourceLocation _key, MutationSupplier<Mutation> _supplier) {
-        return Mutations.register(_key, _supplier);
+    protected static <M extends Mutation, B extends AbstractMutationDataBuilder<M>> M registerChild (B _builder) {
+        return Mutations.register(_builder);
     }
 
     public void loadTreeData (JsonObject json) {
