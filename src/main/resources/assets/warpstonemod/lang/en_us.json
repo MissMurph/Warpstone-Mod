@@ -6,6 +6,8 @@
   "block.warpstonemod.warpstone_block": "Warpstone Block",
   "itemGroup.warpstone": "Warpstone",
 
+  "entity.warpstonemod.rat": "Rat",
+
   "mutation.screen.instability": "Instability",
   "mutation.screen.corruption": "Corruption",
   "warpstone.screen.generic.level": "Level:",
