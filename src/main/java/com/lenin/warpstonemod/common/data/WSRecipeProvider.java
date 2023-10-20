@@ -15,23 +15,25 @@ public class WSRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected void registerRecipes (Consumer<IFinishedRecipe> consumer){
+    protected void buildShapelessRecipes (Consumer<IFinishedRecipe> consumer){
         //WARPSTONE DUST
-        ShapelessRecipeBuilder.shapelessRecipe(WSItems.WARPSTONE_DUST, 1)
-                .addIngredient(WSItems.WARPSTONE_SHARD, 3)
-                .addCriterion("has_item", hasItem(WSItems.WARPSTONE_SHARD))
-                .build(consumer);
+        ShapelessRecipeBuilder.shapeless(WSItems.WARPSTONE_DUST, 1)
+                .requires(WSItems.WARPSTONE_SHARD, 3)
+                .unlockedBy("has_item", has(WSItems.WARPSTONE_SHARD))
+                .save(consumer);
 
         //WARPSTONE BLOCK
-        ShapelessRecipeBuilder.shapelessRecipe(WSBlocks.WARPSTONE_BLOCK, 1)
-                .addIngredient(WSItems.WARPSTONE_SHARD, 9)
-                .addCriterion("has_item", hasItem(WSItems.WARPSTONE_SHARD))
-                .build(consumer);
+        ShapelessRecipeBuilder.shapeless(WSBlocks.WARPSTONE_BLOCK, 1)
+                .requires(WSItems.WARPSTONE_SHARD, 9)
+                .unlockedBy("has_item", has(WSItems.WARPSTONE_SHARD))
+                .save(consumer);
 
         //WARPSTONE SHARD
-        ShapelessRecipeBuilder.shapelessRecipe(WSItems.WARPSTONE_SHARD, 9)
-                .addIngredient(WSBlocks.WARPSTONE_BLOCK, 1)
-                .addCriterion("has_item", hasItem(WSBlocks.WARPSTONE_BLOCK))
-                .build(consumer);
+        ShapelessRecipeBuilder.shapeless(WSItems.WARPSTONE_SHARD, 9)
+                .requires(WSBlocks.WARPSTONE_BLOCK, 1)
+                .unlockedBy("has_item", has(WSBlocks.WARPSTONE_BLOCK))
+                .save(consumer);
     }
+
+
 }

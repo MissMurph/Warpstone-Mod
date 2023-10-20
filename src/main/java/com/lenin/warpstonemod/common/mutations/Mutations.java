@@ -38,7 +38,7 @@ public class Mutations {
 			.addTag(MutationTags.COMMON));
 
 	public static final Mutation JUMP_BOOST = register(new PotionMutationBuilder(Warpstone.key("jump_boost"))
-			.addPotion(Effects.JUMP_BOOST)
+			.addPotion(Effects.JUMP)
 			.addCondition(HasMutationCondition.builder(Warpstone.key("weak_legs"), false).build())
 			.addTag(MutationTags.UNCOMMON));
 

@@ -29,16 +29,16 @@ public class WeakLungsMutation extends CounterMutation implements IMutationTick 
 				|| !containsInstance(player)
 		) return;
 
-		if (decrement(counterMap, player.getUniqueID())) {
-			if (player.areEyesInFluid(FluidTags.WATER)
-					&& !player.world.getBlockState(new BlockPos(player.getPosX(), player.getPosYEye(), player.getPosZ())).matchesBlock(Blocks.BUBBLE_COLUMN)
-					&& !EffectUtils.canBreatheUnderwater(player)
-					&& !player.abilities.disableDamage
+		if (decrement(counterMap, player.getUUID())) {
+			if (player.isEyeInFluid(FluidTags.WATER)
+					&& !player.level.getBlockState(new BlockPos(player.getX(), player.getEyeY(), player.getZ())).is(Blocks.BUBBLE_COLUMN)
+					&& !EffectUtils.hasWaterBreathing(player)
+					&& !player.abilities.invulnerable
 			) {
-				int air = player.getAir() - 1;
-				player.setAir(air);
+				int air = player.getAirSupply() - 1;
+				player.setAirSupply(air);
 			} else {
-				reset(counterMap, player.getUniqueID());
+				reset(counterMap, player.getUUID());
 			}
 		}
 	}

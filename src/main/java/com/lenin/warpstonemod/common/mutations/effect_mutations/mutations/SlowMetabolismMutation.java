@@ -19,12 +19,12 @@ public class SlowMetabolismMutation extends Mutation {
 
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
-				|| !event.getItem().getItem().isFood()
-				|| !instanceMap.containsKey(event.getEntityLiving().getUniqueID())
+				|| !event.getItem().getItem().isEdible()
+				|| !instanceMap.containsKey(event.getEntityLiving().getUUID())
 				|| event.getItem().getItem() instanceof MutateItem
 		) return;
 
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-		playerEntity.getFoodStats().addStats(-1, -2);
+		playerEntity.getFoodData().eat(-1, -2);
 	}
 }

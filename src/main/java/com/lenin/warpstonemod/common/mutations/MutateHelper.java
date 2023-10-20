@@ -27,12 +27,12 @@ public class MutateHelper {
     protected final static List<PlayerManager> MANAGERS = new ArrayList<>();
 
     public static PlayerManager getManager (LivingEntity entity) {
-        return getManager(entity.getUniqueID());
+        return getManager(entity.getUUID());
     }
 
     public static PlayerManager getManager (UUID playerUUID){
         for (PlayerManager m : MANAGERS) {
-            if (m.getParentEntity().getUniqueID() == playerUUID)
+            if (m.getParentEntity().getUUID() == playerUUID)
                 return m;
         }
         return null;
@@ -63,7 +63,7 @@ public class MutateHelper {
     public static void pushPlayerDataToClient(UUID playerUUID, CompoundNBT nbt){
         SyncPlayerDataPacket pkt = new SyncPlayerDataPacket(nbt);
         MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
-        PacketHandler.CHANNEL.sendToPlayer(server.getPlayerList().getPlayerByUUID(playerUUID), pkt);
+        PacketHandler.CHANNEL.sendToPlayer(server.getPlayerList().getPlayer(playerUUID), pkt);
     }
 
     public static void loadPlayerData (UUID playerUUID){
@@ -75,7 +75,7 @@ public class MutateHelper {
         } catch (Exception ignored) {}
 
         MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
-        PlayerManager manager = new PlayerManager(server.getPlayerList().getPlayerByUUID(playerUUID));
+        PlayerManager manager = new PlayerManager(server.getPlayerList().getPlayer(playerUUID));
         MANAGERS.add(manager);
 
         if (nbt != null) manager.loadFromNBT(nbt);

@@ -21,12 +21,12 @@ public class FrailBodyMutation extends Mutation {
 
 	public void onLivingDamge (LivingDamageEvent event){
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
-				|| !instanceMap.containsKey(event.getEntityLiving().getUniqueID())
-				|| event.getSource().getTrueSource() == null
+				|| !instanceMap.containsKey(event.getEntityLiving().getUUID())
+				|| event.getSource().getEntity() == null
 				|| !(Math.random() > 0.75f)
 		) return;
 
 		int ticks = Math.max(Math.round((float)Math.random() * 100), 20);
-		event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.POISON, ticks));
+		event.getEntityLiving().addEffect(new EffectInstance(Effects.POISON, ticks));
 	}
 }

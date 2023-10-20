@@ -26,14 +26,14 @@ public class BlindnessMutation extends Mutation {
 	public void clearMutation(PlayerManager manager) {
 		super.clearMutation(manager);
 
-		if (!manager.getParentEntity().world.isRemote()) return;
+		if (!manager.getParentEntity().level.isClientSide()) return;
 		if (instanceMap.containsKey(manager.getUniqueId())) instanceMap.remove(manager.getUniqueId());
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public void onRenderFog (EntityViewRenderEvent.FogDensity event) {
-		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
-				|| !instanceMap.containsKey(Minecraft.getInstance().player.getUniqueID())
+		if (!instanceMap.containsKey(Minecraft.getInstance().player.getUUID())
+				|| !instanceMap.containsKey(Minecraft.getInstance().player.getUUID())
 		) return;
 
 		float density = event.getDensity();
@@ -51,7 +51,7 @@ public class BlindnessMutation extends Mutation {
 	public MutationInstance putClientInstance() {
 		MutationInstance instance = new MutationInstance(MutateHelper.getClientManager());
 
-		instanceMap.put(Minecraft.getInstance().player.getUniqueID(), instance);
+		instanceMap.put(Minecraft.getInstance().player.getUUID(), instance);
 
 		return instance;
 	}

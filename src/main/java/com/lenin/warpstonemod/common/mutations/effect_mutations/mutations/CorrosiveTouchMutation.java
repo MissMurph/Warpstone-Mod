@@ -21,12 +21,12 @@ public class CorrosiveTouchMutation extends Mutation {
 	}
 
 	public void onLivingDamage (LivingDamageEvent event) {
-		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)
-				|| !instanceMap.containsKey(event.getSource().getTrueSource().getUniqueID())
+		if (!(event.getSource().getEntity() instanceof PlayerEntity)
+				|| !instanceMap.containsKey(event.getSource().getEntity().getUUID())
 				|| !Warpstone.getRandom().nextBoolean()
 		) return;
 
 		int ticks = Math.max(Math.round((float)Math.random() * 200f), 40);
-		event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.POISON, ticks));
+		event.getEntityLiving().addEffect(new EffectInstance(Effects.POISON, ticks));
 	}
 }

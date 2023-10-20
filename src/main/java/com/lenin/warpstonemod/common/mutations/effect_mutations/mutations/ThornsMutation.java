@@ -21,11 +21,11 @@ public class ThornsMutation extends EffectMutation {
 
 	public void onLivingDamage (LivingDamageEvent event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
-				|| event.getSource().getTrueSource() == null
+				|| event.getSource().getEntity() == null
 				|| !containsInstance(event.getEntityLiving())
 		) return;
 
 		float damage = event.getAmount() * 0.25f;
-		event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(event.getEntityLiving()), damage);
+		event.getSource().getEntity().hurt(DamageSource.thorns(event.getEntityLiving()), damage);
 	}
 }

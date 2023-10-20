@@ -27,23 +27,23 @@ public class WeakLiverMutation extends EffectMutation {
 	}
 
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event){
-		if (event.getEntityLiving().world.isRemote()
+		if (event.getEntityLiving().level.isClientSide()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !(event.getItem().getItem() instanceof PotionItem)
-				|| PotionUtils.getEffectsFromStack(event.getItem()).isEmpty()
+				|| PotionUtils.getCustomEffects(event.getItem()).isEmpty()
 				|| !containsInstance(event.getEntityLiving())
 		) return;
 
 		int ticks = (int) Math.max(200, Math.random() * 400);
-		event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.NAUSEA, ticks));
+		event.getEntityLiving().addEffect(new EffectInstance(Effects.CONFUSION, ticks));
 	}
 
 	@Override
 	public void clearMutation(PlayerManager manager) {
 		super.clearMutation(manager);
 
-		if (manager.getParentEntity().world.isRemote()) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
-		manager.getParentEntity().removePotionEffect(Effects.NAUSEA);
+		manager.getParentEntity().removeEffect(Effects.CONFUSION);
 	}
 }

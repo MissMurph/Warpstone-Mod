@@ -24,13 +24,13 @@ public class ClawsMutation extends Mutation implements IMutationTick {
 
 		ModifiableAttributeInstance attribute = player.getAttribute(Attributes.ATTACK_DAMAGE);
 
-		if (player.getHeldItemMainhand() == ItemStack.EMPTY && player.getHeldItemOffhand() == ItemStack.EMPTY) {
+		if (player.getMainHandItem() == ItemStack.EMPTY && player.getOffhandItem() == ItemStack.EMPTY) {
 			float bonusDamage = Math.min(10f, Math.round(3f + (7f * (1f - (Math.max(0, player.getHealth() - 5) / player.getMaxHealth())))));
 
 			if (attribute.getModifier(uuid) != null) {
 				if (attribute.getModifier(uuid).getAmount() != bonusDamage) {
 					attribute.removeModifier(uuid);
-					attribute.applyNonPersistentModifier(
+					attribute.addTransientModifier(
 							new AttributeModifier(
 									uuid,
 									name + ".damage.boost",
@@ -41,7 +41,7 @@ public class ClawsMutation extends Mutation implements IMutationTick {
 				}
 			}
 			else {
-				attribute.applyNonPersistentModifier(
+				attribute.addTransientModifier(
 						new AttributeModifier(
 								uuid,
 								name + ".damage.boost",

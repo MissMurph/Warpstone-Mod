@@ -22,7 +22,7 @@ public class UndeadMutation extends EffectMutation {
 
 	public void onPotionApplicable (PotionEvent.PotionApplicableEvent event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
-				|| !(event.getPotionEffect().getPotion() == Effects.POISON)
+				|| !(event.getPotionEffect().getEffect() == Effects.POISON)
 				|| !containsInstance(event.getEntityLiving())
 		) return;
 

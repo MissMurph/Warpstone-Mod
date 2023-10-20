@@ -54,12 +54,12 @@ public class HydrophilicMutation extends CounterMutation implements IMutationTic
 				|| !containsInstance(player)
 			) return;
 
-		if (player.isInWaterRainOrBubbleColumn()) {
-			if (decrement(counterMap, player.getUniqueID())) {
-				player.getFoodStats().addStats(1, 0);
+		if (player.isInWaterOrRain()) {
+			if (decrement(counterMap, player.getUUID())) {
+				player.getFoodData().eat(1, 0);
 			}
 		}
-		else reset(counterMap, player.getUniqueID());
+		else reset(counterMap, player.getUUID());
 	}
 
 	public void onItemUseStart (PlayerInteractEvent.RightClickItem event) {
@@ -67,12 +67,12 @@ public class HydrophilicMutation extends CounterMutation implements IMutationTic
 				|| !containsInstance(event.getEntityLiving())
 			) return;
 
-		if (event.getItemStack().isFood()) {
+		if (event.getItemStack().isEdible()) {
 			event.setCanceled(true);
 			return;
 		}
 
-		if (legalPotions.contains(PotionUtils.getPotionFromItem(event.getItemStack())) && ((PlayerEntity) event.getEntityLiving()).getFoodStats().getFoodLevel() == 20) {
+		if (legalPotions.contains(PotionUtils.getPotion(event.getItemStack())) && ((PlayerEntity) event.getEntityLiving()).getFoodData().getFoodLevel() == 20) {
 			event.setCanceled(true);
 		}
 	}
@@ -82,15 +82,15 @@ public class HydrophilicMutation extends CounterMutation implements IMutationTic
 	 */
 
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
-		if (event.getEntityLiving().world.isRemote
+		if (event.getEntityLiving().level.isClientSide()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
 				|| !(event.getItem().getItem() instanceof PotionItem)
-				|| !legalPotions.contains(PotionUtils.getPotionFromItem(event.getItem()))
+				|| !legalPotions.contains(PotionUtils.getPotion(event.getItem()))
 		) return;
 
-		int foodValue = 4 - legalPotions.indexOf(PotionUtils.getPotionFromItem(event.getItem()));
+		int foodValue = 4 - legalPotions.indexOf(PotionUtils.getPotion(event.getItem()));
 
-		((PlayerEntity) event.getEntityLiving()).getFoodStats().addStats(foodValue, 1);
+		((PlayerEntity) event.getEntityLiving()).getFoodData().eat(foodValue, 1);
 	}
 }

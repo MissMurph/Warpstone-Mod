@@ -13,7 +13,7 @@ public class WSTags {
         public static final ITag.INamedTag<Block> STORAGE_BLOCKS_WARPSTONE = forge("storage_blocks/warpstone");
 
         private static ITag.INamedTag<Block> forge(String path){
-            return BlockTags.makeWrapperTag(new ResourceLocation("forge", path).toString());
+            return BlockTags.bind(new ResourceLocation("forge", path).toString());
         }
     }
 
@@ -25,7 +25,7 @@ public class WSTags {
         public static final ITag.INamedTag<Item> DUSTS_WARPSTONE = forge("dusts/warpstone");
 
         private static ITag.INamedTag<Item> forge(String path) {
-            return ItemTags.makeWrapperTag(new ResourceLocation("forge", path).toString());
+            return ItemTags.bind(new ResourceLocation("forge", path).toString());
         }
     }
 }

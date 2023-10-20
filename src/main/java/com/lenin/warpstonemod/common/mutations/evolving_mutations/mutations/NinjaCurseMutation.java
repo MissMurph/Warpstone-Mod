@@ -37,7 +37,7 @@ public class NinjaCurseMutation extends EvolvingMutation {
     public void applyMutation(PlayerManager manager) {
         super.applyMutation(manager);
 
-        if (manager.getParentEntity().world.isRemote()) return;
+        if (manager.getParentEntity().level.isClientSide()) return;
 
         EvolvingMutationInstance instance = (EvolvingMutationInstance) getInstance(manager.getUniqueId());
 
@@ -45,15 +45,15 @@ public class NinjaCurseMutation extends EvolvingMutation {
     }
 
     private void onLivingFall (LivingFallEvent event) {
-        if (event.getEntityLiving().world.isRemote()
+        if (event.getEntityLiving().level.isClientSide()
                 || !(event.getEntityLiving() instanceof PlayerEntity)
                 || !containsInstance(event.getEntityLiving())
-                || TREE.getCurrentNode(event.getEntityLiving().getUniqueID()).getParent().equals(CHILD_GIFT)
+                || TREE.getCurrentNode(event.getEntityLiving().getUUID()).getParent().equals(CHILD_GIFT)
         ) return;
 
         EvolvingMutationInstance instance = (EvolvingMutationInstance) getInstance(event.getEntityLiving());
 
-        int value = ((IntNBT)instance.readData("fall_blocks")).getInt();
+        int value = ((IntNBT)instance.readData("fall_blocks")).getAsInt();
         if (value < BLOCKS_TO_FALL) {
             instance.writeData("fall_blocks", IntNBT.valueOf(Math.min(BLOCKS_TO_FALL, value  + Math.round(event.getDistance()))));
         }

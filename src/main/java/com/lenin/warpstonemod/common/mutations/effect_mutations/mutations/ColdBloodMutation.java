@@ -56,21 +56,21 @@ public class ColdBloodMutation extends CounterMutation implements IMutationTick 
                 || !containsInstance(player)
         ) return;
 
-        if (LEGAL_BIOMES.contains(player.world.getBiome(player.getPosition()))) {
-            if (decrement(counterMap, player.getUniqueID())) {
-                player.addPotionEffect(new EffectInstance(
+        if (LEGAL_BIOMES.contains(player.level.getBiome(player.blockPosition()))) {
+            if (decrement(counterMap, player.getUUID())) {
+                player.addEffect(new EffectInstance(
                         Effects.REGENERATION,
                         20
                 ));
             }
         }
-        else if (ILLEGAL_BIOMES.contains(player.world.getBiome(player.getPosition()))) {
-            if (decrement(counterMap, player.getUniqueID())) {
-                player.getFoodStats().setFoodLevel(player.getFoodStats().getFoodLevel() - 1);
+        else if (ILLEGAL_BIOMES.contains(player.level.getBiome(player.blockPosition()))) {
+            if (decrement(counterMap, player.getUUID())) {
+                player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() - 1);
             }
         }
         else {
-            reset(counterMap, player.getUniqueID());
+            reset(counterMap, player.getUUID());
         }
     }
 

@@ -43,35 +43,35 @@ public class PotassiumMutation extends CounterMutation implements IMutationTick 
 				|| !containsInstance(player)
 			) return;
 
-		if (player.isInWaterRainOrBubbleColumn()) {
-			if (decrement(counterMap, player.getUniqueID())) {
-				player.world.createExplosion(
+		if (player.isInWaterOrRain()) {
+			if (decrement(counterMap, player.getUUID())) {
+				player.level.explode(
 						player,
-						player.getPosX(),
-						player.getPosYHeight(0.0625D),
-						player.getPosZ(),
+						player.getX(),
+						player.getY(0.0625D),
+						player.getZ(),
 						6f,
 						Explosion.Mode.BREAK
 				);
 			}
-		} else reset(counterMap, player.getUniqueID());
+		} else reset(counterMap, player.getUUID());
 	}
 
 	public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
-		if (event.getEntityLiving().world.isRemote()
+		if (event.getEntityLiving().level.isClientSide()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
 				|| !(event.getItem().getItem() instanceof PotionItem)
-				|| !legalPotions.contains(PotionUtils.getPotionFromItem(event.getItem()))
+				|| !legalPotions.contains(PotionUtils.getPotion(event.getItem()))
 			) return;
 
 		LivingEntity entity = event.getEntityLiving();
 
-		entity.world.createExplosion(
+		entity.level.explode(
 				null,
-				entity.getPosX(),
-				entity.getPosYHeight(0.0625D),
-				entity.getPosZ(),
+				entity.getX(),
+				entity.getY(0.0625D),
+				entity.getZ(),
 				6f,
 				Explosion.Mode.BREAK
 		);

@@ -12,9 +12,9 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 public class WarpstoneWorldGen {
     private static final ConfiguredFeature<?,?> WARPSTONE_GEN = registerOre(
             "warpstone_ore",
-            Feature.ORE.withConfiguration(new OreFeatureConfig(
-                            OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                            WSBlocks.WARPSTONE_ORE.getDefaultState(),
+            Feature.ORE.configured(new OreFeatureConfig(
+                            OreFeatureConfig.FillerBlockType.NATURAL_STONE,
+                            WSBlocks.WARPSTONE_ORE.defaultBlockState(),
                             4))
                     .range(64)
                     .count(16)
@@ -22,9 +22,9 @@ public class WarpstoneWorldGen {
 
     private static final ConfiguredFeature<?,?> WARPSTONE_GEN_DEEP = registerOre(
             "warpstone_ore",
-            Feature.ORE.withConfiguration(new OreFeatureConfig(
-                            OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD,
-                            WSBlocks.WARPSTONE_ORE.getDefaultState(),
+            Feature.ORE.configured(new OreFeatureConfig(
+                            OreFeatureConfig.FillerBlockType.NATURAL_STONE,
+                            WSBlocks.WARPSTONE_ORE.defaultBlockState(),
                             6))
                     .range(16)
                     .count(10)
@@ -35,8 +35,8 @@ public class WarpstoneWorldGen {
     }
 
     public static void onBiomeLoading(BiomeLoadingEvent event) {
-        event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, WARPSTONE_GEN);
-        event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, WARPSTONE_GEN_DEEP);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, WARPSTONE_GEN);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, WARPSTONE_GEN_DEEP);
     }
 
     public static void init(){}

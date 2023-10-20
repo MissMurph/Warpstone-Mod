@@ -26,22 +26,22 @@ public class StrengthMutation extends Mutation {
 	 */
 
 	public void onKnockBack (LivingDamageEvent event) {
-		if (!(event.getSource().getTrueSource() instanceof PlayerEntity)
-				|| !containsInstance((LivingEntity) event.getSource().getTrueSource())
+		if (!(event.getSource().getEntity() instanceof PlayerEntity)
+				|| !containsInstance((LivingEntity) event.getSource().getEntity())
 		) return;
 
-		LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+		LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
 		LivingEntity entity = event.getEntityLiving();
 
 		//This is to determine the angle of the knockback, d1 & d0 reflect the x and z direction of the knockback
 
-		double d1 = attacker.getPosX() - entity.getPosX();
+		double d1 = attacker.getX() - entity.getX();
 		double d0;
 
-		for(d0 = attacker.getPosZ() - entity.getPosZ(); d1 * d1 + d0 * d0 < 1.0E-4D; d0 = (Math.random() - Math.random()) * 0.01D) {
+		for(d0 = attacker.getZ() - entity.getZ(); d1 * d1 + d0 * d0 < 1.0E-4D; d0 = (Math.random() - Math.random()) * 0.01D) {
 			d1 = (Math.random() - Math.random()) * 0.01D;
 		}
 
-		entity.applyKnockback(0.4F, d1, d0);
+		entity.knockback(0.4F, d1, d0);
 	}
 }

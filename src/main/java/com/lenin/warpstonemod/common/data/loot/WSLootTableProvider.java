@@ -46,8 +46,8 @@ public class WSLootTableProvider extends LootTableProvider {
         protected void addTables (){
             dropSelf(WSBlocks.WARPSTONE_BLOCK);
 
-            add(WSBlocks.WARPSTONE_ORE, (warpstoneOre) -> dropWhenSilkTouch(warpstoneOre,
-                    withExplosionDecay(warpstoneOre, ItemLootEntry.lootTableItem(WSItems.WARPSTONE_SHARD)
+            add(WSBlocks.WARPSTONE_ORE, (warpstoneOre) -> createSilkTouchDispatchTable(warpstoneOre,
+                    applyExplosionDecay(warpstoneOre, ItemLootEntry.lootTableItem(WSItems.WARPSTONE_SHARD)
                             .apply(SetCount.setCount(RandomValueRange.between(1.0F, 3.0F)))
                             .apply(ApplyBonus.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
                     )

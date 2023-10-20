@@ -41,12 +41,12 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
                 || !containsInstance(player)
         ) return;
 
-        if (!player.isPotionActive(WSEffects.WOOL)) {
+        if (!player.hasEffect(WSEffects.WOOL)) {
             int bonus = 0;
-            if (bonusMap.containsKey(player.getUniqueID())) bonus = bonusMap.get(player.getUniqueID());
+            if (bonusMap.containsKey(player.getUUID())) bonus = bonusMap.get(player.getUUID());
             int duration = bonus >= 9 ? 72000 : 1200;
 
-            player.addPotionEffect(new EffectInstance(
+            player.addEffect(new EffectInstance(
                     WSEffects.WOOL,
                     duration,
                     bonus,
@@ -57,61 +57,61 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     }
 
     public void onPotionRemove(PotionEvent.PotionRemoveEvent event) {
-        if (event.getEntityLiving().world.isRemote()
+        if (event.getEntityLiving().level.isClientSide()
                 || event.getPotion() != WSEffects.WOOL
                 || !containsInstance(event.getEntityLiving())
         ) return;
 
-        if (!removeList.contains(event.getEntityLiving().getUniqueID())) {
+        if (!removeList.contains(event.getEntityLiving().getUUID())) {
             event.setCanceled(true);
         }
-        else removeList.remove(event.getEntityLiving().getUniqueID());
+        else removeList.remove(event.getEntityLiving().getUUID());
     }
 
     public void onPotionExpiry (PotionEvent.PotionExpiryEvent event) {
-        if (event.getEntityLiving().world.isRemote()
-                || event.getPotionEffect().getPotion() != WSEffects.WOOL
+        if (event.getEntityLiving().level.isClientSide
+                || event.getPotionEffect().getEffect() != WSEffects.WOOL
                 || !containsInstance(event.getEntityLiving())
         ) return;
 
-        if (event.getPotionEffect().getAmplifier() < 9) bonusMap.put(event.getEntityLiving().getUniqueID(), event.getPotionEffect().getAmplifier() + 1);
+        if (event.getPotionEffect().getAmplifier() < 9) bonusMap.put(event.getEntityLiving().getUUID(), event.getPotionEffect().getAmplifier() + 1);
     }
 
     public void onItemRightClick (PlayerInteractEvent.RightClickItem event) {
         if (event.getItemStack().getItem() != Items.SHEARS
                 || !containsInstance(event.getEntityLiving())
-                || event.getEntityLiving().getActivePotionEffect(WSEffects.WOOL).getAmplifier() < 1
+                || event.getEntityLiving().getEffect(WSEffects.WOOL).getAmplifier() < 1
         ) return;
 
         PlayerEntity player = event.getPlayer();
 
-        if (event.getWorld().isRemote()) player.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1f, 1f);
-        event.getWorld().playSound(player, player.getPosition(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL, 1f, 1f);
+        if (event.getWorld().isClientSide()) player.playSound(SoundEvents.SHEEP_SHEAR, 1f, 1f);
+        event.getWorld().playSound(player, player.blockPosition(), SoundEvents.SHEEP_SHEAR, SoundCategory.NEUTRAL, 1f, 1f);
 
-        int amount = event.getEntityLiving().getActivePotionEffect(WSEffects.WOOL).getAmplifier() + 1;
+        int amount = event.getEntityLiving().getEffect(WSEffects.WOOL).getAmplifier() + 1;
 
         ItemEntity entity = new ItemEntity(
                 event.getWorld(),
-                player.getPosX(),
-                player.getPosY(),
-                player.getPosZ(),
+                player.getX(),
+                player.getY(),
+                player.getZ(),
                 new ItemStack(Items.WHITE_WOOL.getItem(), amount)
         );
 
-        event.getWorld().addEntity(entity);
+        event.getWorld().addFreshEntity(entity);
 
-        removeList.add(player.getUniqueID());
-        bonusMap.remove(player.getUniqueID());
-        player.removePotionEffect(WSEffects.WOOL);
+        removeList.add(player.getUUID());
+        bonusMap.remove(player.getUUID());
+        player.removeEffect(WSEffects.WOOL);
     }
 
     @Override
     public void applyMutation(PlayerManager manager) {
         super.applyMutation(manager);
 
-        if (manager.getParentEntity().world.isRemote()) return;
+        if (manager.getParentEntity().level.isClientSide()) return;
 
-        manager.getParentEntity().addPotionEffect(new EffectInstance(
+        manager.getParentEntity().addEffect(new EffectInstance(
                 WSEffects.WOOL,
                 1200,
                 0,
@@ -124,11 +124,11 @@ public class WoolMutation extends EffectMutation implements IMutationTick {
     public void clearMutation(PlayerManager manager) {
         super.clearMutation(manager);
 
-        if (manager.getParentEntity().world.isRemote() && !manager.getParentEntity().isPotionActive(WSEffects.WOOL)) return;
+        if (manager.getParentEntity().level.isClientSide() && !manager.getParentEntity().hasEffect(WSEffects.WOOL)) return;
 
         removeList.add(manager.getUniqueId());
 
-        manager.getParentEntity().removePotionEffect(WSEffects.WOOL);
+        manager.getParentEntity().removeEffect(WSEffects.WOOL);
         bonusMap.remove(manager.getUniqueId());
     }
 }

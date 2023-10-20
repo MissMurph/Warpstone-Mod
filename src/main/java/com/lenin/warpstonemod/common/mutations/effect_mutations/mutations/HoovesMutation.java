@@ -24,10 +24,10 @@ public class HoovesMutation extends Mutation implements IMutationTick {
 
 		ModifiableAttributeInstance instance = player.getAttribute(Attributes.MOVEMENT_SPEED);
 
-		if (player.isSprinting() && player.getHeldItemMainhand() == ItemStack.EMPTY && player.getHeldItemOffhand() == ItemStack.EMPTY) {
+		if (player.isSprinting() && player.getMainHandItem() == ItemStack.EMPTY && player.getOffhandItem() == ItemStack.EMPTY) {
 			if (instance.getModifier(uuid) != null) return;
 
-			instance.applyNonPersistentModifier(
+			instance.addTransientModifier(
 					new AttributeModifier(
 							uuid,
 							name + ".speed.boost",

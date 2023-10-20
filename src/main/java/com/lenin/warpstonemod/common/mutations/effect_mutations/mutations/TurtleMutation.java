@@ -25,36 +25,36 @@ public class TurtleMutation extends EffectMutation {
 	public void onLivingAttack (LivingAttackEvent event) {
 		//This event is fired BEFORE damage is applied so we can't change any modifiers to damage for the attacker
 
-		if (event.getEntityLiving().world.isRemote()
+		if (event.getEntityLiving().level.isClientSide()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !containsInstance(event.getEntityLiving())
 			) return;
 
-		if (event.getEntityLiving().isActiveItemStackBlocking() && !event.getEntityLiving().isPotionActive(WSEffects.TURTLE)) {
-			event.getEntityLiving().getAttribute(Attributes.ATTACK_DAMAGE).applyNonPersistentModifier(new AttributeModifier(
+		if (event.getEntityLiving().isBlocking() && !event.getEntityLiving().hasEffect(WSEffects.TURTLE)) {
+			event.getEntityLiving().getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(new AttributeModifier(
 					uuid,
 					name + ".damage.boost",
 					1.0f,
 					AttributeModifier.Operation.MULTIPLY_TOTAL
 			));
 
-			event.getEntityLiving().addPotionEffect(new EffectInstance(WSEffects.TURTLE, 72000, 0, false, false, true));
+			event.getEntityLiving().addEffect(new EffectInstance(WSEffects.TURTLE, 72000, 0, false, false, true));
 		}
 	}
 
 	public void onLivingDamage (LivingDamageEvent event) {
 		//This event is fired AFTER damage is applied, so we remove the damage modifier here
 
-		if (event.getEntityLiving().world.isRemote()
-				|| !(event.getSource().getTrueSource() instanceof PlayerEntity)
-				|| !containsInstance(event.getSource().getTrueSource().getUniqueID())
+		if (event.getEntityLiving().level.isClientSide()
+				|| !(event.getSource().getEntity() instanceof PlayerEntity)
+				|| !containsInstance(event.getSource().getEntity().getUUID())
 		) return;
 
-		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
+		PlayerEntity player = (PlayerEntity) event.getSource().getEntity();
 
-		if (player.isPotionActive(WSEffects.TURTLE)) {
+		if (player.hasEffect(WSEffects.TURTLE)) {
 			player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(uuid);
-			player.removePotionEffect(WSEffects.TURTLE);
+			player.removeEffect(WSEffects.TURTLE);
 		}
 	}
 }

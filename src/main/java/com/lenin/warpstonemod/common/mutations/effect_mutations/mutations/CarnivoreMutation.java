@@ -13,28 +13,28 @@ public class CarnivoreMutation extends HerbivoreMutation {
 
     @Override
     public void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
-        if (event.getEntityLiving().world.isRemote()
+        if (event.getEntityLiving().level.isClientSide()
                 || !(event.getEntityLiving() instanceof PlayerEntity)
-                || !event.getItem().isFood()
+                || !event.getItem().isEdible()
                 || !containsInstance(event.getEntityLiving())
         ) return;
 
-        Food food = event.getItem().getItem().getFood();
+        Food food = event.getItem().getItem().getFoodProperties();
 
         if (MEAT_FOOD.contains(food) || food.isMeat()) {
-            float hunger = food.getHealing() * 0.25f;
-            float saturation = food.getSaturation() * 0.25f;
+            float hunger = food.getNutrition() * 0.25f;
+            float saturation = food.getSaturationModifier() * 0.25f;
 
             PlayerEntity player = (PlayerEntity)event.getEntityLiving();
-            player.getFoodStats().addStats(Math.round(hunger), saturation);
+            player.getFoodData().eat(Math.round(hunger), saturation);
         }
 
         if (VEGE_FOOD.contains(food) || !food.isMeat()) {
-            float hunger = food.getHealing() * 0.25f;
-            float saturation = food.getSaturation() * 0.25f;
+            float hunger = food.getNutrition() * 0.25f;
+            float saturation = food.getSaturationModifier() * 0.25f;
 
             PlayerEntity player = (PlayerEntity)event.getEntityLiving();
-            player.getFoodStats().addStats(-Math.round(hunger), -saturation);
+            player.getFoodData().eat(-Math.round(hunger), -saturation);
         }
     }
 }

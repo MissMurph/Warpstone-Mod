@@ -27,7 +27,8 @@ public class RatEntity extends CreatureEntity {
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return RatEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 2.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.5D);
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                .add(Attributes.FOLLOW_RANGE, 10.0f);
     }
 
     @Override

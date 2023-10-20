@@ -39,9 +39,9 @@ public class FireBreathingMutation extends CounterMutation implements IMutationT
 				|| !containsInstance(player)
 		) return;
 
-		if (decrement(counterMap, player.getUniqueID())) {
+		if (decrement(counterMap, player.getUUID())) {
 			canHeal = true;
-			counterMap.put(player.getUniqueID(), INTERVAL);
+			counterMap.put(player.getUUID(), INTERVAL);
 		}
 	}
 

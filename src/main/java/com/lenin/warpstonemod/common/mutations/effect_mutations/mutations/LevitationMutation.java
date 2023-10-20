@@ -20,12 +20,12 @@ public class LevitationMutation extends CounterMutation implements IMutationTick
 	@Override
 	public void mutationTick(PlayerEntity player, LogicalSide side) {
 		if (side == LogicalSide.CLIENT
-				|| !instanceMap.containsKey(player.getUniqueID())
+				|| !instanceMap.containsKey(player.getUUID())
 		) return;
 
-		if (decrement(counterMap, player.getUniqueID()) && Warpstone.getRandom().nextInt(100) >= 90) {
+		if (decrement(counterMap, player.getUUID()) && Warpstone.getRandom().nextInt(100) >= 90) {
 			int duration = 20 + Warpstone.getRandom().nextInt(100);
-			player.addPotionEffect(new EffectInstance(Effects.LEVITATION, duration));
+			player.addEffect(new EffectInstance(Effects.LEVITATION, duration));
 		}
 	}
 
@@ -33,8 +33,8 @@ public class LevitationMutation extends CounterMutation implements IMutationTick
 	public void clearMutation(PlayerManager manager) {
 		super.clearMutation(manager);
 
-		if (manager.getParentEntity().world.isRemote()) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
-		manager.getParentEntity().removePotionEffect(Effects.LEVITATION);
+		manager.getParentEntity().removeEffect(Effects.LEVITATION);
 	}
 }

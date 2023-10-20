@@ -36,17 +36,17 @@ public class ScarringMutation extends CounterMutation implements IMutationTick {
 				|| !containsInstance(player)
 			) return;
 
-		if (decrement(counterMap, player.getUniqueID())) {
+		if (decrement(counterMap, player.getUUID())) {
 			applyEffect(player);
 		}
 	}
 
 	public void onLivingDamage (LivingDamageEvent event) {
-		if (event.getEntityLiving().world.isRemote()
+		if (event.getEntityLiving().level.isClientSide()
 				|| !containsInstance(event.getEntityLiving())
 			) return;
 
-		UUID playerUUID = event.getEntityLiving().getUniqueID();
+		UUID playerUUID = event.getEntityLiving().getUUID();
 
 		int bonus = Math.min(7, Math.round(bonusMap.get(playerUUID) + (event.getAmount() / 2f)));
 		bonusMap.put(playerUUID, bonus);
@@ -60,9 +60,9 @@ public class ScarringMutation extends CounterMutation implements IMutationTick {
 	}
 
 	private void applyEffect (LivingEntity entity) {
-		entity.addPotionEffect(new EffectInstance(
+		entity.addEffect(new EffectInstance(
 				Effects.REGENERATION,
-				60 + (bonusMap.get(entity.getUniqueID()) * 20)
+				60 + (bonusMap.get(entity.getUUID()) * 20)
 		));
 	}
 
@@ -70,7 +70,7 @@ public class ScarringMutation extends CounterMutation implements IMutationTick {
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.getParentEntity().world.isRemote()) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
 		bonusMap.put(manager.getUniqueId(), 0);
 	}
@@ -79,7 +79,7 @@ public class ScarringMutation extends CounterMutation implements IMutationTick {
 	public void clearMutation(PlayerManager manager) {
 		super.clearMutation(manager);
 
-		if (manager.getParentEntity().world.isRemote()) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
 		bonusMap.remove(manager.getUniqueId());
 	}

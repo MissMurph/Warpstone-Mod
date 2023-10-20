@@ -37,15 +37,15 @@ public class IronGutMutation extends Mutation {
 				|| !containsInstance(event.getEntityLiving())
 		) return;
 
-		List<Effect> effects = event.getItem().getItem().getFood().getEffects()
+		List<Effect> effects = event.getItem().getItem().getFoodProperties().getEffects()
 				.stream()
 				.map(Pair::getFirst)
-				.map(EffectInstance::getPotion)
-				.filter(effect -> effect.getEffectType() == EffectType.HARMFUL)
+				.map(EffectInstance::getEffect)
+				.filter(effect -> effect.getCategory() == EffectType.HARMFUL)
 				.collect(Collectors.toList());
 
 		effects.forEach(effect -> {
-			event.getEntityLiving().removePotionEffect(effect);
+			event.getEntityLiving().removeEffect(effect);
 		});
 	}
 }

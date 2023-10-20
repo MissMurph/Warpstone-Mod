@@ -18,7 +18,7 @@ public class ChooseOptionalPacket extends WSPacket<ChooseOptionalPacket> {
 
     public ChooseOptionalPacket (UUID _uuid, ResourceLocation _parent, ResourceLocation _target) {
         data = new CompoundNBT();
-        data.putUniqueId("player", _uuid);
+        data.putUUID("player", _uuid);
         data.putString("parent", _parent.toString());
         data.putString("target", _target.toString());
     }
@@ -48,7 +48,7 @@ public class ChooseOptionalPacket extends WSPacket<ChooseOptionalPacket> {
             public void handle(ChooseOptionalPacket packet, NetworkEvent.Context context, LogicalSide side) {
                 if (side.isServer()) {
                     context.enqueueWork(() -> {
-                        UUID player = data.getUniqueId("player");
+                        UUID player = data.getUUID("player");
                         ResourceLocation parent = new ResourceLocation(data.getString("parent"));
                         ResourceLocation target = new ResourceLocation(data.getString("target"));
 

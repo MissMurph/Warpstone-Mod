@@ -41,7 +41,7 @@ public class ExplosiveMutation extends Mutation {
 				|| !containsInstance(event.getEntityLiving())
 		) return;
 
-		event.getEntityLiving().attackEntityFrom(DamageSource.ON_FIRE, 1f);
+		event.getEntityLiving().hurt(DamageSource.ON_FIRE, 1f);
 	}
 
 	public void onLivingDeath (LivingDeathEvent event) {
@@ -51,6 +51,6 @@ public class ExplosiveMutation extends Mutation {
 
 		LivingEntity entity = event.getEntityLiving();
 
-		entity.world.createExplosion(entity, entity.getPosX(), entity.getPosYHeight(0.0625D), entity.getPosZ(), 4.0F, Explosion.Mode.BREAK);
+		entity.level.explode(entity, entity.getX(), entity.getY(0.0625D), entity.getZ(), 4.0F, Explosion.Mode.BREAK);
 	}
 }

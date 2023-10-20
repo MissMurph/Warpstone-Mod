@@ -32,8 +32,8 @@ public class StrongLegsMutation extends Mutation {
 		) return;
 
 		if (event.getEntityLiving().isSprinting()) {
-			Vector3d v = event.getEntityLiving().getLookVec();
-			event.getEntityLiving().applyKnockback(0.7f, -v.x, -v.z);
+			Vector3d v = event.getEntityLiving().getLookAngle();
+			event.getEntityLiving().knockback(0.7f, -v.x, -v.z);
 		}
 	}
 }

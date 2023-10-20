@@ -13,17 +13,17 @@ import java.util.function.Supplier;
 
 public class WSBlocks {
 	public static final Block WARPSTONE_ORE = registerBlock("warpstone_ore", () -> new Block(AbstractBlock.Properties
-			.create(Material.ROCK)
-			.setRequiresTool()
+			.of(Material.STONE)
+			.requiresCorrectToolForDrops()
 			.harvestLevel(2)
 			.harvestTool(ToolType.PICKAXE)
-			.hardnessAndResistance(3,3)
+			.strength(3,3)
 	));
 
 	public static final Block WARPSTONE_BLOCK = registerBlock("warpstone_block", () -> new Block(AbstractBlock.Properties
-			.create(Material.IRON)
-			.setRequiresTool()
-			.hardnessAndResistance(5,6)
+			.of(Material.METAL)
+			.requiresCorrectToolForDrops()
+			.strength(5,6)
 			.sound(SoundType.METAL)
 	));
 
@@ -34,7 +34,7 @@ public class WSBlocks {
 
 	public static Block registerBlock(String name, Supplier<Block> block) {
 		Block ref = blockRegistry(name, block);
-		Warpstone.getProxy().getRegistration().register(new BlockItem(ref, new Item.Properties().group(Warpstone.MOD_GROUP)).setRegistryName(name));
+		Warpstone.getProxy().getRegistration().register(new BlockItem(ref, new Item.Properties().tab(Warpstone.MOD_GROUP)).setRegistryName(name));
 		return ref;
 	}
 
