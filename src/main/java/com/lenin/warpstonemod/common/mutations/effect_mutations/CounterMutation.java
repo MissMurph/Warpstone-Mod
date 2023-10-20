@@ -43,7 +43,7 @@ public class CounterMutation extends Mutation {
     public MutationInstance constructInstance(PlayerManager manager) {
         MutationInstance instance = super.constructInstance(manager);
 
-        if (manager.getParentEntity().world.isRemote) return instance;
+        if (manager.getParentEntity().level.isClientSide()) return instance;
 
         counterMap.put(manager.getUniqueId(), INTERVAL);
 
@@ -54,7 +54,7 @@ public class CounterMutation extends Mutation {
     public void clearMutation(PlayerManager manager) {
         super.clearMutation(manager);
 
-        if (manager.getParentEntity().world.isRemote) return;
+        if (manager.getParentEntity().level.isClientSide()) return;
 
         counterMap.remove(manager.getUniqueId());
     }

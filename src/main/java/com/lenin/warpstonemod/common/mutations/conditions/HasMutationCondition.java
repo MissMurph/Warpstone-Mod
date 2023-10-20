@@ -34,8 +34,8 @@ public class HasMutationCondition implements IMutationCondition {
     @Override
     public ITextComponent getTooltip() {
         return new TranslationTextComponent("condition." + resource.getPath())
-                .appendString(": ")
-                .appendSibling(Mutations.getMutation(mutationKey).getMutationName());
+                .append(": ")
+                .append(Mutations.getMutation(mutationKey).getMutationName());
     }
 
     public static IMutationCondition.IBuilder builder (ResourceLocation _key, boolean _test) {

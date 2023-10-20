@@ -31,14 +31,14 @@ public class MutateItem extends Item {
 
     public MutateItem() {
         super(new Item.Properties()
-                .group(Warpstone.MOD_GROUP)
+                .tab(Warpstone.MOD_GROUP)
                 .food(WSFoods.MUTATE_ITEM)
         );
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
-        if (worldIn.isRemote()) return super.onItemUseFinish(stack, worldIn, entity);
+    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entity) {
+        if (worldIn.isClientSide()) return super.finishUsingItem(stack, worldIn, entity);
 
         PlayerManager m = MutateHelper.getManager(entity);
 
@@ -46,12 +46,12 @@ public class MutateItem extends Item {
 
         m.mutate(this);
 
-        return super.onItemUseFinish(stack, worldIn, entity);
+        return super.finishUsingItem(stack, worldIn, entity);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         if (worldIn == null) return;
 
         PlayerManager m = MutateHelper.getClientManager();
@@ -64,10 +64,12 @@ public class MutateItem extends Item {
         df.setRoundingMode(RoundingMode.CEILING);
 
         tooltip.add(text
-                .appendSibling(new StringTextComponent(" "))
-                .appendSibling(new StringTextComponent(df.format(chance) + "%")
-                        .mergeStyle(color)));
+                .append(new StringTextComponent(" "))
+                .append(new StringTextComponent(df.format(chance) + "%")
+                        .withStyle(color)));
     }
+
+
 
     public void loadData (JsonObject json) {
 

@@ -2,10 +2,7 @@ package com.lenin.warpstonemod.common.entities;
 
 import com.lenin.warpstonemod.common.items.WSItems;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -23,22 +20,14 @@ import javax.annotation.Nullable;
 
 public class RatEntity extends CreatureEntity {
 
-    public RatEntity(World worldIn) {
-        super(WSEntityTypes.RAT, worldIn);
-    }
-
     public RatEntity(EntityType<? extends CreatureEntity> entity, World worldIn) {
         super(entity, worldIn);
     }
 
-    public static EntityType.IFactory<RatEntity> factory() {
-        return (type, world) -> new RatEntity(world);
-    }
-
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
-        return RatEntity.func_233666_p_()
-                .createMutableAttribute(Attributes.MAX_HEALTH, 2.0D)
-                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.5D);
+        return RatEntity.createLivingAttributes()
+                .add(Attributes.MAX_HEALTH, 2.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.5D);
     }
 
     @Override
@@ -47,35 +36,33 @@ public class RatEntity extends CreatureEntity {
 
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.5D));
-        this.goalSelector.addGoal(2, new TemptGoal(this, 1.1D, Ingredient.fromItems(WSItems.HUMAN_MEAT), true));
+        this.goalSelector.addGoal(2, new TemptGoal(this, 1.1D, Ingredient.of(WSItems.HUMAN_MEAT), true));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1.8D));
         this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
     }
 
     @Override
-    protected int getExperiencePoints(PlayerEntity player) {
-        return 1 + this.world.rand.nextInt(2);
+    protected int getExperienceReward(PlayerEntity player) {
+        return 1 + this.level.random.nextInt(2);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_BAT_AMBIENT;
+        return SoundEvents.BAT_AMBIENT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_BAT_DEATH;
+        return SoundEvents.BAT_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_BAT_HURT;
+        return SoundEvents.BAT_HURT;
     }
 
     @Override
     protected void playStepSound(BlockPos p_180429_1_, BlockState p_180429_2_) {
-        this.playSound(SoundEvents.ENTITY_SILVERFISH_STEP, 0.15f, 1.0f);
+        this.playSound(SoundEvents.SILVERFISH_STEP, 0.15f, 1.0f);
     }
-
-
 }

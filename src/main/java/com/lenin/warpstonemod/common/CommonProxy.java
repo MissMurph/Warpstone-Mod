@@ -92,18 +92,18 @@ public class CommonProxy {
 	private void onPlayerConnect (PlayerEvent.PlayerLoggedInEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
-		MutateHelper.loadPlayerData(player.getUniqueID());
+		MutateHelper.loadPlayerData(player.getUUID());
 	}
 
 	private void onPlayerDisconnect (PlayerEvent.PlayerLoggedOutEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
-		MutateHelper.unloadManager(player.getUniqueID());
+		MutateHelper.unloadManager(player.getUUID());
 	}
 
 	private void onServerSave (WorldEvent.Save event){
 		for (PlayerManager m : MutateHelper.getManagers()) {
-			MutateHelper.savePlayerData(m.getParentEntity().getUniqueID());
+			MutateHelper.savePlayerData(m.getParentEntity().getUUID());
 		}
 	}
 
@@ -135,7 +135,7 @@ public class CommonProxy {
 
 		if (server == null) { System.out.println("Server Not Found"); return null; }
 
-		File dir = server.func_240776_a_(new FolderName(Warpstone.MOD_ID)).toFile();
+		File dir = server.getWorldPath(new FolderName(Warpstone.MOD_ID)).toFile();
 
 		if (!dir.exists()) dir.mkdirs();
 

@@ -7,24 +7,25 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
 public class WSEntityTypes {
 
-    public static EntityType<RatEntity> RAT;
+    public static EntityType<RatEntity> RAT = register("rat",
+            () -> EntityType.Builder.of(RatEntity::new, EntityClassification.CREATURE)
+                    .sized(0.4f, 0.3f)
+                    .build(Warpstone.key("rat").toString()));
 
-    private static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder)  {
-        EntityType<T> entity = builder.build(Warpstone.key(name).toString());
+    private static <T extends Entity> EntityType<T> register(String name, Supplier<EntityType<T>> builder)  {
+        EntityType<T> entity = builder.get();
         entity.setRegistryName(name);
         Warpstone.getProxy().getRegistration().register(entity);
         return entity;
     }
 
-    public static void register() {
-        RAT = register("rat",
-                EntityType.Builder.create(RatEntity.factory(), EntityClassification.CREATURE)
-                        .setCustomClientFactory(((spawnEntity, world) -> new RatEntity(RAT, world)))
-                        .size(0.4f, 0.3f));
-    }
+    public static void register() {}
 }

@@ -18,8 +18,8 @@ public class AttrRangedDamage extends WSAttribute {
     }
 
     public void onLivingHurt (LivingHurtEvent event) {
-        if (event.getEntity().world.isRemote()
-                || event.getSource().getTrueSource() != parentEntity
+        if (event.getEntity().level.isClientSide()
+                || event.getSource().getEntity() != parentEntity
         ) return;
 
         if (event.getSource().isProjectile()) {

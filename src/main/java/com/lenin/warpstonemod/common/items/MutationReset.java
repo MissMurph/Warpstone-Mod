@@ -15,13 +15,13 @@ public class MutationReset extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (worldIn.isRemote()) return super.onItemRightClick(worldIn, playerIn, handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if (worldIn.isClientSide()) return super.use(worldIn, playerIn, handIn);
 
 		PlayerManager m = MutateHelper.getManager(playerIn);
 
 		if (m != null) m.resetMutations(true); else System.out.println("Manager is null");
 
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		return super.use(worldIn, playerIn, handIn);
 	}
 }

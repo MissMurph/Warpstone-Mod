@@ -45,14 +45,14 @@ public class NbtNumberCondition extends NbtCondition {
                     if (testValue.equals(requiredValue)) return true;
                 case LESS_THAN:
                     if (Type.valueOf(testValue.getType().getName()).equals(Type.FLOAT))
-                        if (testValue.getFloat() < requiredValue.getFloat()) return true;
+                        if (testValue.getAsFloat() < requiredValue.getAsFloat()) return true;
                     else {
-                        if (testValue.getInt() < requiredValue.getInt()) return true; }
+                        if (testValue.getAsInt() < requiredValue.getAsInt()) return true; }
                 case GREATER_THAN:
                     if (Type.valueOf(testValue.getType().getName()).equals(Type.FLOAT))
-                        if (testValue.getFloat() > requiredValue.getFloat()) return true;
+                        if (testValue.getAsFloat() > requiredValue.getAsFloat()) return true;
                     else {
-                        if (testValue.getInt() > requiredValue.getInt()) return true; }
+                        if (testValue.getAsInt() > requiredValue.getAsInt()) return true; }
             }
         }
 
@@ -87,8 +87,8 @@ public class NbtNumberCondition extends NbtCondition {
             String value;
 
             if (Type.valueOf(condition.nbt.getType().getName()).equals(Type.FLOAT))
-                value = condition.nbt.getString().replace("f", "");
-            else value = condition.nbt.getString();
+                value = condition.nbt.getAsString().replace("f", "");
+            else value = condition.nbt.getAsString();
 
             out.addProperty("value", value);
 

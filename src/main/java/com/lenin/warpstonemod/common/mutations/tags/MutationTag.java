@@ -72,7 +72,7 @@ public class MutationTag {
 
         List<TextFormatting> _formatting = new ArrayList<>();
 
-        json.getAsJsonArray("formatting").forEach(format -> _formatting.add(TextFormatting.getValueByName(format.getAsString())));
+        json.getAsJsonArray("formatting").forEach(format -> _formatting.add(TextFormatting.getByName(format.getAsString())));
 
         formatting = _formatting;
     }

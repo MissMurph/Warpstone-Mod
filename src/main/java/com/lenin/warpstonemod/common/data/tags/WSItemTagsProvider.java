@@ -14,17 +14,17 @@ public class WSItemTagsProvider extends ItemTagsProvider {
     }
 
     @Override
-    protected void registerTags (){
+    protected void addTags (){
         copy(WSTags.Blocks.ORES_WARPSTONE, WSTags.Items.ORES_WARPSTONE);
         copy(Tags.Blocks.ORES, Tags.Items.ORES);
 
         copy(WSTags.Blocks.STORAGE_BLOCKS_WARPSTONE, WSTags.Items.STORAGE_BLOCKS_WARPSTONE);
         copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS);
 
-        getOrCreateBuilder(WSTags.Items.GEMS_WARPSTONE).add(WSItems.WARPSTONE_SHARD);
-        getOrCreateBuilder(Tags.Items.GEMS).addTag(WSTags.Items.GEMS_WARPSTONE);
+        tag(WSTags.Items.GEMS_WARPSTONE).add(WSItems.WARPSTONE_SHARD);
+        tag(Tags.Items.GEMS).addTag(WSTags.Items.GEMS_WARPSTONE);
 
-        getOrCreateBuilder(WSTags.Items.DUSTS_WARPSTONE).add(WSItems.WARPSTONE_DUST);
-        getOrCreateBuilder(Tags.Items.DUSTS).addTag(WSTags.Items.DUSTS_WARPSTONE);
+        tag(WSTags.Items.DUSTS_WARPSTONE).add(WSItems.WARPSTONE_DUST);
+        tag(Tags.Items.DUSTS).addTag(WSTags.Items.DUSTS_WARPSTONE);
     }
 }

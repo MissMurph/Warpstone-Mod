@@ -84,7 +84,7 @@ public class Directory {
         }
 
         @Override
-        public void act(DirectoryCache cache) throws IOException {
+        public void run(DirectoryCache cache) throws IOException {
             for (JsonObject data : data) {
                 IDataProvider.save(gson, cache, data, this.generator.getOutputFolder().resolve("data/" + buffer.getNameSpace() + "/" + path + ".json"));
             }

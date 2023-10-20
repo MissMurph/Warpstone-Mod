@@ -51,7 +51,7 @@ public class AttributeMutation implements IWeightable<AttributeMutation> {
 
 	public void setLevel (INBT nbt) {
 		if (nbt instanceof NumberNBT) {
-			setLevel(((NumberNBT) nbt).getInt());
+			setLevel(((NumberNBT) nbt).getAsInt());
 		}
 	}
 
@@ -86,7 +86,7 @@ public class AttributeMutation implements IWeightable<AttributeMutation> {
 		int change = (manager.getCorruptionLevel() > 0 ? Warpstone.getRandom().nextInt(manager.getCorruptionLevel()) + 1 : 1);
 
 		if (result.getValue() instanceof NumberNBT) {
-			 change *= ((NumberNBT) result.getValue()).getInt();
+			 change *= ((NumberNBT) result.getValue()).getAsInt();
 		}
 
 		setLevel(mutationLevel + change);

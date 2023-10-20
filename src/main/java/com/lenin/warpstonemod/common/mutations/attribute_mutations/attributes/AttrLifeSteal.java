@@ -22,11 +22,11 @@ public class AttrLifeSteal extends WSAttribute {
     }
 
     public void onLivingDamage (LivingDamageEvent event) {
-        if (event.getEntity().world.isRemote()
-                || event.getSource().getTrueSource() != parentEntity
+        if (event.getEntity().level.isClientSide()
+                || event.getSource().getEntity() != parentEntity
         ) return;
 
         int amount = Math.round(event.getAmount() * (getAttributeValue() - 1f));
-        ((PlayerEntity) event.getSource().getTrueSource()).heal(amount);
+        ((PlayerEntity) event.getSource().getEntity()).heal(amount);
     }
 }

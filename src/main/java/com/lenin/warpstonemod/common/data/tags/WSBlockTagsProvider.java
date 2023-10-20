@@ -14,13 +14,13 @@ public class WSBlockTagsProvider extends BlockTagsProvider {
     }
 
     @Override
-    protected void registerTags (){
+    protected void addTags (){
         //WARPSTONE ORE TAGS
-        getOrCreateBuilder(WSTags.Blocks.ORES_WARPSTONE).add(WSBlocks.WARPSTONE_ORE);           //Adding block to tag
-        getOrCreateBuilder(Tags.Blocks.ORES).addTag(WSTags.Blocks.ORES_WARPSTONE);                //This is adding the tag to the group
+        tag(WSTags.Blocks.ORES_WARPSTONE).add(WSBlocks.WARPSTONE_ORE);           //Adding block to tag
+        tag(Tags.Blocks.ORES).addTag(WSTags.Blocks.ORES_WARPSTONE);                //This is adding the tag to the group
 
         //WARPSTONE BLOCK TAGS
-        getOrCreateBuilder(WSTags.Blocks.STORAGE_BLOCKS_WARPSTONE).add(WSBlocks.WARPSTONE_BLOCK);           //Adding block to tag
-        getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).addTag(WSTags.Blocks.STORAGE_BLOCKS_WARPSTONE);        //This is adding the tag to the group
+        tag(WSTags.Blocks.STORAGE_BLOCKS_WARPSTONE).add(WSBlocks.WARPSTONE_BLOCK);           //Adding block to tag
+        tag(Tags.Blocks.STORAGE_BLOCKS).addTag(WSTags.Blocks.STORAGE_BLOCKS_WARPSTONE);        //This is adding the tag to the group
     }
 }

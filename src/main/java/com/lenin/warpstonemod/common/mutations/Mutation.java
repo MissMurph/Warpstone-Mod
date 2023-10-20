@@ -66,7 +66,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements I
 
     public void applyMutation (MutationInstance instance) {
         if (!containsInstance(instance.getParent().getUniqueId())) {
-            if (instance.getParent().getParentEntity().world.isRemote()) {
+            if (instance.getParent().getParentEntity().level.isClientSide()) {
                 MutationInstance clientInstance = putClientInstance();
                 if (clientInstance != null) instanceMap.put(clientInstance.getParent().getUniqueId(), clientInstance);
             }
@@ -80,7 +80,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements I
     //Different from Deactivate Mutations as will deactivate then clear the instance
     public void clearMutation(PlayerManager manager) {
         if (containsInstance(manager.getUniqueId())) {
-            if (manager.getParentEntity().world.isRemote()) {
+            if (manager.getParentEntity().level.isClientSide()) {
                 clearClientInstance();
                 return;
             }
@@ -94,7 +94,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements I
 
         for (MutationTag tag : tags) {
             if (tag.getFormatting() != null) {
-                tag.getFormatting().forEach(text::mergeStyle);
+                tag.getFormatting().forEach(text::withStyle);
             }
         }
 
@@ -104,7 +104,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements I
     public List<ITextComponent> getToolTips () {
         List<ITextComponent> list = new ArrayList<>();
         list.add(getMutationName());
-        list.add(new TranslationTextComponent(translateKeyConstant + name + ".desc").mergeStyle(TextFormatting.WHITE));
+        list.add(new TranslationTextComponent(translateKeyConstant + name + ".desc").withStyle(TextFormatting.WHITE));
         return list;
     }
 
@@ -189,7 +189,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements I
     }
 
     public MutationInstance getInstance (LivingEntity entity) {
-        return getInstance(entity.getUniqueID());
+        return getInstance(entity.getUUID());
     }
 
     public MutationInstance getInstance (PlayerManager manager) {
@@ -202,7 +202,7 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements I
     }
 
     public boolean containsInstance (LivingEntity entity) {
-        return containsInstance(entity.getUniqueID());
+        return containsInstance(entity.getUUID());
     }
 
     public boolean containsInstance (UUID playerUUID) {
@@ -211,9 +211,9 @@ public abstract class Mutation extends ForgeRegistryEntry<Mutation> implements I
     }
 
     public MutationInstance constructInstance(PlayerManager manager) {
-        MutationInstance instance = manager.getParentEntity().world.isRemote() ? putClientInstance() : getInstanceType(manager);
+        MutationInstance instance = manager.getParentEntity().level.isClientSide() ? putClientInstance() : getInstanceType(manager);
 
-        if (instance != null) return instanceMap.put(manager.getParentEntity().getUniqueID(), instance);
+        if (instance != null) return instanceMap.put(manager.getParentEntity().getUUID(), instance);
         return null;
     }
 

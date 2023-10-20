@@ -29,7 +29,7 @@ public class ToolTipComponent extends Component implements IRenderable {
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         if (parentElement.isHovered()) {
-            GuiUtils.drawHoveringText(matrixStack, toolTips, mouseX, mouseY, parentElement.getScreen().width, parentElement.getScreen().height, -1, Minecraft.getInstance().fontRenderer);
+            GuiUtils.drawHoveringText(matrixStack, toolTips, mouseX, mouseY, parentElement.getScreen().width, parentElement.getScreen().height, -1, Minecraft.getInstance().font);
         }
     }
 }

@@ -20,7 +20,7 @@ public class MutateItemDataProvider extends WarpstoneDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
         for (MutateItemData item : data) {
             IDataProvider.save(GSON, cache, item.serialize(), this.generator.getOutputFolder().resolve("data/warpstonemod/mutate_items/" + item.getKey() + ".json"));
         }

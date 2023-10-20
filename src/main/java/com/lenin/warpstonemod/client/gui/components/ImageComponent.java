@@ -27,7 +27,7 @@ public class ImageComponent extends Component implements IRenderable {
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getTextureManager().bindTexture(activeTexture.resource);
+        minecraft.getTextureManager().bind(activeTexture.resource);
 
         RenderSystem.enableDepthTest();
         RenderSystem.depthFunc(0);

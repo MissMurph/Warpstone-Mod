@@ -25,7 +25,7 @@ public class ChooseOptionalComponent extends ButtonComponent{
 
     public static void choose (Mutation parent, Mutation target) {
         ChooseOptionalPacket pkt = new ChooseOptionalPacket(
-                Minecraft.getInstance().player.getUniqueID(),
+                Minecraft.getInstance().player.getUUID(),
                 parent.getRegistryName(),
                 target.getRegistryName()
         );

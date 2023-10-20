@@ -43,14 +43,14 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
         ) return;
 
         for (Effect effect : potions) {
-            if (player.isPotionActive(effect)) {
-                for (EffectInstance e : player.getActivePotionEffects()) {
-                    if (e.getPotion() == effect && e.getDuration() < 1200) {
-                        player.addPotionEffect(new EffectInstance(effect, 3600, 0, false, false));
+            if (player.hasEffect(effect)) {
+                for (EffectInstance e : player.getActiveEffects()) {
+                    if (e.getEffect() == effect && e.getDuration() < 1200) {
+                        player.addEffect(new EffectInstance(effect, 3600, 0, false, false));
                     }
                 }
             } else {
-                player.addPotionEffect(new EffectInstance(effect, 3600, 0, false, false));
+                player.addEffect(new EffectInstance(effect, 3600, 0, false, false));
             }
         }
     }
@@ -64,8 +64,8 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
 
         for (Effect potion : potions) {
             out.add(new TranslationTextComponent("generic.potion.grants")
-                    .appendString(": ")
-                    .appendSibling(potion.getDisplayName())
+                    .append(": ")
+                    .append(potion.getDisplayName())
             );
         }
 
@@ -74,20 +74,20 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
 
     public void onPotionApply (PotionEvent.PotionAddedEvent event) {
         if (!containsInstance(event.getEntityLiving())
-                || !potions.contains(event.getPotionEffect().getPotion())
+                || !potions.contains(event.getPotionEffect().getEffect())
         ) return;
 
-        event.getPotionEffect().setPotionDurationMax(true);
+        event.getPotionEffect().setNoCounter(true);
     }
 
     @Override
     public void applyMutation(PlayerManager manager) {
         super.applyMutation(manager);
 
-        if (manager.getParentEntity().world.isRemote) return;
+        if (manager.getParentEntity().level.isClientSide()) return;
 
         for (Effect effect : potions) {
-            manager.getParentEntity().addPotionEffect(new EffectInstance(effect, 3600, 0, false, false));
+            manager.getParentEntity().addEffect(new EffectInstance(effect, 3600, 0, false, false));
         }
     }
 
@@ -95,10 +95,10 @@ public class PotionMutation extends EffectMutation implements IMutationTick {
     public void clearMutation(PlayerManager manager) {
         super.clearMutation(manager);
 
-        if (manager.getParentEntity().world.isRemote) return;
+        if (manager.getParentEntity().level.isClientSide()) return;
 
         for (Effect effect : potions) {
-            manager.getParentEntity().removePotionEffect(effect);
+            manager.getParentEntity().removeEffect(effect);
         }
     }
 

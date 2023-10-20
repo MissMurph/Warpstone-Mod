@@ -24,11 +24,11 @@ public class TextComponent extends Component implements IRenderable {
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+        FontRenderer fontRenderer = Minecraft.getInstance().font;
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, parentElement.getAlpha());
         RenderSystem.enableBlend();
 
-        fontRenderer.drawText(matrixStack, text, parentElement.getX(), parentElement.getY(), 1);
+        fontRenderer.draw(matrixStack, text, parentElement.getX(), parentElement.getY(), 1);
 
         blit(matrixStack, parentElement.getX(), parentElement.getY(), 0, 0, 0, 0);
     }

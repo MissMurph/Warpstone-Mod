@@ -14,21 +14,23 @@ public class MutationScreenOpenButton extends Button {
 
 	public MutationScreenOpenButton(int x, int y, int width, int height, Screen _parentGui) {
 		super(x, y, width, height, new TranslationTextComponent("warpstone.screen.generic.button"),
-				(openScreen) -> Minecraft.getInstance().displayGuiScreen(new MutationScreen(new TranslationTextComponent("warpstonemod.mutation_screen"))));
+				(openScreen) -> Minecraft.getInstance().setScreen(new MutationScreen(new TranslationTextComponent("warpstonemod.mutation_screen"))));
 		parentGui = _parentGui;
 	}
 
+
+
 	@Override
-	public void renderWidget(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		Minecraft minecraft = Minecraft.getInstance();
-		minecraft.getTextureManager().bindTexture(Textures.MUT_OPEN_SCREEN_BUTTON.resource);
+		minecraft.getTextureManager().bind(Textures.MUT_OPEN_SCREEN_BUTTON.resource);
 
 		//78 is the offset applied by the Recipe Book GUI
 
-		if (((InventoryScreen)parentGui).getRecipeGui().isVisible() && x != getParentLeft() + 212) {
+		if (((InventoryScreen)parentGui).getRecipeBookComponent().isVisible() && x != getParentLeft() + 212) {
 			this.setPosition(getParentLeft() + 212, getParentTop() + (166 / 2) - 22);
 		}
-		else if (!((InventoryScreen)parentGui).getRecipeGui().isVisible() && x != getParentLeft() + 134) {
+		else if (!((InventoryScreen)parentGui).getRecipeBookComponent().isVisible() && x != getParentLeft() + 134) {
 			this.setPosition(getParentLeft() + 134, getParentTop() + (166 / 2) - 22);
 		}
 

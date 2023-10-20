@@ -45,7 +45,7 @@ public abstract class WSAttribute implements IAttributeSource {
 
     @Override
     public void applyModifier(AttributeModifier source) {
-        AttributeModifier mod = modMap.putIfAbsent(source.getID(), source);
+        AttributeModifier mod = modMap.putIfAbsent(source.getId(), source);
         if (mod != null) {
             throw new IllegalArgumentException("Modifier is already applied on this attribute!");
         }
@@ -54,24 +54,24 @@ public abstract class WSAttribute implements IAttributeSource {
         switch (source.getOperation()){
             case ADDITION:
                 resultValue = source.getAmount() / 100;
-                resultMap.put(source.getID(), resultValue);
+                resultMap.put(source.getId(), resultValue);
                 modValue += resultValue;
                 break;
 
             case MULTIPLY_BASE:
                 resultValue = baseValue * source.getAmount();
-                resultMap.put(source.getID(), resultValue);
+                resultMap.put(source.getId(), resultValue);
                 modValue += resultValue;
                 break;
 
             case MULTIPLY_TOTAL:
                 resultValue = (baseValue + modValue) * source.getAmount();
-                resultMap.put(source.getID(), resultValue);
+                resultMap.put(source.getId(), resultValue);
                 modValue += resultValue;
                 break;
         }
 
-        modMap.put(source.getID(), source);
+        modMap.put(source.getId(), source);
     }
 
     @Override

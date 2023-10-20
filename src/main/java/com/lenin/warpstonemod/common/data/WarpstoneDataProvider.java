@@ -20,7 +20,7 @@ public abstract class WarpstoneDataProvider implements IDataProvider {
     }
 
     @Override
-    public abstract void act(DirectoryCache cache) throws IOException;
+    public abstract void run(DirectoryCache cache) throws IOException;
 
     @Override
     public String getName() {

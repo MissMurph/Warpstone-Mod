@@ -27,13 +27,13 @@ public abstract class NbtCondition implements IMutationCondition {
     @Override
     public ITextComponent getTooltip() {
         TranslationTextComponent text = new TranslationTextComponent("condition.nbt." + nbtKey);
-        text.appendString(": ");
-        text.appendString(nbt.getString());
+        text.append(": ");
+        text.append(nbt.getAsString());
 
-        if (parent.containsInstance(Minecraft.getInstance().player.getUniqueID())) {
-            INBT current = ((EvolvingMutationInstance) parent.getInstance(Minecraft.getInstance().player.getUniqueID())).readData(nbtKey);
+        if (parent.containsInstance(Minecraft.getInstance().player.getUUID())) {
+            INBT current = ((EvolvingMutationInstance) parent.getInstance(Minecraft.getInstance().player.getUUID())).readData(nbtKey);
 
-            text.appendString(" | Current: " + current.getString());
+            text.append(" | Current: " + current.getAsString());
         }
 
         return text;

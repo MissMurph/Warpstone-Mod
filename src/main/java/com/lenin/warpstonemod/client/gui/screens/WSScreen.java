@@ -75,7 +75,7 @@ public class WSScreen extends Screen {
         this.renderBackground(matrixStack);
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bindTexture(screenResource.resource);
+        this.minecraft.getTextureManager().bind(screenResource.resource);
         int i = this.guiLeft;
         int j = this.guiTop;
         this.blit(matrixStack, i, j, 0, 0, this.sizeX, this.sizeY);
@@ -89,11 +89,11 @@ public class WSScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
+        InputMappings.Input mouseKey = InputMappings.getKey(keyCode, scanCode);
         if (super.keyPressed(keyCode, scanCode, modifiers)) {
             return true;
-        } else if (this.minecraft.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)) {
-            this.closeScreen();
+        } else if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
+            this.onClose();
             return true;
         }
         return true;
@@ -161,7 +161,7 @@ public class WSScreen extends Screen {
                     border.addChild(WSElement.builder(x - 2, y - 2, width + 2, height + 2, this)
                                     .addComponent(ImageComponent.factory(
                                             new RawTextureResource(
-                                                    Warpstone.key("textures/gui/effect_mutations/borders/trim_" + format.getFriendlyName() + ".png"),
+                                                    Warpstone.key("textures/gui/effect_mutations/borders/trim_" + format.getName() + ".png"),
                                                     24, 24, 0, 0
                                             ))),
                             0
@@ -188,10 +188,10 @@ public class WSScreen extends Screen {
         MutationTree.Node currentNode = null;
         List<ResourceLocation> legalOptionals = new ArrayList<>();
 
-        if (mutation.containsInstance(Minecraft.getInstance().player.getUniqueID())) {
+        if (mutation.containsInstance(Minecraft.getInstance().player.getUUID())) {
             texture = new RawTextureResource(mutation.getCurrentTexture(), 18, 18, 0, 0);
 
-            currentNode = mutation.getCurrentNode(Minecraft.getInstance().player.getUniqueID());
+            currentNode = mutation.getCurrentNode(Minecraft.getInstance().player.getUUID());
 
             legalOptionals = currentNode.getOptional()
                     .stream()
@@ -259,7 +259,7 @@ public class WSScreen extends Screen {
             List<ITextComponent> conditionTooltips = node.getParent().getConditionTooltips();
 
             if (conditionTooltips.size() > 0)
-                currentBuilder.addComponent(ToolTipComponent.factory(new TranslationTextComponent("generic.required.conditions").appendString(":")))
+                currentBuilder.addComponent(ToolTipComponent.factory(new TranslationTextComponent("generic.required.conditions").append(":")))
                     .addComponent(ToolTipComponent.factory(node.getParent().getConditionTooltips().toArray(new ITextComponent[0])));
 
             if (currentNode != null && legalOptionals.contains(node.getRegistryKey())) {

@@ -155,7 +155,7 @@ public class PlayerManager {
         double witherRisk = getWitherRisk(properties.corruption);
         if (Math.random() > 1f - witherRisk) {
             int duration = Warpstone.getRandom().nextInt((int) Math.round(2400 * witherRisk));
-            parentEntity.addPotionEffect(new EffectInstance(Effects.WITHER, duration));
+            parentEntity.addEffect(new EffectInstance(Effects.WITHER, duration));
         }
 
         int instabilityValue = properties.instability + (int) Math.round(properties.instability * (
@@ -171,7 +171,7 @@ public class PlayerManager {
         MutateHelper.pushPlayerDataToClient(getUniqueId(), getMutData());
 
         if (currentLevel != getCorruptionLevel()) {
-            parentEntity.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+            parentEntity.playSound(SoundEvents.PLAYER_LEVELUP, 1f, 1f);
         }
     }
 
@@ -211,7 +211,7 @@ public class PlayerManager {
 
     protected CompoundNBT serialize (){
         CompoundNBT out = new CompoundNBT();
-        out.putUniqueId("player", parentEntity.getUniqueID());
+        out.putUUID("player", parentEntity.getUUID());
         out.putInt("instability", getInstability());
         out.putInt("corruption", getCorruption());
 
@@ -242,7 +242,7 @@ public class PlayerManager {
         mutData = nbt;
 
         if (getCorruptionLevel() > currentLevel) {
-            parentEntity.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+            parentEntity.playSound(SoundEvents.PLAYER_LEVELUP, 1f, 1f);
         }
 
         for (AttributeMutation mut : getAttributeMutations()) {
@@ -285,7 +285,7 @@ public class PlayerManager {
         instability = 0;
         mutData = serialize();
 
-        MutateHelper.pushPlayerDataToClient(parentEntity.getUniqueID(), getMutData());
+        MutateHelper.pushPlayerDataToClient(parentEntity.getUUID(), getMutData());
     }
 
     public List<AttributeMutation> getAttributeMutations (){
@@ -347,27 +347,28 @@ public class PlayerManager {
         List<ITextComponent> toolTips = new ArrayList<>();
         int witherEffect = getCorruptionLevel() * 10;
 
-        toolTips.add(new TranslationTextComponent("mutation.screen.corruption").mergeStyle(TextFormatting.WHITE));
+        toolTips.add(new TranslationTextComponent("mutation.screen.corruption").withStyle(TextFormatting.WHITE));
         toolTips.add(new TranslationTextComponent("warpstone.screen.generic.level")
-                .appendSibling(new StringTextComponent(" "))
-                .appendSibling(new StringTextComponent(String.valueOf(getCorruptionLevel())))
-                .mergeStyle(TextFormatting.WHITE));
+                .append(new StringTextComponent(" "))
+                .append(new StringTextComponent(String.valueOf(getCorruptionLevel())))
+                .withStyle(TextFormatting.WHITE));
         toolTips.add(new TranslationTextComponent("warpstone.screen.generic.total")
-                .appendSibling(new StringTextComponent(" "))
-                .appendSibling(new StringTextComponent(String.valueOf(getCorruption())))
-                .mergeStyle(TextFormatting.WHITE));
+                .append(new StringTextComponent(" "))
+                .append(new StringTextComponent(String.valueOf(getCorruption())))
+                .withStyle(TextFormatting.WHITE));
 
         toolTips.add(new TranslationTextComponent("warpstone.screen.generic.next_level")
-                .mergeStyle(TextFormatting.GRAY)
-                .mergeStyle(TextFormatting.ITALIC)
-                .appendSibling(new StringTextComponent(" "))
-                .appendSibling(new StringTextComponent(String.valueOf(getCorruptionToNextLevel())).mergeStyle(TextFormatting.WHITE))
+                .withStyle(TextFormatting.GRAY)
+                .withStyle(TextFormatting.ITALIC)
+                .append(new StringTextComponent(" "))
+                .append(new StringTextComponent(String.valueOf(getCorruptionToNextLevel())).withStyle(TextFormatting.WHITE))
         );
 
         if (witherEffect > 0) {
             toolTips.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
-                    .appendSibling(new StringTextComponent(" "))
-                    .appendSibling(new StringTextComponent("-" + witherEffect + "%").mergeStyle(TextFormatting.GREEN))
+                    .append(new StringTextComponent(" "))
+                    .append(new StringTextComponent("-" + witherEffect + "%")
+                            .withStyle(TextFormatting.GREEN))
             );
         }
 
@@ -380,19 +381,19 @@ public class PlayerManager {
 
         int witherEffect = getInstabilityLevel() * 10 - 30;
 
-        toolTips.add(new TranslationTextComponent("mutation.screen.instability").mergeStyle(TextFormatting.WHITE));
+        toolTips.add(new TranslationTextComponent("mutation.screen.instability").withStyle(TextFormatting.WHITE));
         toolTips.add(new TranslationTextComponent("warpstone.screen.generic.level")
-                .appendSibling(new StringTextComponent(" "))
-                .appendSibling(new StringTextComponent(String.valueOf(getInstabilityLevel()))
-                        .mergeStyle(color)));
+                .append(new StringTextComponent(" "))
+                .append(new StringTextComponent(String.valueOf(getInstabilityLevel()))
+                        .withStyle(color)));
         toolTips.add(new TranslationTextComponent("warpstone.screen.generic.total")
-                .appendSibling(new StringTextComponent(" "))
-                .appendSibling(new StringTextComponent(String.valueOf(getInstability())))
-                .mergeStyle(TextFormatting.WHITE));
+                .append(new StringTextComponent(" "))
+                .append(new StringTextComponent(String.valueOf(getInstability())))
+                .withStyle(TextFormatting.WHITE));
         if (witherEffect > 0) {
             toolTips.add(new TranslationTextComponent("warpstone.consumable.wither_risk")
-                    .appendSibling(new StringTextComponent(" "))
-                    .appendSibling(new StringTextComponent("+" + witherEffect + "%").mergeStyle(TextFormatting.RED))
+                    .append(new StringTextComponent(" "))
+                    .append(new StringTextComponent("+" + witherEffect + "%").withStyle(TextFormatting.RED))
             );
         }
 
@@ -400,7 +401,7 @@ public class PlayerManager {
     }
 
     public UUID getUniqueId () {
-        return getParentEntity().getUniqueID();
+        return getParentEntity().getUUID();
     }
 
     public IAttributeSource getAttribute (ResourceLocation key) {
@@ -442,7 +443,7 @@ public class PlayerManager {
 
     public void saveData (){
         mutData = serialize();
-        MutateHelper.savePlayerData(parentEntity.getUniqueID(), getMutData());
+        MutateHelper.savePlayerData(parentEntity.getUUID(), getMutData());
     }
 
     private Mutation getMutation(ResourceLocation key) {

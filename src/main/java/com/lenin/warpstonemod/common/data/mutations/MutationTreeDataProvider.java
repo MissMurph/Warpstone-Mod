@@ -20,7 +20,7 @@ public class MutationTreeDataProvider extends WarpstoneDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
         for (MutationTreeData tree : data) {
             IDataProvider.save(GSON, cache, tree.serialize(), this.generator.getOutputFolder().resolve("data/warpstonemod/mutations/trees/" + tree.getKey().getPath() + ".json"));
         }

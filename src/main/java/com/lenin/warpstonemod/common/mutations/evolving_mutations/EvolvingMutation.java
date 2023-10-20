@@ -152,7 +152,7 @@ public abstract class EvolvingMutation extends Mutation {
         //This is only ever going to be called from client side so we're safe to assume the player using
     @Override
     public List<ITextComponent> getToolTips() {
-        return TREE.getCurrentNode(Minecraft.getInstance().player.getUniqueID()).getParent().getToolTips();
+        return TREE.getCurrentNode(Minecraft.getInstance().player.getUUID()).getParent().getToolTips();
     }
 
     @Override
@@ -161,7 +161,7 @@ public abstract class EvolvingMutation extends Mutation {
     }
 
     public ResourceLocation getCurrentTexture() {
-        return TREE.getCurrentNode(Minecraft.getInstance().player.getUniqueID()).getParent().getTexture();
+        return TREE.getCurrentNode(Minecraft.getInstance().player.getUUID()).getParent().getTexture();
     }
 
     public List<MutationTree.Node> getChildNodes () {

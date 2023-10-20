@@ -28,7 +28,7 @@ public class MutationDataProvider extends WarpstoneDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
         for (MutationData mut : data) {
             IDataProvider.save(GSON, cache, mut.serialize(), this.generator.getOutputFolder().resolve("data/warpstonemod/mutations/" + mut.getPath() + ".json"));
         }

@@ -41,7 +41,7 @@ public class TileSheetElement extends WSElement {
 
         for (int i = 0; i < 9; i++) {
             RawTextureResource activeTexture = textures.get(i);
-            minecraft.getTextureManager().bindTexture(activeTexture.resource);
+            minecraft.getTextureManager().bind(activeTexture.resource);
 
             //int tileY = y + (int) (i / 3f);
             //int tileX = x + (i - (tileY * 3));

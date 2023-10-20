@@ -46,7 +46,7 @@ public class NbtMatchesStringCondition extends NbtCondition {
             out.addProperty("key", condition.registryKey.toString());
             out.addProperty("target_mutation", condition.parent.getRegistryName().toString());
             out.addProperty("target_nbt", condition.nbtKey);
-            out.addProperty("value", condition.nbt.getString());
+            out.addProperty("value", condition.nbt.getAsString());
 
             return out;
         }

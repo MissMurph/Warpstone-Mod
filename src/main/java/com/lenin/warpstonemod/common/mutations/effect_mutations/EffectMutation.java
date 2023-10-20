@@ -31,7 +31,7 @@ public class EffectMutation extends Mutation {
 	public void applyMutation (PlayerManager manager){
 		if (!containsInstance(manager.getUniqueId())) constructInstance(manager);
 
-		if (manager.getParentEntity().world.isRemote()) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
 		for (ResourceLocation target : modifiers.keySet()) {
 			manager.getAttribute(target).applyModifier(modifiers.get(target));
@@ -42,10 +42,10 @@ public class EffectMutation extends Mutation {
 	public void clearMutation(PlayerManager manager) {
 		super.clearMutation(manager);
 
-		if (manager.getParentEntity().world.isRemote()) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
 		for (ResourceLocation target : modifiers.keySet()) {
-			manager.getAttribute(target).removeModifier(modifiers.get(target).getID());
+			manager.getAttribute(target).removeModifier(modifiers.get(target).getId());
 		}
 	}
 
@@ -87,10 +87,10 @@ public class EffectMutation extends Mutation {
 
 			tooltips.add(
 					new StringTextComponent(prefix + ((int)value) + suffix)
-							.mergeStyle(formatting)
-							.appendString(" ")
-							.appendSibling(new TranslationTextComponent("attribute." + entry.getKey().getPath())
-									.mergeStyle(TextFormatting.WHITE)
+							.withStyle(formatting)
+							.append(" ")
+							.append(new TranslationTextComponent("attribute." + entry.getKey().getPath())
+									.withStyle(TextFormatting.WHITE)
 							)
 			);
 		}

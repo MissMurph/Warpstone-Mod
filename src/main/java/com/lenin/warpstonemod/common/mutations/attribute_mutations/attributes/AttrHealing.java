@@ -19,7 +19,7 @@ public class AttrHealing extends WSAttribute {
     }
 
     protected void onLivingHeal (LivingHealEvent event) {
-        if (event.getEntity().world.isRemote()) return;
+        if (event.getEntity().level.isClientSide()) return;
 
         float amount = event.getAmount() * getAttributeValue();
         event.setAmount(amount);

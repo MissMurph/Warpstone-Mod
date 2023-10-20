@@ -80,7 +80,7 @@ public class Registration {
     }
 
     private void registerEntityAttributes (EntityAttributeCreationEvent event) {
-        event.put(WSEntityTypes.RAT, RatEntity.setCustomAttributes().create());
+        event.put(WSEntityTypes.RAT, RatEntity.setCustomAttributes().build());
     }
 
     private void registerMutations (RegistryEvent.Register<Mutation> event) {

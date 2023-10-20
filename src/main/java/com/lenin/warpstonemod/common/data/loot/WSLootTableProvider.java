@@ -37,19 +37,21 @@ public class WSLootTableProvider extends LootTableProvider {
 
     @Override
     protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationTracker) {
-        map.forEach((resLocation, lootTable) -> LootTableManager.validateLootTable(validationTracker, resLocation, lootTable));
+        map.forEach((resLocation, lootTable) -> LootTableManager.validate(validationTracker, resLocation, lootTable));
     }
 
     public static class WarpBlockLootTables extends BlockLootTables {
 
         @Override
         protected void addTables (){
-            registerDropSelfLootTable(WSBlocks.WARPSTONE_BLOCK);
+            dropSelf(WSBlocks.WARPSTONE_BLOCK);
 
-            registerLootTable(WSBlocks.WARPSTONE_ORE, (warpstoneOre) -> droppingWithSilkTouch(warpstoneOre,
-                    withExplosionDecay(warpstoneOre, ItemLootEntry.builder(WSItems.WARPSTONE_SHARD)
-                            .acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F)))
-                            .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE)))));
+            add(WSBlocks.WARPSTONE_ORE, (warpstoneOre) -> dropWhenSilkTouch(warpstoneOre,
+                    withExplosionDecay(warpstoneOre, ItemLootEntry.lootTableItem(WSItems.WARPSTONE_SHARD)
+                            .apply(SetCount.setCount(RandomValueRange.between(1.0F, 3.0F)))
+                            .apply(ApplyBonus.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+                    )
+            ));
         }
 
         @Override

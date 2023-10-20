@@ -49,14 +49,14 @@ public class CorruptionLevelCondition implements IMutationCondition {
     @Override
     public ITextComponent getTooltip() {
         TranslationTextComponent text = new TranslationTextComponent("condition." + resource.getPath());
-        text.appendString(": ");
+        text.append(": ");
 
         for (int i = 0; i < operations.size(); i++) {
-            if (i > 0) text.appendString("& ");
-            text.appendString(operations.get(i).toString() + " ");
+            if (i > 0) text.append("& ");
+            text.append(operations.get(i).toString() + " ");
         }
 
-        text.appendString(String.valueOf(value));
+        text.append(String.valueOf(value));
 
         return text;
     }

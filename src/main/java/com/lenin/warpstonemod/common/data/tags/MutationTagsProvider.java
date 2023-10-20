@@ -22,7 +22,7 @@ public class MutationTagsProvider extends WarpstoneDataProvider {
     }
 
     @Override
-    public void act(DirectoryCache cache) throws IOException {
+    public void run(DirectoryCache cache) throws IOException {
         for (MutationTagData tag : data) {
             IDataProvider.save(GSON, cache, tag.serialize(), this.generator.getOutputFolder().resolve("data/warpstonemod/mutations/tags/" + tag.getPath() + ".json"));
         }

@@ -56,53 +56,53 @@ public class AlcoholicMutation extends EffectMutation {
 	 */
 
 	private void onItemUseFinish (LivingEntityUseItemEvent.Finish event) {
-		if (event.getEntityLiving().world.isRemote()
+		if (event.getEntityLiving().level.isClientSide()
 				|| !(event.getEntityLiving() instanceof PlayerEntity)
 				|| !(event.getItem().getItem() instanceof PotionItem)
-				|| PotionUtils.getEffectsFromStack(event.getItem()).isEmpty()
+				|| PotionUtils.getCustomEffects(event.getItem()).isEmpty()
 				|| !containsInstance(event.getEntityLiving())
 		) return;
 
 		LivingEntity entity = event.getEntityLiving();
 
-		float newValue = Math.min(20, valueMap.get(entity.getUniqueID()) + 4) - valueMap.get(entity.getUniqueID());
+		float newValue = Math.min(20, valueMap.get(entity.getUUID()) + 4) - valueMap.get(entity.getUUID());
 
 		int ticks = Math.max(100, Math.round((float)Math.random() * 300));
-		entity.addPotionEffect(new EffectInstance(Effects.ABSORPTION, ticks, -1));
+		entity.addEffect(new EffectInstance(Effects.ABSORPTION, ticks, -1));
 
 		entity.setAbsorptionAmount(entity.getAbsorptionAmount() + newValue);
-		valueMap.put(entity.getUniqueID(), valueMap.get(entity.getUniqueID()) + (int) newValue);
+		valueMap.put(entity.getUUID(), valueMap.get(entity.getUUID()) + (int) newValue);
 	}
 
 	private void onPotionFinish (PotionEvent.PotionExpiryEvent event) {
 		if (!(event.getEntityLiving() instanceof PlayerEntity)
-				|| event.getPotionEffect().getPotion() != Effects.ABSORPTION
+				|| event.getPotionEffect().getEffect() != Effects.ABSORPTION
 				|| !containsInstance(event.getEntityLiving())
 		) return;
 
 		LivingEntity entity = event.getEntityLiving();
 
-		entity.setAbsorptionAmount(entity.getAbsorptionAmount() - valueMap.get(entity.getUniqueID()));
-		valueMap.put(entity.getUniqueID(), 0);
+		entity.setAbsorptionAmount(entity.getAbsorptionAmount() - valueMap.get(entity.getUUID()));
+		valueMap.put(entity.getUUID(), 0);
 	}
 
 	@Override
 	public void applyMutation(PlayerManager manager) {
 		super.applyMutation(manager);
 
-		if (manager.getParentEntity().world.isRemote) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
-		if (!valueMap.containsKey(manager.getParentEntity().getUniqueID())) valueMap.put(manager.getParentEntity().getUniqueID(), 0);
+		if (!valueMap.containsKey(manager.getParentEntity().getUUID())) valueMap.put(manager.getParentEntity().getUUID(), 0);
 	}
 
 	@Override
 	public void clearMutation(PlayerManager manager) {
 		super.clearMutation(manager);
 
-		if (manager.getParentEntity().world.isRemote) return;
+		if (manager.getParentEntity().level.isClientSide()) return;
 
 		manager.getParentEntity().setAbsorptionAmount(manager.getParentEntity().getAbsorptionAmount() - valueMap.get(manager.getUniqueId()));
 		valueMap.remove(manager.getUniqueId());
-		manager.getParentEntity().removePotionEffect(Effects.ABSORPTION);
+		manager.getParentEntity().removeEffect(Effects.ABSORPTION);
 	}
 }

@@ -16,9 +16,9 @@ public class CorruptedTomeItem extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (worldIn.isRemote()) Minecraft.getInstance().displayGuiScreen(new CorruptedTomeScreen());
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (worldIn.isClientSide()) Minecraft.getInstance().setScreen(new CorruptedTomeScreen());
 
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 }

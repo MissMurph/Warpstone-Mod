@@ -33,7 +33,7 @@ public class MutationArgument implements ArgumentType<Mutation> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        return ISuggestionProvider.suggestIterable(
+        return ISuggestionProvider.suggestResource(
                 Registration.MUTATIONS.getValues().stream()
                         .map(Mutation::getRegistryName)
                         .collect(Collectors.toList()),

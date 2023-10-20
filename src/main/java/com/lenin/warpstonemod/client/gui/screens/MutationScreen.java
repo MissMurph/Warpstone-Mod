@@ -32,7 +32,7 @@ public class MutationScreen extends WSScreen {
 		layer(WSElement.builder(132, 144, 20, 18, this)
 				.addComponent(ImageComponent.factory(Textures.MUT_OPEN_SCREEN_BUTTON))
 				.addComponent(
-						ButtonComponent.factory((onPress) -> Minecraft.getInstance().displayGuiScreen(
+						ButtonComponent.factory((onPress) -> Minecraft.getInstance().setScreen(
 								new InventoryScreen(Minecraft.getInstance().player)),
 								Textures.MUT_OPEN_SCREEN_BUTTON_HVRD))
 		);
@@ -77,18 +77,18 @@ public class MutationScreen extends WSScreen {
 
 			List<ITextComponent> attrTooltips = new ArrayList();
 
-			attrTooltips.add(muts.get(i).getMutationName().mergeStyle(TextFormatting.WHITE));
+			attrTooltips.add(muts.get(i).getMutationName().withStyle(TextFormatting.WHITE));
 			String levelText = "+";
 			TextFormatting color = TextFormatting.GREEN;
 			if (level < 0) { levelText = ""; color = TextFormatting.RED; }
 
 			String strMaxLevel = (level < 0 ? "-" + 5 * clientManager.getCorruptionLevel() : "+" + 10 * clientManager.getCorruptionLevel()) + "%";
 
-			attrTooltips.add((new StringTextComponent(levelText + (level) + "%")).mergeStyle(color));
+			attrTooltips.add((new StringTextComponent(levelText + (level) + "%")).withStyle(color));
 			attrTooltips.add(new StringTextComponent("")
-					.appendSibling(new TranslationTextComponent("warpstone.screen.generic.max_level"))
-					.appendSibling(new StringTextComponent(" " + strMaxLevel)
-							.mergeStyle(color)
+					.append(new TranslationTextComponent("warpstone.screen.generic.max_level"))
+					.append(new StringTextComponent(" " + strMaxLevel)
+							.withStyle(color)
 					)
 			);
 

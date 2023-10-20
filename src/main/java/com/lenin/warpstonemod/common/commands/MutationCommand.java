@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class MutationCommand {
     public static ArgumentBuilder<CommandSource, ?> register () {
-        return Commands.literal("mutation").requires(source -> source.hasPermissionLevel(2))
+        return Commands.literal("mutation").requires(source -> source.hasPermission(2))
                 .then(Commands.literal("add")
                         .then(Commands.argument("mutation", new MutationArgument())
                                 .then(Commands.argument("player", EntityArgument.player())
@@ -46,16 +46,16 @@ public class MutationCommand {
     }
 
     private static int addMutation (CommandSource source, @Nullable PlayerEntity target, Mutation mutation) throws CommandSyntaxException {
-        PlayerEntity player = target != null ? target : source.asPlayer();
+        PlayerEntity player = target != null ? target : source.getPlayerOrException();
         PlayerManager manager = MutateHelper.getManager(player);
 
         if (manager.containsMutation(mutation)) {
             player.sendMessage(new StringTextComponent("Error: ")
-                    .appendSibling(player.getDisplayName())
-                    .appendString(" Already Has ")
-                    .appendSibling(mutation.getMutationName())
-                    .mergeStyle(TextFormatting.RED),
-                    Util.DUMMY_UUID
+                    .append(player.getDisplayName())
+                    .append(" Already Has ")
+                    .append(mutation.getMutationName())
+                    .withStyle(TextFormatting.RED),
+                    Util.NIL_UUID
             );
 
             return 0;
@@ -63,10 +63,10 @@ public class MutationCommand {
 
         if (!Registration.MUTATIONS.containsValue(mutation)) {
             player.sendMessage(new StringTextComponent("Error: ")
-                    .appendSibling(mutation.getMutationName())
-                    .appendString(" Not Found ")
-                    .mergeStyle(TextFormatting.RED),
-                    Util.DUMMY_UUID
+                    .append(mutation.getMutationName())
+                    .append(" Not Found ")
+                    .withStyle(TextFormatting.RED),
+                    Util.NIL_UUID
             );
 
             return 0;
@@ -77,16 +77,16 @@ public class MutationCommand {
     }
 
     private static int removeMutation (CommandSource source, @Nullable PlayerEntity target, Mutation mutation) throws CommandSyntaxException {
-        PlayerEntity player = target != null ? target : source.asPlayer();
+        PlayerEntity player = target != null ? target : source.getPlayerOrException();
         PlayerManager manager = MutateHelper.getManager(player);
 
         if (!manager.containsMutation(mutation)) {
             player.sendMessage(new StringTextComponent("Error: ")
-                            .appendSibling(player.getDisplayName())
-                            .appendString(" Doesn't have ")
-                            .appendSibling(mutation.getMutationName())
-                            .mergeStyle(TextFormatting.RED),
-                    Util.DUMMY_UUID
+                            .append(player.getDisplayName())
+                            .append(" Doesn't have ")
+                            .append(mutation.getMutationName())
+                            .withStyle(TextFormatting.RED),
+                    Util.NIL_UUID
             );
 
             return 0;

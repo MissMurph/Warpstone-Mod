@@ -34,7 +34,7 @@ public class VanillaAttribute implements IAttributeSource{
 
 	@Override
 	public void applyModifier(AttributeModifier source) {
-		attribute.applyNonPersistentModifier(source);
+		attribute.addTransientModifier(source);
 	}
 
 	@Override

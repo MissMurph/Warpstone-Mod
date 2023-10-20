@@ -49,7 +49,7 @@ public class MutationTagData {
         }
 
         public Builder addFormatting (TextFormatting formatting) {
-            return addFormatting(formatting.getFriendlyName());
+            return addFormatting(formatting.getName());
         }
 
         public Builder addFormatting (String formatting) {

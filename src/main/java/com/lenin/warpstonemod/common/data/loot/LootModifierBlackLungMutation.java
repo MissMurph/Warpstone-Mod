@@ -29,14 +29,14 @@ public class LootModifierBlackLungMutation extends LootModifier {
     @Nonnull
     @Override
     protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        for (LootParameter<?> p : LootParameterSets.BLOCK.getRequiredParameters()) {
-            if (!context.has(p) || !context.has(LootParameters.THIS_ENTITY)) return generatedLoot;
+        for (LootParameter<?> p : LootParameterSets.BLOCK.getRequired()) {
+            if (!context.hasParam(p) || !context.hasParam(LootParameters.THIS_ENTITY)) return generatedLoot;
         }
 
-        PlayerManager manager = MutateHelper.getManager(context.get(LootParameters.THIS_ENTITY).getUniqueID());
+        PlayerManager manager = MutateHelper.getManager(context.getParamOrNull(LootParameters.THIS_ENTITY).getUUID());
 
         if (manager != null && manager.containsMutation(Mutations.BLACK_LUNG)) {
-            Block block = context.get(LootParameters.BLOCK_STATE).getBlock();
+            Block block = context.getParamOrNull(LootParameters.BLOCK_STATE).getBlock();
 
             block.getTags().stream().filter(tag -> tag.equals(Tags.Blocks.ORES_COAL.getName())).forEach(tag -> {
                 List<ItemStack> stack = new ArrayList<>(generatedLoot);
